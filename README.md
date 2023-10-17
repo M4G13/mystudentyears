@@ -1,5 +1,16 @@
 # MyStudentYears App
 
+## Setup Instructions
+Make sure you have npm and node installed, to install all project dependencies run:
+```
+npm install
+```
+then to start the expo app run:
+```
+npx expo start
+```
+Download the "Expo Go" app and scan the QR code the command generates—the app should open.
+
 ## Project Overview
 An app to help students in the transitionary period from high school to University/College.  Provides students with extra support for everything from managing finances, cooking, and academic skills in a fun and engaging environment.
 
