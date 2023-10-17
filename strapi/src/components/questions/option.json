@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_questions_options",
+  "info": {
+    "displayName": "Option",
+    "icon": "question"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "correct": {
+      "type": "boolean",
+      "default": false,
+      "required": false
+    }
+  }
+}
