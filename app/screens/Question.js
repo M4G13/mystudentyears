@@ -1,6 +1,8 @@
 import { Component, useState, useEffect } from 'react';
 import { Alert, StyleSheet, View, Text, Pressable, Image } from 'react-native';
 
+import baseStyle from '../styles/base.js';
+
 export default class FinanceQuiz extends Component {
     correctAnswer() {
         return(
@@ -16,9 +18,9 @@ export default class FinanceQuiz extends Component {
 
     render() {
         return(
-            <View style={styles.container}>
+            <View style={baseStyle.view}>
                 <View style={styles.questionContainer}>
-                    <Image source={require('./assets/mirror.png')} style={{width: 100, height:200, objectFit: 'contain'}}/>
+                    <Image source={require('../assets/mirror.png')} style={{width: 100, height:200, objectFit: 'contain'}}/>
                     <Text style={styles.questionText}>Should you spend your entire student loan payment on alcohol?</Text>
                 </View>
                 <View style={styles.buttonRow}>
