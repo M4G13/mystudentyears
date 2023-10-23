@@ -67,7 +67,21 @@ export default class QuizScreen extends Component {
                 </View>
             </View>
         );
-    }
+}
+
+const Stack = createNativeStackNavigator();
+
+export default function App() {
+    return(
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen name="My Student Years" component={HomeScreen} />
+                    <Stack.Screen name="Categories" component={Categories} />
+                    <Stack.Screen name="Finance" component={Finance} />
+                    <Stack.Screen name="Finance Quiz" component={FinanceQuiz} />
+                </Stack.Navigator>
+            </NavigationContainer>
+    );
 }
 
 
@@ -117,5 +131,14 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 20,
         textAlign: 'center',
-    }
+    },
+
+    selectButton: {
+        backgroundColor: '#05b4ff',
+        padding: 15,
+        paddingLeft: 25,
+        paddingRight: 25,
+        borderRadius: 5,
+        width: '45%',
+    },
 });
