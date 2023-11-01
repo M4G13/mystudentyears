@@ -3,53 +3,51 @@ import { Alert, StyleSheet, View, Text, Pressable, Image } from 'react-native';
 
 import baseStyle from '../styles/base.js';
 
-export default class FinanceQuiz extends Component {
-    correctAnswer() {
+export default function FinanceQuiz({ navigation }) {
+    function correctAnswer() {
         return(
             Alert.alert("Correct")
         )
     }
 
-    incorrectAnswer() {
+    function incorrectAnswer() {
         return(
             Alert.alert("Incorrect")
         )
     }
 
-    render() {
-        return(
-            <View style={baseStyle.view}>
-                <View style={styles.questionContainer}>
-                    <Image source={require('../assets/mirror.png')} style={{width: 100, height:200, objectFit: 'contain'}}/>
-                    <Text style={styles.questionText}>Should you spend your entire student loan payment on alcohol?</Text>
-                </View>
-                <View style={styles.buttonRow}>
-                    <Pressable onPress={this.correctAnswer} style={[styles.answerButton, {backgroundColor: '#dd8844'}]}>
-                        <Text style={styles.answerText}>
-                            Definitely.
-                        </Text>
-                    </Pressable>
-                    <Pressable onPress={this.incorrectAnswer} style={[styles.answerButton, {backgroundColor: '#44dd88'}]}>
-                        <Text style={styles.answerText}>
-                            Probably?
-                        </Text>
-                    </Pressable>
-                </View>
-                <View style={styles.buttonRow}>
-                    <Pressable onPress={this.incorrectAnswer} style={[styles.answerButton, {backgroundColor: '#dd4488'}]}>
-                        <Text style={styles.answerText}>
-                            Maybe?
-                        </Text>
-                    </Pressable>
-                    <Pressable onPress={this.incorrectAnswer} style={[styles.answerButton, {backgroundColor: '#8844dd'}]}>
-                        <Text style={styles.answerText}>
-                            No?
-                        </Text>
-                    </Pressable>
-                </View>
-            </View>
-        );
-    }
+    return(
+        <View style={baseStyle.view}>
+        <View style={styles.questionContainer}>
+        <Image source={require('../assets/mirror.png')} style={{width: 100, height:200, objectFit: 'contain'}}/>
+        <Text style={styles.questionText}>Should you spend your entire student loan payment on alcohol?</Text>
+        </View>
+        <View style={styles.buttonRow}>
+        <Pressable onPress={correctAnswer} style={[styles.answerButton, {backgroundColor: '#dd8844'}]}>
+        <Text style={styles.answerText}>
+        Definitely.
+        </Text>
+        </Pressable>
+        <Pressable onPress={incorrectAnswer} style={[styles.answerButton, {backgroundColor: '#44dd88'}]}>
+        <Text style={styles.answerText}>
+        Probably?
+        </Text>
+        </Pressable>
+        </View>
+        <View style={styles.buttonRow}>
+        <Pressable onPress={incorrectAnswer} style={[styles.answerButton, {backgroundColor: '#dd4488'}]}>
+        <Text style={styles.answerText}>
+        Maybe?
+        </Text>
+        </Pressable>
+        <Pressable onPress={incorrectAnswer} style={[styles.answerButton, {backgroundColor: '#8844dd'}]}>
+        <Text style={styles.answerText}>
+        No?
+        </Text>
+        </Pressable>
+        </View>
+        </View>
+    );
 }
 
 

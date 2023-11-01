@@ -3,20 +3,18 @@ import { StyleSheet, View, Text, Pressable, Image } from 'react-native';
 
 import baseStyle from '../styles/base.js';
 
-export default class HomeScreen extends Component {
-    render() {
-        return(
-            <View style={baseStyle.view}>
-                <Image source={require('../assets/msy-logo.png')} style={styles.mainImage}/>
-                <Text style={baseStyle.bigText}>Welcome to My Student Years</Text>
-                <Pressable onPress={() => this.props.navigation.navigate("Categories")}>
-                    <Text style={baseStyle.button}>
-                        Go to Categories
-                    </Text>
-                </Pressable>
-            </View>
-        )
-    }
+export default function HomeScreen({navigation}) {
+    return(
+        <View style={baseStyle.view}>
+        <Image source={require('../assets/msy-logo.png')} style={styles.mainImage}/>
+        <Text style={baseStyle.bigText}>Welcome to My Student Years</Text>
+        <Pressable onPress={() => navigation.navigate("Categories")}>
+        <Text style={baseStyle.button}>
+        Go to Categories
+        </Text>
+        </Pressable>
+        </View>
+    )
 }
 
 
