@@ -13,27 +13,6 @@
   "attributes": {
     "text": {
       "type": "string"
-    },
-    "option1": {
-      "displayName": "Option",
-      "type": "component",
-      "repeatable": false,
-      "component": "questions.option"
-    },
-    "option2": {
-      "type": "component",
-      "repeatable": false,
-      "component": "questions.option"
-    },
-    "option3": {
-      "type": "component",
-      "repeatable": false,
-      "component": "questions.option"
-    },
-    "option4": {
-      "type": "component",
-      "repeatable": false,
-      "component": "questions.option"
     }
   }
 }

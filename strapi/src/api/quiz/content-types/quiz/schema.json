@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "quizzes",
+  "info": {
+    "singularName": "quiz",
+    "pluralName": "quizzes",
+    "displayName": "Quiz",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "questions": {
+      "type": "dynamiczone",
+      "components": [
+        "questions.multi-choice-question"
+      ],
+      "min": 1
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

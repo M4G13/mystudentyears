@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_questions_multi_choice_questions",
+  "info": {
+    "displayName": "multi-choice-question",
+    "icon": "layer",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "option1": {
+      "type": "component",
+      "repeatable": false,
+      "component": "option-types.multi-choice-option"
+    },
+    "option2": {
+      "type": "component",
+      "repeatable": false,
+      "component": "option-types.multi-choice-option"
+    },
+    "option3": {
+      "type": "component",
+      "repeatable": false,
+      "component": "option-types.multi-choice-option"
+    },
+    "option4": {
+      "type": "component",
+      "repeatable": false,
+      "component": "option-types.multi-choice-option"
+    },
+    "question": {
+      "type": "string"
+    }
+  }
+}

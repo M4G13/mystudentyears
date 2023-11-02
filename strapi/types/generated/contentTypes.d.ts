@@ -677,6 +677,32 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiInfoInfo extends Schema.CollectionType {
+  collectionName: 'infos';
+  info: {
+    singularName: 'info';
+    pluralName: 'infos';
+    displayName: 'Information';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String;
+    image: Attribute.Media;
+    Text: Attribute.RichText;
+    description: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::info.info', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::info.info', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface ApiInformationPageInformationPage
   extends Schema.CollectionType {
   collectionName: 'information_pages';
@@ -722,10 +748,6 @@ export interface ApiQuestionQuestion extends Schema.CollectionType {
   };
   attributes: {
     text: Attribute.String;
-    option1: Attribute.Component<'questions.option'>;
-    option2: Attribute.Component<'questions.option'>;
-    option3: Attribute.Component<'questions.option'>;
-    option4: Attribute.Component<'questions.option'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -736,6 +758,65 @@ export interface ApiQuestionQuestion extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::question.question',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiQuizQuiz extends Schema.CollectionType {
+  collectionName: 'quizzes';
+  info: {
+    singularName: 'quiz';
+    pluralName: 'quizzes';
+    displayName: 'Quiz';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    questions: Attribute.DynamicZone<['questions.multi-choice-question']> &
+      Attribute.SetMinMax<{
+        min: 1;
+      }>;
+    description: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::quiz.quiz', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::quiz.quiz', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiStudentStudent extends Schema.CollectionType {
+  collectionName: 'students';
+  info: {
+    singularName: 'student';
+    pluralName: 'students';
+    displayName: 'Student Story';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Name: Attribute.String;
+    category: Attribute.Component<'category.category', true>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::student.student',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::student.student',
       'oneToOne',
       'admin::user'
     > &
@@ -759,8 +840,11 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::info.info': ApiInfoInfo;
       'api::information-page.information-page': ApiInformationPageInformationPage;
       'api::question.question': ApiQuestionQuestion;
+      'api::quiz.quiz': ApiQuizQuiz;
+      'api::student.student': ApiStudentStudent;
     }
   }
 }

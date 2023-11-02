@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_category_categories",
+  "info": {
+    "displayName": "Category",
+    "icon": "grid"
+  },
+  "options": {},
+  "attributes": {
+    "Category": {
+      "type": "enumeration",
+      "enum": [
+        "Finance",
+        "Wellbeing",
+        "Academics",
+        "Independence"
+      ]
+    },
+    "information": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::info.info"
+    },
+    "quiz": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::quiz.quiz"
+    }
+  }
+}
