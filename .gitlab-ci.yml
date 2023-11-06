@@ -1,0 +1,16 @@
+image: node:latest
+
+cache:
+  paths:
+    - app/node_modules/
+    # - strapi/node_modules/
+
+stages:
+  - test
+
+lint-app-job:
+  stage: test
+  script:
+    - cd app
+    - npm install
+    - npm run lint
