@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@react-navigation/native": "^6.1.9",
@@ -18,7 +19,10 @@
     "react-navigation": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "eslint": "^8.53.0",
+    "eslint-config-universe": "^12.0.0",
+    "prettier": "^3.0.3"
   },
   "private": true
 }
