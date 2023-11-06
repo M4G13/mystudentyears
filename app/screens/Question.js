@@ -3,7 +3,7 @@ import { Alert, StyleSheet, View, Text, Pressable, Image } from "react-native";
 
 import baseStyle from "../styles/base.js";
 
-export default function FinanceQuiz({ navigation }) {
+export default function FinanceQuiz({ route, navigation }) {
   function correctAnswer() {
     return Alert.alert("Correct");
   }
@@ -12,6 +12,9 @@ export default function FinanceQuiz({ navigation }) {
     return Alert.alert("Incorrect");
   }
 
+  const { category_id, student_id } = route.params;
+  const quiz = global.data.data.find(s => s.id === student_id).attributes.category.find(c => c.id === category_id).quiz.data.attributes;
+
   return (
     <View style={baseStyle.view}>
       <View style={styles.questionContainer}>
@@ -19,9 +22,7 @@ export default function FinanceQuiz({ navigation }) {
           source={require("../assets/mirror.png")}
           style={{ width: 100, height: 200, objectFit: "contain" }}
         />
-        <Text style={styles.questionText}>
-          Should you spend your entire student loan payment on alcohol?
-        </Text>
+        <Text style={styles.questionText}>{quiz.questions[0].question}</Text>
       </View>
       <View style={styles.buttonRow}>
         <Pressable
