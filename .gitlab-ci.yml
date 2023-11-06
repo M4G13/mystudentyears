@@ -8,9 +8,9 @@ cache:
 stages:
   - test
 
-lint-job:
+lint-app-job:
   stage: test
   script:
     - cd app
-    - npm install --only=dev
+    - npm install
     - npm run lint
