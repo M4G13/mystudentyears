@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React, { useState, useEffect } from "react";
 
-import HomeScreen from "./screens/HomeScreen.js";
 import Categories from "./screens/Categories.js";
 import Category from "./screens/Category.js";
+import HomeScreen from "./screens/HomeScreen.js";
+import Info from "./screens/Info.js";
 import Question from "./screens/Question.js";
-import Info from "./screens/Info.js"
 
 const Stack = createNativeStackNavigator();
 
@@ -24,7 +24,7 @@ export default function App() {
     fetch(url)
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
@@ -36,7 +36,7 @@ export default function App() {
         setError(error);
         setIsLoading(false);
       });
-  }
+  };
 
   useEffect(() => {
     // Fetch data when the component mounts
