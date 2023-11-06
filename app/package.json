@@ -7,7 +7,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
+    "lint-hard" : "eslint . --max-warnings=0"
   },
   "dependencies": {
     "@react-navigation/native": "^6.1.9",
