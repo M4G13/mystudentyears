@@ -5,7 +5,7 @@ import baseStyle from "../styles/base.js";
 
 export default function Info({ route, navigation }) {
   const { id, category_id, student_id } = route.params;
-  const info = global.data.data.find(s => s.id === student_id).attributes.category.find(c => c.id === id).information.data.find(i => i.id === id).attributes;
+  const info = global.data.data.find(s => s.id === student_id).attributes.category.find(c => c.id === category_id).information.data.find(i => i.id === id).attributes;
 
   return (
     <View style={baseStyle.view}>
