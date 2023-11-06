@@ -10,6 +10,16 @@ import {
 import baseStyle from "../styles/base.js";
 
 export default function Categories({ navigation }) {
+  const student_id = 1;
+  const categories = global.data.data.find((s) => s.id === student_id)
+    .attributes.category;
+  const locs = {
+    Finance: [40, 50],
+    Wellbeing: [280, 300],
+    Academics: [10, 370],
+    Independence: [260, 570],
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
@@ -17,39 +27,25 @@ export default function Categories({ navigation }) {
         resizeMode="cover"
         style={styles.map}
       >
-        <Pressable
-          onPress={() => navigation.navigate("Category")}
-          style={{ width: "55%", position: "absolute", left: 40, top: 50 }}
-        >
-          <Text style={styles.selectButton}>Finance</Text>
-        </Pressable>
-
-        <Pressable
-          onPress={() => navigation.navigate("Categories")}
-          style={{ width: "65%", position: "absolute", left: 280, top: 300 }}
-        >
-          <Text style={styles.selectButton}>Wellbeing</Text>
-        </Pressable>
-
-        <Pressable
-          onPress={() => navigation.navigate("Categories")}
-          style={{ width: "65%", position: "absolute", left: 10, top: 370 }}
-        >
-          <Text style={styles.selectButton}>Academic Support</Text>
-        </Pressable>
-
-        <Pressable
-          onPress={() => navigation.navigate("Categories")}
-          style={{
-            width: "66%",
-            height: 70,
-            position: "absolute",
-            left: 260,
-            top: 550,
-          }}
-        >
-          <Text style={styles.selectButton}>4th category(?)</Text>
-        </Pressable>
+        {categories.map((c) => (
+          <Pressable
+            key={c.id}
+            onPress={() =>
+              navigation.navigate("Category", {
+                id: c.id,
+                student_id,
+              })
+            }
+            style={{
+              width: "65%",
+              position: "absolute",
+              left: locs[c.Category][0],
+              top: locs[c.Category][1],
+            }}
+          >
+            <Text style={styles.selectButton}>{c.Category}</Text>
+          </Pressable>
+        ))}
       </ImageBackground>
     </View>
   );
