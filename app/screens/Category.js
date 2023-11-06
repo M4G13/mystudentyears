@@ -5,7 +5,9 @@ import baseStyle from "../styles/base.js";
 
 export default function Category({ route, navigation }) {
   const { id, student_id } = route.params;
-  const category = global.data.data.find(s => s.id === student_id).attributes.category.find(c => c.id === id);
+  const category = global.data.data
+    .find((s) => s.id === student_id)
+    .attributes.category.find((c) => c.id === id);
   const infos = category.information.data;
   return (
     <View style={baseStyle.view}>
@@ -16,11 +18,27 @@ export default function Category({ route, navigation }) {
         There will be a bunch of resources here.
       </Text>
       {infos.map((i) => (
-        <Pressable key={i.id} onPress={() => navigation.navigate("Info", {id: i.id, category_id: id, student_id: student_id})}>
-            <Text style={styles.quizButton}>{i.attributes.Title}</Text>
+        <Pressable
+          key={i.id}
+          onPress={() =>
+            navigation.navigate("Info", {
+              id: i.id,
+              category_id: id,
+              student_id,
+            })
+          }
+        >
+          <Text style={styles.quizButton}>{i.attributes.Title}</Text>
         </Pressable>
       ))}
-      <Pressable onPress={() => navigation.navigate("Question", {category_id: id, student_id: student_id})}>
+      <Pressable
+        onPress={() =>
+          navigation.navigate("Question", {
+            category_id: id,
+            student_id,
+          })
+        }
+      >
         <Text style={styles.quizButton}>Go to the quiz for this section</Text>
       </Pressable>
     </View>

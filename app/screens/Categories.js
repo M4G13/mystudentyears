@@ -11,13 +11,14 @@ import baseStyle from "../styles/base.js";
 
 export default function Categories({ navigation }) {
   const student_id = 1;
-  const categories = global.data.data.find(s => s.id === student_id).attributes.category;
+  const categories = global.data.data.find((s) => s.id === student_id)
+    .attributes.category;
   const locs = {
-    "Finance": [40, 50],
-    "Wellbeing": [280, 300],
-    "Academics": [10, 370],
-    "Independence": [260, 570]
-  }
+    Finance: [40, 50],
+    Wellbeing: [280, 300],
+    Academics: [10, 370],
+    Independence: [260, 570],
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -27,13 +28,23 @@ export default function Categories({ navigation }) {
         style={styles.map}
       >
         {categories.map((c) => (
-        <Pressable
-          key={c.id}
-          onPress={() => navigation.navigate("Category", {id: c.id, student_id: student_id })}
-          style={{ width: "65%", position: "absolute", left: locs[c.Category][0], top: locs[c.Category][1] }}
-        >
-          <Text style={styles.selectButton}>{c.Category}</Text>
-        </Pressable>
+          <Pressable
+            key={c.id}
+            onPress={() =>
+              navigation.navigate("Category", {
+                id: c.id,
+                student_id,
+              })
+            }
+            style={{
+              width: "65%",
+              position: "absolute",
+              left: locs[c.Category][0],
+              top: locs[c.Category][1],
+            }}
+          >
+            <Text style={styles.selectButton}>{c.Category}</Text>
+          </Pressable>
         ))}
       </ImageBackground>
     </View>

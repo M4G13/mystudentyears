@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-let baseStyle = StyleSheet.create({
+const baseStyle = StyleSheet.create({
   view: {
     flex: 1,
     alignItems: "center",

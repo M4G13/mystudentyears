@@ -13,7 +13,9 @@ export default function FinanceQuiz({ route, navigation }) {
   }
 
   const { category_id, student_id } = route.params;
-  const quiz = global.data.data.find(s => s.id === student_id).attributes.category.find(c => c.id === category_id).quiz.data.attributes;
+  const quiz = global.data.data
+    .find((s) => s.id === student_id)
+    .attributes.category.find((c) => c.id === category_id).quiz.data.attributes;
 
   return (
     <View style={baseStyle.view}>
