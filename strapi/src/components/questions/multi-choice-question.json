@@ -7,28 +7,15 @@
   },
   "options": {},
   "attributes": {
-    "option1": {
-      "type": "component",
-      "repeatable": false,
-      "component": "option-types.multi-choice-option"
-    },
-    "option2": {
-      "type": "component",
-      "repeatable": false,
-      "component": "option-types.multi-choice-option"
-    },
-    "option3": {
-      "type": "component",
-      "repeatable": false,
-      "component": "option-types.multi-choice-option"
-    },
-    "option4": {
-      "type": "component",
-      "repeatable": false,
-      "component": "option-types.multi-choice-option"
-    },
     "question": {
       "type": "string"
+    },
+    "options": {
+      "type": "component",
+      "repeatable": true,
+      "component": "option-types.multi-choice-option",
+      "min": 4,
+      "max": 4
     }
   }
 }

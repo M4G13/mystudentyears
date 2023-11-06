@@ -15,7 +15,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const url = "http://192.168.1.169:1337/api/students?populate[0]=category.information&populate[1]=category.quiz.questions.option4&populate[2]=category.quiz.questions.option3&populate[3]=category.quiz.questions.option2&populate[4]=category.quiz.questions.option1";
+  const url = "http://192.168.0.3:1337/api/students?populate=deep";
 
   const fetchData = () => {
     setIsLoading(true);
