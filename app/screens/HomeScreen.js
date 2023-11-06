@@ -4,6 +4,8 @@ import { StyleSheet, View, Text, Pressable, Image } from 'react-native';
 import baseStyle from '../styles/base.js';
 
 export default function HomeScreen({navigation}) {
+
+
     return(
         <View style={baseStyle.view}>
         <Image source={require('../assets/msy-logo.png')} style={styles.mainImage}/>
@@ -13,6 +15,13 @@ export default function HomeScreen({navigation}) {
         Go to Categories
         </Text>
         </Pressable>
+
+        <Pressable onPress={() => navigation.navigate("Info")}>
+            <Text style={baseStyle.button}>
+                Go to Info
+            </Text>
+        </Pressable>
+
         </View>
     )
 }

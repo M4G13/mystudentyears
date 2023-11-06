@@ -41,11 +41,12 @@ export interface QuestionsMultiChoiceQuestion extends Schema.Component {
     description: '';
   };
   attributes: {
-    option1: Attribute.Component<'option-types.multi-choice-option'>;
-    option2: Attribute.Component<'option-types.multi-choice-option'>;
-    option3: Attribute.Component<'option-types.multi-choice-option'>;
-    option4: Attribute.Component<'option-types.multi-choice-option'>;
     question: Attribute.String;
+    options: Attribute.Component<'option-types.multi-choice-option', true> &
+      Attribute.SetMinMax<{
+        min: 4;
+        max: 4;
+      }>;
   };
 }
 

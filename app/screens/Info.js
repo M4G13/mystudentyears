@@ -1,57 +1,45 @@
-export default function Info() {
-    const [information, setInformation] = useState(null)
+import { Component, useState, useEffect } from 'react';
+import { Alert, StyleSheet, View, Text, Pressable, Image } from 'react-native';
 
-    useEffect(() => {
-        try {
-            const response = await fetch('http://localhost:1337/api/information-pages/1'); // Change all localhost's  with ip 
-            const data = await response.json();
+import baseStyle from '../styles/base.js';
 
-            if (response.status === 200 && data.data && data.data.attributes) {
-                setInformation(data.data.attributes);
-            } else {
-                console.error('Error fetching data:', data);
-            }
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    }, []);
+export default function Info({navigation}) {
 
-    function _wrongButton() {
-        Alert.alert('Wrong ❌');
-    }
-    function _correctButton() {
-        Alert.alert('Correct ✅');
-    }
+    const question_example = data.data[0].attributes.category[0].quiz.data.attributes.questions[0].question;
+    const answers = data.data[0].attributes.category[0].quiz.data.attributes.questions[0].options;
 
-    return (
-        <View style={styles.container}>
-        {information && (
-            <View style={styles.questionContainer}>
-            <Image source={require('./assets/mirror.png')} style={{ width: 100, height: 200, objectFit: 'contain' }} />
-            <Text style= {styles.questionText}>Mirror, mirror on the wall-who is the fairest of them all?</Text>
-            <Text style={styles.questionText}>{information.Title}</Text>
-            <Text style={styles.questionText}>{information.content}</Text>
-            <Image source={{ uri: 'http://localhost:1337/uploads/Wallet_689b92f573.jpg' }} style={{ width: 100, height: 100}} />  
+    return(
+        <View style={baseStyle.view}>
+        <Text style={baseStyle.bigText}>Welcome to My Student Years</Text>
 
+        <Text style={baseStyle.bigText}>{question_example}</Text>
+        {answers.map((i) => (<Text key={i.id} style={baseStyle.smallText}>{i.text}</Text>))}
 
-            </View>
-        )}
-        <View style={styles.buttonRow}>
-        <Pressable onPress={_wrongButton} style={[styles.answerButton, { backgroundColor: '#dd8844' }]}>
-        <Text style={styles.answerText}>Snow White</Text>
+        <Pressable onPress={() => navigation.navigate("Home Screen")}>
         </Pressable>
-        <Pressable onPress={_wrongButton} style={[styles.answerButton, { backgroundColor: '#44dd88' }]}>
-        <Text style={styles.answerText}>Evil Queen</Text>
-        </Pressable>
+
+
+
+
         </View>
-        <View style={styles.buttonRow}>
-        <Pressable onPress={_correctButton} style={[styles.answerButton, { backgroundColor: '#dd4488' }]}>
-        <Text style={styles.answerText}>Dopey</Text>
-        </Pressable>
-        <Pressable onPress={_wrongButton} style={[styles.answerButton, { backgroundColor: '#8844dd' }]}>
-        <Text style={styles.answerText}>Huntsman</Text>
-        </Pressable>
-        </View>
-        </View>
-    );
+    )
+
+
 }
+
+const styles = StyleSheet.create({
+    mainImage: {
+        width: 200,
+        height:400,
+        objectFit: 'contain',
+    },
+    
+    selectButton: {
+        backgroundColor: '#05b4ff',
+        padding: 15,
+        paddingLeft: 25,
+        paddingRight: 25,
+        borderRadius: 5,
+        width: '45%',
+    },
+});
