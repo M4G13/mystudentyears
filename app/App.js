@@ -7,6 +7,7 @@ import Constants from 'expo-constants'; // REMOVE IN PRODUCTION
 import Categories from "./screens/Categories.js";
 import Category from "./screens/Category.js";
 import HomeScreen from "./screens/HomeScreen.js";
+import Gatehouse from "./screens/Gatehouse.js";
 import Info from "./screens/Info.js";
 import Question from "./screens/Question.js";
 
@@ -51,6 +52,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home Screen" component={HomeScreen} />
+        <Stack.Screen name="Gatehouse" component={Gatehouse} />
         <Stack.Screen name="Categories" component={Categories} />
         <Stack.Screen name="Category" component={Category} />
         <Stack.Screen name="Question" component={Question} />
