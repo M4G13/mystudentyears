@@ -2,6 +2,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useState, useEffect } from "react";
 
+import Constants from 'expo-constants'; // REMOVE IN PRODUCTION
+
 import Categories from "./screens/Categories.js";
 import Category from "./screens/Category.js";
 import HomeScreen from "./screens/HomeScreen.js";
@@ -15,7 +17,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const url = "http://192.168.224.204:1337/api/students?populate=deep";
+  const url = "http://" + Constants.expoConfig.hostUri.split(':').shift() + ":1337/api/students?populate=deep";
 
   const fetchData = () => {
     setIsLoading(true);
