@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useState, useEffect } from "react";
+import { Text } from "react-native";
 
 import Constants from 'expo-constants'; // REMOVE IN PRODUCTION
 
@@ -15,28 +16,22 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const url = "http://" + Constants.expoConfig.hostUri.split(':').shift() + ":1337/api/students?populate=deep";
 
   const fetchData = () => {
-    setIsLoading(true);
-    setError(null);
-
     fetch(url)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
+        response.json();
       })
       .then((data) => {
         setData(data);
         setIsLoading(false);
       })
       .catch((error) => {
-        setError(error);
+        setError(true);
         setIsLoading(false);
       });
   };
@@ -48,7 +43,9 @@ export default function App() {
 
   global.data = data;
 
-  
+    if (error) {
+        return (<Text style={{fontWeight: 600, fontSize: 25, textAlign: "center", paddingTop: 100}}>start strapi idiot</Text>)
+    }
 
   return (
     <NavigationContainer>
