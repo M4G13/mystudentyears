@@ -50,7 +50,7 @@ export interface QuestionsMissingWordsQuestion extends Schema.Component {
     description: '';
   };
   attributes: {
-    Question: Attribute.String;
+    question: Attribute.Text;
   };
 }
 
@@ -75,10 +75,11 @@ export interface QuestionsOpenResponseQuestion extends Schema.Component {
   collectionName: 'components_questions_open_response_questions';
   info: {
     displayName: 'open-response-question';
+    description: '';
   };
   attributes: {
-    Question: Attribute.String;
-    Answer: Attribute.String;
+    question: Attribute.String;
+    answer: Attribute.String;
   };
 }
 
@@ -89,8 +90,12 @@ export interface QuestionsRankOrderQuestion extends Schema.Component {
     description: '';
   };
   attributes: {
-    Question: Attribute.String;
-    answers: Attribute.Component<'answers.answers', true>;
+    question: Attribute.String;
+    answers: Attribute.Component<'answers.answers', true> &
+      Attribute.SetMinMax<{
+        min: 3;
+        max: 5;
+      }>;
   };
 }
 

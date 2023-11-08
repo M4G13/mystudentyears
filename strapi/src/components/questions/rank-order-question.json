@@ -6,14 +6,16 @@
   },
   "options": {},
   "attributes": {
-    "Question": {
+    "question": {
       "type": "string"
     },
     "answers": {
       "displayName": "answers",
       "type": "component",
       "repeatable": true,
-      "component": "answers.answers"
+      "component": "answers.answers",
+      "max": 5,
+      "min": 3
     }
   }
 }
