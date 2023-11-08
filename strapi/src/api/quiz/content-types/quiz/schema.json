@@ -15,7 +15,10 @@
     "questions": {
       "type": "dynamiczone",
       "components": [
-        "questions.multi-choice-question"
+        "questions.multi-choice-question",
+        "questions.missing-words-question",
+        "questions.rank-order-question",
+        "questions.open-response-question"
       ],
       "min": 1
     },

@@ -744,7 +744,14 @@ export interface ApiQuizQuiz extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    questions: Attribute.DynamicZone<['questions.multi-choice-question']> &
+    questions: Attribute.DynamicZone<
+      [
+        'questions.multi-choice-question',
+        'questions.missing-words-question',
+        'questions.rank-order-question',
+        'questions.open-response-question'
+      ]
+    > &
       Attribute.SetMinMax<{
         min: 1;
       }>;

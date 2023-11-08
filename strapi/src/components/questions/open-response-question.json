@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_questions_open_response_questions",
+  "info": {
+    "displayName": "open-response-question"
+  },
+  "options": {},
+  "attributes": {
+    "Question": {
+      "type": "string"
+    },
+    "Answer": {
+      "type": "string"
+    }
+  }
+}
