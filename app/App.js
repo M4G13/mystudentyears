@@ -48,6 +48,8 @@ export default function App() {
 
   global.data = data;
 
+  
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
