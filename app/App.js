@@ -15,20 +15,15 @@ import Question from "./screens/Question.js";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const url = "http://" + Constants.expoConfig.hostUri.split(':').shift() + ":1337/api/students?populate=deep";
-
   const fetchData = () => {
-    fetch(url)
-      .then((response) => {
-        response.json();
-      })
+    fetch("http://" + Constants.expoConfig.hostUri.split(':').shift() + ":1337/api/students?populate=deep")
+      .then((response) => response.json())
       .then((data) => {
-        setData(data);
         setIsLoading(false);
+        global.data = data;
       })
       .catch((error) => {
         setError(true);
@@ -37,11 +32,8 @@ export default function App() {
   };
 
   useEffect(() => {
-    // Fetch data when the component mounts
     fetchData();
   }, []);
-
-  global.data = data;
 
     if (error) {
         return (<Text style={{fontWeight: 600, fontSize: 25, textAlign: "center", paddingTop: 100}}>start strapi idiot</Text>)
