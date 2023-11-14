@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "lint-hard" : "eslint . --max-warnings=0"
+    "lint-hard": "eslint . --max-warnings=0"
   },
   "dependencies": {
     "@react-navigation/native": "^6.1.9",
@@ -18,7 +18,8 @@
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
     "react-native": "0.72.6",
-    "react-navigation": "^5.0.0"
+    "react-navigation": "^5.0.0",
+    "expo-constants": "~14.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

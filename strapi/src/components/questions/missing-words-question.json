@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_questions_missing_words_questions",
+  "info": {
+    "displayName": "missing-words-question",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "question": {
+      "type": "text"
+    }
+  }
+}
