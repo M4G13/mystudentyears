@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView, Pressable } from "react-native";
+
 import baseStyle from "../styles/base.js";
 
 export default function Info() {
@@ -10,7 +11,10 @@ export default function Info() {
   });
 
   const navigateToNextPage = () => {
-    if (currentPage.categoryIndex < students[currentPage.studentIndex].attributes.category.length - 1) {
+    if (
+      currentPage.categoryIndex <
+      students[currentPage.studentIndex].attributes.category.length - 1
+    ) {
       setCurrentPage({
         studentIndex: currentPage.studentIndex,
         categoryIndex: currentPage.categoryIndex + 1,
@@ -33,7 +37,8 @@ export default function Info() {
       const prevStudentIndex = currentPage.studentIndex - 1;
       setCurrentPage({
         studentIndex: prevStudentIndex,
-        categoryIndex: students[prevStudentIndex].attributes.category.length - 1,
+        categoryIndex:
+          students[prevStudentIndex].attributes.category.length - 1,
       });
     }
   };
@@ -47,9 +52,11 @@ export default function Info() {
       <Pressable onPress={navigateToPreviousPage}>
         <Text style={styles.button}>Previous</Text>
       </Pressable>
-      
+
       <View key={student.id} style={styles.studentContainer}>
-        <Text style={styles.studentName}>Student: {student.attributes.Name}</Text>
+        <Text style={styles.studentName}>
+          Student: {student.attributes.Name}
+        </Text>
         <View key={category.id} style={styles.categoryContainer}>
           <Text style={styles.categoryName}>Category: {category.Category}</Text>
           <View style={styles.infoContainer}>
@@ -62,7 +69,7 @@ export default function Info() {
           </View>
         </View>
       </View>
-      
+
       <Pressable onPress={navigateToNextPage}>
         <Text style={styles.button}>Next</Text>
       </Pressable>
@@ -73,17 +80,17 @@ export default function Info() {
 const styles = {
   container: {
     padding: 16,
-    backgroundColor: "#f5f5f5", 
+    backgroundColor: "#f5f5f5",
   },
   button: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#007AFF", 
+    color: "#007AFF",
     margin: 10,
   },
   studentContainer: {
     marginBottom: 16,
-    backgroundColor: "#fff", 
+    backgroundColor: "#fff",
     padding: 16,
     borderRadius: 8,
     shadowColor: "#000",
@@ -108,7 +115,7 @@ const styles = {
     marginTop: 8,
   },
   infoCard: {
-    backgroundColor: "#fff", 
+    backgroundColor: "#fff",
     padding: 16,
     borderRadius: 8,
     marginBottom: 16,

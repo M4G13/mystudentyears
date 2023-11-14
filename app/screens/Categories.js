@@ -10,7 +10,7 @@ import {
 import baseStyle from "../styles/base.js";
 
 export default function Categories({ route, navigation }) {
-  const {student_id} = route.params;
+  const { student_id } = route.params;
   const categories = global.data.data.find((s) => s.id === student_id)
     .attributes.category;
   const locs = {

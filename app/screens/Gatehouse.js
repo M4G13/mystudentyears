@@ -9,13 +9,15 @@ export default function Gatehouse({ navigation }) {
     <View style={baseStyle.view}>
       <Text style={baseStyle.bigText}>Gatehouse</Text>
       {students.map((s) => (
-      <Pressable key={s.id}
-        onPress={
-          () => navigation.navigate("Categories", {student_id:s.id,})
-        }>
-        <Text style={baseStyle.button}>{s.attributes.Name}</Text>
-      </Pressable>))
-      }
+        <Pressable
+          key={s.id}
+          onPress={() =>
+            navigation.navigate("Categories", { student_id: s.id })
+          }
+        >
+          <Text style={baseStyle.button}>{s.attributes.Name}</Text>
+        </Pressable>
+      ))}
     </View>
   );
 }
