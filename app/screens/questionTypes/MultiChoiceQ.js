@@ -1,7 +1,7 @@
 import { Component, useState, useEffect } from "react";
 import { Alert, StyleSheet, View, Text, Pressable, Image } from "react-native";
 
-import baseStyle from "../styles/base.js";
+import baseStyle from "../../styles/base.js";
 
 export default function QuizPage({ route, navigation }) {
   
@@ -48,7 +48,7 @@ export default function QuizPage({ route, navigation }) {
     <View style={baseStyle.view}>
       <View style={styles.questionContainer}>
         <Image
-          source={require("../assets/msy-logo.png")}
+          source={require("../../assets/msy-logo.png")}
           style={{ width: 100, height: 200, objectFit: "contain" }}
         />
         <Text style={styles.questionText}>{quiz.questions[0].question}</Text>
