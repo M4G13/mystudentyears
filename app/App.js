@@ -9,7 +9,7 @@ import Category from "./screens/Category.js";
 import Gatehouse from "./screens/Gatehouse.js";
 import HomeScreen from "./screens/HomeScreen.js";
 import Info from "./screens/Info.js";
-import Question from "./screens/MultiChoiceQ.js";
+import Question from "./screens/questionTypes/MultiChoiceQ.js";
 
 const Stack = createNativeStackNavigator();
 

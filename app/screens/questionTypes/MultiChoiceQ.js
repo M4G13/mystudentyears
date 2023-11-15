@@ -4,20 +4,11 @@ import { Alert, StyleSheet, View, Text, Pressable, Image } from "react-native";
 import baseStyle from "../styles/base.js";
 
 export default function QuizPage({ route, navigation }) {
-  function correctAnswer() {
-    return Alert.alert("Correct");
-  }
-
-  function incorrectAnswer() {
-    return Alert.alert("Incorrect");
-  }
   
-
-  function answerLogic() {
-    if (quiz.questions[x].options[x].correct = true)
-      return Alert.alert("Correct");
-    else
-      return Alert.alert("Incorrect");
+  function answerLogic(x) {
+    if (x)
+      return Alert.alert("Correct")
+    return Alert.alert("Incorrect")
   }
 
   const { category_id, student_id } = route.params;
@@ -50,6 +41,7 @@ export default function QuizPage({ route, navigation }) {
 
     console.log(quiz.questions[0].options[0])
     console.log(quiz.questions[0].options[0].correct)
+    
 
 
   return (
@@ -61,34 +53,17 @@ export default function QuizPage({ route, navigation }) {
         />
         <Text style={styles.questionText}>{quiz.questions[0].question}</Text>
       </View>
-      <View style={styles.buttonRow}>
-        <Pressable 
-          style={[styles.answerButton, { backgroundColor: "#dd8844" }]}
-          onPress={this.answerLogic}
-        >
-          <Text style={styles.answerText}>{quiz.questions[0].options[0].text}</Text>
-          
-        </Pressable>
+      <View>
+        {quiz.questions[0].options.map((q)=> (
         <Pressable
-          onPress={incorrectAnswer}
-          style={[styles.answerButton, { backgroundColor: "#44dd88" }]}
+          key = {q.id}
+          style={[styles.answerButton, { backgroundColor: "#FF69B4" }]}
+          onPress={()=>answerLogic(q.correct)}
         >
-          <Text style={styles.answerText}>{quiz.questions[0].options[1].text}</Text>
-        </Pressable>
-      </View>
-      <View style={styles.buttonRow}>
-        <Pressable
-          onPress={incorrectAnswer}
-          style={[styles.answerButton, { backgroundColor: "#dd4488" }]}
-        >
-          <Text style={styles.answerText}>{quiz.questions[0].options[2].text}</Text>
-        </Pressable>
-        <Pressable
-          onPress={incorrectAnswer}
-          style={[styles.answerButton, { backgroundColor: "#8844dd" }]}
-        >
-          <Text style={styles.answerText}>{quiz.questions[0].options[3].text}</Text>
-        </Pressable>
+          <Text style={styles.answerText}>{q.text}</Text>
+        </Pressable>))
+        
+        }
       </View>
     </View>
 
