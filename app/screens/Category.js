@@ -13,7 +13,7 @@ export default function Category({ route, navigation }) {
   const handleInitialPress = () => {
     if (infos.length > 0) {
       navigation.navigate("Info", {
-        id: infos[0].id,
+        index: 0,
         category_id: id,
         student_id,
       })
