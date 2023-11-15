@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_questions_rank_order_questions",
+  "info": {
+    "displayName": "rank-order-question",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "question": {
+      "type": "string"
+    },
+    "answers": {
+      "displayName": "answers",
+      "type": "component",
+      "repeatable": true,
+      "component": "answers.answers",
+      "max": 5,
+      "min": 3
+    }
+  }
+}

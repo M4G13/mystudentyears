@@ -9,8 +9,8 @@ import {
 
 import baseStyle from "../styles/base.js";
 
-export default function Categories({ navigation }) {
-  const student_id = 5;
+export default function Categories({ route, navigation }) {
+  const { student_id , student_name } = route.params;
   const categories = global.data.data.find((s) => s.id === student_id)
     .attributes.category;
   const locs = {
@@ -34,6 +34,7 @@ export default function Categories({ navigation }) {
               navigation.navigate("Category", {
                 id: c.id,
                 student_id,
+                student_name,
               })
             }
             style={{
