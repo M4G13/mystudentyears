@@ -4,41 +4,31 @@ import { View, Text, ScrollView, Pressable } from "react-native";
 import baseStyle from "../styles/base.js";
 
 export default function Info({ route, navigation }) {
-  const { student_id, category_id } = route.params;
-  const students = global.data.data;
-  const student = students.find((s) => s.id === student_id);
+  const { index, category_id, student_id } = route.params;
+
+  const student = global.data.data.find((s) => s.id === student_id);
   const category = student.attributes.category.find((c) => c.id === category_id);
   const information = category.information.data;
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const isFirstPage = currentPage === 0;
-  const isLastPage = currentPage === information.length - 1;
+  const isLastPage = index === information.length - 1;
 
   const navigateToNextPage = () => {
-    if (isLastPage) {
+    if (index === information.length - 1) {
       navigation.navigate("Question", {
         category_id,
         student_id,
       });
     } else {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const navigateToPreviousPage = () => {
-    if (!isFirstPage) {
-      setCurrentPage(currentPage - 1);
+      navigation.push("Info", {
+        index: index + 1,
+        category_id,
+        student_id,
+      })
     }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {!isFirstPage && (
-        <Pressable onPress={navigateToPreviousPage}>
-          <Text style={styles.button}>Previous</Text>
-        </Pressable>
-      )}
-
       <View key={student.id} style={styles.studentContainer}>
         <Text style={styles.studentName}>
           Student: {student.attributes.Name}
@@ -46,11 +36,11 @@ export default function Info({ route, navigation }) {
         <View key={category.id} style={styles.categoryContainer}>
           <Text style={styles.categoryName}>Category: {category.Category}</Text>
           <View style={styles.infoContainer}>
-            <View key={information[currentPage].id} style={styles.infoCard}>
-              <Text style={styles.infoTitle}>Title: {information[currentPage].attributes.Title}
+            <View key={information[index].id} style={styles.infoCard}>
+              <Text style={styles.infoTitle}>Title: {information[index].attributes.Title}
               </Text>
               <Text style={styles.infoText}>
-                {information[currentPage].attributes.Text}
+                {information[index].attributes.Text}
               </Text>
             </View>
           </View>
