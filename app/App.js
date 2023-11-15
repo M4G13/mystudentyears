@@ -8,7 +8,7 @@ import Categories from "./screens/Categories.js";
 import Category from "./screens/Category.js";
 import HomeScreen from "./screens/HomeScreen.js";
 import Info from "./screens/Info.js";
-import Question from "./screens/Question.js";
+import Question from "./screens/MultiChoiceQ.js";
 
 const Stack = createNativeStackNavigator();
 
