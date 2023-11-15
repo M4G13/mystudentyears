@@ -14,10 +14,10 @@ export default function Categories({ route, navigation }) {
   const categories = global.data.data.find((s) => s.id === student_id)
     .attributes.category;
   const locs = {
-    Finance: [40, 50],
-    Wellbeing: [280, 300],
-    Academics: [10, 370],
-    Independence: [260, 570],
+    Finance: [80, 160],
+    Wellbeing: [240, 230],
+    Academics: [40, 400],
+    Independence: [250, 520],
   };
 
   return (
@@ -38,7 +38,7 @@ export default function Categories({ route, navigation }) {
               })
             }
             style={{
-              width: "65%",
+              width: "75%",
               position: "absolute",
               left: locs[c.Category][0],
               top: locs[c.Category][1],
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     paddingRight: 25,
     borderRadius: 5,
     width: "45%",
+    textAlign: "center",
   },
 
   map: {
