@@ -1,15 +1,14 @@
 import { Component, useState, useEffect } from "react";
 import { Alert, StyleSheet, View, Text, Pressable, Image } from "react-native";
 
-import baseStyle from "../styles/base.js";
+import baseStyle from "../../styles/base.js";
 
-export default function FinanceQuiz({ route, navigation }) {
-  function correctAnswer() {
-    return Alert.alert("Correct");
-  }
-
-  function incorrectAnswer() {
-    return Alert.alert("Incorrect");
+export default function QuizPage({ route, navigation }) {
+  
+  function answerLogic(x) {
+    if (x)
+      return Alert.alert("Correct")
+    return Alert.alert("Incorrect")
   }
 
   const { category_id, student_id } = route.params;
@@ -17,44 +16,58 @@ export default function FinanceQuiz({ route, navigation }) {
     .find((s) => s.id === student_id)
     .attributes.category.find((c) => c.id === category_id).quiz.data.attributes;
 
+  /*const [currentPage, setCurrentPage] = useState(0);
+  //const isFirstPage = currentPage === 0;
+  //const isLastPage = currentPage === question.length - 1;
+
+
+  const navigateToNextPage = () => {
+    if (isLastPage) {
+      navigation.navigate("QuizEndScreen", {
+        category_id,
+        student_id,
+      });
+    } else {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const navigateToPreviousPage = () => {
+    if (!isFirstPage) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  */
+
+    console.log(quiz.questions[0].options[0])
+    console.log(quiz.questions[0].options[0].correct)
+    
+
+
   return (
     <View style={baseStyle.view}>
       <View style={styles.questionContainer}>
         <Image
-          source={require("../assets/mirror.png")}
+          source={require("../../assets/msy-logo.png")}
           style={{ width: 100, height: 200, objectFit: "contain" }}
         />
         <Text style={styles.questionText}>{quiz.questions[0].question}</Text>
       </View>
-      <View style={styles.buttonRow}>
+      <View>
+        {quiz.questions[0].options.map((q)=> (
         <Pressable
-          onPress={correctAnswer}
-          style={[styles.answerButton, { backgroundColor: "#dd8844" }]}
+          key = {q.id}
+          style={[styles.answerButton, { backgroundColor: "#FF69B4" }]}
+          onPress={()=>answerLogic(q.correct)}
         >
-          <Text style={styles.answerText}>Definitely.</Text>
-        </Pressable>
-        <Pressable
-          onPress={incorrectAnswer}
-          style={[styles.answerButton, { backgroundColor: "#44dd88" }]}
-        >
-          <Text style={styles.answerText}>Probably?</Text>
-        </Pressable>
-      </View>
-      <View style={styles.buttonRow}>
-        <Pressable
-          onPress={incorrectAnswer}
-          style={[styles.answerButton, { backgroundColor: "#dd4488" }]}
-        >
-          <Text style={styles.answerText}>Maybe?</Text>
-        </Pressable>
-        <Pressable
-          onPress={incorrectAnswer}
-          style={[styles.answerButton, { backgroundColor: "#8844dd" }]}
-        >
-          <Text style={styles.answerText}>No?</Text>
-        </Pressable>
+          <Text style={styles.answerText}>{q.text}</Text>
+        </Pressable>))
+        
+        }
       </View>
     </View>
+
+    
   );
 }
 
