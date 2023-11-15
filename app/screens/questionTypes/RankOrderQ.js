@@ -1,4 +1,4 @@
-import { Component, useState, useEffect, useRef } from "react";
+/*import { Component, useState, useEffect, useRef } from "react";
 import { Alert, StyleSheet, View, Text, Pressable, Image } from "react-native";
 
 import baseStyle from "../styles/base.js";
@@ -95,3 +95,4 @@ const styles = StyleSheet.create({
     width: "45%",
   },
 });
+*/
