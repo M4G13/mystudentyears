@@ -12,7 +12,7 @@ export default function Gatehouse({ navigation }) {
         <Pressable
           key={s.id}
           onPress={() =>
-            navigation.navigate("Categories", { student_id: s.id })
+            navigation.navigate("Categories", { student_id: s.id, s_name: s.attributes.Name})
           }
         >
           <Text style={baseStyle.button}>{s.attributes.Name}</Text>

@@ -1,57 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, Pressable } from "react-native";
 
 import baseStyle from "../styles/base.js";
 
-export default function Info() {
+export default function Info({ route, navigation }) {
+  const { student_id, category_id } = route.params;
   const students = global.data.data;
-  const [currentPage, setCurrentPage] = useState({
-    studentIndex: 0,
-    categoryIndex: 0,
-  });
+  const student = students.find((s) => s.id === student_id);
+  const category = student.attributes.category.find((c) => c.id === category_id);
+  const information = category.information.data;
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const isFirstPage = currentPage === 0;
+  const isLastPage = currentPage === information.length - 1;
 
   const navigateToNextPage = () => {
-    if (
-      currentPage.categoryIndex <
-      students[currentPage.studentIndex].attributes.category.length - 1
-    ) {
-      setCurrentPage({
-        studentIndex: currentPage.studentIndex,
-        categoryIndex: currentPage.categoryIndex + 1,
+    if (isLastPage) {
+      navigation.navigate("Question", {
+        category_id,
+        student_id,
       });
-    } else if (currentPage.studentIndex < students.length - 1) {
-      setCurrentPage({
-        studentIndex: currentPage.studentIndex + 1,
-        categoryIndex: 0,
-      });
+    } else {
+      setCurrentPage(currentPage + 1);
     }
   };
 
   const navigateToPreviousPage = () => {
-    if (currentPage.categoryIndex > 0) {
-      setCurrentPage({
-        studentIndex: currentPage.studentIndex,
-        categoryIndex: currentPage.categoryIndex - 1,
-      });
-    } else if (currentPage.studentIndex > 0) {
-      const prevStudentIndex = currentPage.studentIndex - 1;
-      setCurrentPage({
-        studentIndex: prevStudentIndex,
-        categoryIndex:
-          students[prevStudentIndex].attributes.category.length - 1,
-      });
+    if (!isFirstPage) {
+      setCurrentPage(currentPage - 1);
     }
   };
 
-  const student = students[currentPage.studentIndex];
-  const category = student.attributes.category[currentPage.categoryIndex];
-  const information = category.information.data;
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Pressable onPress={navigateToPreviousPage}>
-        <Text style={styles.button}>Previous</Text>
-      </Pressable>
+      {!isFirstPage && (
+        <Pressable onPress={navigateToPreviousPage}>
+          <Text style={styles.button}>Previous</Text>
+        </Pressable>
+      )}
 
       <View key={student.id} style={styles.studentContainer}>
         <Text style={styles.studentName}>
@@ -60,18 +46,19 @@ export default function Info() {
         <View key={category.id} style={styles.categoryContainer}>
           <Text style={styles.categoryName}>Category: {category.Category}</Text>
           <View style={styles.infoContainer}>
-            {information.map((info) => (
-              <View key={info.id} style={styles.infoCard}>
-                <Text style={styles.infoTitle}>{info.attributes.Title}</Text>
-                <Text style={styles.infoText}>{info.attributes.Text}</Text>
-              </View>
-            ))}
+            <View key={information[currentPage].id} style={styles.infoCard}>
+              <Text style={styles.infoTitle}>Title: {information[currentPage].attributes.Title}
+              </Text>
+              <Text style={styles.infoText}>
+                {information[currentPage].attributes.Text}
+              </Text>
+            </View>
           </View>
         </View>
       </View>
 
       <Pressable onPress={navigateToNextPage}>
-        <Text style={styles.button}>Next</Text>
+        <Text style={styles.button}>{isLastPage ? "Go to Quiz" : "Next"}</Text>
       </Pressable>
     </ScrollView>
   );
@@ -100,7 +87,7 @@ const styles = {
     elevation: 2,
   },
   studentName: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
     marginBottom: 8,
   },
@@ -108,7 +95,7 @@ const styles = {
     marginTop: 8,
   },
   categoryName: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
   },
   infoContainer: {
@@ -126,8 +113,9 @@ const styles = {
     elevation: 2,
   },
   infoTitle: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
+    marginBottom: 8,
   },
   infoText: {
     fontSize: 14,
