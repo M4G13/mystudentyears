@@ -39,11 +39,6 @@ export default function QuizPage({ route, navigation }) {
   };
   */
 
-    console.log(quiz.questions[0].options[0])
-    console.log(quiz.questions[0].options[0].correct)
-    
-
-
   return (
     <View style={baseStyle.view}>
       <View style={styles.questionContainer}>
