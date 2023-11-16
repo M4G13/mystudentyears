@@ -1,7 +1,7 @@
 import { Component, useState, useEffect } from "react";
 import { Alert, StyleSheet, View, Text, Pressable, Image } from "react-native";
 
-import baseStyle from "../../styles/base.js";
+import style from "../../styles/multichoiceq.js";
 
 export default function QuizPage({ route, navigation }) {
   
@@ -40,22 +40,22 @@ export default function QuizPage({ route, navigation }) {
   */
 
   return (
-    <View style={baseStyle.view}>
-      <View style={styles.questionContainer}>
+    <View style={style.view}>
+      <View style={style.questionContainer}>
         <Image
           source={require("../../assets/msy-logo.png")}
-          style={{ width: 100, height: 200, objectFit: "contain" }}
+          style={style.image}
         />
-        <Text style={styles.questionText}>{quiz.questions[0].question}</Text>
+        <Text style={style.bigText}>{quiz.questions[0].question}</Text>
       </View>
-      <View>
+      <View style={style.optionsContainer}>
         {quiz.questions[0].options.map((q)=> (
         <Pressable
           key = {q.id}
-          style={[styles.answerButton, { backgroundColor: "#FF69B4" }]}
+          style={style.pressable}
           onPress={()=>answerLogic(q.correct)}
         >
-          <Text style={styles.answerText}>{q.text}</Text>
+          <Text style={style.button}>{q.text}</Text>
         </Pressable>))
         
         }
@@ -65,59 +65,3 @@ export default function QuizPage({ route, navigation }) {
     
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "#272522",
-  },
-
-  questionContainer: {
-    flex: 0,
-    width: "100%",
-    padding: 30,
-    paddingBottom: 50,
-    alignItems: "center",
-  },
-
-  questionText: {
-    textAlign: "center",
-    width: "100%",
-    fontSize: 30,
-    color: "#ffffff",
-  },
-
-  buttonRow: {
-    margin: 30,
-    marginTop: 0,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    textTransform: 0,
-  },
-
-  answerButton: {
-    backgroundColor: "#4488dd",
-    padding: 15,
-    paddingLeft: 25,
-    paddingRight: 25,
-    borderRadius: 5,
-    width: "45%",
-  },
-
-  answerText: {
-    color: "#ffffff",
-    fontWeight: "600",
-    fontSize: 20,
-    textAlign: "center",
-  },
-
-  selectButton: {
-    backgroundColor: "#05b4ff",
-    padding: 15,
-    paddingLeft: 25,
-    paddingRight: 25,
-    borderRadius: 5,
-    width: "45%",
-  },
-});

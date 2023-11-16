@@ -7,7 +7,6 @@ import {
   ImageBackground,
 } from "react-native";
 
-import baseStyle from "../styles/base.js";
 import style from "../styles/categories.js";
 
 export default function Categories({ route, navigation }) {
