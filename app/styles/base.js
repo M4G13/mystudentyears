@@ -19,13 +19,6 @@ const baseStyle = StyleSheet.create({
     fontWeight: "600",
   },
 
-  buttonText: {
-    color: "#ffffff",
-    fontWeight: "600",
-    fontSize: 20,
-    textAlign: "center",
-  },
-
   bigText: {
     color: "#ffffff",
     fontWeight: "600",

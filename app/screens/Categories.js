@@ -1,16 +1,9 @@
-import { Component, useState, useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-  ImageBackground,
-} from "react-native";
+import { View, Text, Pressable, ImageBackground } from "react-native";
 
-import baseStyle from "../styles/base.js";
+import style from "../styles/categories.js";
 
 export default function Categories({ route, navigation }) {
-  const { student_id , student_name } = route.params;
+  const { student_id } = route.params;
   const categories = global.data.data.find((s) => s.id === student_id)
     .attributes.category;
   const locs = {
@@ -20,12 +13,14 @@ export default function Categories({ route, navigation }) {
     Independence: [250, 520],
   };
 
+  const imageSource = require("../assets/temp_map.png");
+
   return (
-    <View style={{ flex: 1 }}>
+    <View style={style.view}>
       <ImageBackground
-        source={require("../assets/temp_map.png")}
+        source={imageSource}
         resizeMode="cover"
-        style={styles.map}
+        style={style.map}
       >
         {categories.map((c) => (
           <Pressable
@@ -34,52 +29,20 @@ export default function Categories({ route, navigation }) {
               navigation.navigate("Category", {
                 id: c.id,
                 student_id,
-                student_name,
               })
             }
-            style={{
-              width: "75%",
-              position: "absolute",
-              left: locs[c.Category][0],
-              top: locs[c.Category][1],
-            }}
+            style={[
+              style.pressable,
+              {
+                left: locs[c.Category][0],
+                top: locs[c.Category][1],
+              },
+            ]}
           >
-            <Text style={styles.selectButton}>{c.Category}</Text>
+            <Text style={style.button}>{c.Category}</Text>
           </Pressable>
         ))}
       </ImageBackground>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  categoriesText: {
-    color: "#ffffff",
-    fontWeight: "600",
-    fontSize: 20,
-    textAlign: "center",
-  },
-
-  categoryButton: {
-    backgroundColor: "#05b4ff",
-    padding: 15,
-    paddingLeft: 25,
-    paddingRight: 25,
-    borderRadius: 5,
-    width: "45%",
-  },
-
-  selectButton: {
-    backgroundColor: "#05b4ff",
-    padding: 15,
-    paddingLeft: 25,
-    paddingRight: 25,
-    borderRadius: 5,
-    width: "45%",
-    textAlign: "center",
-  },
-
-  map: {
-    flex: 1,
-  },
-});

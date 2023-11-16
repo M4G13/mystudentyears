@@ -1,8 +1,8 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Constants from "expo-constants"; // REMOVE IN PRODUCTION
 import React, { useState, useEffect } from "react";
-import { Text } from "react-native";
+import { Text, StatusBar } from "react-native";
 
 import Categories from "./screens/Categories.js";
 import Category from "./screens/Category.js";
@@ -16,6 +16,8 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  StatusBar.setBarStyle("light-content");
 
   const fetchData = () => {
     fetch(
@@ -54,8 +56,13 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
+    <NavigationContainer theme={DarkTheme}>
+      <Stack.Navigator
+        screenOptions={{
+          animation: "fade",
+          presentation: "transparentModal",
+        }}
+      >
         <Stack.Screen name="Home Screen" component={HomeScreen} />
         <Stack.Screen name="Gatehouse" component={Gatehouse} />
         <Stack.Screen name="Categories" component={Categories} />

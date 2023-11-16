@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, Text, ScrollView, Pressable } from "react-native";
 
-import baseStyle from "../styles/base.js";
+import style from "../styles/info.js";
 
 export default function Info({ route, navigation }) {
   const { index, category_id, student_id } = route.params;
 
   const student = global.data.data.find((s) => s.id === student_id);
-  const category = student.attributes.category.find((c) => c.id === category_id);
+  const category = student.attributes.category.find(
+    (c) => c.id === category_id,
+  );
   const information = category.information.data;
 
   const isLastPage = index === information.length - 1;
@@ -23,91 +25,24 @@ export default function Info({ route, navigation }) {
         index: index + 1,
         category_id,
         student_id,
-      })
+      });
     }
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View key={student.id} style={styles.studentContainer}>
-        <Text style={styles.studentName}>
-          Student: {student.attributes.Name}
+    <ScrollView contentContainerStyle={style.view}>
+      <View>
+        <Text style={style.smallText}>
+          {student.attributes.Name}, {category.Category}
         </Text>
-        <View key={category.id} style={styles.categoryContainer}>
-          <Text style={styles.categoryName}>Category: {category.Category}</Text>
-          <View style={styles.infoContainer}>
-            <View key={information[index].id} style={styles.infoCard}>
-              <Text style={styles.infoTitle}>Title: {information[index].attributes.Title}
-              </Text>
-              <Text style={styles.infoText}>
-                {information[index].attributes.Text}
-              </Text>
-            </View>
-          </View>
-        </View>
+        <Text style={style.bigText}>{information[index].attributes.Title}</Text>
+        <Text style={style.smallerText}>
+          {information[index].attributes.Text}
+        </Text>
+        <Pressable onPress={navigateToNextPage}>
+          <Text style={style.button}>{isLastPage ? "Go to Quiz" : "Next"}</Text>
+        </Pressable>
       </View>
-
-      <Pressable onPress={navigateToNextPage}>
-        <Text style={styles.button}>{isLastPage ? "Go to Quiz" : "Next"}</Text>
-      </Pressable>
     </ScrollView>
   );
 }
-
-const styles = {
-  container: {
-    padding: 16,
-    backgroundColor: "#f5f5f5",
-  },
-  button: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#007AFF",
-    margin: 10,
-  },
-  studentContainer: {
-    marginBottom: 16,
-    backgroundColor: "#fff",
-    padding: 16,
-    borderRadius: 8,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 2,
-  },
-  studentName: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-  categoryContainer: {
-    marginTop: 8,
-  },
-  categoryName: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  infoContainer: {
-    marginTop: 8,
-  },
-  infoCard: {
-    backgroundColor: "#fff",
-    padding: 16,
-    borderRadius: 8,
-    marginBottom: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 2,
-  },
-  infoTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-  infoText: {
-    fontSize: 14,
-  },
-};

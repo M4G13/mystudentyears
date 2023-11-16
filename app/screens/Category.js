@@ -1,10 +1,9 @@
-import { Component, useState, useEffect } from "react";
-import { StyleSheet, View, Text, Pressable, Image } from "react-native";
+import { View, Text, Pressable } from "react-native";
 
 import baseStyle from "../styles/base.js";
 
 export default function Category({ route, navigation }) {
-  const { id, student_id, student_name } = route.params;
+  const { id, student_id } = route.params;
   const category = global.data.data
     .find((s) => s.id === student_id)
     .attributes.category.find((c) => c.id === id);
@@ -16,19 +15,17 @@ export default function Category({ route, navigation }) {
         index: 0,
         category_id: id,
         student_id,
-      })
+      });
     }
   };
 
-
-
   return (
     <View style={baseStyle.view}>
-      <Text style={(styles.bigText, { color: "#ffffff" })}>
+      <Text style={baseStyle.bigText}>
         This is the {category.Category} section
       </Text>
       <Pressable onPress={handleInitialPress}>
-        <Text style={styles.startReadingButton}>Start Reading </Text>
+        <Text style={baseStyle.button}>Start Reading </Text>
       </Pressable>
       <Pressable
         onPress={() =>
@@ -38,27 +35,8 @@ export default function Category({ route, navigation }) {
           })
         }
       >
-        <Text style={styles.quizButton}>Go to the quiz for this section</Text>
+        <Text style={baseStyle.button}>Go to the quiz for this section</Text>
       </Pressable>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  quizButton: {
-    backgroundColor: "#05b4ff",
-    padding: 15,
-    paddingLeft: 25,
-    paddingRight: 25,
-    borderRadius: 5,
-    width: "45%",
-  },
-  startReadingButton: {
-    backgroundColor: "#05b4ff",
-    padding: 15,
-    paddingLeft: 25,
-    paddingRight: 25,
-    borderRadius: 5,
-    marginTop: 10,
-  },
-});
