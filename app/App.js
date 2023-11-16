@@ -2,7 +2,7 @@ import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Constants from "expo-constants"; // REMOVE IN PRODUCTION
 import React, { useState, useEffect } from "react";
-import { Text, useColorScheme } from "react-native";
+import { Text, useColorScheme, StatusBar } from "react-native";
 
 import Categories from "./screens/Categories.js";
 import Category from "./screens/Category.js";
@@ -18,6 +18,7 @@ export default function App() {
   const [error, setError] = useState(false);
 
   const scheme = useColorScheme();
+  StatusBar.setBarStyle("light-content");
 
   const fetchData = () => {
     fetch(
@@ -58,8 +59,8 @@ export default function App() {
   return (
     <NavigationContainer theme={DarkTheme}>
       <Stack.Navigator screenOptions={{
-        animation:'fade',
-        presentation:'transparentModal'}}>
+        animation: 'fade',
+        presentation: 'transparentModal'}}>
         <Stack.Screen name="Home Screen" component={HomeScreen} />
         <Stack.Screen name="Gatehouse" component={Gatehouse} />
         <Stack.Screen name="Categories" component={Categories} />
