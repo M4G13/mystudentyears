@@ -1,5 +1,4 @@
-import { Component, useState, useEffect } from "react";
-import { StyleSheet, View, Text, Pressable, Image } from "react-native";
+import { View, Text, Pressable } from "react-native";
 
 import baseStyle from "../styles/base.js";
 
@@ -12,7 +11,9 @@ export default function Gatehouse({ navigation }) {
         <Pressable
           key={s.id}
           onPress={() =>
-            navigation.navigate("Categories", { student_id: s.id, s_name: s.attributes.Name})
+            navigation.navigate("Categories", {
+              student_id: s.id,
+            })
           }
         >
           <Text style={baseStyle.button}>{s.attributes.Name}</Text>

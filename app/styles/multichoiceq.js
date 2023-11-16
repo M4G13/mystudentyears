@@ -12,14 +12,13 @@ const style = StyleSheet.create({
   optionsContainer: {
     flex: 1,
     flexWrap: "wrap",
-    flexDirection: "row", 
-    justifyContent: "center", 
-    gap: 15
-    
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 15,
   },
   image: {
-    width: 100, 
-    height: 200, 
+    width: 100,
+    height: 200,
     objectFit: "contain",
   },
   pressable: {

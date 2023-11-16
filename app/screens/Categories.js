@@ -1,16 +1,9 @@
-import { Component, useState, useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-  ImageBackground,
-} from "react-native";
+import { View, Text, Pressable, ImageBackground } from "react-native";
 
 import style from "../styles/categories.js";
 
 export default function Categories({ route, navigation }) {
-  const { student_id , student_name } = route.params;
+  const { student_id } = route.params;
   const categories = global.data.data.find((s) => s.id === student_id)
     .attributes.category;
   const locs = {
@@ -36,12 +29,14 @@ export default function Categories({ route, navigation }) {
               navigation.navigate("Category", {
                 id: c.id,
                 student_id,
-                student_name,
               })
             }
-            style={[style.pressable, {
-              left: locs[c.Category][0],
-              top: locs[c.Category][1],}
+            style={[
+              style.pressable,
+              {
+                left: locs[c.Category][0],
+                top: locs[c.Category][1],
+              },
             ]}
           >
             <Text style={style.button}>{c.Category}</Text>

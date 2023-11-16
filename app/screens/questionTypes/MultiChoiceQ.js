@@ -1,14 +1,11 @@
-import { Component, useState, useEffect } from "react";
-import { Alert, StyleSheet, View, Text, Pressable, Image } from "react-native";
+import { Alert, View, Text, Pressable, Image } from "react-native";
 
 import style from "../../styles/multichoiceq.js";
 
 export default function QuizPage({ route, navigation }) {
-  
   function answerLogic(x) {
-    if (x)
-      return Alert.alert("Correct")
-    return Alert.alert("Incorrect")
+    if (x) return Alert.alert("Correct");
+    return Alert.alert("Incorrect");
   }
 
   const { category_id, student_id } = route.params;
@@ -49,19 +46,16 @@ export default function QuizPage({ route, navigation }) {
         <Text style={style.bigText}>{quiz.questions[0].question}</Text>
       </View>
       <View style={style.optionsContainer}>
-        {quiz.questions[0].options.map((q)=> (
-        <Pressable
-          key = {q.id}
-          style={style.pressable}
-          onPress={()=>answerLogic(q.correct)}
-        >
-          <Text style={style.button}>{q.text}</Text>
-        </Pressable>))
-        
-        }
+        {quiz.questions[0].options.map((q) => (
+          <Pressable
+            key={q.id}
+            style={style.pressable}
+            onPress={() => answerLogic(q.correct)}
+          >
+            <Text style={style.button}>{q.text}</Text>
+          </Pressable>
+        ))}
       </View>
     </View>
-
-    
   );
 }

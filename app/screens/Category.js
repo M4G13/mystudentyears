@@ -1,10 +1,9 @@
-import { Component, useState, useEffect } from "react";
-import { StyleSheet, View, Text, Pressable, Image } from "react-native";
+import { View, Text, Pressable } from "react-native";
 
 import baseStyle from "../styles/base.js";
 
 export default function Category({ route, navigation }) {
-  const { id, student_id, student_name } = route.params;
+  const { id, student_id } = route.params;
   const category = global.data.data
     .find((s) => s.id === student_id)
     .attributes.category.find((c) => c.id === id);
@@ -16,7 +15,7 @@ export default function Category({ route, navigation }) {
         index: 0,
         category_id: id,
         student_id,
-      })
+      });
     }
   };
 

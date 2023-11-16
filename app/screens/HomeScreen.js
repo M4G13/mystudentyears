@@ -1,8 +1,6 @@
-import { Component, useState, useEffect } from "react";
-import { StyleSheet, View, Text, Pressable, Image } from "react-native";
+import { View, Text, Pressable, Image } from "react-native";
 
 import style from "../styles/homescreen.js";
-
 
 export default function HomeScreen({ navigation }) {
   return (

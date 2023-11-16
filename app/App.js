@@ -58,9 +58,12 @@ export default function App() {
 
   return (
     <NavigationContainer theme={DarkTheme}>
-      <Stack.Navigator screenOptions={{
-        animation: 'fade',
-        presentation: 'transparentModal'}}>
+      <Stack.Navigator
+        screenOptions={{
+          animation: "fade",
+          presentation: "transparentModal",
+        }}
+      >
         <Stack.Screen name="Home Screen" component={HomeScreen} />
         <Stack.Screen name="Gatehouse" component={Gatehouse} />
         <Stack.Screen name="Categories" component={Categories} />
