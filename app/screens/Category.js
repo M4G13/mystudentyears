@@ -20,15 +20,13 @@ export default function Category({ route, navigation }) {
     }
   };
 
-
-
   return (
     <View style={baseStyle.view}>
-      <Text style={(styles.bigText, { color: "#ffffff" })}>
+      <Text style={baseStyle.bigText}>
         This is the {category.Category} section
       </Text>
       <Pressable onPress={handleInitialPress}>
-        <Text style={styles.startReadingButton}>Start Reading </Text>
+        <Text style={baseStyle.button}>Start Reading </Text>
       </Pressable>
       <Pressable
         onPress={() =>
@@ -38,27 +36,8 @@ export default function Category({ route, navigation }) {
           })
         }
       >
-        <Text style={styles.quizButton}>Go to the quiz for this section</Text>
+        <Text style={baseStyle.button}>Go to the quiz for this section</Text>
       </Pressable>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  quizButton: {
-    backgroundColor: "#05b4ff",
-    padding: 15,
-    paddingLeft: 25,
-    paddingRight: 25,
-    borderRadius: 5,
-    width: "45%",
-  },
-  startReadingButton: {
-    backgroundColor: "#05b4ff",
-    padding: 15,
-    paddingLeft: 25,
-    paddingRight: 25,
-    borderRadius: 5,
-    marginTop: 10,
-  },
-});

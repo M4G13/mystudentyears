@@ -21,20 +21,3 @@ export default function Gatehouse({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  mainImage: {
-    width: 200,
-    height: 400,
-    objectFit: "contain",
-  },
-
-  selectButton: {
-    backgroundColor: "#05b4ff",
-    padding: 15,
-    paddingLeft: 25,
-    paddingRight: 25,
-    borderRadius: 5,
-    width: "45%",
-  },
-});
