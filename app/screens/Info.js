@@ -19,6 +19,7 @@ export default function Info({ route, navigation }) {
       navigation.navigate("Question", {
         category_id,
         student_id,
+        question_index: 0,
       });
     } else {
       navigation.push("Info", {

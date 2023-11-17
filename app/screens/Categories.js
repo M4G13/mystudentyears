@@ -27,8 +27,11 @@ export default function Categories({ route, navigation }) {
             key={c.id}
             onPress={() =>
               navigation.navigate("Category", {
-                id: c.id,
-                student_id,
+                screen: "Entrance",
+                params: {
+                  id: c.id,
+                  student_id,
+                }
               })
             }
             style={[
