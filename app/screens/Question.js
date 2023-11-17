@@ -1,18 +1,13 @@
 import React, { useState } from "react";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 
+import MissingWordsQ from "./questionTypes/MissingWordsQ.js";
 import MultiChoiceQ from "./questionTypes/MultiChoiceQ.js";
 import OpenResponseQ from "./questionTypes/OpenResponseQ.js";
 import RankOrderQ from "./questionTypes/RankOrderQ.js";
-import MissingWordsQ from "./questionTypes/MissingWordsQ.js";
 import baseStyle from "../styles/base.js";
 
 export default function Question({ route, navigation }) {
-  function answerLogic(x) {
-    if (x) return Alert.alert("Correct");
-    return Alert.alert("Incorrect");
-  }
-
   const { category_id, student_id, question_index } = route.params;
   const quiz = global.data.data
     .find((s) => s.id === student_id)
@@ -22,17 +17,16 @@ export default function Question({ route, navigation }) {
 
   const [answer, setAnswer] = useState(null);
   if (answer !== null) {
-        if (question_index < quiz.questions.length-1) {
-            navigation.navigate("Question", {
-                category_id: category_id,
-                student_id: student_id,
-                question_index: question_index + 1,
-            })
-        }
-        else {
-            navigation.popToTop()
-            navigation.pop()
-        }
+    if (question_index < quiz.questions.length - 1) {
+      navigation.navigate("Question", {
+        category_id,
+        student_id,
+        question_index: question_index + 1,
+      });
+    } else {
+      navigation.popToTop();
+      navigation.pop();
+    }
     setAnswer(null);
   }
 
@@ -41,7 +35,7 @@ export default function Question({ route, navigation }) {
     "questions.open-response-question": OpenResponseQ,
     "questions.rank-order-question": RankOrderQ,
     "questions.missing-words-question": MissingWordsQ,
-  }
+  };
 
   const QuestionType = questionTypes[type];
 
