@@ -17,10 +17,20 @@ export default function Question({ route, navigation }) {
 
   const type = quiz.questions[question_index].__component;
 
-  const [answer, setAnswer] = useState("undefined");
-  if (answer !== "undefined") {
-    console.log(answer)
-    setAnswer("undefined");
+  const [answer, setAnswer] = useState(null);
+  if (answer !== null) {
+        if (question_index < quiz.questions.length-1) {
+            navigation.navigate("Question", {
+                category_id: category_id,
+                student_id: student_id,
+                question_index: question_index + 1,
+            })
+        }
+        else {
+            navigation.popToTop()
+            navigation.pop()
+        }
+    setAnswer(null);
   }
   return (
     <View style={baseStyle.view}>

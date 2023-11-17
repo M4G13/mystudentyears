@@ -67,8 +67,6 @@ export default function App() {
         <Stack.Screen name="Gatehouse" component={Gatehouse} />
         <Stack.Screen name="Categories" component={Categories} />
         <Stack.Screen name="Category" component={Category} />
-        <Stack.Screen name="Question" component={Question} />
-        <Stack.Screen name="Info" component={Info} />
       </Stack.Navigator>
     </NavigationContainer>
   );

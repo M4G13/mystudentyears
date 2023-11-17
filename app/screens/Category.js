@@ -1,8 +1,13 @@
 import { View, Text, Pressable } from "react-native";
+import { NavigationContainer, DarkTheme } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import baseStyle from "../styles/base.js";
 
-export default function Category({ route, navigation }) {
+import Info from "./Info.js";
+import Question from "./Question.js";
+
+function Entrance ({ route, navigation }) {
   const { id, student_id } = route.params;
   const category = global.data.data
     .find((s) => s.id === student_id)
@@ -40,4 +45,22 @@ export default function Category({ route, navigation }) {
       </Pressable>
     </View>
   );
+}
+
+const CatStack = createNativeStackNavigator();
+
+export default function Category() {
+    return (
+        <CatStack.Navigator
+            screenOptions = {{
+                headerShown:false,
+                animation: "fade",
+                presentation: "transparentModal",
+            }}
+        >
+            <CatStack.Screen name="Entrance" component={Entrance} />
+            <CatStack.Screen name="Question" component={Question} />
+            <CatStack.Screen name="Info" component={Info} />
+        </CatStack.Navigator>
+    )
 }
