@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import MissingWordsQ from "./questionTypes/MissingWordsQ.js";
 import MultiChoiceQ from "./questionTypes/MultiChoiceQ.js";
@@ -16,28 +15,33 @@ export default function Question({ route, navigation }) {
 
   async function handleAnswer(correct) {
     try {
-      await AsyncStorage.setItem('quizanswer' + quiz.questions[question_index].id, correct ? "true" : "false")
+      await AsyncStorage.setItem(
+        "quizanswer" + quiz.questions[question_index].id,
+        correct ? "true" : "false",
+      );
     } catch (e) {
-      console.error('Failed to save answer.' + e)
+      console.error("Failed to save answer. " + e);
     }
     if (question_index < quiz.questions.length - 1) {
-        navigation.navigate("Question", {
-            category_id,
-            student_id,
-            question_index: question_index + 1,
-        });
+      navigation.navigate("Question", {
+        category_id,
+        student_id,
+        question_index: question_index + 1,
+      });
     } else {
-        let value = {};
-        try {
-            for (i=0;i<quiz.questions.length;i++) {
-                value[i] = await AsyncStorage.getItem('quizanswer' + quiz.questions[i].id);
-            }
-            console.log(value);
-        } catch (e) {
-            // error reading value
+      const value = {};
+      try {
+        for (let i = 0; i < quiz.questions.length; i++) {
+          value[i] = await AsyncStorage.getItem(
+            "quizanswer" + quiz.questions[i].id,
+          );
         }
-        navigation.popToTop();
-        navigation.pop();
+        console.log(value);
+      } catch (e) {
+        console.error("Failed to get answers. " + e);
+      }
+      navigation.popToTop();
+      navigation.pop();
     }
   }
 
