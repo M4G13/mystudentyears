@@ -2,7 +2,7 @@ import { View, Text, Pressable } from "react-native";
 
 import style from "../../styles/multichoiceq.js";
 
-export default function RankOrderQ({ question, setAnswer }) {
+export default function MissingWordsQ({ question, setAnswer }) {
   function answerLogic(isCorrect) {
     setAnswer(isCorrect);
   }

@@ -31,7 +31,7 @@ export default function Categories({ route, navigation }) {
                 params: {
                   id: c.id,
                   student_id,
-                }
+                },
               })
             }
             style={[

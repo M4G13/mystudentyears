@@ -1,4 +1,4 @@
-import { Alert, View, Text, Pressable, Image } from "react-native";
+import { View, Text, Pressable } from "react-native";
 
 import style from "../../styles/multichoiceq.js";
 
@@ -10,10 +10,6 @@ export default function MultiChoiceQ({ question, setAnswer }) {
   return (
     <View>
       <View style={style.questionContainer}>
-        <Image
-          source={require("../../assets/msy-logo.png")}
-          style={style.image}
-        />
         <Text style={style.bigText}>{question.question}</Text>
       </View>
       <View style={style.optionsContainer}>
