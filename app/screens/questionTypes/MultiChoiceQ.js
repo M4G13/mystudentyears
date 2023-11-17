@@ -2,11 +2,7 @@ import { View, Text, Pressable } from "react-native";
 
 import style from "../../styles/multichoiceq.js";
 
-export default function MultiChoiceQ({ question, setAnswer }) {
-  function answerLogic(isCorrect) {
-    setAnswer(isCorrect);
-  }
-
+export default function MultiChoiceQ({ question, handleAnswer }) {
   return (
     <View>
       <View style={style.questionContainer}>
@@ -17,7 +13,7 @@ export default function MultiChoiceQ({ question, setAnswer }) {
           <Pressable
             key={q.id}
             style={style.pressable}
-            onPress={() => answerLogic(q.correct)}
+            onPress={() => handleAnswer(q.correct)}
           >
             <Text style={style.button}>{q.text}</Text>
           </Pressable>

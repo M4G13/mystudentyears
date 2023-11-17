@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import MissingWordsQ from "./questionTypes/MissingWordsQ.js";
 import MultiChoiceQ from "./questionTypes/MultiChoiceQ.js";
@@ -13,21 +14,31 @@ export default function Question({ route, navigation }) {
     .find((s) => s.id === student_id)
     .attributes.category.find((c) => c.id === category_id).quiz.data.attributes;
 
-  const type = quiz.questions[question_index].__component;
-
-  const [answer, setAnswer] = useState(null);
-  if (answer !== null) {
-    if (question_index < quiz.questions.length - 1) {
-      navigation.navigate("Question", {
-        category_id,
-        student_id,
-        question_index: question_index + 1,
-      });
-    } else {
-      navigation.popToTop();
-      navigation.pop();
+  async function handleAnswer(correct) {
+    try {
+      await AsyncStorage.setItem('quizanswer' + quiz.questions[question_index].id, correct ? "true" : "false")
+    } catch (e) {
+      console.error('Failed to save answer.' + e)
     }
-    setAnswer(null);
+    if (question_index < quiz.questions.length - 1) {
+        navigation.navigate("Question", {
+            category_id,
+            student_id,
+            question_index: question_index + 1,
+        });
+    } else {
+        let value = {};
+        try {
+            for (i=0;i<quiz.questions.length;i++) {
+                value[i] = await AsyncStorage.getItem('quizanswer' + quiz.questions[i].id);
+            }
+            console.log(value);
+        } catch (e) {
+            // error reading value
+        }
+        navigation.popToTop();
+        navigation.pop();
+    }
   }
 
   const questionTypes = {
@@ -37,13 +48,15 @@ export default function Question({ route, navigation }) {
     "questions.missing-words-question": MissingWordsQ,
   };
 
+  const type = quiz.questions[question_index].__component;
+
   const QuestionType = questionTypes[type];
 
   return (
     <View style={baseStyle.view}>
       <QuestionType
         question={quiz.questions[question_index]}
-        setAnswer={setAnswer}
+        handleAnswer={(answer) => handleAnswer(answer)}
       />
     </View>
   );
