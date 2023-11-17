@@ -24,8 +24,7 @@ export default function MultiChoiceQ({ question, setAnswer }) {
             onPress={() => answerLogic(q.correct)}
           >
             <Text style={style.button}>{q.text}</Text>
-          </Pressable>
-        ))}
+          </Pressable>))}
       </View>
     </View>
   );

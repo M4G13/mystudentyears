@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Alert, View } from "react-native";
 
 import MultiChoiceQ from "./questionTypes/MultiChoiceQ.js";
+import OpenResponseQ from "./questionTypes/OpenResponseQ.js";
+import RankOrderQ from "./questionTypes/RankOrderQ.js";
+import MissingWordsQ from "./questionTypes/MissingWordsQ.js";
 import baseStyle from "../styles/base.js";
 
 export default function Question({ route, navigation }) {
@@ -32,9 +35,19 @@ export default function Question({ route, navigation }) {
         }
     setAnswer(null);
   }
+
+  const questionTypes = {
+    "questions.multi-choice-question": MultiChoiceQ,
+    "questions.open-response-question": OpenResponseQ,
+    "questions.rank-order-question": RankOrderQ,
+    "questions.missing-words-question": MissingWordsQ,
+  }
+
+  const QuestionType = questionTypes[type];
+
   return (
     <View style={baseStyle.view}>
-      <MultiChoiceQ
+      <QuestionType
         question={quiz.questions[question_index]}
         setAnswer={setAnswer}
       />

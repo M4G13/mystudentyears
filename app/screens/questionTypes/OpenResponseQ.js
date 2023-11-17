@@ -2,7 +2,7 @@ import { Alert, View, Text, Pressable, Image } from "react-native";
 
 import style from "../../styles/multichoiceq.js";
 
-export default function RankOrderQ({ question, setAnswer }) {
+export default function OpenResponseQ({ question, setAnswer }) {
   function answerLogic(isCorrect) {
     setAnswer(isCorrect);
   }
@@ -22,3 +22,4 @@ export default function RankOrderQ({ question, setAnswer }) {
     </View>
   );
 }
+
