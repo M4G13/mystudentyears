@@ -26,7 +26,7 @@ const style = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     flexBasis: "40%",
-    flexDirection: "column",
+    flexDirection: "row",
     justifyContent: "center",
   },
   button: {
@@ -36,6 +36,14 @@ const style = StyleSheet.create({
     textAlign: "center",
   },
   bigText: base.bigText,
+  input: {
+    width:300,
+    alignItems:"stretch",
+    marginTop:60,
+    borderWidth:1,
+    padding:10,
+    backgroundColor:"#ffffff",
+  }
 });
 
 export default style;
