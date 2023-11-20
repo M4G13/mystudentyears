@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useState } from "react";
 import { View } from "react-native";
 
 import MissingWordsQ from "./questionTypes/MissingWordsQ.js";
@@ -13,15 +14,17 @@ export default function Question({ route, navigation }) {
     .find((s) => s.id === student_id)
     .attributes.category.find((c) => c.id === category_id).quiz.data.attributes;
 
+  const [numCorrect, setNumCorrect] = useState(0);
+
   async function handleAnswer(correct) {
-    try {
-      await AsyncStorage.setItem(
-        "quizanswer" + quiz.questions[question_index].id,
-        correct ? "true" : "false",
-      );
-    } catch (e) {
-      console.error("Failed to save answer. " + e);
+    let nextNumCorrect;
+    if (correct) {
+      nextNumCorrect = numCorrect + 1;
+      setNumCorrect(nextNumCorrect);
+    } else {
+      nextNumCorrect = numCorrect;
     }
+
     if (question_index < quiz.questions.length - 1) {
       navigation.navigate("Question", {
         category_id,
@@ -29,16 +32,12 @@ export default function Question({ route, navigation }) {
         question_index: question_index + 1,
       });
     } else {
-      const value = {};
+      // probably should navigate to quiz end screen
+      const result = (100 * nextNumCorrect) / quiz.questions.length;
       try {
-        for (let i = 0; i < quiz.questions.length; i++) {
-          value[i] = await AsyncStorage.getItem(
-            "quizanswer" + quiz.questions[i].id,
-          );
-        }
-        console.log(value);
+        await AsyncStorage.setItem("quiz" + category_id, result.toString());
       } catch (e) {
-        console.error("Failed to get answers. " + e);
+        console.error("Failed to save progress. " + e);
       }
       navigation.popToTop();
       navigation.pop();
