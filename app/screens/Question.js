@@ -16,7 +16,15 @@ export default function Question({ route, navigation }) {
 
   const [numCorrect, setNumCorrect] = useState(0);
 
-  async function handleAnswer(correct) {
+  async function storeResult(result) {
+    try {
+      await AsyncStorage.setItem("quiz" + category_id, result.toString());
+    } catch (e) {
+      console.error("Failed to save progress. " + e);
+    }
+  }
+
+  function handleAnswer(correct) {
     let nextNumCorrect;
     if (correct) {
       nextNumCorrect = numCorrect + 1;
@@ -34,11 +42,7 @@ export default function Question({ route, navigation }) {
     } else {
       // probably should navigate to quiz end screen
       const result = (100 * nextNumCorrect) / quiz.questions.length;
-      try {
-        await AsyncStorage.setItem("quiz" + category_id, result.toString());
-      } catch (e) {
-        console.error("Failed to save progress. " + e);
-      }
+      storeResult(result)
       navigation.popToTop();
       navigation.pop();
     }
