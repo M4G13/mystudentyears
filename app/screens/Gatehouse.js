@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useState, useEffect, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+import React, { useState, useCallback } from "react";
 import { View, Text, Pressable } from "react-native";
 
 import baseStyle from "../styles/base.js";
@@ -34,7 +34,7 @@ export default function Gatehouse({ navigation }) {
       }
 
       getCompletion();
-    }, [])
+    }, []),
   );
 
   return (

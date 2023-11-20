@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useState, useEffect, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React, { useState, useCallback } from "react";
 import { View, Text, Pressable } from "react-native";
 
 import Info from "./Info.js";
@@ -35,7 +35,8 @@ function Entrance({ route, navigation }) {
       }
 
       getCompletion();
-    }, []));
+    }, []),
+  );
 
   return (
     <View style={baseStyle.view}>
