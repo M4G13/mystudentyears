@@ -38,7 +38,6 @@ export default function Question({ route, navigation }) {
       // probably should navigate to quiz end screen
       storeResult(nextAnswers);
       navigation.popToTop();
-      navigation.pop();
     }
   }
 

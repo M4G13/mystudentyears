@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { View, Text, Pressable } from "react-native";
 
 import Info from "./Info.js";
@@ -15,25 +16,26 @@ function Entrance({ route, navigation }) {
 
   const [completion, setCompletion] = useState(null);
 
-  useEffect(() => {
-    async function getCompletion() {
-      try {
-        let sum = 0;
-        const storedCompletion = await AsyncStorage.getItem("quiz" + id);
-        if (storedCompletion != null) {
-          JSON.parse(storedCompletion).map((x) => (sum += x ? 1 : 0));
-          setCompletion(sum);
-        } else {
+  useFocusEffect(
+    useCallback(() => {
+      async function getCompletion() {
+        try {
+          let sum = 0;
+          const storedCompletion = await AsyncStorage.getItem("quiz" + id);
+          if (storedCompletion != null) {
+            JSON.parse(storedCompletion).map((x) => (sum += x ? 1 : 0));
+            setCompletion(sum);
+          } else {
+            setCompletion(null);
+          }
+        } catch (e) {
+          console.error("Failed to get progress. " + e);
           setCompletion(null);
         }
-      } catch (e) {
-        console.error("Failed to get progress. " + e);
-        setCompletion(null);
       }
-    }
 
-    getCompletion();
-  }, []);
+      getCompletion();
+    }, []));
 
   return (
     <View style={baseStyle.view}>

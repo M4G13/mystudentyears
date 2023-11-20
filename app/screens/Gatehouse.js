@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { View, Text, Pressable } from "react-native";
 
 import baseStyle from "../styles/base.js";
@@ -8,31 +9,33 @@ export default function Gatehouse({ navigation }) {
   const students = global.data.data;
 
   const [openStories, setOpenStories] = useState({});
-  useEffect(() => {
-    async function getCompletion() {
-      const open = {};
-      const completed = [];
-      for (let i = 0; i < students.length; i++) {
-        completed[i] = 0;
-        for (const category of students[i].attributes.category) {
-          try {
-            const storedCompletion = await AsyncStorage.getItem(
-              "quiz" + category.id,
-            );
-            if (storedCompletion != null) {
-              completed[i] += 1;
+  useFocusEffect(
+    useCallback(() => {
+      async function getCompletion() {
+        const open = {};
+        const completed = [];
+        for (let i = 0; i < students.length; i++) {
+          completed[i] = 0;
+          for (const category of students[i].attributes.category) {
+            try {
+              const storedCompletion = await AsyncStorage.getItem(
+                "quiz" + category.id,
+              );
+              if (storedCompletion != null) {
+                completed[i] += 1;
+              }
+            } catch (e) {
+              console.error("Failed to get progress. " + e);
             }
-          } catch (e) {
-            console.error("Failed to get progress. " + e);
           }
+          open[students[i].id] = i === 0 ? true : completed[i - 1] === 4;
         }
-        open[students[i].id] = i === 0 ? true : completed[i - 1] === 4;
+        setOpenStories(open);
       }
-      setOpenStories(open);
-    }
 
-    getCompletion();
-  }, []);
+      getCompletion();
+    }, [])
+  );
 
   return (
     <View style={baseStyle.view}>
