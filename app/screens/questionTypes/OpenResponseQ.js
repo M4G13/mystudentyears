@@ -1,30 +1,25 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import { View, Text, Pressable, TextInput } from "react-native";
 
-import style from "../../styles/multichoiceq.js";
+import style from "../../styles/openresponseqs.js";
 
 export default function OpenResponseQ({ question, handleAnswer }) {
+  const [input, setInput] = useState("");
 
-  const [input, setInput] = useState('');
+  function compare(actual, expected) {
+    actual = actual.toLowerCase().replace(/\W/g, "");
 
-  function compare(actual, expected){
-    actual = actual.toLowerCase()
-    actual = actual.replace(/\s/g, '')
-    actual = actual.replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '')
+    expected = expected.toLowerCase().replace(/\W/g, "");
 
-    expected = expected.toLowerCase()
-    expected = expected.replace(/\s/g, '')
-    expected = expected.replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '')
-
-    return actual == expected
+    return actual == expected;
   }
 
   return (
     <View>
       <View style={style.questionContainer}>
         <Text style={style.bigText}>{question.question}</Text>
-        
-        <View >
+
+        <View>
           <TextInput
             style={style.input}
             placeholder="Enter your answer here"
@@ -32,19 +27,15 @@ export default function OpenResponseQ({ question, handleAnswer }) {
             value={input}
           />
         </View>
-
       </View>
       <View style={style.optionsContainer}>
-
-      <Pressable style={style.pressable} onPress={() => handleAnswer(compare(input, question.answer))}>
+        <Pressable
+          style={style.pressable}
+          onPress={() => handleAnswer(compare(input, question.answer))}
+        >
           <Text style={style.button}>Submit</Text>
         </Pressable>
-
       </View>
-
-        
-
     </View>
   );
 }
-
