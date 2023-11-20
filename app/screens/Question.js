@@ -14,24 +14,19 @@ export default function Question({ route, navigation }) {
     .find((s) => s.id === student_id)
     .attributes.category.find((c) => c.id === category_id).quiz.data.attributes;
 
-  const [numCorrect, setNumCorrect] = useState(0);
+  const [answers, setAnswers] = useState([]);
 
-  async function storeResult(result) {
+  async function storeResult(answers) {
     try {
-      await AsyncStorage.setItem("quiz" + category_id, result.toString());
+      await AsyncStorage.setItem("quiz" + category_id, JSON.stringify(answers));
     } catch (e) {
       console.error("Failed to save progress. " + e);
     }
   }
 
   function handleAnswer(correct) {
-    let nextNumCorrect;
-    if (correct) {
-      nextNumCorrect = numCorrect + 1;
-      setNumCorrect(nextNumCorrect);
-    } else {
-      nextNumCorrect = numCorrect;
-    }
+    const nextAnswers = [...answers, correct];
+    setAnswers(nextAnswers);
 
     if (question_index < quiz.questions.length - 1) {
       navigation.navigate("Question", {
@@ -41,8 +36,7 @@ export default function Question({ route, navigation }) {
       });
     } else {
       // probably should navigate to quiz end screen
-      const result = (100 * nextNumCorrect) / quiz.questions.length;
-      storeResult(result)
+      storeResult(nextAnswers);
       navigation.popToTop();
       navigation.pop();
     }
@@ -63,7 +57,7 @@ export default function Question({ route, navigation }) {
     <View style={baseStyle.view}>
       <QuestionType
         question={quiz.questions[question_index]}
-        handleAnswer={(answer) => handleAnswer(answer)}
+        handleAnswer={handleAnswer}
       />
     </View>
   );

@@ -18,8 +18,14 @@ function Entrance({ route, navigation }) {
   useEffect(() => {
     async function getCompletion() {
       try {
+        let sum = 0;
         const storedCompletion = await AsyncStorage.getItem("quiz" + id);
-        setCompletion(storedCompletion);
+        if (storedCompletion != null) {
+          JSON.parse(storedCompletion).map((x) => (sum += x ? 1 : 0));
+          setCompletion(sum);
+        } else {
+          setCompletion(null);
+        }
       } catch (e) {
         console.error("Failed to get progress. " + e);
         setCompletion(null);
@@ -63,7 +69,10 @@ function Entrance({ route, navigation }) {
         </>
       ) : (
         <>
-          <Text style={baseStyle.bigText}>You got {completion}%</Text>
+          <Text style={baseStyle.bigText}>
+            You got {completion} out of{" "}
+            {category.quiz.data.attributes.questions.length}
+          </Text>
           <Pressable
             onPress={() => {
               AsyncStorage.clear();
