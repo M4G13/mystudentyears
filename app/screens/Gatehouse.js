@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useState, useCallback } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Alert } from "react-native";
 
 import baseStyle from "../styles/base.js";
 
@@ -28,7 +28,7 @@ export default function Gatehouse({ navigation }) {
               console.error("Failed to get progress. " + e);
             }
           }
-          open[students[i].id] = i === 0 ? true : completed[i - 1] === 4;
+          open[students[i].id] = i === 0 ? true : completed[i - 1] === 4; // 4 is number of categories, should change
         }
         setOpenStories(open);
       }
@@ -49,7 +49,7 @@ export default function Gatehouse({ navigation }) {
                 student_id: s.id,
               });
             } else {
-              console.warn("Not completed previous story");
+              Alert.alert("Not completed previous story");
             }
           }}
         >
