@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useState } from "react";
 import { View } from "react-native";
 
 import MissingWordsQ from "./questionTypes/MissingWordsQ.js";
@@ -13,15 +14,20 @@ export default function Question({ route, navigation }) {
     .find((s) => s.id === student_id)
     .attributes.category.find((c) => c.id === category_id).quiz.data.attributes;
 
-  async function handleAnswer(correct) {
+  const [answers, setAnswers] = useState([]);
+
+  async function storeResult(answers) {
     try {
-      await AsyncStorage.setItem(
-        "quizanswer" + quiz.questions[question_index].id,
-        correct ? "true" : "false",
-      );
+      await AsyncStorage.setItem("quiz" + category_id, JSON.stringify(answers));
     } catch (e) {
-      console.error("Failed to save answer. " + e);
+      console.error("Failed to save progress. " + e);
     }
+  }
+
+  function handleAnswer(correct) {
+    const nextAnswers = [...answers, correct];
+    setAnswers(nextAnswers);
+
     if (question_index < quiz.questions.length - 1) {
       navigation.navigate("Question", {
         category_id,
@@ -29,19 +35,9 @@ export default function Question({ route, navigation }) {
         question_index: question_index + 1,
       });
     } else {
-      const value = {};
-      try {
-        for (let i = 0; i < quiz.questions.length; i++) {
-          value[i] = await AsyncStorage.getItem(
-            "quizanswer" + quiz.questions[i].id,
-          );
-        }
-        console.log(value);
-      } catch (e) {
-        console.error("Failed to get answers. " + e);
-      }
+      // probably should navigate to quiz end screen
+      storeResult(nextAnswers);
       navigation.popToTop();
-      navigation.pop();
     }
   }
 
@@ -60,7 +56,7 @@ export default function Question({ route, navigation }) {
     <View style={baseStyle.view}>
       <QuestionType
         question={quiz.questions[question_index]}
-        handleAnswer={(answer) => handleAnswer(answer)}
+        handleAnswer={handleAnswer}
       />
     </View>
   );
