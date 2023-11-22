@@ -4,7 +4,7 @@ import DraggableFlatList, {
   ScaleDecorator,
 } from "react-native-draggable-flatlist";
 
-import style from "../../styles/openresponseqs.js";
+import style from "../../styles/question.js";
 
 //https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 function shuffle(a) {
