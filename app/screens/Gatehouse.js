@@ -28,7 +28,10 @@ export default function Gatehouse({ navigation }) {
               console.error("Failed to get progress. " + e);
             }
           }
-          open[students[i].id] = i === 0 ? true : completed[i - 1] === 4; // 4 is number of categories, should change
+          open[students[i].id] =
+            i === 0
+              ? true
+              : completed[i - 1] === students[i - 1].attributes.category.length;
         }
         setOpenStories(open);
       }
