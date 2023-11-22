@@ -2,12 +2,14 @@ import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Constants from "expo-constants"; // REMOVE IN PRODUCTION
 import React, { useState, useEffect } from "react";
-import { Text, StatusBar } from "react-native";
+import { Text, StatusBar, Pressable, View } from "react-native";
 
 import Categories from "./screens/Categories.js";
 import Category from "./screens/Category.js";
 import Gatehouse from "./screens/Gatehouse.js";
 import HomeScreen from "./screens/HomeScreen.js";
+
+import baseStyle from "./styles/base.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +28,7 @@ export default function App() {
       .then((response) => response.json())
       .then((data) => {
         setIsLoading(false);
+        setError(false);
         global.data = data;
       })
       .catch((error) => {
@@ -40,16 +43,14 @@ export default function App() {
 
   if (error) {
     return (
-      <Text
-        style={{
-          fontWeight: 600,
-          fontSize: 25,
-          textAlign: "center",
-          paddingTop: 100,
-        }}
-      >
-        start strapi idiot
-      </Text>
+      <View style={baseStyle.view}>
+        <Text style={baseStyle.bigText}>
+          start strapi idiot
+        </Text>
+        <Pressable onPress={() => fetchData()}>
+          <Text style={baseStyle.button}>Retry</Text>
+        </Pressable>
+      </View>
     );
   }
 
