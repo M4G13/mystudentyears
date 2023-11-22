@@ -1,3 +1,6 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useState, useCallback } from "react";
 import { View, Text, Pressable, ImageBackground } from "react-native";
 
 import style from "../styles/categories.js";
@@ -12,6 +15,28 @@ export default function Categories({ route, navigation }) {
     Academics: [40, 400],
     Independence: [250, 520],
   };
+
+  const [completed, setCompleted] = useState({});
+  useFocusEffect(
+    useCallback(() => {
+      async function getCompletion() {
+        const complete = {};
+        for (const category of categories) {
+          try {
+            const storedCompletion = await AsyncStorage.getItem(
+              "quiz" + category.id,
+            );
+            complete[category.id] = storedCompletion != null;
+          } catch (e) {
+            console.error("Failed to get progress. " + e);
+            complete[category.id] = false;
+          }
+        }
+        setCompleted(complete);
+      }
+      getCompletion();
+    }, []),
+  );
 
   const imageSource = require("../assets/temp_map.png");
 
@@ -42,7 +67,10 @@ export default function Categories({ route, navigation }) {
               },
             ]}
           >
-            <Text style={style.button}>{c.Category}</Text>
+            <Text style={style.button}>
+              {c.Category}
+              {completed[c.id] ? " - done" : null}
+            </Text>
           </Pressable>
         ))}
       </ImageBackground>
