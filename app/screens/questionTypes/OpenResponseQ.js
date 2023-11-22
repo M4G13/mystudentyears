@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Pressable, TextInput } from "react-native";
 
-import style from "../../styles/openresponseqs.js";
+import style from "../../styles/question.js";
 
 export default function OpenResponseQ({ question, handleAnswer }) {
   const [input, setInput] = useState("");
