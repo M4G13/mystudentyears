@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Constants from "expo-constants"; // REMOVE IN PRODUCTION
 import React, { useState, useEffect } from "react";
 import { Text, StatusBar, Pressable, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import Categories from "./screens/Categories.js";
 import Category from "./screens/Category.js";
@@ -55,18 +56,20 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer theme={DarkTheme}>
-      <Stack.Navigator
-        screenOptions={{
-          animation: "fade",
-          presentation: "transparentModal",
-        }}
-      >
-        <Stack.Screen name="Home Screen" component={HomeScreen} />
-        <Stack.Screen name="Gatehouse" component={Gatehouse} />
-        <Stack.Screen name="Categories" component={Categories} />
-        <Stack.Screen name="Category" component={Category} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer theme={DarkTheme}>
+        <Stack.Navigator
+          screenOptions={{
+            animation: "fade",
+            presentation: "transparentModal",
+          }}
+        >
+          <Stack.Screen name="Home Screen" component={HomeScreen} />
+          <Stack.Screen name="Gatehouse" component={Gatehouse} />
+          <Stack.Screen name="Categories" component={Categories} />
+          <Stack.Screen name="Category" component={Category} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }
