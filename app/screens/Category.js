@@ -4,11 +4,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useState, useCallback } from "react";
 import { View, Text, Pressable } from "react-native";
 
-import Info from "./Info.js";
-import Question from "./Question.js";
 import baseStyle from "../styles/base.js";
 
-function Entrance({ route, navigation }) {
+export default function Category({ route, navigation }) {
   const { id, student_id } = route.params;
   const category = global.data.data
     .find((s) => s.id === student_id)
@@ -87,23 +85,5 @@ function Entrance({ route, navigation }) {
         </>
       )}
     </View>
-  );
-}
-
-const CatStack = createNativeStackNavigator();
-
-export default function Category() {
-  return (
-    <CatStack.Navigator
-      screenOptions={{
-        headerShown: false,
-        animation: "fade",
-        presentation: "transparentModal",
-      }}
-    >
-      <CatStack.Screen name="Entrance" component={Entrance} />
-      <CatStack.Screen name="Question" component={Question} />
-      <CatStack.Screen name="Info" component={Info} />
-    </CatStack.Navigator>
   );
 }

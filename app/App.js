@@ -9,6 +9,8 @@ import Categories from "./screens/Categories.js";
 import Category from "./screens/Category.js";
 import Gatehouse from "./screens/Gatehouse.js";
 import HomeScreen from "./screens/HomeScreen.js";
+import Info from "./screens/Info.js";
+import Question from "./screens/Question.js";
 
 import baseStyle from "./styles/base.js";
 
@@ -68,6 +70,8 @@ export default function App() {
           <Stack.Screen name="Gatehouse" component={Gatehouse} />
           <Stack.Screen name="Categories" component={Categories} />
           <Stack.Screen name="Category" component={Category} />
+          <Stack.Screen name="Question" component={Question} />
+          <Stack.Screen name="Info" component={Info} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
