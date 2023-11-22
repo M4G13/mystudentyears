@@ -11,7 +11,7 @@ export default function OpenResponseQ({ question, handleAnswer }) {
 
     expected = expected.toLowerCase().replace(/\W/g, "");
 
-    return actual == expected;
+    return actual === expected;
   }
 
   return (
