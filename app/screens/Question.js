@@ -37,7 +37,10 @@ export default function Question({ route, navigation }) {
     } else {
       // probably should navigate to quiz end screen
       storeResult(nextAnswers);
-      navigation.popToTop();
+      navigation.navigate("Category", {
+        id: category_id,
+        student_id,
+      })
     }
   }
 
