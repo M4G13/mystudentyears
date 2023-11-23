@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, Pressable } from 'react-native';
-import style from '../../styles/question.js';
+import React, { useState } from "react";
+import { View, Text, Pressable } from "react-native";
+
+import style from "../../styles/question.js";
 
 // Function to shuffle an array using Fisher-Yates algorithm
 const shuffleArray = (array) => {
@@ -12,26 +13,37 @@ const shuffleArray = (array) => {
 };
 
 export default function MissingWordsQ({ question, handleAnswer }) {
-  const keywords = question.question.match(/\[([^\]]*)\]/g).map(match => match.slice(1, -1));
-  const [currentQuestion, setCurrentQuestion] = useState((question && question.question) ? question.question.replace(/\[.*?\]/g, match => "_".repeat(match.length - 1)) : "");
+  const keywords = question.question
+    .match(/\[([^\]]*)\]/g)
+    .map((match) => match.slice(1, -1));
+  const [currentQuestion, setCurrentQuestion] = useState(
+    question && question.question
+      ? question.question.replace(/\[.*?\]/g, (match) =>
+          "_".repeat(match.length - 1),
+        )
+      : "",
+  );
   const [prevKeywords, setPrevKeywords] = useState([]);
   const [unusedKeywords, setUnusedKeywords] = useState(keywords);
 
   const replaceKeyword = (keyword) => {
     const updatedQuestion = currentQuestion.replace(/_+/, keyword);
-    setPrevKeywords(prev => [...prev, keyword]);
+    setPrevKeywords((prev) => [...prev, keyword]);
     setCurrentQuestion(updatedQuestion);
 
-    setUnusedKeywords(prev => prev.filter(kw => kw !== keyword));
+    setUnusedKeywords((prev) => prev.filter((kw) => kw !== keyword));
   };
 
   const undo = () => {
     if (prevKeywords.length > 0) {
       const lastUsedKeyword = prevKeywords.pop();
-      const updatedQuestion = currentQuestion.replace(new RegExp(lastUsedKeyword), '_'.repeat(lastUsedKeyword.length));
+      const updatedQuestion = currentQuestion.replace(
+        new RegExp(lastUsedKeyword),
+        "_".repeat(lastUsedKeyword.length),
+      );
       setCurrentQuestion(updatedQuestion);
       setPrevKeywords([...prevKeywords]);
-      setUnusedKeywords(prev => [...prev, lastUsedKeyword]);
+      setUnusedKeywords((prev) => [...prev, lastUsedKeyword]);
     }
   };
 
@@ -58,7 +70,14 @@ export default function MissingWordsQ({ question, handleAnswer }) {
         <Pressable style={style.pressable} onPress={undo}>
           <Text style={style.button}>Undo</Text>
         </Pressable>
-        <Pressable style={style.pressable} onPress={() => handleAnswer(currentQuestion == question.question.replace(/\[|\]/g, ""))}>
+        <Pressable
+          style={style.pressable}
+          onPress={() =>
+            handleAnswer(
+              currentQuestion === question.question.replace(/\[|\]/g, ""),
+            )
+          }
+        >
           <Text style={style.button}>Submit</Text>
         </Pressable>
       </View>

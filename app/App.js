@@ -9,7 +9,6 @@ import Categories from "./screens/Categories.js";
 import Category from "./screens/Category.js";
 import Gatehouse from "./screens/Gatehouse.js";
 import HomeScreen from "./screens/HomeScreen.js";
-
 import baseStyle from "./styles/base.js";
 
 const Stack = createNativeStackNavigator();
@@ -45,9 +44,7 @@ export default function App() {
   if (error) {
     return (
       <View style={baseStyle.view}>
-        <Text style={baseStyle.bigText}>
-          start strapi idiot
-        </Text>
+        <Text style={baseStyle.bigText}>start strapi idiot</Text>
         <Pressable onPress={() => fetchData()}>
           <Text style={baseStyle.button}>Retry</Text>
         </Pressable>

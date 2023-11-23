@@ -46,17 +46,17 @@ const style = StyleSheet.create({
   },
   draggable: {
     borderWidth: 1,
-    backgroundColor: '#779ecb',
+    backgroundColor: "#779ecb",
     padding: 10,
     borderRadius: 20,
-    margin:5
+    margin: 5,
   },
   keywords: {
-    paddingTop:50,
+    paddingTop: 50,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
-  }
+  },
 });
 
 export default style;
