@@ -3,6 +3,9 @@ import { View, Text, Pressable } from "react-native";
 import style from "../../styles/question.js";
 
 export default function MultiChoiceQ({ question, handleAnswer }) {
+
+  
+
   return (
     <View>
       <View style={style.questionContainer}>
