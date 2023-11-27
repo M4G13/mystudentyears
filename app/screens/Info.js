@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, ScrollView, Pressable } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import style from "../styles/info.js";
 
@@ -14,8 +15,19 @@ export default function Info({ route, navigation }) {
 
   const isLastPage = index === information.length - 1;
 
-  const navigateToNextPage = () => {
+  const navigateToNextPage = async() => {
     if (index === information.length - 1) {
+
+      try {
+        const storedCompletion = await AsyncStorage.getItem("quiz" + category_id);
+
+        if (storedCompletion) {
+          await AsyncStorage.removeItem("quiz" + category_id);
+        }
+      } catch (error) {
+        console.error("Failed to clear quiz progress. " + error);
+      }
+
       navigation.navigate("Question", {
         category_id,
         student_id,

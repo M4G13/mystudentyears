@@ -70,6 +70,16 @@ export default function Categories({ route, navigation }) {
             </Text>
           </Pressable>
         ))}
+
+        <Pressable
+          onPress={async () => {
+            await AsyncStorage.clear();
+            setCompleted({});
+          }}
+          style={style.clearButton}
+        >
+          <Text style={style.button}>Clear all stored data</Text>
+        </Pressable>
       </ImageBackground>
     </View>
   );

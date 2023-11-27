@@ -13,6 +13,7 @@ import Info from "./screens/Info.js";
 import Question from "./screens/Question.js";
 
 import baseStyle from "./styles/base.js";
+import QuizEndScreen from "./screens/QuizEndScreen.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -72,6 +73,7 @@ export default function App() {
           <Stack.Screen name="Category" component={Category} />
           <Stack.Screen name="Question" component={Question} />
           <Stack.Screen name="Info" component={Info} />
+          <Stack.Screen name="QuizEndScreen" component={QuizEndScreen} options={{ title: 'Quiz Complete' }} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
