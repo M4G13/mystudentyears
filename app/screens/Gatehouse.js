@@ -56,7 +56,10 @@ export default function Gatehouse({ navigation }) {
             }
           }}
         >
-          <Text style={baseStyle.button}>{s.attributes.Name}</Text>
+          <Text style={baseStyle.button}>
+            {s.attributes.Name}
+            {!openStories[s.id] && " 🔒"}
+          </Text>
         </Pressable>
       ))}
     </View>

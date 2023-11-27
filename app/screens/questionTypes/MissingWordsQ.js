@@ -1,16 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 
+import { shuffle } from "../../common.js";
 import style from "../../styles/question.js";
-
-// Function to shuffle an array using Fisher-Yates algorithm
-const shuffleArray = (array) => {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-};
 
 export default function MissingWordsQ({ question, handleAnswer }) {
   const keywords = question.question
@@ -48,7 +40,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
   };
 
   // Shuffle the unusedKeywords array
-  const shuffledKeywords = shuffleArray(unusedKeywords);
+  const shuffledKeywords = shuffle(unusedKeywords);
 
   return (
     <View>

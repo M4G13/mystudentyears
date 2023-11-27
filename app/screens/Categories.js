@@ -65,7 +65,7 @@ export default function Categories({ route, navigation }) {
           >
             <Text style={style.button}>
               {c.Category}
-              {completed[c.id] ? " - done" : null}
+              {completed[c.id] ? " ✅" : null}
             </Text>
           </Pressable>
         ))}

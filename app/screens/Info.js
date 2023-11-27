@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from "@react-navigation/native";
-import React, { useCallback } from "react";
+import React from "react";
 import { View, Text, Pressable } from "react-native";
 import Markdown from "react-native-marked";
 
@@ -40,12 +39,6 @@ export default function Info({ route, navigation }) {
       });
     }
   };
-
-  useFocusEffect(
-    useCallback(() => {
-      navigation.setOptions({ title: `${student.Name}, ${category.Category}` });
-    }, []),
-  );
 
   return (
     <View style={style.view}>
