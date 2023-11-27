@@ -1,10 +1,12 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from "react";
 import { View, Text, Pressable } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import baseStyle from "../styles/base.js";
 
 export default function QuizEndScreen({ route, navigation }) {
-  const { category_id, student_id, score, correctAmount, QuestionAmount } = route.params;
+  const { category_id, student_id, score, correctAmount, QuestionAmount } =
+    route.params;
 
   const retakeQuiz = async () => {
     try {
@@ -12,7 +14,7 @@ export default function QuizEndScreen({ route, navigation }) {
       navigation.navigate("Question", {
         category_id,
         student_id,
-        question_index: 0,
+        index: 0,
       });
     } catch (error) {
       console.error("Failed to clear progress. " + error);
@@ -36,10 +38,16 @@ export default function QuizEndScreen({ route, navigation }) {
   return (
     <View style={baseStyle.view}>
       <Text style={baseStyle.bigText}>Quiz Completed!</Text>
-      <Text style={baseStyle.smallText}>You got {score.toFixed(2)}%, which is {correctAmount} out of {QuestionAmount}</Text>
+      <Text style={baseStyle.smallText}>
+        You got {score.toFixed(2)}%, which is {correctAmount} out of{" "}
+        {QuestionAmount}
+      </Text>
       <Text style={baseStyle.smallText}>{message}</Text>
-      <View style={[baseStyle.buttonContainer, { flexDirection: 'row' }]}>
-        <Pressable onPress={retakeQuiz} style={[baseStyle.button, {marginRight: 5}]}>
+      <View style={[baseStyle.buttonContainer, { flexDirection: "row" }]}>
+        <Pressable
+          onPress={retakeQuiz}
+          style={[baseStyle.button, { marginRight: 5 }]}
+        >
           <Text style={baseStyle.buttonText}>Retake Quiz</Text>
         </Pressable>
         <Pressable onPress={goToMap} style={baseStyle.button}>
@@ -49,5 +57,3 @@ export default function QuizEndScreen({ route, navigation }) {
     </View>
   );
 }
-
-
