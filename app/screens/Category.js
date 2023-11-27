@@ -33,57 +33,61 @@ export default function Category({ route, navigation }) {
       }
 
       getCompletion();
-    }, []),
+    }, [id]),
   );
+
+  const clearQuizProgress = async () => {
+    try {
+      await AsyncStorage.removeItem("quiz" + id);
+      setCompletion(null);
+      startQuiz();
+    } catch (error) {
+      console.error("Failed to clear quiz progress. " + error);
+    }
+  };
+
+  const startQuiz = () => {
+    navigation.navigate("Question", {
+      category_id: id,
+      student_id,
+      question_index: 0,
+    });
+  };
+
+  const navigateToInfo = () => {
+    navigation.navigate("Info", {
+      index: 0,
+      category_id: id,
+      student_id,
+    });
+  };
 
   return (
     <View style={baseStyle.view}>
-      {completion === null ? (
-        <>
+      <>
+        <Text style={baseStyle.bigText}>
+          This is the {category.Category} section
+        </Text>
+        {completion !== null && (
           <Text style={baseStyle.bigText}>
-            This is the {category.Category} section
-          </Text>
-          <Pressable
-            onPress={() =>
-              navigation.navigate("Info", {
-                index: 0,
-                category_id: id,
-                student_id,
-              })
-            }
-          >
-            <Text style={baseStyle.button}>Start Reading </Text>
-          </Pressable>
-          <Pressable
-            onPress={() =>
-              navigation.navigate("Question", {
-                category_id: id,
-                student_id,
-                question_index: 0,
-              })
-            }
-          >
-            <Text style={baseStyle.button}>
-              Go to the quiz for this section
-            </Text>
-          </Pressable>
-        </>
-      ) : (
-        <>
-          <Text style={baseStyle.bigText}>
-            You got {completion} out of{" "}
+            Previously you got {completion} out of{" "}
             {category.quiz.data.attributes.questions.length}
           </Text>
-          <Pressable
-            onPress={() => {
-              AsyncStorage.clear();
-              navigation.pop();
-            }}
-          >
-            <Text style={baseStyle.button}>Clear all stored data</Text>
+        )}
+        <Pressable onPress={navigateToInfo}>
+          <Text style={baseStyle.button}>Start Reading</Text>
+        </Pressable>
+        {completion === null && (
+          <Pressable onPress={startQuiz}>
+            <Text style={baseStyle.button}>Start Quiz</Text>
           </Pressable>
-        </>
-      )}
+        )}
+        {completion !== null && (
+          <Pressable onPress={clearQuizProgress}>
+            <Text style={baseStyle.button}>Retake Quiz</Text>
+          </Pressable>
+        )}
+      </>
     </View>
   );
 }

@@ -24,6 +24,16 @@ export default function Question({ route, navigation }) {
     }
   }
 
+  function calculateScore(answers, totalQuestions) {
+    const correctAnswers = answers.filter((answer) => answer === true);
+    const score = (correctAnswers.length / totalQuestions) * 100;
+  
+    return {
+      score,
+      correctAmount: correctAnswers.length,
+    };
+  }
+
   function handleAnswer(correct) {
     const nextAnswers = [...answers, correct];
     setAnswers(nextAnswers);
@@ -36,11 +46,15 @@ export default function Question({ route, navigation }) {
       });
     } else {
       // probably should navigate to quiz end screen
+      const { score, correctAmount } = calculateScore(nextAnswers, quiz.questions.length);
       storeResult(nextAnswers);
-      navigation.navigate("Category", {
-        id: category_id,
+      navigation.navigate("QuizEndScreen", {
+        category_id,
         student_id,
-      })
+        score,
+        correctAmount,
+        QuestionAmount: quiz.questions.length
+      });
     }
   }
 
