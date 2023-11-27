@@ -3,12 +3,11 @@ import { useFocusEffect } from "@react-navigation/native";
 import React, { useState, useCallback } from "react";
 import { View, Text, Pressable, ImageBackground } from "react-native";
 
+import { getData } from "../common.js";
 import style from "../styles/categories.js";
 
 export default function Categories({ route, navigation }) {
-  const { student_id } = route.params;
-  const categories = global.data.data.find((s) => s.id === student_id)
-    .attributes.category;
+  const categories = getData(route.params).student.category;
   const locs = {
     Finance: [80, 160],
     Wellbeing: [240, 230],
@@ -52,8 +51,8 @@ export default function Categories({ route, navigation }) {
             key={c.id}
             onPress={() =>
               navigation.navigate("Category", {
-                id: c.id,
-                student_id,
+                ...route.params,
+                category_id: c.id,
               })
             }
             style={[
@@ -70,6 +69,16 @@ export default function Categories({ route, navigation }) {
             </Text>
           </Pressable>
         ))}
+
+        <Pressable
+          onPress={async () => {
+            await AsyncStorage.clear();
+            setCompleted({});
+          }}
+          style={style.clearButton}
+        >
+          <Text style={style.button}>Clear all stored data</Text>
+        </Pressable>
       </ImageBackground>
     </View>
   );

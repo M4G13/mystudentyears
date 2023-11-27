@@ -1,49 +1,64 @@
-import React from "react";
-import { View, Text, ScrollView, Pressable } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useCallback } from "react";
+import { View, Text, Pressable } from "react-native";
+import Markdown from "react-native-marked";
 
+import { getData } from "../common.js";
 import style from "../styles/info.js";
 
 export default function Info({ route, navigation }) {
-  const { index, category_id, student_id } = route.params;
+  const index = route.params.index;
+  const { student, category } = getData(route.params);
 
-  const student = global.data.data.find((s) => s.id === student_id);
-  const category = student.attributes.category.find(
-    (c) => c.id === category_id,
-  );
   const information = category.information.data;
-
+  const currInfo = information[index].attributes;
   const isLastPage = index === information.length - 1;
 
-  const navigateToNextPage = () => {
-    if (index === information.length - 1) {
+  const navigateToNextPage = async () => {
+    if (isLastPage) {
+      try {
+        const storedCompletion = await AsyncStorage.getItem(
+          "quiz" + category.id,
+        );
+
+        if (storedCompletion) {
+          await AsyncStorage.removeItem("quiz" + category.id);
+        }
+      } catch (error) {
+        console.error("Failed to clear quiz progress. " + error);
+      }
+
       navigation.navigate("Question", {
-        category_id,
-        student_id,
-        question_index: 0,
+        ...route.params,
+        index: 0,
       });
     } else {
       navigation.push("Info", {
+        ...route.params,
         index: index + 1,
-        category_id,
-        student_id,
       });
     }
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      navigation.setOptions({ title: `${student.Name}, ${category.Category}` });
+    }, []),
+  );
+
   return (
-    <ScrollView contentContainerStyle={style.view}>
-      <View>
-        <Text style={style.smallText}>
-          {student.attributes.Name}, {category.Category}
-        </Text>
-        <Text style={style.bigText}>{information[index].attributes.Title}</Text>
-        <Text style={style.smallerText}>
-          {information[index].attributes.Text}
-        </Text>
-        <Pressable onPress={navigateToNextPage}>
-          <Text style={style.button}>{isLastPage ? "Go to Quiz" : "Next"}</Text>
-        </Pressable>
-      </View>
-    </ScrollView>
+    <View style={style.view}>
+      <Text style={style.bigText}>{currInfo.Title}</Text>
+      <Markdown
+        value={currInfo.Text}
+        flatListProps={{
+          style: { backgroundColor: "#151718" },
+        }}
+      />
+      <Pressable onPress={navigateToNextPage}>
+        <Text style={style.button}>{isLastPage ? "Go to Quiz" : "Next"}</Text>
+      </Pressable>
+    </View>
   );
 }

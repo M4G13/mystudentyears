@@ -9,6 +9,9 @@ import Categories from "./screens/Categories.js";
 import Category from "./screens/Category.js";
 import Gatehouse from "./screens/Gatehouse.js";
 import HomeScreen from "./screens/HomeScreen.js";
+import Info from "./screens/Info.js";
+import Question from "./screens/Question.js";
+import QuizEndScreen from "./screens/QuizEndScreen.js";
 import baseStyle from "./styles/base.js";
 
 const Stack = createNativeStackNavigator();
@@ -32,6 +35,7 @@ export default function App() {
         global.data = data;
       })
       .catch((error) => {
+        console.error(error);
         setError(true);
         setIsLoading(false);
       });
@@ -41,7 +45,7 @@ export default function App() {
     fetchData();
   }, []);
 
-  if (error) {
+  if (error || isLoading) {
     return (
       <View style={baseStyle.view}>
         <Text style={baseStyle.bigText}>start strapi idiot</Text>
@@ -67,6 +71,11 @@ export default function App() {
           <Stack.Screen name="Category" component={Category} />
           <Stack.Screen name="Question" component={Question} />
           <Stack.Screen name="Info" component={Info} />
+          <Stack.Screen
+            name="QuizEndScreen"
+            component={QuizEndScreen}
+            options={{ title: "Quiz Complete" }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
