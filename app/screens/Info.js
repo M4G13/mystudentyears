@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, ScrollView, Pressable } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Markdown from "react-native-marked";
 
 import style from "../styles/info.js";
 
@@ -43,19 +44,20 @@ export default function Info({ route, navigation }) {
   };
 
   return (
-    <ScrollView contentContainerStyle={style.view}>
-      <View>
-        <Text style={style.smallText}>
-          {student.attributes.Name}, {category.Category}
-        </Text>
-        <Text style={style.bigText}>{information[index].attributes.Title}</Text>
-        <Text style={style.smallerText}>
-          {information[index].attributes.Text}
-        </Text>
-        <Pressable onPress={navigateToNextPage}>
-          <Text style={style.button}>{isLastPage ? "Go to Quiz" : "Next"}</Text>
-        </Pressable>
-      </View>
-    </ScrollView>
+    <View style={style.view}>
+      <Text style={style.smallText}>
+        {student.attributes.Name}, {category.Category}
+      </Text>
+      <Text style={style.bigText}>{information[index].attributes.Title}</Text>
+      <Markdown
+        value={information[index].attributes.Text}
+        flatListProps={{
+          style: {backgroundColor: "#151718"}
+        }}
+      />
+      <Pressable onPress={navigateToNextPage}>
+        <Text style={style.button}>{isLastPage ? "Go to Quiz" : "Next"}</Text>
+      </Pressable>
+    </View>
   );
 }
