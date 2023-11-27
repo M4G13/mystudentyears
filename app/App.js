@@ -73,7 +73,7 @@ export default function App() {
           <Stack.Screen name="Category" component={Category} />
           <Stack.Screen name="Question" component={Question} />
           <Stack.Screen name="Info" component={Info} />
-          <Stack.Screen name="QuizEndScreen" component={QuizEndScreen} />
+          <Stack.Screen name="QuizEndScreen" component={QuizEndScreen} options={{ title: 'Quiz Complete' }} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
