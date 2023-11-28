@@ -4,11 +4,12 @@ import DraggableFlatList, {
   ScaleDecorator,
 } from "react-native-draggable-flatlist";
 
-import { shuffled } from "../../common.js";
 import style from "../../styles/question.js";
 
+const _ = require("lodash");
+
 export default function RankOrderQ({ question, handleAnswer }) {
-  const [data, setData] = useState(shuffled(question.answers));
+  const [data, setData] = useState(_.shuffle(question.answers));
 
   const renderItem = ({ item, drag, isActive }) => {
     return (
@@ -42,9 +43,7 @@ export default function RankOrderQ({ question, handleAnswer }) {
         <Pressable
           style={style.pressable}
           onPress={() => {
-            handleAnswer(
-              JSON.stringify(data) === JSON.stringify(question.answers),
-            );
+            handleAnswer(_.isEqual(data, question.answers));
           }}
         >
           <Text style={style.button}>Submit</Text>
