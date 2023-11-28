@@ -9,7 +9,8 @@ export function getData({ student_id, category_id }) {
 }
 
 //https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-export function shuffle(array) {
+export function shuffled(a) {
+  const array = JSON.parse(JSON.stringify(a));
   let currentIndex = array.length,
     randomIndex;
 

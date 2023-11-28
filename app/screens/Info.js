@@ -8,7 +8,7 @@ import style from "../styles/info.js";
 
 export default function Info({ route, navigation }) {
   const index = route.params.index;
-  const { student, category } = getData(route.params);
+  const { category } = getData(route.params);
 
   const information = category.information.data;
   const currInfo = information[index].attributes;

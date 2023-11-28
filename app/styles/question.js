@@ -51,8 +51,13 @@ const style = StyleSheet.create({
     borderRadius: 20,
     margin: 5,
   },
+  draggableSelected: {
+    backgroundColor: "#ff69b4",
+    padding: 10,
+    margin: 5,
+  },
   keywords: {
-    paddingTop: 50,
+    padding: 10,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",

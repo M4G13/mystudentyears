@@ -4,13 +4,11 @@ import DraggableFlatList, {
   ScaleDecorator,
 } from "react-native-draggable-flatlist";
 
-import { shuffle } from "../../common.js";
+import { shuffled } from "../../common.js";
 import style from "../../styles/question.js";
 
 export default function RankOrderQ({ question, handleAnswer }) {
-  const [data, setData] = useState(
-    shuffle(JSON.parse(JSON.stringify(question.answers))),
-  );
+  const [data, setData] = useState(shuffled(question.answers));
 
   const renderItem = ({ item, drag, isActive }) => {
     return (

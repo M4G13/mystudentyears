@@ -1,72 +1,82 @@
 import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 
-import { shuffle } from "../../common.js";
+import { shuffled } from "../../common.js";
 import style from "../../styles/question.js";
 
 export default function MissingWordsQ({ question, handleAnswer }) {
-  const keywords = question.question
-    .match(/\[([^\]]*)\]/g)
-    .map((match) => match.slice(1, -1));
-  const [currentQuestion, setCurrentQuestion] = useState(
-    question && question.question
-      ? question.question.replace(/\[.*?\]/g, (match) =>
-          "_".repeat(match.length - 1),
-        )
-      : "",
+  const keywords = Array.from(
+    question.question.matchAll(/\[(.+?)\]/g),
+    (w) => w[1],
   );
-  const [prevKeywords, setPrevKeywords] = useState([]);
-  const [unusedKeywords, setUnusedKeywords] = useState(keywords);
 
-  const replaceKeyword = (keyword) => {
-    const updatedQuestion = currentQuestion.replace(/_+/, keyword);
-    setPrevKeywords((prev) => [...prev, keyword]);
-    setCurrentQuestion(updatedQuestion);
+  const questionString = question.question.split(/\[.+?\]/g);
 
-    setUnusedKeywords((prev) => prev.filter((kw) => kw !== keyword));
-  };
+  const [selected, setSelected] = useState(null);
+  const [selectedKeywords, setSelectedKeywords] = useState([]);
+  const [availableKeywords, setAvailableKeywords] = useState(
+    shuffled(keywords),
+  );
 
-  const undo = () => {
-    if (prevKeywords.length > 0) {
-      const lastUsedKeyword = prevKeywords.pop();
-      const updatedQuestion = currentQuestion.replace(
-        new RegExp(lastUsedKeyword),
-        "_".repeat(lastUsedKeyword.length),
-      );
-      setCurrentQuestion(updatedQuestion);
-      setPrevKeywords([...prevKeywords]);
-      setUnusedKeywords((prev) => [...prev, lastUsedKeyword]);
+  function modifyKeyword(index) {
+    const nextSelectedKeywords = [...selectedKeywords];
+    const nextAvailableKeywords = [...availableKeywords];
+
+    if (selected !== null) {
+      nextSelectedKeywords[index] = nextAvailableKeywords[selected];
+      nextAvailableKeywords.splice(selected, 1);
+      setSelected(null);
+    } else if (selectedKeywords[index]) {
+      nextAvailableKeywords.push(nextSelectedKeywords[index]);
+      delete nextSelectedKeywords[index];
     }
-  };
 
-  // Shuffle the unusedKeywords array
-  const shuffledKeywords = shuffle(unusedKeywords);
+    setAvailableKeywords(nextAvailableKeywords);
+    setSelectedKeywords(nextSelectedKeywords);
+  }
 
   return (
-    <View>
-      <View style={style.questionContainer}>
-        <Text style={style.bigText}>{currentQuestion}</Text>
-        <View style={style.keywords}>
-          {shuffledKeywords.map((q, index) => (
-            <Pressable
-              style={style.draggable}
-              onPress={() => replaceKeyword(q)}
-              key={index}
-            >
-              <Text style={style.bigText}>{q}</Text>
-            </Pressable>
-          ))}
-        </View>
+    <View style={style.view}>
+      <Text style={style.bigText}>
+        {questionString.map((text, i) => {
+          return (
+            <Text key={`${text}${i}${selectedKeywords[i]}`}>
+              {text}
+              {i < keywords.length && (
+                <Text
+                  style={{ ...style.bigText, backgroundColor: "#ff69b4" }}
+                  onPress={() => modifyKeyword(i)}
+                >
+                  {selectedKeywords[i] || "____"}
+                </Text>
+              )}
+            </Text>
+          );
+        })}
+      </Text>
+      <View style={style.keywords}>
+        {availableKeywords.map((keyword, index) => (
+          <Pressable
+            style={
+              selected === index ? style.draggableSelected : style.draggable
+            }
+            onPress={() => {
+              if (selected === index) setSelected(null);
+              else setSelected(index);
+            }}
+            key={`${index}${keyword}`}
+          >
+            <Text style={style.bigText}>{keyword}</Text>
+          </Pressable>
+        ))}
       </View>
+
       <View style={style.optionsContainer}>
-        <Pressable style={style.pressable} onPress={undo}>
-          <Text style={style.button}>Undo</Text>
-        </Pressable>
         <Pressable
           style={style.pressable}
           onPress={() =>
             handleAnswer(
-              currentQuestion === question.question.replace(/\[|\]/g, ""),
+              JSON.stringify(selectedKeywords) === JSON.stringify(keywords),
             )
           }
         >
