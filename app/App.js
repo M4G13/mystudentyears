@@ -2,7 +2,13 @@ import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Constants from "expo-constants"; // REMOVE IN PRODUCTION
 import React, { useState, useEffect } from "react";
-import { Text, StatusBar, Pressable, View } from "react-native";
+import {
+  Text,
+  StatusBar,
+  Pressable,
+  View,
+  ActivityIndicator,
+} from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import Categories from "./screens/Categories.js";
@@ -45,10 +51,20 @@ export default function App() {
     fetchData();
   }, []);
 
-  if (error || isLoading) {
+  if (isLoading) {
     return (
       <View style={baseStyle.view}>
-        <Text style={baseStyle.bigText}>start strapi idiot</Text>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={baseStyle.view}>
+        <Text style={baseStyle.bigText}>
+          Failed to load data (start strapi)
+        </Text>
         <Pressable onPress={() => fetchData()}>
           <Text style={baseStyle.button}>Retry</Text>
         </Pressable>
