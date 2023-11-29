@@ -65,7 +65,7 @@ export default function App() {
         <Text style={baseStyle.bigText}>
           Failed to load data (start strapi)
         </Text>
-        <Pressable onPress={() => fetchData()}>
+        <Pressable onPress={fetchData}>
           <Text style={baseStyle.button}>Retry</Text>
         </Pressable>
       </View>
