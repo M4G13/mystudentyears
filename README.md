@@ -3,35 +3,48 @@
 ## Project Overview
 An app to help students in the transitionary period from high school to University/College.  Provides students with extra support for everything from managing finances, cooking, and academic skills in a fun and engaging environment.
 
-## Requirements
-* Cross platform app (using react native).
-* Quiz questions in 4 categories, with multiple sub-categories each.
-* An element of choice for the user (pick which categories they work through, what order, etc.)
-* Non-quiz elements for users to gain the knowledge they'll need to pass the quizzes (e.g. text info, videos, audio, etc.)
-* Administrator should be able to create new quiz questions/categories/etc. in a no-code environment and have the app update with these automatically.
-* Database should use DigitalOcean.
-* App should return useful analytics data to the administrator (watch out for GDPR).
 
 ## Roadmap
-- [ ] Create simple react app for quiz questions.
-	- [ ] Create app to simply display quiz questions using react.
-	- [ ] Create tests for this, ensure it works on multiple platforms.
-- [ ] Allow react app to retrieve questions from DigitalOcean db.
-	- [ ] Work out infrastructure
-	- [ ] Create some mocked questions on the db for testing
-	- [ ] Work out and implement the retrieval on the app (what happens to your progress if questions are changed?)
-	- [ ] Ensure test suite is robust.
-- [ ] Allow administrator to add to db with no-code env (e.g. SanityCMS hosted on MyStudentYears website).
-	- [ ] Decide on which CMS to use (or if a CMS is even the right choice?), and on hosting options.
-	- [ ] Work out how to interact with the DB from the CMS (access keys; security issues—find out!).
-	- [ ] Make sure there's a useful preview on the CMS so admin can see what it will look like.
-	- [ ] Rigorously test workflow (Publish on CMS -> upload to DB -> retrieve on app)
-	- [ ] At this point the MVP is achieved but requirements are not met—needs to be expanded to fulfil all user requirements
-	- [ ] Ensure test suite is robust.
-- [ ] Expand the scope.
-	- [ ] Add more question types.
-	- [ ] Add more categories.
-	- [ ] Improve UI (branching paths, etc.).
-	- [ ] Create an analytics viewing page on the CMS (or elsewhere).
-	- [ ] Conduct user tests—see what else could be improved.
-	- [ ] Ensure a robust testing suite.
+- [x] Research + Stack Decisions
+    - [x] Research + determine cross-platform app stack
+    - [x] Research CMS options
+    - [x] Prototype use of systems
+- [x] Simple, base functionality
+    - [x] Finalise structure of all pages
+    - [x] Pipeline for static analysis
+    - [x] App interface with strapi
+    - [x] Standardise + improve app layout
+    - [x] Create all question types
+    - [x] App works with strapi
+- [ ] Extended end-user functionality
+    - [ ] Full E2E + regression test suite
+    - [ ] Improve quiz functionality
+    - [ ] Display + store progress
+    - [ ] Form/survey at start + end of app flow
+    - [ ] Analytics captured
+    - [ ] Improved look + layout of whole app
+- [ ] Dev build + deployment of CMS
+    - [ ] Strapi deployed
+    - [ ] App visuals improved, nearly finalised
+    - [ ] Analytics displayed, visualised
+    - [ ] Development build delivered to customer
+- [ ] User testing, polish
+    - [ ] App finalised
+    - [ ] Flourishes + polish
+    - [ ] User testing of app
+
+## Requirements
+* The app will open with some welcome screen > NEXT
+* Enter name and email - plus link to privacy policy, terms and conditions, etc. > NEXT
+* Simple in app Survey (see below) / or link to google docs (tho I would rather keep them "in-app" >  The user will fill out the survey > Submit
+* The data will be stored in a database which product owner can access - opportunity for data visualisation
+* The map will show a campus with a building (category) (money, wellbeing, studies, independence) Plus some text Welcome to Freedom Campus
+* At the entrance to the Campus they will see  4 students (Sam, Lee, Molly and Ben) and be able to follow each student story -  each story will visit the 4 buildings - Lecture Hall, Medical Centre, Student Union and Finance Advisor. In each category the student stories are consistent  and approximately correspond to some level of complexity/ stage/ . The user starts with the first student story, then the second, third and fourth.
+* Through each of the student's story they visit each of the buildings/ Categories and are taken through  3 information "screens" which have  3-4 paragraphs of text and 4-5 Links to podcast, youtube,  PDF, weblink,
+* Before the user leaves the building/ category there is a quiz - marked out of 10 marks. Quizzes are composed of several questions of different types, these can include multiple choice, free input (number, text, etc.), ranking, etc. The quiz will be marked and credits awarded, and comments supplied if credits are below XX.
+* The marks from the 4 quizzes in each story will be added  together to give a total of 30 credits for the one student story
+* Once all complete 30 x 4 = 120 (clever eh) the total  shown to the user at then end with suggestions of further work if they get certain scores in certain categories - eg overall Money score is 50% then
+* Once the user has completed all four student stories they will be given a survey to fill out which is similar to the first survey for analytics (e.g. confidence).
+* The Survey data will be in format that product owner (Sally) can compare analytics from the first and second surveys, tied to a user id so that comparisons can be made (e.g. students are more confident after using the app).
+* The quiz data answers will be stored in a database and able to be analysed, reported on , exported etc.
+* The categories and map won't be changeable by the product owner but within each category (map building) the product owner can add any number of student stories and any number of information pages and quiz questions to that user story in that category.
