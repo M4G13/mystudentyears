@@ -33,5 +33,6 @@ build-strapi:
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
+    - cd strapi
     - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
