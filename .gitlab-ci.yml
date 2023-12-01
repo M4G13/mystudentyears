@@ -1,16 +1,39 @@
-image: node:latest
-
-cache:
-  paths:
-    - app/node_modules/
-    # - strapi/node_modules/
+variables:
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:latest
+  IMAGE_TAG_SHA: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
 
 stages:
   - test
+  - build
 
 lint-app-job:
   stage: test
+  image: node:latest
+  rules:
+    - changes:
+      - app/**/*
+  cache:
+    paths:
+      - app/node_modules/
   script:
     - cd app
     - npm install
     - npm run lint
+
+build-strapi:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  rules:
+    - changes:
+      - strapi/**/*
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+  only:
+    - tags
