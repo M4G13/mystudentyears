@@ -76,7 +76,7 @@ const style = StyleSheet.create({
     width: 380,
   },
   submit: {
-    margin:20,
+    margin: 20,
     padding: 20,
     width: 380,
     backgroundColor: "#1897F6",
@@ -84,7 +84,7 @@ const style = StyleSheet.create({
     borderRadius: 20,
     fontSize: 20,
     fontWeight: "bold",
-  }
+  },
 });
 
 export default style;
