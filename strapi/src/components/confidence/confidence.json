@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_confidence_confidences",
+  "info": {
+    "displayName": "confidence",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "Finance",
+        "Wellbeing",
+        "Academics",
+        "Independence"
+      ]
+    },
+    "confidence": {
+      "type": "enumeration",
+      "enum": [
+        "Fully confident",
+        "Quite confident",
+        "Not very confident",
+        "Not at all confident"
+      ]
+    }
+  }
+}

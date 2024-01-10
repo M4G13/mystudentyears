@@ -10,6 +10,11 @@ export default function HomeScreen({ navigation }) {
         style={style.mainImage}
       />
       <Text style={style.bigText}>Welcome to My Student Years</Text>
+
+      <Pressable onPress={() => navigation.navigate("Survey")}>
+        <Text style={style.button}>Take the survey</Text>
+      </Pressable>
+
       <Pressable onPress={() => navigation.navigate("Gatehouse")}>
         <Text style={style.button}>Go to Gatehouse</Text>
       </Pressable>

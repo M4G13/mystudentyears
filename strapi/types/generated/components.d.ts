@@ -29,6 +29,27 @@ export interface CategoryCategory extends Schema.Component {
   };
 }
 
+export interface ConfidenceConfidence extends Schema.Component {
+  collectionName: 'components_confidence_confidences';
+  info: {
+    displayName: 'confidence';
+    description: '';
+  };
+  attributes: {
+    category: Attribute.Enumeration<
+      ['Finance', 'Wellbeing', 'Academics', 'Independence']
+    >;
+    confidence: Attribute.Enumeration<
+      [
+        'Fully confident',
+        'Quite confident',
+        'Not very confident',
+        'Not at all confident'
+      ]
+    >;
+  };
+}
+
 export interface OptionTypesMultiChoiceOption extends Schema.Component {
   collectionName: 'components_option_types_multi_choice_options';
   info: {
@@ -104,6 +125,7 @@ declare module '@strapi/types' {
     export interface Components {
       'answers.answers': AnswersAnswers;
       'category.category': CategoryCategory;
+      'confidence.confidence': ConfidenceConfidence;
       'option-types.multi-choice-option': OptionTypesMultiChoiceOption;
       'questions.missing-words-question': QuestionsMissingWordsQuestion;
       'questions.multi-choice-question': QuestionsMultiChoiceQuestion;

@@ -18,6 +18,7 @@ import HomeScreen from "./screens/HomeScreen.js";
 import Info from "./screens/Info.js";
 import Question from "./screens/Question.js";
 import QuizEndScreen from "./screens/QuizEndScreen.js";
+import Survey from "./screens/Survey.js";
 import baseStyle from "./styles/base.js";
 
 const Stack = createNativeStackNavigator();
@@ -82,6 +83,7 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Home Screen" component={HomeScreen} />
+          <Stack.Screen name="Survey" component={Survey} />
           <Stack.Screen name="Gatehouse" component={Gatehouse} />
           <Stack.Screen name="Categories" component={Categories} />
           <Stack.Screen name="Category" component={Category} />
