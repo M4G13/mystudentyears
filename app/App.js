@@ -13,6 +13,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import Categories from "./screens/Categories.js";
 import Category from "./screens/Category.js";
+import Error from "./screens/Error.js";
 import Gatehouse from "./screens/Gatehouse.js";
 import HomeScreen from "./screens/HomeScreen.js";
 import Info from "./screens/Info.js";
@@ -31,20 +32,20 @@ export default function App() {
   const fetchData = () => {
     fetch(
       "http://" +
-        Constants.expoConfig.hostUri.split(":").shift() +
-        ":1337/api/students?populate=deep",
+      Constants.expoConfig.hostUri.split(":").shift() +
+      ":1337/api/students?populate=deep",
     )
-      .then((response) => response.json())
-      .then((data) => {
-        setIsLoading(false);
-        setError(false);
-        global.data = data;
-      })
-      .catch((error) => {
-        console.error(error);
-        setError(true);
-        setIsLoading(false);
-      });
+    .then((response) => response.json())
+    .then((data) => {
+      setIsLoading(false);
+      setError(false);
+      global.data = data;
+    })
+    .catch((error) => {
+      console.error(error);
+      setError(true);
+      setIsLoading(false);
+    });
   };
 
   useEffect(() => {
@@ -63,7 +64,7 @@ export default function App() {
     return (
       <View style={baseStyle.view}>
         <Text style={baseStyle.bigText}>
-          Failed to load data (start strapi)
+          Failed to load data, make sure you have an internet connection and try again
         </Text>
         <Pressable onPress={fetchData}>
           <Text style={baseStyle.button}>Retry</Text>
@@ -87,6 +88,7 @@ export default function App() {
           <Stack.Screen name="Category" component={Category} />
           <Stack.Screen name="Question" component={Question} />
           <Stack.Screen name="Info" component={Info} />
+          <Stack.Screen name="Error" component={Error} />
           <Stack.Screen
             name="QuizEndScreen"
             component={QuizEndScreen}
