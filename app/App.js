@@ -32,20 +32,20 @@ export default function App() {
   const fetchData = () => {
     fetch(
       "http://" +
-      Constants.expoConfig.hostUri.split(":").shift() +
-      ":1337/api/students?populate=deep",
+        Constants.expoConfig.hostUri.split(":").shift() +
+        ":1337/api/students?populate=deep",
     )
-    .then((response) => response.json())
-    .then((data) => {
-      setIsLoading(false);
-      setError(false);
-      global.data = data;
-    })
-    .catch((error) => {
-      console.error(error);
-      setError(true);
-      setIsLoading(false);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        setIsLoading(false);
+        setError(false);
+        global.data = data;
+      })
+      .catch((error) => {
+        console.error(error);
+        setError(true);
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -64,7 +64,8 @@ export default function App() {
     return (
       <View style={baseStyle.view}>
         <Text style={baseStyle.bigText}>
-          Failed to load data, make sure you have an internet connection and try again
+          Failed to load data, make sure you have an internet connection and try
+          again
         </Text>
         <Pressable onPress={fetchData}>
           <Text style={baseStyle.button}>Retry</Text>
