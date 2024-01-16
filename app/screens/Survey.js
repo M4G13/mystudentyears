@@ -1,5 +1,7 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 import Constants from "expo-constants"; // REMOVE IN PRODUCTION
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { View, Text, ScrollView, TextInput, Pressable } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import RadioForm from "react-native-simple-radio-button";
@@ -352,6 +354,34 @@ export default function Survey({ navigation }) {
     { key: "340", value: "Woodmill High School" },
   ];
 
+  async function storeResponse(response) {
+    try {
+      await AsyncStorage.setItem("survey", JSON.stringify(response));
+    } catch (e) {
+      console.error("Failed to save progress. " + e);
+    }
+  }
+
+  const [response, setResponse] = useState({});
+  useFocusEffect(
+    useCallback(() => {
+      async function getResponse() {
+        let tempResponse;
+        try {
+          const storedResponse = await AsyncStorage.getItem("survey");
+          tempResponse = JSON.parse(storedResponse);
+          setSelected(tempResponse?.data?.school);
+          setInput(tempResponse?.data?.email);
+        } catch (e) {
+          console.error("Failed to get response. " + e);
+          tempResponse = null;
+        }
+        setResponse(tempResponse);
+      }
+      getResponse();
+    }, []),
+  );
+
   const handlePostData = async (data) => {
     try {
       const response = await fetch(
@@ -362,7 +392,6 @@ export default function Survey({ navigation }) {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // Add any additional headers if needed
           },
           body: JSON.stringify(data),
         },
@@ -376,6 +405,8 @@ export default function Survey({ navigation }) {
     } catch (error) {
       console.error("Error:", error.message);
     }
+
+    storeResponse(data);
   };
 
   const categories = [
@@ -392,22 +423,20 @@ export default function Survey({ navigation }) {
     "Not at all confident",
   ];
 
-  // State to store selected values for each Likert scale set
   const [selectedValues, setSelectedValues] = useState(Array(4).fill("NULL"));
 
-  // Radio button options for each Likert scale set
   const radioProps = likertOptions.map((option, index) => ({
     label: option,
     value: index,
   }));
 
   function process() {
-    if (!/\S+@\S+\.\S+/.test(input)) {
+    if (!/\S+@\S+\.\S+/.test(input) && response !== null) {
       alert("Please enter a valid e-mail address.");
       return 0;
     }
 
-    if (selected === "") {
+    if (selected === "" && response !== null) {
       alert("Please select a school.");
       return 0;
     }
@@ -423,6 +452,7 @@ export default function Survey({ navigation }) {
       data: {
         email: input,
         school: selected,
+        responseNo: response === null ? 1 : 2,
         confidence: [
           {
             id: 1,
@@ -449,38 +479,48 @@ export default function Survey({ navigation }) {
     };
 
     handlePostData(data);
+    navigation.navigate("Gatehouse");
   }
 
   return (
     <ScrollView contentContainerStyle={style.scrollView}>
       <View style={style.view}>
-        <Text style={style.bigText}>Introductory Survey</Text>
+        {response === null ? (
+          <View>
+            <Text style={style.bigText}>Introductary Survey</Text>
 
-        <View>
-          <TextInput
-            style={style.input}
-            placeholder="Enter your e-mail address"
-            onChangeText={(text) => setInput(text)}
-            value={input}
-          />
-        </View>
+            <TextInput
+              style={style.input}
+              placeholder="Enter your e-mail address"
+              onChangeText={(text) => setInput(text)}
+              value={input}
+            />
 
-        <SelectList
-          style={style.temp}
-          setSelected={(val) => {
-            setSelected(val);
-          }}
-          data={schools}
-          boxStyles={style.boxStyle}
-          inputStyles={style.dropdownOption}
-          dropdownStyles={style.dropdownOption}
-          dropdownTextStyles={style.dropdownOption}
-          dropdownItemStyles={style.dropdownOption}
-          placeholder="Select your school"
-          searchPlaceholder="search"
-          searchPlaceholderTextColor="white"
-          save="value"
-        />
+            <View style={style.dropDown}>
+              <SelectList
+                setSelected={(val) => {
+                  setSelected(val);
+                }}
+                data={schools}
+                boxStyles={style.boxStyle}
+                inputStyles={style.dropdownOption}
+                dropdownStyles={style.dropdownOption}
+                dropdownTextStyles={style.dropdownOption}
+                dropdownItemStyles={style.dropdownOption}
+                placeholder="Select your school"
+                searchPlaceholder="search"
+                searchPlaceholderTextColor="white"
+                save="value"
+              />
+            </View>
+          </View>
+        ) : (
+          <View style={style.personalInfo}>
+            <Text style={style.bigText}>Conclusionary Survey</Text>
+            <Text style={style.smallText}>{response.data?.email}</Text>
+            <Text style={style.smallText}>{response.data?.school}</Text>
+          </View>
+        )}
 
         {categories.map((category, index) => (
           <View key={index} style={style.questionContainer}>
@@ -502,7 +542,7 @@ export default function Survey({ navigation }) {
         ))}
 
         <Pressable onPress={() => process()}>
-          <Text style={style.submit}>Go to Gatehouse</Text>
+          <Text style={style.submit}>Continue to campus</Text>
         </Pressable>
       </View>
     </ScrollView>

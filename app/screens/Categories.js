@@ -41,6 +41,8 @@ export default function Categories({ route, navigation }) {
 
   return (
     <View style={style.view}>
+      <Text style={style.smallText}> Not my first time </Text>
+
       <ImageBackground
         source={imageSource}
         resizeMode="cover"

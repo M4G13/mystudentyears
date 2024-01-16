@@ -85,6 +85,13 @@ const style = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
+  dropDown: {
+    paddingLeft: 20,
+  },
+  personalInfo: {
+    textAlign: "center",
+    alignItems: "center",
+  },
 });
 
 export default style;

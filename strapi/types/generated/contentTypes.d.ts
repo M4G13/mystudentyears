@@ -779,8 +779,9 @@ export interface ApiSurveyDatumSurveyDatum extends Schema.CollectionType {
   };
   attributes: {
     email: Attribute.Email;
-    School: Attribute.String;
+    school: Attribute.String;
     confidence: Attribute.Component<'confidence.confidence', true>;
+    responseNo: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
