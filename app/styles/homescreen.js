@@ -11,6 +11,12 @@ const style = StyleSheet.create({
   view: base.view,
   bigText: base.bigText,
   button: base.button,
+
+  discreteButton: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+  }
 });
 
 export default style;
