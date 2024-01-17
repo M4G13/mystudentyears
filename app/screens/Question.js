@@ -9,6 +9,15 @@ import RankOrderQ from "./questionTypes/RankOrderQ.js";
 import { getData } from "../common.js";
 import baseStyle from "../styles/base.js";
 
+export function calculateScore(answers, totalQuestions) {
+  const correctAnswers = answers.filter((answer) => answer === true);
+  const score = (correctAnswers.length / totalQuestions) * 100;
+  return {
+    score,
+    correctAmount: correctAnswers.length,
+  };
+}
+
 export default function Question({ route, navigation }) {
   const { index } = route.params;
   const { category } = getData(route.params);
@@ -25,16 +34,6 @@ export default function Question({ route, navigation }) {
     } catch (e) {
       console.error("Failed to save progress. " + e);
     }
-  }
-
-  function calculateScore(answers, totalQuestions) {
-    const correctAnswers = answers.filter((answer) => answer === true);
-    const score = (correctAnswers.length / totalQuestions) * 100;
-
-    return {
-      score,
-      correctAmount: correctAnswers.length,
-    };
   }
 
   function handleAnswer(correct) {
