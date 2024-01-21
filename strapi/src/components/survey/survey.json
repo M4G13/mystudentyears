@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_survey_surveys",
+  "info": {
+    "displayName": "Survey Response",
+    "icon": "envelop",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Completed": {
+      "displayName": "Survey Completion",
+      "type": "component",
+      "repeatable": true,
+      "component": "survey.survey-completion"
+    }
+  }
+}

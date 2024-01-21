@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_completion_completions",
+  "info": {
+    "displayName": "Completion",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "quiz": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::quiz.quiz"
+    },
+    "Percentage": {
+      "type": "float"
+    }
+  }
+}
