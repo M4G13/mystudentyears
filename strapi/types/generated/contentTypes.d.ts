@@ -677,6 +677,45 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiAppUserAppUser extends Schema.CollectionType {
+  collectionName: 'app_users';
+  info: {
+    singularName: 'app-user';
+    pluralName: 'app-users';
+    displayName: 'AppUser';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    Email: Attribute.Email;
+    InitalSurvey: Attribute.Component<'survey.survey'>;
+    FinalSurvey: Attribute.Component<'survey.survey'>;
+    CompletedQuizzes: Attribute.Component<'completion.completion', true>;
+    UUID: Attribute.UID;
+    school: Attribute.Relation<
+      'api::app-user.app-user',
+      'oneToOne',
+      'api::school.school'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::app-user.app-user',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::app-user.app-user',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiInfoInfo extends Schema.CollectionType {
   collectionName: 'infos';
   info: {
@@ -765,6 +804,36 @@ export interface ApiQuizQuiz extends Schema.CollectionType {
   };
 }
 
+export interface ApiSchoolSchool extends Schema.CollectionType {
+  collectionName: 'schools';
+  info: {
+    singularName: 'school';
+    pluralName: 'schools';
+    displayName: 'School';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    Name: Attribute.String;
+    Location: Attribute.JSON;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::school.school',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::school.school',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiStudentStudent extends Schema.CollectionType {
   collectionName: 'students';
   info: {
@@ -789,6 +858,36 @@ export interface ApiStudentStudent extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::student.student',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSurveyQuestionSurveyQuestion extends Schema.CollectionType {
+  collectionName: 'survey_questions';
+  info: {
+    singularName: 'survey-question';
+    pluralName: 'survey-questions';
+    displayName: 'Survey Questions';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Question: Attribute.Component<'questions.multi-choice-question'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::survey-question.survey-question',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::survey-question.survey-question',
       'oneToOne',
       'admin::user'
     > &
@@ -843,10 +942,13 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::app-user.app-user': ApiAppUserAppUser;
       'api::info.info': ApiInfoInfo;
       'api::privacy-policy.privacy-policy': ApiPrivacyPolicyPrivacyPolicy;
       'api::quiz.quiz': ApiQuizQuiz;
+      'api::school.school': ApiSchoolSchool;
       'api::student.student': ApiStudentStudent;
+      'api::survey-question.survey-question': ApiSurveyQuestionSurveyQuestion;
       'api::t-and-c.t-and-c': ApiTAndCTAndC;
     }
   }

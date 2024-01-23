@@ -10,7 +10,8 @@
     "web": "expo start --web",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "lint-hard": "eslint . --max-warnings=0"
+    "lint-hard": "eslint . --max-warnings=0",
+    "test": "jest --verbose"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.18.2",
@@ -33,7 +34,15 @@
     "eslint": "^8.53.0",
     "eslint-config-universe": "^12.0.0",
     "expo-constants": "^14.4.2",
-    "prettier": "^3.0.3"
+    "prettier": "^3.0.3",
+    "jest-expo": "~49.0.0",
+    "jest": "^29.2.1"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
+    ]
   },
   "private": true
 }
