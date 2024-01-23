@@ -17,8 +17,10 @@ import Error from "./screens/Error.js";
 import Gatehouse from "./screens/Gatehouse.js";
 import HomeScreen from "./screens/HomeScreen.js";
 import Info from "./screens/Info.js";
+import Privacy from "./screens/Privacy.js";
 import Question from "./screens/Question.js";
 import QuizEndScreen from "./screens/QuizEndScreen.js";
+import Terms from "./screens/Terms.js";
 import baseStyle from "./styles/base.js";
 
 const Stack = createNativeStackNavigator();
@@ -84,6 +86,8 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Home Screen" component={HomeScreen} />
+          <Stack.Screen name="Terms & Conditions" component={Terms} />
+          <Stack.Screen name="Privacy Policy" component={Privacy} />
           <Stack.Screen name="Gatehouse" component={Gatehouse} />
           <Stack.Screen name="Categories" component={Categories} />
           <Stack.Screen name="Category" component={Category} />

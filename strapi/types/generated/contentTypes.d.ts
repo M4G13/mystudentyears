@@ -741,6 +741,36 @@ export interface ApiInfoInfo extends Schema.CollectionType {
   };
 }
 
+export interface ApiPrivacyPolicyPrivacyPolicy extends Schema.SingleType {
+  collectionName: 'privacy_policies';
+  info: {
+    singularName: 'privacy-policy';
+    pluralName: 'privacy-policies';
+    displayName: 'Privacy Policy';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    privacyPolicy: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::privacy-policy.privacy-policy',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::privacy-policy.privacy-policy',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiQuizQuiz extends Schema.CollectionType {
   collectionName: 'quizzes';
   info: {
@@ -865,6 +895,37 @@ export interface ApiSurveyQuestionSurveyQuestion extends Schema.CollectionType {
   };
 }
 
+export interface ApiTAndCTAndC extends Schema.SingleType {
+  collectionName: 't_and_cs';
+  info: {
+    singularName: 't-and-c';
+    pluralName: 't-and-cs';
+    displayName: 'Terms and Conditions';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    TermsAndConditions: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::t-and-c.t-and-c',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::t-and-c.t-and-c',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -883,10 +944,12 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::app-user.app-user': ApiAppUserAppUser;
       'api::info.info': ApiInfoInfo;
+      'api::privacy-policy.privacy-policy': ApiPrivacyPolicyPrivacyPolicy;
       'api::quiz.quiz': ApiQuizQuiz;
       'api::school.school': ApiSchoolSchool;
       'api::student.student': ApiStudentStudent;
       'api::survey-question.survey-question': ApiSurveyQuestionSurveyQuestion;
+      'api::t-and-c.t-and-c': ApiTAndCTAndC;
     }
   }
 }
