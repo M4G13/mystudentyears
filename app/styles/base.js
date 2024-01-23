@@ -34,11 +34,11 @@ const baseStyle = StyleSheet.create({
   },
 
   discreteButton: {
-    textAlign : "bottom",
+    textAlign: "bottom",
     position: "absolute",
     bottom: 0,
     left: 0,
-  }
+  },
 });
 
 export default baseStyle;

@@ -1,63 +1,59 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from "@react-navigation/native";
 import Constants from "expo-constants"; // REMOVE IN PRODUCTION
-import React, { useState, useCallback, useEffect } from "react";
-import { View, Text, ScrollView, TextInput, Pressable, ActivityIndicator } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, Pressable, ActivityIndicator } from "react-native";
+
 import baseStyle from "../styles/base";
 
-export default function Terms({route, navigation }) {
+export default function Terms({ route, navigation }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const [termsContent, setTermsContent] = useState("");
 
+  const fetchData = () => {
+    fetch(
+      "http://" +
+        Constants.expoConfig.hostUri.split(":").shift() +
+        ":1337/api/t-and-c",
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setTermsContent(data.data.attributes.TermsAndConditions);
+        setIsLoading(false);
+        setError(false);
+        console.log(data.data);
+      })
+      .catch((error) => {
+        console.error(error);
+        setError(true);
+        setIsLoading(false);
+      });
+  };
 
-const fetchData = () => {
-  fetch(
-    "http://" +
-      Constants.expoConfig.hostUri.split(":").shift() +
-      ":1337/api/t-and-c",
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      setTermsContent(data.data.attributes.TermsAndConditions);
-      setIsLoading(false);
-      setError(false);
-      console.log(data.data);
-    })
-    .catch((error) => {
-      console.error(error);
-      setError(true);
-      setIsLoading(false);
-    });
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    
-};
+  if (isLoading) {
+    return (
+      <View style={baseStyle.view}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
-useEffect(() => {
-  fetchData();
-}, []);
-
-if (isLoading) {
-  return (
-    <View style={baseStyle.view}>
-      <ActivityIndicator size="large" />
-    </View>
-  );
-}
-
-if (error) {
-  return (
-    <View style={baseStyle.view}>
-      <Text style={baseStyle.bigText}>
-        Failed to load data, make sure you have an internet connection and try
-        again
-      </Text>
-      <Pressable onPress={fetchData}>
-        <Text style={baseStyle.button}>Retry</Text>
-      </Pressable>
-    </View>
-  );
-}
+  if (error) {
+    return (
+      <View style={baseStyle.view}>
+        <Text style={baseStyle.bigText}>
+          Failed to load data, make sure you have an internet connection and try
+          again
+        </Text>
+        <Pressable onPress={fetchData}>
+          <Text style={baseStyle.button}>Retry</Text>
+        </Pressable>
+      </View>
+    );
+  }
 
   return (
     <View style={baseStyle.view}>
