@@ -4,7 +4,7 @@ module.exports = {
       strapi.service('api::school.school').fetchSchools();
     },
     options: {
-      rule: "0 0 0 1 */3 *",
+      rule: '0 0 0 1 */3 *',
     },
   },
 };

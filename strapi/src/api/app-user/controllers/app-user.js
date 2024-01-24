@@ -14,7 +14,7 @@ module.exports = createCoreController('api::app-user.app-user', ({ strapi }) => 
           $eq: ctx.request.params.UUID
         }
       }
-    })
+    });
     ctx.request.params.id = entry[0].id;
     return super.update(ctx);
   }

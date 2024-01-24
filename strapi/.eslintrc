@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "extends": "eslint:recommended",
   "env": {
     "commonjs": true,
@@ -8,6 +8,10 @@
     "browser": false
   },
   "parserOptions": {
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": [ "@babel/preset-react" ]
+    },
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,
       "jsx": false
