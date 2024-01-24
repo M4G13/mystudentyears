@@ -7,7 +7,10 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
+    "lint-hard": "eslint . --max-warnings=0"
   },
   "dependencies": {
     "@strapi/plugin-users-permissions": "4.17.1",
@@ -30,5 +33,10 @@
     "node": ">=18.0.0 <=20.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.23.3",
+    "@babel/preset-react": "^7.23.3",
+    "eslint": "^8.56.0"
+  }
 }

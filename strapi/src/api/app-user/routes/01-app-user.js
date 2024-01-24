@@ -1,9 +1,9 @@
 module.exports = {
   routes: [
     {
-      method: "PUT",
-      path: "/app-user/:UUID",
-      handler: "app-user.update",
+      method: 'PUT',
+      path: '/app-user/:UUID',
+      handler: 'app-user.update',
     },
   ],
 };
