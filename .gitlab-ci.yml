@@ -1,16 +1,31 @@
-image: node:latest
+image: node:20
 
 cache:
   paths:
     - app/node_modules/
-    # - strapi/node_modules/
+    - strapi/node_modules/
 
 stages:
-  - test
+  - static_analysis
+  - unit_test
 
 lint-app-job:
-  stage: test
+  stage: static_analysis
   script:
     - cd app
     - npm install
     - npm run lint
+
+lint-strapi-job:
+  stage: static_analysis
+  script:
+    - cd strapi
+    - npm install
+    - npm run lint
+
+unit-test-job:
+  stage: unit_test
+  script:
+    - cd app
+    - npm install
+    - npm run test

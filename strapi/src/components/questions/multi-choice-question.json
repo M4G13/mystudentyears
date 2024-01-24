@@ -16,6 +16,16 @@
       "component": "option-types.multi-choice-option",
       "min": 4,
       "max": 4
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

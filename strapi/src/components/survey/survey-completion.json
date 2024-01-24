@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_survey_survey_completions",
+  "info": {
+    "displayName": "Survey Completion"
+  },
+  "options": {},
+  "attributes": {
+    "survey_question": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::survey-question.survey-question"
+    },
+    "Answer": {
+      "type": "string"
+    }
+  }
+}
