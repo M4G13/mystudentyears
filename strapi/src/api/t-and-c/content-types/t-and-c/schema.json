@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "t_and_cs",
+  "info": {
+    "singularName": "t-and-c",
+    "pluralName": "t-and-cs",
+    "displayName": "Terms and Conditions",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "TermsAndConditions": {
+      "type": "text"
+    }
+  }
+}
