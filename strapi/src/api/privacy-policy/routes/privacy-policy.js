@@ -6,4 +6,14 @@
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::privacy-policy.privacy-policy');
+module.exports = createCoreRouter('api::privacy-policy.privacy-policy', {
+  only: ['find', 'findOne'],
+  config: {
+    find: {
+      auth: false,
+    },
+    findOne: {
+      auth: false,
+    },
+  },
+});
