@@ -1,0 +1,19 @@
+'use strict';
+
+/**
+ * school router
+ */
+
+const { createCoreRouter } = require('@strapi/strapi').factories;
+
+module.exports = createCoreRouter('api::school.school', {
+  only: ['find', 'findOne'],
+  config: {
+    find: {
+      auth: false,
+    },
+    findOne: {
+      auth: false,
+    },
+  },
+});

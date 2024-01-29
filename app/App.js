@@ -13,11 +13,14 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import Categories from "./screens/Categories.js";
 import Category from "./screens/Category.js";
+import Error from "./screens/Error.js";
 import Gatehouse from "./screens/Gatehouse.js";
 import HomeScreen from "./screens/HomeScreen.js";
 import Info from "./screens/Info.js";
+import Privacy from "./screens/Privacy.js";
 import Question from "./screens/Question.js";
 import QuizEndScreen from "./screens/QuizEndScreen.js";
+import Terms from "./screens/Terms.js";
 import baseStyle from "./styles/base.js";
 
 const Stack = createNativeStackNavigator();
@@ -63,7 +66,8 @@ export default function App() {
     return (
       <View style={baseStyle.view}>
         <Text style={baseStyle.bigText}>
-          Failed to load data (start strapi)
+          Failed to load data, make sure you have an internet connection and try
+          again
         </Text>
         <Pressable onPress={fetchData}>
           <Text style={baseStyle.button}>Retry</Text>
@@ -82,11 +86,14 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Home Screen" component={HomeScreen} />
+          <Stack.Screen name="Terms & Conditions" component={Terms} />
+          <Stack.Screen name="Privacy Policy" component={Privacy} />
           <Stack.Screen name="Gatehouse" component={Gatehouse} />
           <Stack.Screen name="Categories" component={Categories} />
           <Stack.Screen name="Category" component={Category} />
           <Stack.Screen name="Question" component={Question} />
           <Stack.Screen name="Info" component={Info} />
+          <Stack.Screen name="Error" component={Error} />
           <Stack.Screen
             name="QuizEndScreen"
             component={QuizEndScreen}
