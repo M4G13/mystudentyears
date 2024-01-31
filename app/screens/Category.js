@@ -55,7 +55,7 @@ export default function Category({ route, navigation }) {
         {completion !== null && (
           <Text style={baseStyle.bigText}>
             Previously you got {completion} out of{" "}
-            {category.quiz.data.attributes.questions.length}
+            {category.quiz.questions.length}
           </Text>
         )}
         <Pressable

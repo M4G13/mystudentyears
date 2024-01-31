@@ -22,7 +22,7 @@ export default function Question({ route, navigation }) {
   const { index } = route.params;
   const { category } = getData(route.params);
 
-  const quiz = category.quiz.data.attributes;
+  const quiz = category.quiz;
 
   const question = quiz.questions[index];
 

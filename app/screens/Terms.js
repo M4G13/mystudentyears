@@ -20,7 +20,6 @@ export default function Terms({ route, navigation }) {
         setTermsContent(data.data.attributes.TermsAndConditions);
         setIsLoading(false);
         setError(false);
-        console.log(data.data);
       })
       .catch((error) => {
         console.error(error);
