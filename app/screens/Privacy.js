@@ -20,7 +20,6 @@ export default function Privacy({ route, navigation }) {
         setPrivacyContent(data.data.attributes.privacyPolicy);
         setIsLoading(false);
         setError(false);
-        console.log(data.data);
       })
       .catch((error) => {
         console.error(error);

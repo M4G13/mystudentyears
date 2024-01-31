@@ -10,8 +10,6 @@ export default function Info({ route, navigation }) {
   const index = route.params.index;
   const { category } = getData(route.params);
 
-  console.log(category);
-
   const information = category.information;
   const currInfo = information[index];
   const isLastPage = index === information.length - 1;
