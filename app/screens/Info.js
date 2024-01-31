@@ -16,7 +16,6 @@ export default function Info({ route, navigation }) {
   const currInfo = information[index];
   const isLastPage = index === information.length - 1;
 
-
   const navigateToNextPage = async () => {
     if (isLastPage) {
       try {
