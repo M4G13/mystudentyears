@@ -3,7 +3,7 @@ services:
   strapi:
     container_name: strapi
     build: .
-    image: strapi:latest
+    image: mystudentyears/mystudentyears:latest
     restart: unless-stopped
     env_file: .env.prod
     environment:
@@ -16,12 +16,14 @@ services:
       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       NODE_ENV: ${NODE_ENV}
+      UPSTREAM_URL: ${UPSTREAM_URL}
+      IS_PROXIED: ${IS_PROXIED}
     volumes:
       - ./config:/opt/app/config
       - ./src:/opt/app/src
       - ./package.json:/opt/package.json
       - ./package-lock.json:/opt/package-lock.json
-      - ./.env:/opt/app/.env
+      - ./.env.prod:/opt/app/.env.prod
       - ./public/uploads:/opt/app/public/uploads
     ports:
       - '1337:1337'
@@ -34,7 +36,7 @@ services:
     container_name: strapiDB
     platform: linux/amd64
     restart: unless-stopped
-    env_file: .env
+    env_file: .env.prod
     image: postgres:14-alpine
     environment:
       POSTGRES_USER: ${DATABASE_USERNAME}
