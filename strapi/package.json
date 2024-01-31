@@ -13,14 +13,13 @@
     "lint-hard": "eslint . --max-warnings=0"
   },
   "dependencies": {
-    "@strapi/plugin-users-permissions": "4.17.1",
-    "@strapi/strapi": "4.17.1",
+    "@strapi/plugin-users-permissions": "4.19.1",
+    "@strapi/strapi": "4.19.1",
     "better-sqlite3": "8.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^5.3.4",
     "sharp": "^0.32.6",
-    "strapi-plugin-populate-deep": "^3.0.1",
     "styled-components": "^5.3.3"
   },
   "author": {

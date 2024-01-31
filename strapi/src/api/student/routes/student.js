@@ -1,19 +1,12 @@
-'use strict';
-
-/**
- * student router
- */
-
-const { createCoreRouter } = require('@strapi/strapi').factories;
-
-module.exports = createCoreRouter('api::student.student', {
-  only: ['find', 'findOne'],
-  config: {
-    find: {
-      auth: false,
-    },
-    findOne: {
-      auth: false,
-    },
-  },
-});
+module.exports = {
+  routes: [
+    {
+      method: "GET",
+      path: "/students",
+      handler: "student.populateDeep",
+      config: {
+        auth: false
+      }
+    }
+  ]
+}
