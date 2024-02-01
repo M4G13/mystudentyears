@@ -49,32 +49,36 @@ build-strapi:
   stage: build
   rules:
     - if: $CI_COMMIT_BRANCH == "prod"
+      when: always
+    - changes:
+      - strapi/**/*
   image: docker:latest
   services:
     - docker:dind
-  rules:
-    - changes:
-      - strapi/**/*
   before_script:
     - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $REGISTRY_SERVER
   script:
     - cd strapi
     - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
+  when: manual
 
 deploy-strapi:
   stage: deploy
   rules:
     - if: $CI_COMMIT_BRANCH == "prod"
+      when: always
+    - changes:
+      - strapi/**/*
   image: alpine:latest
   before_script:
     - chmod og= $ID_RSA
     - apk update && apk add openssh-client
   script:
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "mkdir strapi || true"
-    - scp -i $ID_RSA -o StrictHostKeyChecking=no -r ./strapi/config ./strapi/src ./strapi/package.json ./strapi/package-lock.json $SERVER_USER@$SERVER_IP:~/strapi
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u $REGISTRY_USER --p $REGISTRY_PASSWORD $REGISTRY_SERVER"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd strapi"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "echo $ENV_VARS > .env && echo $ENV_VARS > .env.prod"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "mkdir -p strapi/public/uploads || true"
+    - scp -i $ID_RSA -o StrictHostKeyChecking=no -r ./strapi/docker-compose.yml $SERVER_USER@$SERVER_IP:~/strapi
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $REGISTRY_SERVER"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "echo $ENV_VARS > strapi/.env.prod"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull $IMAGE_TAG"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker-compose up -d && docker-compose rm -fsv"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd strapi && docker-compose up -d && docker-compose rm -fsv"
+  when: manual
