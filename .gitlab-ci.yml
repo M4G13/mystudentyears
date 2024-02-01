@@ -12,6 +12,7 @@ stages:
   - static_analysis
   - unit_test
   - build
+  - deploy
 
 lint-app-job:
   stage: static_analysis
@@ -55,7 +56,7 @@ build-strapi:
     - changes:
       - strapi/**/*
   before_script:
-    - cat $REGISTRY_PASSWORD | docker login -u $REGISTRY_USER --password-stdin $REGISTRY_SERVER
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $REGISTRY_SERVER
   script:
     - cd strapi
     - docker build -t $IMAGE_TAG .
@@ -72,7 +73,7 @@ deploy-strapi:
   script:
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "mkdir strapi || true"
     - scp -i $ID_RSA -o StrictHostKeyChecking=no -r ./strapi/config ./strapi/src ./strapi/package.json ./strapi/package-lock.json $SERVER_USER@$SERVER_IP:~/strapi
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cat $REGISTRY_PASSWORD | docker login -u $REGISTRY_USER --password-stdin $REGISTRY_SERVER"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u $REGISTRY_USER --p $REGISTRY_PASSWORD $REGISTRY_SERVER"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd strapi"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "echo $ENV_VARS > .env && echo $ENV_VARS > .env.prod"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull $IMAGE_TAG"
