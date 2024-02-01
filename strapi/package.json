@@ -15,12 +15,12 @@
   "dependencies": {
     "@strapi/plugin-users-permissions": "4.19.1",
     "@strapi/strapi": "4.19.1",
-    "better-sqlite3": "8.6.0",
+    "better-sqlite3": "^9.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^5.3.4",
-    "sharp": "^0.32.6",
-    "styled-components": "^5.3.3"
+    "sharp": "^0.33.2",
+    "styled-components": "^5.3.11"
   },
   "author": {
     "name": "A Strapi developer"
@@ -34,8 +34,9 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@babel/eslint-parser": "^7.23.3",
+    "@babel/eslint-parser": "^7.23.10",
     "@babel/preset-react": "^7.23.3",
     "eslint": "^8.56.0"
-  }
+  },
+  "packageManager": "pnpm@8.15.1+sha256.245fe901f8e7fa8782d7f17d32b6a83995e2ae03984cb5b62b8949bfdc27c7b5"
 }
