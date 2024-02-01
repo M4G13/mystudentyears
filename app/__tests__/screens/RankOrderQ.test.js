@@ -5,8 +5,7 @@ import renderer from "react-test-renderer";
 import RankOrderQ from "../../screens/questionTypes/RankOrderQ";
 
 const data = require("../data.json");
-const question =
-  data.data[0].attributes.category[0].quiz.data.attributes.questions[2];
+const question = data[0].category[0].quiz.questions[2];
 const mockFn = jest.fn();
 
 describe("<RankOrderQ />", () => {
