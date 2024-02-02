@@ -80,3 +80,6 @@ deploy-strapi:
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull $IMAGE_TAG"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd strapi && docker-compose pull && docker-compose up --force-recreate && docker image prune -f"
   when: manual
+  environment:
+    name: production
+    url: https://mystudentyears.co.uk/strapi/
