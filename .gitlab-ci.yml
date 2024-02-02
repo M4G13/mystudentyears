@@ -37,17 +37,21 @@ lint-strapi-job:
     - pnpm run lint --format gitlab
   artifacts:
     reports:
-      codequality: strapi/gl-codequality.json
+      codequality: gl-codequality.json
 
 unit-test-job:
   stage: unit_test
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   rules:
     - changes:
       - app/**/*
   script:
     - cd app
     - pnpm install
-    - pnpm run test
+    - pnpm run test --ci --reporters=default --reporters=jest-junit
+  artifacts:
+    reports:
+      junit: junit.xml
 
 build-strapi:
   stage: build
