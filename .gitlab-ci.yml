@@ -21,7 +21,10 @@ lint-app-job:
   script:
     - cd app
     - pnpm install
-    - pnpm run lint
+    - pnpm run lint --format gitlab
+  artifacts:
+    reports:
+      codequality: gl-codequality.json
 
 lint-strapi-job:
   stage: static_analysis
@@ -31,7 +34,10 @@ lint-strapi-job:
   script:
     - cd strapi
     - pnpm install
-    - pnpm run lint
+    - pnpm run lint --format gitlab
+  artifacts:
+    reports:
+      codequality: strapi/gl-codequality.json
 
 unit-test-job:
   stage: unit_test
