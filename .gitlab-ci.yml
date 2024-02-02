@@ -52,6 +52,9 @@ unit-test-job:
   artifacts:
     reports:
       junit: app/junit.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: app/coverage/cobertura-coverage.xml
 
 build-strapi:
   stage: build

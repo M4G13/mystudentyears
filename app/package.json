@@ -45,6 +45,7 @@
   "jest": {
     "preset": "jest-expo",
     "collectCoverage": true,
+    "coverageReporters": ["html", "text", "text-summary", "cobertura"],
     "collectCoverageFrom": [
       "./screens/**/*.{js,jsx}",
       "!**/coverage/**",
