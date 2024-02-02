@@ -77,9 +77,8 @@ deploy-strapi:
     - scp -i $ID_RSA -o StrictHostKeyChecking=no ./strapi/docker-compose.yml $SERVER_USER@$SERVER_IP:~/strapi
     - scp -i $ID_RSA -o StrictHostKeyChecking=no $ENV_VARS $SERVER_USER@$SERVER_IP:~/strapi/.env.prod
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $REGISTRY_SERVER"
-    # - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "echo $ENV_VARS > strapi/.env.prod"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull $IMAGE_TAG"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd strapi && docker-compose pull && docker-compose up --force-recreate && docker image prune -f"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd strapi && docker-compose pull && docker-compose up --detach --force-recreate && docker image prune -f"
   when: manual
   environment:
     name: production
