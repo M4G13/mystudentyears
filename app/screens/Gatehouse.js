@@ -62,6 +62,10 @@ export default function Gatehouse({ navigation }) {
           </Text>
         </Pressable>
       ))}
+
+      <Pressable onPress={() => navigation.navigate("Survey")}>
+        <Text style={baseStyle.button}>Final survey 🔒</Text>
+      </Pressable>
     </View>
   );
 }
