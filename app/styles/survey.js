@@ -68,7 +68,7 @@ const style = StyleSheet.create({
   },
   dropdownOption: {
     width: "380",
-    maxWidth:"380",
+    maxWidth: "380",
     fontSize: 20,
     color: "#ffffff",
     flexWrap: "wrap", // Allow line wrapping
@@ -94,13 +94,13 @@ const style = StyleSheet.create({
     alignItems: "center",
   },
   smallerText: {
-    fontSize:15,
-    color:"white",
+    fontSize: 15,
+    color: "white",
   },
-  link:{
-    textDecorationLine: 'underline',
-    color:"#1897F6"
-  }
+  link: {
+    textDecorationLine: "underline",
+    color: "#1897F6",
+  },
 });
 
 export default style;

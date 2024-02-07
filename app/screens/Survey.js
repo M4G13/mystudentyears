@@ -2,7 +2,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import Constants from "expo-constants"; // REMOVE IN PRODUCTION
 import React, { useState, useCallback, useEffect } from "react";
-import { View, Text, ScrollView, TextInput, Pressable, Image } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TextInput,
+  Pressable,
+  Image,
+} from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import RadioForm from "react-native-simple-radio-button";
 
@@ -15,7 +22,6 @@ export default function Survey({ navigation }) {
   const [error, setError] = useState(false);
   const [schools, setSchools] = useState("");
 
-
   const fetchData = () => {
     fetch(
       "http://" +
@@ -24,12 +30,14 @@ export default function Survey({ navigation }) {
     )
       .then((response) => response.json())
       .then((data) => {
-        data =  data.data.map(item => item.attributes.Name);
-        data.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'accent' }))
+        data = data.data.map((item) => item.attributes.Name);
+        data.sort((a, b) =>
+          a.localeCompare(b, "en", { sensitivity: "accent" }),
+        );
 
         data = data.map((str, index) => ({
-          key: index + 1, 
-          value: str
+          key: index + 1,
+          value: str,
         }));
 
         setSchools(data);
@@ -47,7 +55,6 @@ export default function Survey({ navigation }) {
     fetchData();
   }, []);
 
-  
   async function storeResponse(response) {
     try {
       await AsyncStorage.setItem("survey", JSON.stringify(response));
@@ -176,10 +183,6 @@ export default function Survey({ navigation }) {
     navigation.navigate("Gatehouse");
   }
 
-  function handleLinkPress(){
-    return 0;
-  }
-
   return (
     <ScrollView contentContainerStyle={style.scrollView}>
       <View style={style.view}>
@@ -205,11 +208,29 @@ export default function Survey({ navigation }) {
                 dropdownStyles={style.dropdownOption}
                 dropdownTextStyles={style.dropdownOption}
                 dropdownItemStyles={style.dropdownOption}
-                searchicon = {<Image source={require('../assets/search.png')}resizeMode='contain'style={{width:17,height:17}}/>}
-                arrowicon  = {<Image source={require('../assets/arrow.png')}resizeMode='contain'style={{width:17,height:17}}/>}
-                closeicon  = {<Image source={require('../assets/close.png')}resizeMode='contain'style={{width:17,height:17}}/>}
+                searchicon={
+                  <Image
+                    source={require("../assets/search.png")}
+                    resizeMode="contain"
+                    style={{ width: 17, height: 17 }}
+                  />
+                }
+                arrowicon={
+                  <Image
+                    source={require("../assets/arrow.png")}
+                    resizeMode="contain"
+                    style={{ width: 17, height: 17 }}
+                  />
+                }
+                closeicon={
+                  <Image
+                    source={require("../assets/close.png")}
+                    resizeMode="contain"
+                    style={{ width: 17, height: 17 }}
+                  />
+                }
                 placeholder="Select your school"
-                searchPlaceholder= "Search"
+                searchPlaceholder="Search"
                 save="value"
               />
             </View>
@@ -241,17 +262,17 @@ export default function Survey({ navigation }) {
           </View>
         ))}
 
-        <Text style={style.smallerText} >By continuing, you agree to our{' '}
-        <Text onPress={() => navigation.navigate("Terms & Conditions")}>
-          <Text style={ style.link }>Terms and Conditions</Text>
+        <Text style={style.smallerText}>
+          By continuing, you agree to our{" "}
+          <Text onPress={() => navigation.navigate("Terms & Conditions")}>
+            <Text style={style.link}>Terms and Conditions</Text>
+          </Text>
+          , and{" "}
+          <Text onPress={() => navigation.navigate("Privacy Policy")}>
+            <Text style={style.link}>Privacy Policy</Text>
+          </Text>
+          .
         </Text>
-        , and{' '}
-        <Text onPress={() => navigation.navigate("Privacy Policy")}>
-          <Text style={ style.link }>Privacy Policy</Text>
-        </Text>
-        .</Text>
-
-
 
         <Pressable onPress={() => process()}>
           <Text style={style.submit}>Continue to campus</Text>

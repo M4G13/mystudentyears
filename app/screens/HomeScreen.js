@@ -40,7 +40,6 @@ export default function HomeScreen({ navigation }) {
           <Text style={style.button}>Go to Gatehouse</Text>
         </Pressable>
       )}
-
     </View>
   );
 }
