@@ -32,16 +32,17 @@ export default function App() {
 
   StatusBar.setBarStyle("light-content");
 
+  global.api_url =
+    process.env.EXPO_PUBLIC_API_URL ||
+    "http://" + Constants.expoConfig.hostUri.split(":").shift() + ":1337/api";
+
   const fetchData = () => {
-    fetch(
-      "http://" +
-        Constants.expoConfig.hostUri.split(":").shift() +
-        ":1337/api/students",
-    )
+    fetch(global.api_url + "/students")
       .then((response) => response.json())
       .then((data) => {
         setIsLoading(false);
         setError(false);
+        console.log(data);
         global.data = data;
       })
       .catch((error) => {

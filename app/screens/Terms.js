@@ -1,4 +1,3 @@
-import Constants from "expo-constants"; // REMOVE IN PRODUCTION
 import React, { useState, useEffect } from "react";
 import { View, Text, Pressable, ActivityIndicator } from "react-native";
 
@@ -10,11 +9,7 @@ export default function Terms({ route, navigation }) {
   const [termsContent, setTermsContent] = useState("");
 
   const fetchData = () => {
-    fetch(
-      "http://" +
-        Constants.expoConfig.hostUri.split(":").shift() +
-        ":1337/api/t-and-c",
-    )
+    fetch(global.api_url + "t-and-c")
       .then((response) => response.json())
       .then((data) => {
         setTermsContent(data.data.attributes.TermsAndConditions);

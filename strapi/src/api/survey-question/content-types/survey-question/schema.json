@@ -4,17 +4,21 @@
   "info": {
     "singularName": "survey-question",
     "pluralName": "survey-questions",
-    "displayName": "Survey Questions"
+    "displayName": "Survey Questions",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
-    "Question": {
+    "question": {
+      "type": "string"
+    },
+    "option": {
       "type": "component",
-      "repeatable": false,
-      "component": "questions.multi-choice-question"
+      "repeatable": true,
+      "component": "survey.option"
     }
   }
 }

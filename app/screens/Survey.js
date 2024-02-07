@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
-import Constants from "expo-constants"; // REMOVE IN PRODUCTION
 import React, { useState, useCallback, useEffect } from "react";
 import {
   View,
@@ -17,30 +16,36 @@ import style from "../styles/survey";
 
 export default function Survey({ navigation }) {
   const [input, setInput] = useState("");
-  const [selected, setSelected] = React.useState("");
+  const [selected, setSelected] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const [schools, setSchools] = useState("");
+  const [questions, setQuestions] = useState([]);
+  const [selectedValues, setSelectedValues] = useState(Array(4).fill(-1));
 
   const fetchData = () => {
-    fetch(
-      "http://" +
-        Constants.expoConfig.hostUri.split(":").shift() +
-        ":1337/api/schools/?populate=deep",
-    )
+    fetch(global.api_url + "/schools?sort=Name")
       .then((response) => response.json())
       .then((data) => {
-        data = data.data.map((item) => item.attributes.Name);
-        data.sort((a, b) =>
-          a.localeCompare(b, "en", { sensitivity: "accent" }),
-        );
-
-        data = data.map((str, index) => ({
-          key: index + 1,
-          value: str,
+        const temp = data.data.map((item) => ({
+          key: item.id,
+          value: item.attributes.Name,
         }));
 
-        setSchools(data);
+        setSchools(temp);
+        setIsLoading(false);
+        setError(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setError(true);
+        setIsLoading(false);
+      });
+    fetch(global.api_url + "/survey-questions?populate=*")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(JSON.stringify(data, null, 2));
+        setQuestions(data.data);
         setIsLoading(false);
         setError(false);
       })
@@ -84,52 +89,17 @@ export default function Survey({ navigation }) {
   );
 
   const handlePostData = async (data) => {
-    try {
-      const response = await fetch(
-        "http://" +
-          Constants.expoConfig.hostUri.split(":").shift() +
-          ":1337/api/survey-data",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        },
-      );
-
-      if (!response.ok) {
-        const errorBody = await response.text();
-        console.error("Response Body:", errorBody);
-        throw new Error("Network response was not ok");
-      }
-    } catch (error) {
-      console.error("Error:", error.message);
-    }
-
+    fetch(global.api_url + "/app-users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
     storeResponse(data);
   };
-
-  const categories = [
-    "How confident are you with student finance and managing your money?",
-    "How confident are you with managing your personal health and wellbeing in first year?",
-    "How confident are you with first-year teaching and assessment methods?",
-    "How confident are you with dealing with being more independent after leaving school?",
-  ];
-
-  const likertOptions = [
-    "Fully confident",
-    "Quite confident",
-    "Not very confident",
-    "Not at all confident",
-  ];
-
-  const [selectedValues, setSelectedValues] = useState(Array(4).fill("NULL"));
-
-  const radioProps = likertOptions.map((option, index) => ({
-    label: option,
-    value: index,
-  }));
 
   function process() {
     if (!/\S+@\S+\.\S+/.test(input) && response !== null) {
@@ -141,41 +111,17 @@ export default function Survey({ navigation }) {
       alert("Please select a school.");
       return 0;
     }
-
-    for (let i = 0; i < 4; i++) {
-      if (likertOptions[selectedValues[i]] === undefined) {
-        alert("Please answer all questions.");
-        return 0;
-      }
-    }
-
+    console.log(selectedValues);
     const data = {
       data: {
-        email: input,
-        school: selected,
-        responseNo: response === null ? 1 : 2,
-        confidence: [
-          {
-            id: 1,
-            category: "Finance",
-            confidence: likertOptions[selectedValues[0]],
-          },
-          {
-            id: 2,
-            category: "Wellbeing",
-            confidence: likertOptions[selectedValues[1]],
-          },
-          {
-            id: 3,
-            category: "Academics",
-            confidence: likertOptions[selectedValues[2]],
-          },
-          {
-            id: 4,
-            category: "Independence",
-            confidence: likertOptions[selectedValues[3]],
-          },
-        ],
+        Email: input,
+        school: schools.find((elt) => elt.value === selected).key,
+        InitialSurvey: {
+          Completed: Array.from(questions, (q) => ({
+            survey_question: q.id,
+            answer: q.attributes.option[selectedValues[q.id]].option,
+          })),
+        },
       },
     };
 
@@ -243,19 +189,23 @@ export default function Survey({ navigation }) {
           </View>
         )}
 
-        {categories.map((category, index) => (
-          <View key={index} style={style.questionContainer}>
-            <Text style={style.smallText}>{category} </Text>
+        {questions.map((q) => (
+          <View key={q.id} style={style.questionContainer}>
+            <Text style={style.smallText}>{q.attributes.question} </Text>
 
             <RadioForm
               style={style.likertContainer}
-              radio_props={radioProps}
+              radio_props={q.attributes.option.map((o, i) => ({
+                label: o.option,
+                value: i,
+              }))}
               initial={-1} // Set initial to -1 to have no button initially selected
               labelStyle={style.option}
               buttonStyle={{ borderRadius: 1000 }}
               onPress={(value) => {
-                const newSelectedValues = [...selectedValues];
-                newSelectedValues[index] = value;
+                console.log(value);
+                const newSelectedValues = { ...selectedValues };
+                newSelectedValues[q.id] = value;
                 setSelectedValues(newSelectedValues);
               }}
             />
