@@ -5,8 +5,7 @@ import renderer from "react-test-renderer";
 import MultiChoiceQ from "../../screens/questionTypes/MultiChoiceQ";
 
 const data = require("../data.json");
-const question =
-  data.data[0].attributes.category[0].quiz.data.attributes.questions[0];
+const question = data[0].category[0].quiz.questions[0];
 const mockFn = jest.fn();
 
 describe("<MultiChoiceQ />", () => {

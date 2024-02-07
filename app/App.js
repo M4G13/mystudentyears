@@ -36,7 +36,7 @@ export default function App() {
     fetch(
       "http://" +
         Constants.expoConfig.hostUri.split(":").shift() +
-        ":1337/api/students?populate=deep",
+        ":1337/api/students",
     )
       .then((response) => response.json())
       .then((data) => {

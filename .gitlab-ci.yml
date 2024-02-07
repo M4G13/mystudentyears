@@ -1,31 +1,85 @@
+variables:
+  IMAGE_TAG: $IMAGE_NAME:latest
+
 image: node:20
 
-cache:
-  paths:
-    - app/node_modules/
-    - strapi/node_modules/
+before_script:
+  - corepack enable
 
 stages:
   - static_analysis
   - unit_test
+  - build
+  - deploy
 
 lint-app-job:
   stage: static_analysis
+  image: node:latest
+  rules:
+    - changes:
+      - app/**/*
   script:
     - cd app
-    - npm install
-    - npm run lint
+    - pnpm install
+    - pnpm run lint
 
 lint-strapi-job:
   stage: static_analysis
+  rules:
+    - changes:
+      - strapi/**/*
   script:
     - cd strapi
-    - npm install
-    - npm run lint
+    - pnpm install
+    - pnpm run lint
 
 unit-test-job:
   stage: unit_test
+  rules:
+    - changes:
+      - app/**/*
   script:
     - cd app
-    - npm install
-    - npm run test
+    - pnpm install
+    - pnpm run test
+
+build-strapi:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_BRANCH == "prod"
+      when: always
+    - changes:
+      - strapi/**/*
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $REGISTRY_SERVER
+  script:
+    - cd strapi
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+  when: manual
+
+deploy-strapi:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH == "prod"
+      when: always
+    - changes:
+      - strapi/**/*
+  image: alpine:latest
+  before_script:
+    - chmod og= $ID_RSA
+    - apk update && apk add openssh-client
+  script:
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "mkdir -p strapi/public/uploads || true"
+    - scp -i $ID_RSA -o StrictHostKeyChecking=no ./strapi/docker-compose.yml $SERVER_USER@$SERVER_IP:~/strapi
+    - scp -i $ID_RSA -o StrictHostKeyChecking=no $ENV_VARS $SERVER_USER@$SERVER_IP:~/strapi/.env.prod
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $REGISTRY_SERVER"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull $IMAGE_TAG"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd strapi && docker-compose pull && docker-compose up --detach --force-recreate && docker image prune -f"
+  when: manual
+  environment:
+    name: production
+    url: https://mystudentyears.co.uk/strapi/

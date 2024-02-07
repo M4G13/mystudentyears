@@ -10,8 +10,8 @@ export default function Info({ route, navigation }) {
   const index = route.params.index;
   const { category } = getData(route.params);
 
-  const information = category.information.data;
-  const currInfo = information[index].attributes;
+  const information = category.information;
+  const currInfo = information[index];
   const isLastPage = index === information.length - 1;
 
   const navigateToNextPage = async () => {
