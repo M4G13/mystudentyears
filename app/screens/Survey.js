@@ -44,7 +44,6 @@ export default function Survey({ navigation }) {
     fetch(global.api_url + "/survey-questions?populate=*")
       .then((response) => response.json())
       .then((data) => {
-        console.log(JSON.stringify(data, null, 2));
         setQuestions(data.data);
         setIsLoading(false);
         setError(false);
@@ -97,7 +96,6 @@ export default function Survey({ navigation }) {
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
     storeResponse(data);
   };
 
@@ -111,7 +109,6 @@ export default function Survey({ navigation }) {
       alert("Please select a school.");
       return 0;
     }
-    console.log(selectedValues);
     const data = {
       data: {
         Email: input,
@@ -203,7 +200,6 @@ export default function Survey({ navigation }) {
               labelStyle={style.option}
               buttonStyle={{ borderRadius: 1000 }}
               onPress={(value) => {
-                console.log(value);
                 const newSelectedValues = { ...selectedValues };
                 newSelectedValues[q.id] = value;
                 setSelectedValues(newSelectedValues);
