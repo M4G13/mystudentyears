@@ -5,10 +5,5 @@ module.exports = {
       path: '/app-user/:UUID',
       handler: 'app-user.update',
     },
-    {
-      method: 'GET',
-      path: '/app-user/:UUID',
-      handler: 'app-user.findOne',
-    },
   ],
 };

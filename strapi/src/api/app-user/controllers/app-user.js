@@ -17,16 +17,5 @@ module.exports = createCoreController('api::app-user.app-user', ({ strapi }) => 
     });
     ctx.request.params.id = entry[0].id;
     return super.update(ctx);
-  },
-  async findOne(ctx) {
-    const entry = await strapi.entityService.findMany('api::app-user.app-user', {
-      filters: {
-        UUID: {
-          $eq: ctx.request.params.UUID
-        }
-      }
-    });
-    ctx.request.params.id = entry[0].id;
-    return super.findOne(ctx);
   }
 }));
