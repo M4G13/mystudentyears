@@ -21,7 +21,10 @@ lint-app-job:
   script:
     - cd app
     - pnpm install
-    - pnpm run lint
+    - pnpm run lint --format gitlab
+  artifacts:
+    reports:
+      codequality: gl-codequality.json
 
 lint-strapi-job:
   stage: static_analysis
@@ -31,17 +34,27 @@ lint-strapi-job:
   script:
     - cd strapi
     - pnpm install
-    - pnpm run lint
+    - pnpm run lint --format gitlab
+  artifacts:
+    reports:
+      codequality: gl-codequality.json
 
 unit-test-job:
   stage: unit_test
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   rules:
     - changes:
       - app/**/*
   script:
     - cd app
     - pnpm install
-    - pnpm run test
+    - pnpm run test --ci --reporters=default --reporters=jest-junit
+  artifacts:
+    reports:
+      junit: app/junit.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: app/coverage/cobertura-coverage.xml
 
 build-strapi:
   stage: build
