@@ -1,5 +1,5 @@
-module.exports = [
-  'strapi-prometheus': {
-    enabled: true
-  }
-]
+module.exports = {
+  'strapi-prometheus' : {
+    enabled: true,
+  },
+};
