@@ -20,6 +20,7 @@ import Info from "./screens/Info.js";
 import Privacy from "./screens/Privacy.js";
 import Question from "./screens/Question.js";
 import QuizEndScreen from "./screens/QuizEndScreen.js";
+import Survey from "./screens/Survey.js";
 import Terms from "./screens/Terms.js";
 import baseStyle from "./styles/base.js";
 
@@ -31,16 +32,17 @@ export default function App() {
 
   StatusBar.setBarStyle("light-content");
 
+  global.api_url =
+    process.env.EXPO_PUBLIC_API_URL ||
+    "http://" + Constants.expoConfig.hostUri.split(":").shift() + ":1337/api";
+
   const fetchData = () => {
-    fetch(
-      "http://" +
-        Constants.expoConfig.hostUri.split(":").shift() +
-        ":1337/api/students",
-    )
+    fetch(global.api_url + "/students")
       .then((response) => response.json())
       .then((data) => {
         setIsLoading(false);
         setError(false);
+        console.log(data);
         global.data = data;
       })
       .catch((error) => {
@@ -86,6 +88,7 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Home Screen" component={HomeScreen} />
+          <Stack.Screen name="Survey" component={Survey} />
           <Stack.Screen name="Terms & Conditions" component={Terms} />
           <Stack.Screen name="Privacy Policy" component={Privacy} />
           <Stack.Screen name="Gatehouse" component={Gatehouse} />

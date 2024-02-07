@@ -41,6 +41,7 @@ export default function Categories({ route, navigation }) {
 
   return (
     <View style={style.view}>
+
       <ImageBackground
         source={imageSource}
         resizeMode="cover"

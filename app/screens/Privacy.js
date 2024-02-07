@@ -1,4 +1,3 @@
-import Constants from "expo-constants"; // REMOVE IN PRODUCTION
 import React, { useState, useEffect } from "react";
 import { View, Text, Pressable, ActivityIndicator } from "react-native";
 
@@ -10,11 +9,7 @@ export default function Privacy({ route, navigation }) {
   const [privacyContent, setPrivacyContent] = useState("");
 
   const fetchData = () => {
-    fetch(
-      "http://" +
-        Constants.expoConfig.hostUri.split(":").shift() +
-        ":1337/api/privacy-policy",
-    )
+    fetch(global.api_url + "/privacy-policy")
       .then((response) => response.json())
       .then((data) => {
         setPrivacyContent(data.data.attributes.privacyPolicy);

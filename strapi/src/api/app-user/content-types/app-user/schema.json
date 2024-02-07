@@ -15,7 +15,7 @@
     "Email": {
       "type": "email"
     },
-    "InitalSurvey": {
+    "InitialSurvey": {
       "displayName": "Survey",
       "type": "component",
       "repeatable": false,
