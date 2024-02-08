@@ -87,7 +87,7 @@ export default function Survey({ navigation }) {
     }, []),
   );
 
-  const handlePostData = (data) => {
+  const createNewUser = (data) => {
     fetch(global.api_url + "/app-users", {
       method: "POST",
       headers: {
@@ -106,31 +106,60 @@ export default function Survey({ navigation }) {
     storeResponse(data);
   };
 
+  const updateUser = (data) => {
+    fetch(global.api_url + "/app-user/" + global.uuid, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ data }),
+    });
+  };
+
   function process() {
-    if (!/\S+@\S+\.\S+/.test(input) && response !== null) {
-      alert("Please enter a valid e-mail address.");
-      return 0;
+    if (response === null) {
+      if (!/\S+@\S+\.\S+/.test(input)) {
+        alert("Please enter a valid e-mail address.");
+        return 0;
+      } else if (selected === undefined) {
+        alert("Please select a school.");
+        return 0;
+      }
     }
 
-    if (selected === "" && response !== null) {
-      alert("Please select a school.");
-      return 0;
+    for (let i = 0; i < questions.length; i++) {
+      if (selectedValues[questions[i].id] === -1) {
+        alert("Please answer all questions.");
+        return 0;
+      }
     }
-    const data = {
-      data: {
-        Email: input,
-        school: schools.find((elt) => elt.value === selected).key,
-        InitialSurvey: {
+    if (response === null) {
+      const data = {
+        data: {
+          Email: input,
+          school: schools.find((elt) => elt.value === selected).key,
+          InitialSurvey: {
+            Completed: Array.from(questions, (q) => ({
+              survey_question: q.id,
+              answer: q.attributes.option[selectedValues[q.id]].option,
+            })),
+          },
+        },
+      };
+      createNewUser(data);
+      navigation.navigate("Gatehouse");
+    } else {
+      const data = {
+        FinalSurvey: {
           Completed: Array.from(questions, (q) => ({
             survey_question: q.id,
             answer: q.attributes.option[selectedValues[q.id]].option,
           })),
         },
-      },
-    };
-
-    handlePostData(data);
-    navigation.navigate("Gatehouse");
+      };
+      updateUser(data);
+      navigation.navigate("Home Screen");
+    }
   }
 
   return (
@@ -188,8 +217,13 @@ export default function Survey({ navigation }) {
         ) : (
           <View style={style.personalInfo}>
             <Text style={style.bigText}>Conclusionary Survey</Text>
-            <Text style={style.smallText}>{response.data?.email}</Text>
-            <Text style={style.smallText}>{response.data?.school}</Text>
+            <Text style={style.smallText}>{response.data?.Email}</Text>
+            <Text style={style.smallText}>
+              {(
+                schools &&
+                schools.find((pair) => pair.key === response.data?.school)
+              )?.value ?? null}
+            </Text>
           </View>
         )}
 
@@ -228,7 +262,7 @@ export default function Survey({ navigation }) {
         </Text>
 
         <Pressable onPress={() => process()}>
-          <Text style={style.submit}>Continue to campus</Text>
+          <Text style={style.submit}>Submit</Text>
         </Pressable>
       </View>
     </ScrollView>
