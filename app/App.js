@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Constants from "expo-constants"; // REMOVE IN PRODUCTION
@@ -42,7 +43,6 @@ export default function App() {
       .then((data) => {
         setIsLoading(false);
         setError(false);
-        console.log(data);
         global.data = data;
       })
       .catch((error) => {
@@ -54,6 +54,15 @@ export default function App() {
 
   useEffect(() => {
     fetchData();
+    AsyncStorage.getItem("uuid")
+      .then((uuid) => {
+        if (uuid) {
+          global.uuid = uuid;
+        } else {
+          console.log("no uuid (error if after survey)");
+        }
+      })
+      .catch((e) => console.log(e));
   }, []);
 
   if (isLoading) {

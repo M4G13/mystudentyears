@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useState, useCallback } from "react";
 import { View } from "react-native";
 
 import MissingWordsQ from "./questionTypes/MissingWordsQ.js";
@@ -52,6 +53,22 @@ export default function Question({ route, navigation }) {
         quiz.questions.length,
       );
       storeResult(nextAnswers);
+      fetch(global.api_url + "/app-user/" + global.uuid, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: {
+            CompletedQuizzes: [
+              {
+                quiz: quiz.id,
+                results: nextAnswers,
+              },
+            ],
+          },
+        }),
+      });
       navigation.navigate("QuizEndScreen", {
         ...route.params,
         score,
@@ -60,6 +77,17 @@ export default function Question({ route, navigation }) {
       });
     }
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      if (index === 0) {
+        setAnswers([]);
+        AsyncStorage.removeItem("quiz" + category.id).catch((error) => {
+          console.error("Failed to clear progress. " + error);
+        });
+      }
+    }, [index]),
+  );
 
   const questionTypes = {
     "questions.multi-choice-question": MultiChoiceQ,
