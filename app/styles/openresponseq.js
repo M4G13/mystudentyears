@@ -11,8 +11,8 @@ const style = StyleSheet.create({
   },
 
   input: {
-    backgroundColor: "#050710",
-    color: "#ffffff",
+    backgroundColor: base.colors.bg3,
+    color: base.colors.text1,
     padding: 15,
     borderRadius: 5,
     marginTop: 30,
@@ -24,7 +24,7 @@ const style = StyleSheet.create({
     height: "100%",
     padding: 30,
     paddingLeft: 10,
-    color: "#000000",
+    color: base.colors.text2,
   },
 
   submitButtonContainer: {
@@ -33,15 +33,15 @@ const style = StyleSheet.create({
   },
 
   submitButton: {
-    backgroundColor: "#ff69b4",
+    backgroundColor: base.colors.fg2,
     borderRadius: 5,
     padding: 15,
     marginBottom: 0,
   },
 
   listItem: {
-    backgroundColor: "#ff69b4",
-    borderColor: "#ff69b4",
+    backgroundColor: base.colors.fg2,
+    borderColor: base.colors.fg2,
     borderWidth: 4,
     padding: 15,
     borderRadius: 5,
@@ -52,7 +52,7 @@ const style = StyleSheet.create({
   },
 
   button: {
-    color: "#ffffff",
+    color: base.colors.text1,
     fontWeight: "600",
     fontSize: 22,
     textAlign: "center",

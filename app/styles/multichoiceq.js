@@ -6,45 +6,38 @@ const style = StyleSheet.create({
   ...base,
   questionWrapper: {
     flex: 1,
-    height: "100%",
     width: "100%",
   },
   questionContainer: {
     padding: 30,
     paddingLeft: 10,
-    color: "#000000",
-    justifyContent: "space-around",
     width: "100%",
   },
   optionsContainer: {
     width: "100%",
     flexGrow: 1,
-    justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
-    gap: 40,
-    marginBottom: 40,
+    gap: 20,
   },
   submitButtonContainer: {
     marginTop: "auto",
-    marginBottom: 10,
   },
   submitButton: {
-    backgroundColor: "#ff69b4",
+    backgroundColor: base.colors.fg2,
     borderRadius: 5,
     padding: 15,
     margin: 10,
-    marginBottom: 0,
+    marginTop: 30,
   },
   image: {
     width: 100,
     height: 200,
     objectFit: "contain",
   },
-
   pressable: {
     backgroundColor: "transparent",
-    borderColor: "#ff69b4",
+    borderColor: base.colors.fg2,
     borderWidth: 4,
     padding: 15,
     borderRadius: 5,
@@ -53,27 +46,19 @@ const style = StyleSheet.create({
     justifyContent: "center",
     flexGrow: 1,
   },
-
   pressableSelected: {
-    backgroundColor: "#ff69b4",
+    backgroundColor: base.colors.fg2,
   },
-
   button: {
-    color: "#ffffff",
+    color: base.colors.text1,
     fontWeight: "600",
     fontSize: 22,
     textAlign: "center",
   },
-
   bigText: {
     ...base.bigText,
     textAlign: "left",
     fontSize: 30,
-  },
-
-  bigTextInv: {
-    ...base.bigText,
-    color: "#000000",
   },
 });
 
