@@ -43,7 +43,6 @@ export default function App() {
       .then((data) => {
         setIsLoading(false);
         setError(false);
-        console.log(data);
         global.data = data;
       })
       .catch((error) => {

@@ -97,12 +97,11 @@ export default function Survey({ navigation }) {
     })
       .then((response) => response.json())
       .then((user) => {
-        console.log(user);
         global.uuid = user.data.attributes.UUID;
         AsyncStorage.setItem("uuid", global.uuid);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
     storeResponse(data);
   };
