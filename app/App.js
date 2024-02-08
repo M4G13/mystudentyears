@@ -56,14 +56,14 @@ export default function App() {
   useEffect(() => {
     fetchData();
     AsyncStorage.getItem("uuid")
-      .then(uuid => {
+      .then((uuid) => {
         if (uuid) {
           global.uuid = uuid;
         } else {
           console.log("no uuid (error if after survey)");
         }
       })
-      .catch(e => console.log(e))
+      .catch((e) => console.log(e));
   }, []);
 
   if (isLoading) {

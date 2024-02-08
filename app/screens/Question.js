@@ -59,13 +59,15 @@ export default function Question({ route, navigation }) {
         },
         body: JSON.stringify({
           data: {
-            CompletedQuizzes: [{
-              quiz: quiz.id,
-              results: answers
-            }]
-          }
-        })
-      })
+            CompletedQuizzes: [
+              {
+                quiz: quiz.id,
+                results: answers,
+              },
+            ],
+          },
+        }),
+      });
       navigation.navigate("QuizEndScreen", {
         ...route.params,
         score,
