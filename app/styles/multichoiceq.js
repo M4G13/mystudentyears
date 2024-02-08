@@ -51,7 +51,7 @@ const style = StyleSheet.create({
     width: "90%",
     flexDirection: "column",
     justifyContent: "center",
-    flexGrow:1,
+    flexGrow: 1,
   },
 
   pressableSelected: {

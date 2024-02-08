@@ -19,7 +19,7 @@ const style = StyleSheet.create({
     backgroundColor: "#ff69b4",
     borderRadius: 5,
     padding: 15,
-    marginBottom: 0
+    marginBottom: 0,
   },
 
   listItem: {

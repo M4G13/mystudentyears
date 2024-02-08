@@ -38,7 +38,13 @@ export default function QuizEndScreen({ route, navigation }) {
 
   return (
     <View style={style.view}>
-      <Progress.Circle size={200} progress={score.toFixed(2)/100} thickness={10} showsText={true} strokeCap={"round"}/>
+      <Progress.Circle
+        size={200}
+        progress={score.toFixed(2) / 100}
+        thickness={10}
+        showsText
+        strokeCap="round"
+      />
       <View style={style.card}>
         <Text style={style.bigText}>Quiz Completed!</Text>
         <Text style={style.smallText}>

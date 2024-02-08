@@ -1,5 +1,5 @@
-import { View, Text, Pressable } from "react-native";
 import { useState } from "react";
+import { View, Text, Pressable } from "react-native";
 
 import style from "../../styles/multichoiceq.js";
 
@@ -15,8 +15,11 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
         {question.options.map((q) => (
           <Pressable
             key={q.id}
-            style={(q==selected) ? {...style.pressable,
-              ...style.pressableSelected} : {...style.pressable}}
+            style={
+              q === selected
+                ? { ...style.pressable, ...style.pressableSelected }
+                : { ...style.pressable }
+            }
             onPress={() => setSelected(q)}
           >
             <Text style={style.button}>{q.text}</Text>

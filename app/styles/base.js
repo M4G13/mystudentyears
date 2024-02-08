@@ -45,7 +45,7 @@ const baseStyle = StyleSheet.create({
 
   header: {
     backgroundColor: "#151718",
-  }
+  },
 });
 
 export default baseStyle;

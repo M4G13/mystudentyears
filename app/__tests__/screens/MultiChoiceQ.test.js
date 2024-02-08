@@ -21,11 +21,13 @@ describe("handleAnswer()", () => {
   it("returns true with correct button", () => {
     render(<MultiChoiceQ question={question} handleAnswer={mockFn} />);
     fireEvent.press(screen.getByText(question.options[2].text));
+    fireEvent.press(screen.getByText("Submit"));
     expect(mockFn).toBeCalledWith(true);
   });
   it("returns false with incorrect button", () => {
     render(<MultiChoiceQ question={question} handleAnswer={mockFn} />);
     fireEvent.press(screen.getByText(question.options[0].text));
+    fireEvent.press(screen.getByText("Submit"));
     expect(mockFn).toBeCalledWith(false);
   });
 });
