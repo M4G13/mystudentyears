@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native"
 import { View } from "react-native";
 
 import MissingWordsQ from "./questionTypes/MissingWordsQ.js";
@@ -62,7 +63,7 @@ export default function Question({ route, navigation }) {
             CompletedQuizzes: [
               {
                 quiz: quiz.id,
-                results: answers,
+                results: nextAnswers,
               },
             ],
           },
@@ -76,6 +77,17 @@ export default function Question({ route, navigation }) {
       });
     }
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      if(index === 0) {
+        setAnswers([]);
+        AsyncStorage.removeItem("quiz" + category.id).catch((error) => {
+          console.error("Failed to clear progress. " + error);
+        });
+      }
+    }, [index])
+  );
 
   const questionTypes = {
     "questions.multi-choice-question": MultiChoiceQ,
