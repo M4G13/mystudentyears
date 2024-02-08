@@ -52,6 +52,20 @@ export default function Question({ route, navigation }) {
         quiz.questions.length,
       );
       storeResult(nextAnswers);
+      fetch(global.api_url + "/app-user/" + global.uuid, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: {
+            CompletedQuizzes: [{
+              quiz: quiz.id,
+              results: answers
+            }]
+          }
+        })
+      })
       navigation.navigate("QuizEndScreen", {
         ...route.params,
         score,
