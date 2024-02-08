@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from "react";
 import { View, Text, Pressable } from "react-native";
 import * as Progress from "react-native-progress";
@@ -10,16 +9,11 @@ export default function QuizEndScreen({ route, navigation }) {
     route.params;
 
   const retakeQuiz = async () => {
-    try {
-      await AsyncStorage.getItem("quiz" + category_id);
-      navigation.navigate("Question", {
-        category_id,
-        student_id,
-        index: 0,
-      });
-    } catch (error) {
-      console.error("Failed to clear progress. " + error);
-    }
+    navigation.navigate("Question", {
+      category_id,
+      student_id,
+      index: 0,
+    });
   };
 
   const goToMap = () => {
