@@ -27,7 +27,7 @@ export default function RankOrderQ({ question, handleAnswer }) {
   };
 
   return (
-    <View>
+    <View style={style.questionWrapper}>
       <View style={style.questionContainer}>
         <Text style={style.bigText}>{question.question}</Text>
       </View>

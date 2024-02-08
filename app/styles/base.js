@@ -1,17 +1,17 @@
 import { StyleSheet } from "react-native";
 
 const colors = {
-    bg1: "#151718",
-    bg2: "#111316",
-    bg3: "#050710",
-    fg1: "#05b4ff",
-    fg2: "#ff69b4",
-    text1: "#ffffff",
-    text2: "#000000",
-}
+  bg1: "#151718",
+  bg2: "#111316",
+  bg3: "#050710",
+  fg1: "#05b4ff",
+  fg2: "#ff69b4",
+  text1: "#ffffff",
+  text2: "#000000",
+};
 
 const baseStyle = StyleSheet.create({
-  colors: {...colors},
+  colors: { ...colors },
   view: {
     flex: 1,
     alignItems: "center",

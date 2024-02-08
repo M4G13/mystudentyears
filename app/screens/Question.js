@@ -7,11 +7,12 @@ import MultiChoiceQ from "./questionTypes/MultiChoiceQ.js";
 import OpenResponseQ from "./questionTypes/OpenResponseQ.js";
 import RankOrderQ from "./questionTypes/RankOrderQ.js";
 import { getData } from "../common.js";
-import baseStyle from "../styles/base.js";
+import baseStyle from "../styles/question.js";
 
 export function calculateScore(answers, totalQuestions) {
-  const correctAnswers = answers.filter((answer) => answer === true);
-  const score = (correctAnswers.length / totalQuestions) * 100;
+  console.log(answers);
+  let correctAnswers = answers.filter((answer) => answer === true);
+  let score = (correctAnswers.length / totalQuestions) * 100;
   return {
     score,
     correctAmount: correctAnswers.length,
@@ -52,6 +53,7 @@ export default function Question({ route, navigation }) {
         quiz.questions.length,
       );
       storeResult(nextAnswers);
+      setAnswers([]); // Fix for quiz result > 100%
       navigation.navigate("QuizEndScreen", {
         ...route.params,
         score,

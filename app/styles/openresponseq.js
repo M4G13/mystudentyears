@@ -29,14 +29,13 @@ const style = StyleSheet.create({
 
   submitButtonContainer: {
     marginTop: "auto",
-    marginBottom: 10,
   },
-
   submitButton: {
     backgroundColor: base.colors.fg2,
     borderRadius: 5,
     padding: 15,
-    marginBottom: 0,
+    margin: 10,
+    marginTop: 30,
   },
 
   listItem: {

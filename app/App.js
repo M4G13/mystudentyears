@@ -31,6 +31,7 @@ export default function App() {
   const [error, setError] = useState(false);
 
   StatusBar.setBarStyle("light-content");
+  StatusBar.setBackgroundColor(baseStyle.colors.bg1);
 
   global.api_url =
     process.env.EXPO_PUBLIC_API_URL ||

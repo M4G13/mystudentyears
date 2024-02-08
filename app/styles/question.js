@@ -7,24 +7,32 @@ const style = StyleSheet.create({
   questionWrapper: {
     flex: 1,
     height: "100%",
+    width: "100%",
+    backgroundColor: base.colors.bg1,
   },
   questionContainer: {
     padding: 30,
     paddingLeft: 10,
-    color: base.colors.text2,
     justifyContent: "space-around",
   },
   optionsContainer: {
-    flexWrap: "wrap",
-    flexDirection: "row",
+    width: "100%",
     justifyContent: "center",
+    alignItems: "center",
     alignSelf: "center",
     gap: 15,
   },
+  submitButtonContainer: {
+    marginTop: "auto",
+    width: "100%",
+  },
   submitButton: {
+    backgroundColor: base.colors.fg2,
     justifyContent: "end",
     marginTop: "auto",
-    marginBottom: 10,
+    margin: 10,
+    padding: 15,
+    borderRadius: 5,
   },
   image: {
     width: 100,
@@ -35,14 +43,12 @@ const style = StyleSheet.create({
     backgroundColor: base.colors.fg2,
     padding: 15,
     borderRadius: 5,
-    flexBasis: "40%",
-    flexDirection: "row",
     justifyContent: "center",
   },
   button: {
     color: base.colors.text1,
     fontWeight: "600",
-    fontSize: 20,
+    fontSize: 22,
     textAlign: "center",
   },
   bigText: {

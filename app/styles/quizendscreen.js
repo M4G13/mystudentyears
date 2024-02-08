@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import base from "./base.js";
+import base from "./question.js";
 
 const style = StyleSheet.create({
   ...base,
@@ -10,23 +10,25 @@ const style = StyleSheet.create({
     flexDirection: "column",
     justifyItems: "center",
   },
-  card: {
-    borderRadius: 10,
-    padding: 30,
-    backgroundColor: "#9fafff",
+  questionWrapper: {
     alignItems: "center",
-    display: "flex",
-    borderWidth: 4,
-    borderColor: "#0a2a4a",
+    width: "100%",
   },
   bigText: {
     ...base.bigText,
-    color: "#0a0a0a",
+    margin:20,
   },
-  smallText: {
-    ...base.smallText,
-    color: "#0a0a0a",
+  pressable: {
+    ...base.pressable,
+    width: "90%",
+    marginTop: 20,
   },
+  buttonContainer: {
+    ...base.submitButtonContainer,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  }
 });
 
 export default style;

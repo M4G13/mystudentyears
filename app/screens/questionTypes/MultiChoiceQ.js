@@ -29,8 +29,10 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
       <View style={style.submitButtonContainer}>
         <Pressable
           style={style.submitButton}
-          // Maybe change this to have an error message if no option selected?
-          onPress={() => handleAnswer(selected==undefined ? false : selected.correct)}
+          onPress={() => 
+            // Maybe change this to have an error message if no option selected?
+            selected && handleAnswer(selected.correct)
+          }
         >
           <Text style={style.button}>Submit</Text>
         </Pressable>

@@ -15,30 +15,28 @@ export default function OpenResponseQ({ question, handleAnswer }) {
   }
 
   return (
-    <View>
-      <View style={style.questionWrapper}>
-        <View style={style.questionContainer}>
-          <Text style={style.bigText}>{question.question}</Text>
-          <TextInput
-            style={style.input}
-            placeholder="Enter your answer here"
-            placeholderTextColor={style.input.color}
-            onChangeText={(text) => setInput(text)}
-            value={input}
-          />
-        </View>
+    <View style={style.questionWrapper}>
+      <View style={style.questionContainer}>
+        <Text style={style.bigText}>{question.question}</Text>
+        <TextInput
+          style={style.input}
+          placeholder="Enter your answer here"
+          placeholderTextColor={style.input.color}
+          onChangeText={(text) => setInput(text)}
+          value={input}
+        />
+      </View>
 
-        <View style={style.submitButtonContainer}>
-          <Pressable
-            style={style.submitButton}
-            onPress={() => {
-              Keyboard.dismiss(); // Close keyboard when navigate away
-              handleAnswer(compare(input, question.answer));
-            }}
-          >
-            <Text style={style.button}>Submit</Text>
-          </Pressable>
-        </View>
+      <View style={style.submitButtonContainer}>
+        <Pressable
+          style={style.submitButton}
+          onPress={() => {
+            Keyboard.dismiss(); // Close keyboard when navigate away
+            handleAnswer(compare(input, question.answer));
+          }}
+        >
+          <Text style={style.button}>Submit</Text>
+        </Pressable>
       </View>
     </View>
   );

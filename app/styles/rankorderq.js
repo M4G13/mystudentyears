@@ -1,33 +1,12 @@
 import { StyleSheet } from "react-native";
 
-import base from "./base.js";
+import base from "./question.js";
 
 const style = StyleSheet.create({
   ...base,
-  questionContainer: {
-    padding: 30,
-    paddingLeft: 10,
-    color: base.colors.text2,
-  },
-
-  submitButtonContainer: {
-    marginTop: "auto",
-    marginBottom: 10,
-  },
-
-  submitButton: {
-    backgroundColor: base.colors.fg2,
-    borderRadius: 5,
-    padding: 15,
-    marginBottom: 0,
-  },
 
   listItem: {
-    backgroundColor: base.colors.fg2,
-    borderColor: base.colors.fg2,
-    borderWidth: 4,
-    padding: 15,
-    borderRadius: 5,
+    ...base.pressable,
     margin: 5,
     width: "90%",
     alignItems: "center",

@@ -1,57 +1,35 @@
 import { StyleSheet } from "react-native";
 
-import base from "./base.js";
+import base from "./question.js";
 
 const style = StyleSheet.create({
   ...base,
   questionWrapper: {
-    flex: 1,
-    height: "100%",
-  },
-  questionContainer: {
-    padding: 30,
-    paddingLeft: 10,
-    justifyContent: "space-around",
-  },
-  optionsContainer: {
-    flexWrap: "wrap",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignSelf: "center",
-    gaps: 15,
-  },
-  submitButton: {
-    justifyContent: "end",
-    marginTop: "auto",
-    marginBottom: 10,
-  },
-  bigText: {
-    ...base.bigText,
-    textAlign: "left",
-    fontSize: 30,
+    ...base.questionWrapper,
+    justifyContent: "space-between",
   },
   draggable: {
-    ...base.button,
-    minWidth: 0,
+    ...base.pressable,
+    backgroundColor: base.colors.fg1,
     margin: 5,
+    marginBottom: 10,
+    marginTop: 10,
   },
   draggableSelected: {
-    ...base.button,
-    minWidth: 0,
-    margin: 5,
+    ...base.pressable,
     backgroundColor: base.colors.fg2,
+    margin: 5,
+    marginBottom: 10,
+    marginTop: 10,
   },
   keywords: {
-    padding: 10,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
   },
   wordGaps: {
     ...base.bigText,
-    fontSize: 30,
     backgroundColor: base.colors.bg3,
-    borderRadius: 10,
     textDecorationLine: "underline",
   },
 });

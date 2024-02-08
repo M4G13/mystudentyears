@@ -11,7 +11,7 @@ export default function QuizEndScreen({ route, navigation }) {
 
   const retakeQuiz = async () => {
     try {
-      await AsyncStorage.removeItem("quiz" + category_id);
+      await AsyncStorage.getItem("quiz" + category_id);
       navigation.navigate("Question", {
         category_id,
         student_id,
@@ -36,31 +36,34 @@ export default function QuizEndScreen({ route, navigation }) {
     message = "Good effort! You're on the right track.";
   }
 
+
   return (
     <View style={style.view}>
-      <Progress.Circle
-        size={200}
-        progress={score.toFixed(2) / 100}
-        thickness={10}
-        showsText
-        strokeCap="round"
-      />
-      <View style={style.card}>
+      <View style={style.questionWrapper}>
+        <Progress.Circle
+          size={200}
+          progress={score/100}
+          thickness={10}
+          color={style.colors.fg2}
+          formatText={()=>score.toFixed(1)+"%"}
+          showsText
+          strokeCap="round"
+        />
         <Text style={style.bigText}>Quiz Completed!</Text>
         <Text style={style.smallText}>
           You got {score.toFixed(2)}%, which is {correctAmount} out of{" "}
           {QuestionAmount}
         </Text>
         <Text style={style.smallText}>{message}</Text>
-        <View style={[style.buttonContainer, { flexDirection: "row" }]}>
+        <View style={style.buttonContainer}>
           <Pressable
             onPress={retakeQuiz}
-            style={[style.button, { marginRight: 5 }]}
+            style={style.pressable}
           >
-            <Text style={style.buttonText}>Retake Quiz</Text>
+            <Text style={style.button}>Retake Quiz</Text>
           </Pressable>
-          <Pressable onPress={goToMap} style={style.button}>
-            <Text style={style.buttonText}>Go back to campus</Text>
+          <Pressable onPress={goToMap} style={style.pressable}>
+            <Text style={style.button}>Go back to campus</Text>
           </Pressable>
         </View>
       </View>

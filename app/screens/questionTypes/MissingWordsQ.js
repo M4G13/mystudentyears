@@ -40,24 +40,23 @@ export default function MissingWordsQ({ question, handleAnswer }) {
   }
 
   return (
-    <View style={style.view}>
-      <Text style={style.bigText}>
-        {questionString.map((text, i) => {
-          return (
-            <Text key={`${text}${i}${selectedKeywords[i]}`}>
-              {text}
-              {i < keywords.length && (
-                <Text
-                  style={{ ...style.bigText, backgroundColor: "#ff69b4" }}
-                  onPress={() => modifyKeyword(i)}
-                >
-                  {selectedKeywords[i] || "_______"}
-                </Text>
-              )}
-            </Text>
-          );
-        })}
-      </Text>
+    <View style={style.questionWrapper}>
+      <View style={style.questionContainer}>
+        <Text style={style.bigText}>
+          {questionString.map((text, i) => {
+            return (
+              <Text key={`${text}${i}${selectedKeywords[i]}`}>
+                {text}
+                {i < keywords.length && (
+                  <Text style={style.wordGaps} onPress={() => modifyKeyword(i)}>
+                    {selectedKeywords[i] || "________"}
+                  </Text>
+                )}
+              </Text>
+            );
+          })}
+        </Text>
+      </View>
       <View style={style.keywords}>
         {availableKeywords.length ? (
           availableKeywords.map((keyword, index) => (
@@ -75,13 +74,15 @@ export default function MissingWordsQ({ question, handleAnswer }) {
             </Pressable>
           ))
         ) : (
-          <Pressable
-            style={style.pressable}
-            onPress={() => handleAnswer(_.isEqual(selectedKeywords, keywords))}
-          >
-            <Text style={style.button}>Submit</Text>
-          </Pressable>
-        )}
+            <View style={style.submitButtonContainer}>
+              <Pressable
+                style={style.submitButton}
+                onPress={() => handleAnswer(_.isEqual(selectedKeywords, keywords))}
+              >
+                <Text style={style.button}>Submit</Text>
+              </Pressable>
+            </View>
+          )}
       </View>
     </View>
   );
