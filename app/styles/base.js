@@ -6,6 +6,9 @@ const baseStyle = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
     backgroundColor: "#151718",
+    borderTopWidth: 3,
+    borderTop: "solid",
+    borderColor: "#111316",
   },
 
   button: {
@@ -39,6 +42,10 @@ const baseStyle = StyleSheet.create({
     bottom: 0,
     left: 0,
   },
+
+  header: {
+    backgroundColor: "#151718",
+  }
 });
 
 export default baseStyle;

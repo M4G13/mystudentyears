@@ -1,10 +1,13 @@
 import { View, Text, Pressable } from "react-native";
+import { useState } from "react";
 
-import style from "../../styles/question.js";
+import style from "../../styles/multichoiceq.js";
 
 export default function MultiChoiceQ({ question, handleAnswer }) {
+  const [selected, setSelected] = useState();
+
   return (
-    <View>
+    <View style={style.questionWrapper}>
       <View style={style.questionContainer}>
         <Text style={style.bigText}>{question.question}</Text>
       </View>
@@ -12,12 +15,21 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
         {question.options.map((q) => (
           <Pressable
             key={q.id}
-            style={style.pressable}
-            onPress={() => handleAnswer(q.correct)}
+            style={(q==selected) ? {...style.pressable,
+              ...style.pressableSelected} : {...style.pressable}}
+            onPress={() => setSelected(q)}
           >
             <Text style={style.button}>{q.text}</Text>
           </Pressable>
         ))}
+      </View>
+      <View style={style.submitButtonContainer}>
+        <Pressable
+          style={style.submitButton}
+          onPress={() => handleAnswer(selected.correct)}
+        >
+          <Text style={style.button}>Submit</Text>
+        </Pressable>
       </View>
     </View>
   );

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 
-import style from "../../styles/question.js";
+import style from "../../styles/missingwordsq.js";
 
 const _ = require("lodash");
 

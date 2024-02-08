@@ -7,44 +7,64 @@ const style = StyleSheet.create({
   questionWrapper: {
     flex: 1,
     height: "100%",
+    width: "100%",
   },
   questionContainer: {
     padding: 30,
     paddingLeft: 10,
     color: "#000000",
     justifyContent: "space-around",
+    width: "100%",
   },
   optionsContainer: {
-    flexWrap: "wrap",
-    flexDirection: "row",
+    width: "100%",
+    flexGrow: 1,
     justifyContent: "center",
+    alignItems: "center",
     alignSelf: "center",
-    gap: 15,
+    gap: 40,
+    marginBottom: 40,
   },
-  submitButton: {
-    justifyContent: "end",
+  submitButtonContainer: {
     marginTop: "auto",
     marginBottom: 10,
+  },
+  submitButton: {
+    backgroundColor: "#ff69b4",
+    borderRadius: 5,
+    padding: 15,
+    margin: 10,
+    marginBottom: 0,
   },
   image: {
     width: 100,
     height: 200,
     objectFit: "contain",
   },
+
   pressable: {
-    backgroundColor: "#ff69b4",
+    backgroundColor: "transparent",
+    borderColor: "#ff69b4",
+    borderWidth: 4,
     padding: 15,
     borderRadius: 5,
-    flexBasis: "40%",
-    flexDirection: "row",
+    width: "90%",
+    flexDirection: "column",
     justifyContent: "center",
+    flexGrow:1,
   },
+
+  pressableSelected: {
+    backgroundColor: "#ff69b4",
+  },
+
   button: {
     color: "#ffffff",
     fontWeight: "600",
-    fontSize: 20,
+    fontSize: 22,
     textAlign: "center",
   },
+
   bigText: {
     ...base.bigText,
     textAlign: "left",
@@ -54,33 +74,6 @@ const style = StyleSheet.create({
   bigTextInv: {
     ...base.bigText,
     color: "#000000",
-  },
-  input: {
-    width: 300,
-    alignItems: "stretch",
-    marginTop: 60,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: "#ffffff",
-  },
-  draggable: {
-    borderWidth: 1,
-    backgroundColor: "#779ecb",
-    padding: 10,
-    borderRadius: 20,
-    margin: 5,
-  },
-  draggableSelected: {
-    backgroundColor: "#ff69b4",
-    padding: 10,
-    margin: 5,
-    marginTop: 0,
-  },
-  keywords: {
-    padding: 10,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
   },
 });
 

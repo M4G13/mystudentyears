@@ -35,12 +35,12 @@ dependencies:
   react-native-dropdown-select-list:
     specifier: ^2.0.5
     version: 2.0.5
-  react-native-gesture-handler:
-    specifier: ~2.14.1
-    version: 2.14.1(react-native@0.73.2)(react@18.2.0)
   react-native-marked:
     specifier: ^6.0.4
     version: 6.0.4(react-native-svg@14.1.0)(react-native@0.73.2)(react@18.2.0)
+  react-native-progress:
+    specifier: ^5.0.1
+    version: 5.0.1(react-native-svg@14.1.0)
   react-native-reanimated:
     specifier: ~3.6.2
     version: 3.6.2(@babel/core@7.23.9)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.2)(react@18.2.0)
@@ -7649,6 +7649,15 @@ packages:
       react-native-svg: 14.1.0(react-native@0.73.2)(react@18.2.0)
       react-native-table-component: 1.2.2
       svg-parser: 2.0.4
+    dev: false
+
+  /react-native-progress@5.0.1(react-native-svg@14.1.0):
+    resolution: {integrity: sha512-TYfJ4auAe5vubDma2yfFvt7ktSI+UCfysqJnkdHEcLXqAitRFOozgF/cLgN5VNi/iLdaf3ga1ETi2RF4jVZ/+g==}
+    peerDependencies:
+      react-native-svg: '*'
+    dependencies:
+      prop-types: 15.8.1
+      react-native-svg: 14.1.0(react-native@0.73.2)(react@18.2.0)
     dev: false
 
   /react-native-reanimated@3.6.2(@babel/core@7.23.9)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.2)(react@18.2.0):
