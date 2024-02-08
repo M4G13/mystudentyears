@@ -16,7 +16,7 @@ const style = StyleSheet.create({
   },
   bigText: {
     ...base.bigText,
-    margin:20,
+    margin: 20,
   },
   pressable: {
     ...base.pressable,
@@ -28,7 +28,7 @@ const style = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-  }
+  },
 });
 
 export default style;

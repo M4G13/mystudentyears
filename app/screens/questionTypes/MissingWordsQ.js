@@ -74,15 +74,17 @@ export default function MissingWordsQ({ question, handleAnswer }) {
             </Pressable>
           ))
         ) : (
-            <View style={style.submitButtonContainer}>
-              <Pressable
-                style={style.submitButton}
-                onPress={() => handleAnswer(_.isEqual(selectedKeywords, keywords))}
-              >
-                <Text style={style.button}>Submit</Text>
-              </Pressable>
-            </View>
-          )}
+          <View style={style.submitButtonContainer}>
+            <Pressable
+              style={style.submitButton}
+              onPress={() =>
+                handleAnswer(_.isEqual(selectedKeywords, keywords))
+              }
+            >
+              <Text style={style.button}>Submit</Text>
+            </Pressable>
+          </View>
+        )}
       </View>
     </View>
   );

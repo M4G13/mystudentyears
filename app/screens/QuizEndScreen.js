@@ -36,16 +36,15 @@ export default function QuizEndScreen({ route, navigation }) {
     message = "Good effort! You're on the right track.";
   }
 
-
   return (
     <View style={style.view}>
       <View style={style.questionWrapper}>
         <Progress.Circle
           size={200}
-          progress={score/100}
+          progress={score / 100}
           thickness={10}
           color={style.colors.fg2}
-          formatText={()=>score.toFixed(1)+"%"}
+          formatText={() => score.toFixed(1) + "%"}
           showsText
           strokeCap="round"
         />
@@ -56,10 +55,7 @@ export default function QuizEndScreen({ route, navigation }) {
         </Text>
         <Text style={style.smallText}>{message}</Text>
         <View style={style.buttonContainer}>
-          <Pressable
-            onPress={retakeQuiz}
-            style={style.pressable}
-          >
+          <Pressable onPress={retakeQuiz} style={style.pressable}>
             <Text style={style.button}>Retake Quiz</Text>
           </Pressable>
           <Pressable onPress={goToMap} style={style.pressable}>
