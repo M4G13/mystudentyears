@@ -1,5 +1,5 @@
-import PluginIcon from './extensions/AnalyticsPage/icon';
-import Analytics from './extensions/AnalyticsPage/index';
+import PluginIcon from './extensions/AnalyticsPage/icon.jsx';
+import Analytics from './extensions/AnalyticsPage/index.jsx';
 
 const config = {
 };
@@ -13,7 +13,7 @@ const bootstrap = (app) => {
       defaultMessage: 'Analytics',
     },
     Component: async () => {
-      const component = await import('./extensions/AnalyticsPage/index');
+      const component = await import('./extensions/AnalyticsPage/index.jsx');
 
       return component;
     },
