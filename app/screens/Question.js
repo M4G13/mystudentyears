@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useState, useCallback } from "react";
 import { View } from "react-native";
 
 import MissingWordsQ from "./questionTypes/MissingWordsQ.js";
@@ -7,13 +8,22 @@ import MultiChoiceQ from "./questionTypes/MultiChoiceQ.js";
 import OpenResponseQ from "./questionTypes/OpenResponseQ.js";
 import RankOrderQ from "./questionTypes/RankOrderQ.js";
 import { getData } from "../common.js";
-import baseStyle from "../styles/base.js";
+import baseStyle from "../styles/question.js";
+
+export function calculateScore(answers, totalQuestions) {
+  const correctAnswers = answers.filter((answer) => answer === true);
+  const score = (correctAnswers.length / totalQuestions) * 100;
+  return {
+    score,
+    correctAmount: correctAnswers.length,
+  };
+}
 
 export default function Question({ route, navigation }) {
   const { index } = route.params;
   const { category } = getData(route.params);
 
-  const quiz = category.quiz.data.attributes;
+  const quiz = category.quiz;
 
   const question = quiz.questions[index];
 
@@ -25,16 +35,6 @@ export default function Question({ route, navigation }) {
     } catch (e) {
       console.error("Failed to save progress. " + e);
     }
-  }
-
-  function calculateScore(answers, totalQuestions) {
-    const correctAnswers = answers.filter((answer) => answer === true);
-    const score = (correctAnswers.length / totalQuestions) * 100;
-
-    return {
-      score,
-      correctAmount: correctAnswers.length,
-    };
   }
 
   function handleAnswer(correct) {
@@ -53,6 +53,22 @@ export default function Question({ route, navigation }) {
         quiz.questions.length,
       );
       storeResult(nextAnswers);
+      fetch(global.api_url + "/app-user/" + global.uuid, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: {
+            CompletedQuizzes: [
+              {
+                quiz: quiz.id,
+                results: nextAnswers,
+              },
+            ],
+          },
+        }),
+      });
       navigation.navigate("QuizEndScreen", {
         ...route.params,
         score,
@@ -61,6 +77,17 @@ export default function Question({ route, navigation }) {
       });
     }
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      if (index === 0) {
+        setAnswers([]);
+        AsyncStorage.removeItem("quiz" + category.id).catch((error) => {
+          console.error("Failed to clear progress. " + error);
+        });
+      }
+    }, [index]),
+  );
 
   const questionTypes = {
     "questions.multi-choice-question": MultiChoiceQ,

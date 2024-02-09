@@ -6,7 +6,7 @@ import { View, Text, Pressable, Alert } from "react-native";
 import baseStyle from "../styles/base.js";
 
 export default function Gatehouse({ navigation }) {
-  const students = global.data.data;
+  const students = global.data;
 
   const [openStories, setOpenStories] = useState({});
   useFocusEffect(
@@ -16,7 +16,7 @@ export default function Gatehouse({ navigation }) {
         const completed = [];
         for (let i = 0; i < students.length; i++) {
           completed[i] = 0;
-          for (const category of students[i].attributes.category) {
+          for (const category of students[i].category) {
             try {
               const storedCompletion = await AsyncStorage.getItem(
                 "quiz" + category.id,
@@ -31,7 +31,7 @@ export default function Gatehouse({ navigation }) {
           open[students[i].id] =
             i === 0
               ? true
-              : completed[i - 1] === students[i - 1].attributes.category.length;
+              : completed[i - 1] === students[i - 1].category.length;
         }
         setOpenStories(open);
       }
@@ -57,11 +57,15 @@ export default function Gatehouse({ navigation }) {
           }}
         >
           <Text style={baseStyle.button}>
-            {s.attributes.Name}
+            {s.Name}
             {!openStories[s.id] && " 🔒"}
           </Text>
         </Pressable>
       ))}
+
+      <Pressable onPress={() => navigation.navigate("Survey")}>
+        <Text style={baseStyle.button}>Final survey 🔒</Text>
+      </Pressable>
     </View>
   );
 }

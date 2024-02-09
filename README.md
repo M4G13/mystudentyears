@@ -3,6 +3,18 @@
 ## Project Overview
 An app to help students in the transitionary period from high school to University/College.  Provides students with extra support for everything from managing finances, cooking, and academic skills in a fun and engaging environment.
 
+## Contributing
+### Getting started
+To run the app follow the READMEs in `app/` and `strapi/`.
+
+### Pre-commit
+Before committing ensure that any new components created have tests (jest is used for this but follow the relevant docs for your component, e.g., AsyncStorage has its own section on testing).  Also ensure that all tests pass by running `pnpm run test` in `app/`.  Also ensure that you run `pnpm run lint-fix` in `app/` for consistent styling.  Read the output of `lint-fix`, if warnings are generated check if they should be fixed or if they were intentional, if errors are generated the pipeline will fail (fix these).
+
+Make sure you either reference the number of the ticket in the commit message or are on a feature branch which is prefixed with the ticket number.  Use good commit messages (if you needed a quick fix commit, tick the "squash commits" button when submitting a merge request.  Do not approve your own merge request (wait for someone else to review and approve).
+
+### Useful Resources
+[reactnative.express](https://www.reactnative.express/) - Great docs/guide for react native if you need to brush up on something.
+[expo go docs](https://docs.expo.dev/) - Generally better docs than the react native website.
 
 ## Roadmap
 - [x] Research + Stack Decisions
@@ -16,9 +28,9 @@ An app to help students in the transitionary period from high school to Universi
     - [x] Standardise + improve app layout
     - [x] Create all question types
     - [x] App works with strapi
-- [ ] Extended end-user functionality
+- [x] Extended end-user functionality
     - [ ] Full E2E + regression test suite
-    - [ ] Improve quiz functionality
+    - [x] Improve quiz functionality
     - [ ] Display + store progress
     - [ ] Form/survey at start + end of app flow
     - [ ] Analytics captured

@@ -10,17 +10,28 @@ export default function Category({ route, navigation }) {
   const { category } = getData(route.params);
 
   const [completion, setCompletion] = useState(null);
+  const [infoCompletion, setInfoCompletion] = useState(null);
 
   useFocusEffect(
     useCallback(() => {
       async function getCompletion() {
         try {
+          const infoCompletion = await AsyncStorage.getItem(
+            "info" + category.id,
+          );
+          setInfoCompletion(infoCompletion);
+        } catch (e) {
+          console.error("Failed to get info page completion" + e);
+          setInfoCompletion(null);
+        }
+
+        try {
           let sum = 0;
-          const storedCompletion = await AsyncStorage.getItem(
+          const quizCompletion = await AsyncStorage.getItem(
             "quiz" + category.id,
           );
-          if (storedCompletion != null) {
-            JSON.parse(storedCompletion).map((x) => (sum += x ? 1 : 0));
+          if (quizCompletion != null) {
+            JSON.parse(quizCompletion).map((x) => (sum += x ? 1 : 0));
             setCompletion(sum);
           } else {
             setCompletion(null);
@@ -35,30 +46,6 @@ export default function Category({ route, navigation }) {
     }, []),
   );
 
-  const clearQuizProgress = async () => {
-    try {
-      await AsyncStorage.removeItem("quiz" + category.id);
-      setCompletion(null);
-      startQuiz();
-    } catch (error) {
-      console.error("Failed to clear quiz progress. " + error);
-    }
-  };
-
-  const startQuiz = () => {
-    navigation.navigate("Question", {
-      ...route.params,
-      index: 0,
-    });
-  };
-
-  const navigateToInfo = () => {
-    navigation.navigate("Info", {
-      ...route.params,
-      index: 0,
-    });
-  };
-
   return (
     <View style={baseStyle.view}>
       <>
@@ -68,20 +55,32 @@ export default function Category({ route, navigation }) {
         {completion !== null && (
           <Text style={baseStyle.bigText}>
             Previously you got {completion} out of{" "}
-            {category.quiz.data.attributes.questions.length}
+            {category.quiz.questions.length}
           </Text>
         )}
-        <Pressable onPress={navigateToInfo}>
+        <Pressable
+          onPress={() =>
+            navigation.navigate("Info", {
+              ...route.params,
+              index: 0,
+            })
+          }
+        >
           <Text style={baseStyle.button}>Start Reading</Text>
         </Pressable>
-        {completion === null && (
-          <Pressable onPress={startQuiz}>
-            <Text style={baseStyle.button}>Start Quiz</Text>
-          </Pressable>
-        )}
-        {completion !== null && (
-          <Pressable onPress={clearQuizProgress}>
-            <Text style={baseStyle.button}>Retake Quiz</Text>
+
+        {infoCompletion !== null && (
+          <Pressable
+            onPress={() => {
+              navigation.navigate("Question", {
+                ...route.params,
+                index: 0,
+              });
+            }}
+          >
+            <Text style={baseStyle.button}>
+              {completion ? "Retake Quiz" : "Start Quiz"}
+            </Text>
           </Pressable>
         )}
       </>

@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_completion_completions",
+  "info": {
+    "displayName": "Completion",
+    "icon": "bulletList",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "quiz": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::quiz.quiz"
+    },
+    "results": {
+      "type": "json"
+    }
+  }
+}

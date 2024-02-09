@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "survey_questions",
+  "info": {
+    "singularName": "survey-question",
+    "pluralName": "survey-questions",
+    "displayName": "Survey Questions",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "question": {
+      "type": "string"
+    },
+    "option": {
+      "type": "component",
+      "repeatable": true,
+      "component": "survey.option"
+    }
+  }
+}

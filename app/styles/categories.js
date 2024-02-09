@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import base from "./base.js";
 
 const style = StyleSheet.create({
+  ...base,
   view: {
     flex: 1,
   },
@@ -14,7 +15,6 @@ const style = StyleSheet.create({
     fontWeight: "600",
     width: "35%",
   },
-  button: base.button,
 });
 
 export default style;

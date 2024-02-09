@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "app_users",
+  "info": {
+    "singularName": "app-user",
+    "pluralName": "app-users",
+    "displayName": "AppUser",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Email": {
+      "type": "email"
+    },
+    "InitialSurvey": {
+      "displayName": "Survey",
+      "type": "component",
+      "repeatable": false,
+      "component": "survey.survey"
+    },
+    "FinalSurvey": {
+      "type": "component",
+      "repeatable": false,
+      "component": "survey.survey"
+    },
+    "CompletedQuizzes": {
+      "displayName": "Completion",
+      "type": "component",
+      "repeatable": true,
+      "component": "completion.completion"
+    },
+    "UUID": {
+      "type": "uid"
+    },
+    "school": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::school.school"
+    }
+  }
+}

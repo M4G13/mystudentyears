@@ -10,22 +10,26 @@ export default function Info({ route, navigation }) {
   const index = route.params.index;
   const { category } = getData(route.params);
 
-  const information = category.information.data;
-  const currInfo = information[index].attributes;
+  const information = category.information;
+  const currInfo = information[index];
   const isLastPage = index === information.length - 1;
 
   const navigateToNextPage = async () => {
     if (isLastPage) {
       try {
-        const storedCompletion = await AsyncStorage.getItem(
-          "quiz" + category.id,
-        );
+        await AsyncStorage.setItem("info" + category.id, "complete");
+      } catch (e) {
+        console.error("Faled to store category completion. " + e);
+      }
 
-        if (storedCompletion) {
+      try {
+        const quizCompletion = await AsyncStorage.getItem("quiz" + category.id);
+
+        if (quizCompletion) {
           await AsyncStorage.removeItem("quiz" + category.id);
         }
-      } catch (error) {
-        console.error("Failed to clear quiz progress. " + error);
+      } catch (e) {
+        console.error("Failed to clear quiz progress. " + e);
       }
 
       navigation.navigate("Question", {

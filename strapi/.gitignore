@@ -106,9 +106,19 @@ coverage
 ############################
 
 .env
+.env.prod
 license.txt
 exports
 *.cache
 dist
 build
 .strapi-updater.json
+
+types/generated/
+.strapi/
+
+############################
+# Docker
+############################
+
+backup/
