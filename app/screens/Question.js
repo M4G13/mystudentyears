@@ -11,7 +11,6 @@ import { getData } from "../common.js";
 import baseStyle from "../styles/question.js";
 
 export function calculateScore(answers, totalQuestions) {
-  console.log(answers);
   const correctAnswers = answers.filter((answer) => answer === true);
   const score = (correctAnswers.length / totalQuestions) * 100;
   return {
