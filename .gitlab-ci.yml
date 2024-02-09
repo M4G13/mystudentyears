@@ -92,6 +92,8 @@ deploy-strapi:
 
 stop-strapi:
   stage: deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH == "prod"
   environment:
     name: production
     action: stop
