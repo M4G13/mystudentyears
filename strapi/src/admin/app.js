@@ -1,7 +1,23 @@
 import PluginIcon from './extensions/AnalyticsPage/icon.jsx';
 import Analytics from './extensions/AnalyticsPage/index.jsx';
+import favicon from "../../favicon.png";
+import msyLogoSmall from "../../msyLogoSmall.png";
+import msyLogoLarge from "../../msyLogoLarge.png";
 
 const config = {
+  locales: ["en"],
+  auth: {
+    logo: msyLogoLarge,
+  },
+  menu: {
+    logo: msyLogoSmall,
+  },
+  head: {
+    favicon: favicon,
+  },
+  notifications: {
+    releases: false,
+  },
 };
 
 const bootstrap = (app) => {
