@@ -87,7 +87,7 @@ export default function Survey({ navigation }) {
     }, []),
   );
 
-  const handlePostData = async (data) => {
+  const handlePostData = (data) => {
     fetch(global.api_url + "/app-users", {
       method: "POST",
       headers: {
@@ -96,6 +96,13 @@ export default function Survey({ navigation }) {
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
+      .then((user) => {
+        global.uuid = user.data.attributes.UUID;
+        AsyncStorage.setItem("uuid", global.uuid);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     storeResponse(data);
   };
 
