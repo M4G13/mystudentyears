@@ -3,18 +3,36 @@ import { StyleSheet } from "react-native";
 import base from "./base.js";
 
 const style = StyleSheet.create({
-  view: base.view,
+  ...base,
+  questionWrapper: {
+    flex: 1,
+    height: "100%",
+    width: "100%",
+    backgroundColor: base.colors.bg1,
+  },
   questionContainer: {
     padding: 30,
-    marginBottom: 40,
-    alignItems: "center",
+    paddingLeft: 10,
+    justifyContent: "space-around",
   },
   optionsContainer: {
-    flex: 1,
-    flexWrap: "wrap",
-    flexDirection: "row",
+    width: "100%",
     justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
     gap: 15,
+  },
+  submitButtonContainer: {
+    marginTop: "auto",
+    width: "100%",
+  },
+  submitButton: {
+    backgroundColor: base.colors.fg2,
+    justifyContent: "end",
+    marginTop: "auto",
+    margin: 10,
+    padding: 15,
+    borderRadius: 5,
   },
   image: {
     width: 100,
@@ -22,39 +40,47 @@ const style = StyleSheet.create({
     objectFit: "contain",
   },
   pressable: {
-    backgroundColor: "#ff69b4",
+    backgroundColor: base.colors.fg2,
     padding: 15,
     borderRadius: 5,
-    flexBasis: "40%",
-    flexDirection: "row",
     justifyContent: "center",
   },
   button: {
-    color: "#ffffff",
+    color: base.colors.text1,
     fontWeight: "600",
-    fontSize: 20,
+    fontSize: 22,
     textAlign: "center",
   },
-  bigText: base.bigText,
+  bigText: {
+    ...base.bigText,
+    textAlign: "left",
+    fontSize: 30,
+  },
+
+  bigTextInv: {
+    ...base.bigText,
+    color: base.colors.text2,
+  },
   input: {
     width: 300,
     alignItems: "stretch",
     marginTop: 60,
     borderWidth: 1,
     padding: 10,
-    backgroundColor: "#ffffff",
+    backgroundColor: base.colors.text1,
   },
   draggable: {
     borderWidth: 1,
-    backgroundColor: "#779ecb",
+    backgroundColor: base.colors.fg1,
     padding: 10,
     borderRadius: 20,
     margin: 5,
   },
   draggableSelected: {
-    backgroundColor: "#ff69b4",
+    backgroundColor: base.colors.fg2,
     padding: 10,
     margin: 5,
+    marginTop: 0,
   },
   keywords: {
     padding: 10,

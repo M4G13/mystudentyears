@@ -32,6 +32,7 @@ export default function App() {
   const [error, setError] = useState(false);
 
   StatusBar.setBarStyle("light-content");
+  StatusBar.setBackgroundColor(baseStyle.colors.bg1);
 
   global.api_url =
     process.env.EXPO_PUBLIC_API_URL ||
@@ -94,6 +95,9 @@ export default function App() {
           screenOptions={{
             animation: "fade",
             presentation: "transparentModal",
+            headerTitleAlign: "center",
+            headerShadowVisible: false,
+            headerStyle: baseStyle.header,
           }}
         >
           <Stack.Screen name="Home Screen" component={HomeScreen} />
@@ -109,7 +113,7 @@ export default function App() {
           <Stack.Screen
             name="QuizEndScreen"
             component={QuizEndScreen}
-            options={{ title: "Quiz Complete" }}
+            options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>

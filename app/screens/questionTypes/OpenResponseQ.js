@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, Pressable, TextInput } from "react-native";
+import { View, Text, Pressable, TextInput, Keyboard } from "react-native";
 
-import style from "../../styles/question.js";
+import style from "../../styles/openresponseq.js";
 
 export default function OpenResponseQ({ question, handleAnswer }) {
   const [input, setInput] = useState("");
@@ -15,23 +15,25 @@ export default function OpenResponseQ({ question, handleAnswer }) {
   }
 
   return (
-    <View>
+    <View style={style.questionWrapper}>
       <View style={style.questionContainer}>
         <Text style={style.bigText}>{question.question}</Text>
-
-        <View>
-          <TextInput
-            style={style.input}
-            placeholder="Enter your answer here"
-            onChangeText={(text) => setInput(text)}
-            value={input}
-          />
-        </View>
+        <TextInput
+          style={style.input}
+          placeholder="Enter your answer here"
+          placeholderTextColor={style.input.color}
+          onChangeText={(text) => setInput(text)}
+          value={input}
+        />
       </View>
-      <View style={style.optionsContainer}>
+
+      <View style={style.submitButtonContainer}>
         <Pressable
-          style={style.pressable}
-          onPress={() => handleAnswer(compare(input, question.answer))}
+          style={style.submitButton}
+          onPress={() => {
+            Keyboard.dismiss(); // Close keyboard when navigate away
+            handleAnswer(compare(input, question.answer));
+          }}
         >
           <Text style={style.button}>Submit</Text>
         </Pressable>

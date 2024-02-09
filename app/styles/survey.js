@@ -17,7 +17,7 @@ const style = StyleSheet.create({
   smallText: {
     width: "100%",
     fontSize: 20,
-    color: "#ffffff",
+    color: base.colors.text1,
     marginBottom: 10,
     flexWrap: "wrap", // Allow line wrapping
   },
@@ -33,7 +33,7 @@ const style = StyleSheet.create({
     width: "100%", // Ensure full width
   },
   pressable: {
-    backgroundColor: "#ff69b4",
+    backgroundColor: base.colors.fg2,
     padding: 15,
     borderRadius: 5,
     flexBasis: "40%",
@@ -41,7 +41,7 @@ const style = StyleSheet.create({
     justifyContent: "center",
   },
   button: {
-    color: "#ffffff",
+    color: base.colors.text1,
     fontWeight: "600",
     fontSize: 20,
     textAlign: "center",
@@ -53,14 +53,14 @@ const style = StyleSheet.create({
     borderWidth: 1,
     fontSize: 20,
     padding: 10,
-    backgroundColor: "#ffffff",
+    backgroundColor: base.colors.text1,
     margin: 20,
     borderRadius: 10,
   },
   option: {
     width: "100%",
     fontSize: 17,
-    color: "#ffffff",
+    color: base.colors.text1,
     flexWrap: "wrap", // Allow line wrapping
   },
   questions: {
@@ -70,7 +70,7 @@ const style = StyleSheet.create({
     width: "380",
     maxWidth: "380",
     fontSize: 20,
-    color: "#ffffff",
+    color: base.colors.text1,
     flexWrap: "wrap", // Allow line wrapping
   },
   boxStyle: {
@@ -80,7 +80,7 @@ const style = StyleSheet.create({
     margin: 20,
     padding: 20,
     width: 380,
-    backgroundColor: "#1897F6",
+    backgroundColor: base.colors.fg1,
     textAlign: "center",
     borderRadius: 20,
     fontSize: 20,
@@ -95,11 +95,11 @@ const style = StyleSheet.create({
   },
   smallerText: {
     fontSize: 15,
-    color: "white",
+    color: base.colors.text1,
   },
   link: {
     textDecorationLine: "underline",
-    color: "#1897F6",
+    color: base.colors.fg1,
   },
 });
 
