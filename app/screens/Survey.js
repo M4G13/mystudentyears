@@ -261,7 +261,7 @@ export default function Survey({ navigation }) {
           .
         </Text>
 
-        <Pressable onPress={() => process()}>
+        <Pressable onPress={navigation.navigate("Gatehouse")}>
           <Text style={style.submit}>Submit</Text>
         </Pressable>
       </View>

@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useState, useCallback } from "react";
 import { View, Text, Pressable, Alert, ImageBackground } from "react-native";
+import Constants from "expo-constants"; // REMOVE IN PRODUCTION
 
 import style from "../styles/gatehouse.js";
 
@@ -47,15 +48,16 @@ export default function Gatehouse({ navigation }) {
   const [studentIndex, setStudentIndex] = useState(0);
   let currentName = students[studentIndex].Name;
   let currentID = students[studentIndex].id;
+  let path = "http://" + Constants.expoConfig.hostUri.split(":").shift() + ":1337" + students[studentIndex].Student_image.url;
+  console.log(path)
 
-  path = "http://localhost:1337/uploads/" + currentName + ".jpg"
   imageSource={uri:path}
   
 
 
   return (
     <ImageBackground
-        source={{uri: path}}
+        source={imageSource}
         resizeMode="cover"
         style={style.student}
       >
@@ -79,6 +81,7 @@ export default function Gatehouse({ navigation }) {
           onPress={() => {
             if (studentIndex == 0)setStudentIndex(students.length-1);
             else setStudentIndex(current => current - 1);
+            console.log(students)
           }}
         >
           <Text style={style.Left}>
@@ -87,7 +90,7 @@ export default function Gatehouse({ navigation }) {
         </Pressable>
         <Pressable
           onPress={() => {
-            console.log(currentID)
+            
             navigation.navigate("Categories", {student_id: currentID})
           }}
         >
