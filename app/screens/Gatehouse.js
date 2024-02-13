@@ -48,7 +48,6 @@ export default function Gatehouse({ navigation }) {
   let currentName = students[studentIndex].Name;
   let currentID = students[studentIndex].id;
   let path = global.url + students[studentIndex].Student_image.url;
-  console.log(path)
 
   imageSource={uri:path}
   
@@ -80,7 +79,6 @@ export default function Gatehouse({ navigation }) {
           onPress={() => {
             if (studentIndex == 0)setStudentIndex(students.length-1);
             else setStudentIndex(current => current - 1);
-            console.log(students)
           }}
         >
           <Text style={style.Left}>

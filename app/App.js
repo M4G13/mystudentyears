@@ -37,7 +37,7 @@ export default function App() {
   global.url = process.env.EXPO_PUBLIC_API_URL ||
   "http://" + Constants.expoConfig.hostUri.split(":").shift() + ":1337"
   global.api_url = global.url + "/api";
-  global.image_url = global.url + "uploads";
+  global.media_url = global.url + "uploads";
 
   const fetchData = () => {
     fetch(global.api_url + "/students")
