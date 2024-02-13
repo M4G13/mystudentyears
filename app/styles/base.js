@@ -4,10 +4,13 @@ const colors = {
   bg1: "#151718",
   bg2: "#111316",
   bg3: "#050710",
+  bg4: "eee",
   fg1: "#05b4ff",
   fg2: "#ff69b4",
   text1: "#ffffff",
   text2: "#000000",
+  text3: "#FFD700",
+  borderColor1: "#ddd",
 };
 
 const baseStyle = StyleSheet.create({
