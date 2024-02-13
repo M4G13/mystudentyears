@@ -13,19 +13,22 @@
     "lint-hard": "eslint . --max-warnings=0"
   },
   "dependencies": {
+    "@nivo/bar": "^0.84.0",
+    "@nivo/core": "^0.84.0",
+    "@nivo/geo": "^0.84.0",
     "@strapi/icons": "^1.14.1",
     "@strapi/plugin-users-permissions": "4.19.1",
     "@strapi/provider-email-sendmail": "^4.19.1",
     "@strapi/strapi": "4.19.1",
     "better-sqlite3": "^9.3.0",
-    "d3": "^7.8.5",
     "pg": "^8.11.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^5.3.4",
     "sharp": "^0.33.2",
     "strapi-prometheus": "^1.8.1",
-    "styled-components": "^5.3.11"
+    "styled-components": "^5.3.11",
+    "topojson-client": "^3.1.0"
   },
   "author": {
     "name": "A Strapi developer"
