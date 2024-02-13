@@ -1,12 +1,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useState, useCallback } from "react";
-import { View, Text, Pressable, Alert } from "react-native";
+import { View, Text, Pressable, Alert, ImageBackground } from "react-native";
 
-import baseStyle from "../styles/base.js";
+import style from "../styles/gatehouse.js";
 
 export default function Gatehouse({ navigation }) {
   const students = global.data;
+
+
 
   const [openStories, setOpenStories] = useState({});
   useFocusEffect(
@@ -40,32 +42,61 @@ export default function Gatehouse({ navigation }) {
     }, []),
   );
 
+  
+
+  const [studentIndex, setStudentIndex] = useState(0);
+  let currentName = students[studentIndex].Name;
+  let currentID = students[studentIndex].id;
+
+  path = "http://localhost:1337/uploads/" + currentName + ".jpg"
+  imageSource={uri:path}
+  
+
+
   return (
-    <View style={baseStyle.view}>
-      <Text style={baseStyle.bigText}>Gatehouse</Text>
-      {students.map((s) => (
+    <ImageBackground
+        source={{uri: path}}
+        resizeMode="cover"
+        style={style.student}
+      >
+        <View style={style.view}>
+      
+          <Text style={style.Text}>
+            {currentName}
+          </Text>
         <Pressable
-          key={s.id}
           onPress={() => {
-            if (openStories[s.id]) {
-              navigation.navigate("Categories", {
-                student_id: s.id,
-              });
-            } else {
-              Alert.alert("Not completed previous story");
-            }
+            if (studentIndex == students.length-1)setStudentIndex(0);
+            else setStudentIndex(current => current+1);
           }}
         >
-          <Text style={baseStyle.button}>
-            {s.Name}
-            {!openStories[s.id] && " 🔒"}
+
+          <Text style={style.Right}>
+            {">"}
           </Text>
         </Pressable>
-      ))}
+        <Pressable
+          onPress={() => {
+            if (studentIndex == 0)setStudentIndex(students.length-1);
+            else setStudentIndex(current => current - 1);
+          }}
+        >
+          <Text style={style.Left}>
+            {"<"}
+          </Text>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            console.log(currentID)
+            navigation.navigate("Categories", {student_id: currentID})
+          }}
+        >
+          <Text style={style.button}>
+            {currentName}{"'s Story"}
+          </Text>
+        </Pressable>
 
-      <Pressable onPress={() => navigation.navigate("Survey")}>
-        <Text style={baseStyle.button}>Final survey 🔒</Text>
-      </Pressable>
-    </View>
+      </View>
+    </ImageBackground>
   );
 }
