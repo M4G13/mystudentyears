@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useFonts } from 'expo-font';
 
 import Categories from "./screens/Categories.js";
 import Category from "./screens/Category.js";
@@ -30,6 +31,9 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [fontsLoaded, fontError] = useFonts({
+    'Chalkduster': require('./assets/fonts/Chalkduster.ttf')
+  });
 
   StatusBar.setBarStyle("light-content");
   StatusBar.setBackgroundColor(baseStyle.colors.bg1);
