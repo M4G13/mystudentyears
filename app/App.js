@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useFonts } from 'expo-font';
 
 import Categories from "./screens/Categories.js";
 import Category from "./screens/Category.js";
@@ -30,13 +31,18 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [fontsLoaded, fontError] = useFonts({
+    'Chalkduster': require('./assets/fonts/Chalkduster.ttf')
+  });
 
   StatusBar.setBarStyle("light-content");
   StatusBar.setBackgroundColor(baseStyle.colors.bg1);
 
-  global.api_url =
+  global.url =
     process.env.EXPO_PUBLIC_API_URL ||
-    "http://" + Constants.expoConfig.hostUri.split(":").shift() + ":1337/api";
+    "http://" + Constants.expoConfig.hostUri.split(":").shift() + ":1337";
+  global.api_url = global.url + "/api";
+  global.media_url = global.url + "uploads";
 
   const fetchData = () => {
     fetch(global.api_url + "/students")
