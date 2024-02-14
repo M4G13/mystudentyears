@@ -32,7 +32,7 @@ async function processSurvey(type) {
 
 module.exports = createCoreController(
   "api::app-user.app-user",
-  ({ strapi }) => ({
+  () => ({
     initialSurvey: async () => processSurvey('InitialSurvey'),
     finalSurvey: async () => processSurvey('FinalSurvey'),
   })
