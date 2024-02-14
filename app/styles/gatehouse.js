@@ -17,7 +17,7 @@ const style = StyleSheet.create({
   },
   horizontalCenter: {
     position: "absolute",
-    top: 80,
+    bottom: 80,
     left: 0,
     right: 0,
     justifyContent: "center",

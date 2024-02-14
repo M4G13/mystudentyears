@@ -14,6 +14,22 @@ import style from "../styles/gatehouse.js";
 
 export default function Gatehouse({ navigation }) {
   const students = global.data;
+  const [studentIndex, setStudentIndex] = useState(0);
+  const previousName =
+    students[(studentIndex + students.length - 1) % students.length].Name;
+  const currentName = students[studentIndex].Name;
+  const nextName = students[(studentIndex + 1) % students.length].Name;
+  const currentID = students[studentIndex].id;
+
+  const path = global.url + students[studentIndex].Student_image.url;
+  const imageSource = { uri: path };
+
+  const localImage = {
+    right: require("../assets/right.png"),
+    left: require("../assets/left.png"),
+  };
+
+  let alertString = "";
 
   const [openStories, setOpenStories] = useState({});
   useFocusEffect(
@@ -47,34 +63,6 @@ export default function Gatehouse({ navigation }) {
     }, []),
   );
 
-  const [studentIndex, setStudentIndex] = useState(0);
-  const currentName = students[studentIndex].Name;
-  const currentID = students[studentIndex].id;
-
-  const path = global.url + students[studentIndex].Student_image.url;
-  const imageSource = { uri: path };
-  const localImage = {
-    right: require("../assets/right.png"),
-    left: require("../assets/left.png"),
-    starFilled: require("../assets/star_filled.png"),
-    starEmpty: require("../assets/star_empty.png"),
-  };
-
-  const renderStars = (completedCats) => {
-    const stars = [];
-    const totalStars = 4;
-    const filledStars =
-      completedCats >= 4
-        ? 4
-        : completedCats >= 3
-          ? 3
-          : completedCats > 2
-            ? 2
-            : completedCats > 1
-              ? 1
-              : 0;
-  };
-
   return (
     <ImageBackground
       source={imageSource}
@@ -82,14 +70,12 @@ export default function Gatehouse({ navigation }) {
       style={style.student}
     >
       <View style={style.view}>
-        <View style={style.horizontalCenter}>
-          <Text style={style.Text}>{currentName}</Text>
-        </View>
         <View style={style.Right}>
           <Pressable
             onPress={() => {
               if (studentIndex === students.length - 1) setStudentIndex(0);
               else setStudentIndex((current) => current + 1);
+              navigation.setOptions({ title: nextName });
             }}
           >
             <Image source={localImage.right} style={style.Arrow} />
@@ -100,6 +86,7 @@ export default function Gatehouse({ navigation }) {
             onPress={() => {
               if (studentIndex === 0) setStudentIndex(students.length - 1);
               else setStudentIndex((current) => current - 1);
+              navigation.setOptions({ title: previousName });
             }}
           >
             <Image source={localImage.left} style={style.Arrow} />
@@ -110,16 +97,18 @@ export default function Gatehouse({ navigation }) {
             onPress={() => {
               if (openStories[currentID])
                 navigation.navigate("Categories", { student_id: currentID });
-              else
-                Alert.alert(
-                  "Complete " +
-                    students[studentIndex - 1].Name +
-                    "'s story first!",
-                );
+              else {
+                alertString = "Complete " + previousName;
+                if (previousName.slice(-1) !== "s")
+                  alertString = alertString + "'s story first!";
+                else alertString = alertString + "' story first!";
+                console.log(previousName);
+                Alert.alert(alertString);
+              }
             }}
           >
             <Text style={style.pressable}>
-              {currentName}'{currentName !== "James" && "s"} Story
+              {currentName}'{currentName.slice(-1) !== "s" && "s"} Story
               {!openStories[currentID] && " is locked 🔒"}
             </Text>
           </Pressable>

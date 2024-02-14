@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useFonts } from 'expo-font';
 
 import Categories from "./screens/Categories.js";
 import Category from "./screens/Category.js";
@@ -30,6 +31,9 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [fontsLoaded, fontError] = useFonts({
+    'Chalkduster': require('./assets/fonts/Chalkduster.ttf')
+  });
 
   StatusBar.setBarStyle("light-content");
   StatusBar.setBackgroundColor(baseStyle.colors.bg1);
@@ -105,7 +109,7 @@ export default function App() {
           <Stack.Screen name="Survey" component={Survey} />
           <Stack.Screen name="Terms & Conditions" component={Terms} />
           <Stack.Screen name="Privacy Policy" component={Privacy} />
-          <Stack.Screen name="Gatehouse" component={Gatehouse} />
+          <Stack.Screen name="Gatehouse" component={Gatehouse} options={{title: "Molly"}}/>
           <Stack.Screen name="Categories" component={Categories} />
           <Stack.Screen name="Category" component={Category} />
           <Stack.Screen name="Question" component={Question} />
