@@ -15,24 +15,24 @@ const style = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  horizontalCenter:{
+  horizontalCenter: {
     position: "absolute",
-    top:80,
-    left: 0, 
+    top: 80,
+    left: 0,
     right: 0,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
-  centered:{
+  centered: {
     flex: 1,
     position: "relative",
-    justifyContent: "center", 
-    alignItems: "center", 
-    width: "100%"
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
   },
   pressable: {
-    alignSelf: 'center',
-    position:"absolute",
+    alignSelf: "center",
+    position: "absolute",
     backgroundColor: "#05b4ff",
     padding: 15,
     paddingLeft: 25,
@@ -41,15 +41,14 @@ const style = StyleSheet.create({
     minWidth: "45%",
     textAlign: "center",
     fontWeight: "600",
-
   },
   Text: {
     position: "absolute",
-    backgroundColor: "#000000",
+    backgroundColor: base.colors.text2,
     paddingLeft: 25,
     paddingRight: 25,
     borderRadius: 5,
-    color: "#FFD700",
+    color: base.colors.text4,
     fontWeight: "600",
     fontSize: 80,
     textAlign: "center",
@@ -60,18 +59,17 @@ const style = StyleSheet.create({
     height: 80,
     resizeMode: "contain",
   },
-  Right: {    
+  Right: {
     position: "absolute",
-    top:365,
-    bottom:0,
-    right:10
-
+    top: 365,
+    bottom: 0,
+    right: 10,
   },
   Left: {
     position: "absolute",
-    top:365,
-    bottom:0,
-    left:10
+    top: 365,
+    bottom: 0,
+    left: 10,
   },
 });
 
