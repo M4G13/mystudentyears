@@ -167,7 +167,7 @@ export default function Survey({ navigation }) {
       <View style={style.view}>
         {response === null ? (
           <View>
-            <Text style={style.bigText}>Introductary Survey</Text>
+            <Text style={style.bigText}>Introductory Survey</Text>
 
             <TextInput
               style={style.input}
