@@ -1,14 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useState, useCallback } from "react";
-import { View, Text, Pressable, Alert, ImageBackground } from "react-native";
+import { View, Text, Pressable, Alert, ImageBackground, Image} from "react-native";
 
 import style from "../styles/gatehouse.js";
 
 export default function Gatehouse({ navigation }) {
   const students = global.data;
-
-
 
   const [openStories, setOpenStories] = useState({});
   useFocusEffect(
@@ -42,60 +40,71 @@ export default function Gatehouse({ navigation }) {
     }, []),
   );
 
-  
+
 
   const [studentIndex, setStudentIndex] = useState(0);
-  let currentName = students[studentIndex].Name;
-  let currentID = students[studentIndex].id;
-  let path = global.url + students[studentIndex].Student_image.url;
+  const currentName = students[studentIndex].Name;
+  const currentID = students[studentIndex].id;
 
-  imageSource={uri:path}
-  
+  const path = global.url + students[studentIndex].Student_image.url;
+  imageSource = { uri: path };
+  const localImage = {
+    right: require("../assets/right.png"),
+    left: require("../assets/left.png"),
+    starFilled: require("../assets/star_filled.png"),
+    starEmpty: require("../assets/star_empty.png"),
+  };
 
+  const renderStars = (completedCats) => {
+    const stars = [];
+    const totalStars = 4;
+    const filledStars = completedCats >= 4 ? 4 : completedCats >= 3 ? 3 : completedCats > 2 ? 2 : completedCats > 1 ? 1 : 0;
+  }
 
   return (
     <ImageBackground
-        source={imageSource}
-        resizeMode="cover"
-        style={style.student}
-      >
-        <View style={style.view}>
-      
-          <Text style={style.Text}>
-            {currentName}
-          </Text>
-        <Pressable
-          onPress={() => {
-            if (studentIndex == students.length-1)setStudentIndex(0);
-            else setStudentIndex(current => current+1);
-          }}
-        >
-
-          <Text style={style.Right}>
-            {">"}
-          </Text>
-        </Pressable>
-        <Pressable
-          onPress={() => {
-            if (studentIndex == 0)setStudentIndex(students.length-1);
-            else setStudentIndex(current => current - 1);
-          }}
-        >
-          <Text style={style.Left}>
-            {"<"}
-          </Text>
-        </Pressable>
-        <Pressable
-          onPress={() => {
-            
-            navigation.navigate("Categories", {student_id: currentID})
-          }}
-        >
-          <Text style={style.button}>
-            {currentName}{"'s Story"}
-          </Text>
-        </Pressable>
-
+      source={imageSource}
+      resizeMode="cover"
+      style={style.student}
+    >
+      <View style={style.view}>
+        <View style={style.horizontalCenter}>
+          <Text style={style.Text}>{currentName}</Text>
+        </View>
+        <View style={style.Right}>
+          <Pressable
+              onPress={() => {
+                if (studentIndex == students.length - 1) setStudentIndex(0);
+                else setStudentIndex((current) => current + 1);
+              }}
+          >
+            <Image source={localImage.right} style = {style.Arrow}/>
+          </Pressable>
+        </View>
+        <View style={style.Left}>
+          <Pressable
+            onPress={() => {
+              if (studentIndex == 0) setStudentIndex(students.length - 1);
+              else setStudentIndex((current) => current - 1);
+            }}
+          >
+            <Image source={localImage.left} style={style.Arrow}/>
+          </Pressable>
+        </View>
+        <View style={style.centered}>
+          <Pressable
+            onPress={() => {
+              if(openStories[currentID])
+                navigation.navigate("Categories", { student_id: currentID });
+              else Alert.alert("Complete " + students[studentIndex-1].Name + "'s story first!");
+              }}
+          >
+            <Text style={style.pressable}>
+              {currentName}'{currentName!="James" && "s"} Story
+              {!openStories[currentID] && " is locked 🔒"}
+            </Text>
+          </Pressable>
+        </View>
       </View>
     </ImageBackground>
   );
