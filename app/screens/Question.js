@@ -29,9 +29,10 @@ export default function Question({ route, navigation }) {
 
   const [answers, setAnswers] = useState([]);
 
-  async function storeResult(answers) {
+  async function storeResult(answers, score) {
     try {
       await AsyncStorage.setItem("quiz" + category.id, JSON.stringify(answers));
+      await AsyncStorage.setItem("quizScore" + category.id, score.toString());
     } catch (e) {
       console.error("Failed to save progress. " + e);
     }
@@ -52,7 +53,7 @@ export default function Question({ route, navigation }) {
         nextAnswers,
         quiz.questions.length,
       );
-      storeResult(nextAnswers);
+      storeResult(nextAnswers, score);
       fetch(global.api_url + "/app-user/" + global.uuid, {
         method: "PUT",
         headers: {

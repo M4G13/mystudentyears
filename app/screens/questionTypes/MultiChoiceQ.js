@@ -4,7 +4,21 @@ import { View, Text, Pressable } from "react-native";
 import style from "../../styles/multichoiceq.js";
 
 export default function MultiChoiceQ({ question, handleAnswer }) {
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState({});
+
+  const handleSelect = (q) => {
+    const nextSelected = { ...selected };
+    nextSelected[q.id] = !nextSelected[q.id];
+    setSelected(nextSelected);
+  };
+
+  const isCorrect = () => {
+    let correct = true;
+    question.options.forEach((q) => {
+      if (q.correct === !selected[q.id]) correct = false;
+    });
+    return correct;
+  };
 
   return (
     <View style={style.questionWrapper}>
@@ -16,11 +30,11 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
           <Pressable
             key={q.id}
             style={
-              q === selected
+              selected[q.id] === true
                 ? { ...style.pressable, ...style.pressableSelected }
                 : { ...style.pressable }
             }
-            onPress={() => setSelected(q)}
+            onPress={() => handleSelect(q)}
           >
             <Text style={style.button}>{q.text}</Text>
           </Pressable>
@@ -31,7 +45,7 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
           style={style.submitButton}
           onPress={() =>
             // Maybe change this to have an error message if no option selected?
-            selected && handleAnswer(selected.correct)
+            selected !== [] && handleAnswer(isCorrect())
           }
         >
           <Text style={style.button}>Submit</Text>
