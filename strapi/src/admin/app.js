@@ -1,3 +1,5 @@
+import PluginIcon from './extensions/AnalyticsPage/icon.jsx';
+//import Analytics from './extensions/AnalyticsPage/index.jsx';
 import favicon from "../../favicon.png";
 import msyLogoSmall from "../../msyLogoSmall.png";
 import msyLogoLarge from "../../msyLogoLarge.png";
@@ -19,7 +21,20 @@ const config = {
 };
 
 const bootstrap = (app) => {
-  console.log(app);
+  app.addMenuLink({
+    to: '/analytics/',
+    icon: PluginIcon,
+    intlLabel: {
+      id: 'msy.analytics',
+      defaultMessage: 'Analytics',
+    },
+    Component: async () => {
+      const component = await import('./extensions/AnalyticsPage/index.jsx');
+
+      return component;
+    },
+    permissions: [], // permissions to apply to the link
+  });
 };
 
 export default {
