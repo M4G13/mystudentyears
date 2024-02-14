@@ -1,9 +1,7 @@
 'use strict';
 
-const { createCoreController } = require("@strapi/strapi").factories;
-
 async function processSurvey(type) {
-  let entries = await strapi.entityService.findMany('api::app-user.app-user', {
+  const entries = await strapi.entityService.findMany('api::app-user.app-user', {
     populate: {
       [type]: {
         populate: '*',
@@ -31,7 +29,7 @@ async function processSurvey(type) {
 }
 
 async function processQuiz() {
-  let entries = await strapi.entityService.findMany('api::app-user.app-user', {
+  const entries = await strapi.entityService.findMany('api::app-user.app-user', {
     populate: {
       CompletedQuizzes: {
         populate: '*',
@@ -51,11 +49,8 @@ async function processQuiz() {
   return result;
 }
 
-module.exports = createCoreController(
-  "api::app-user.app-user",
-  () => ({
-    initialSurvey: async () => processSurvey('InitialSurvey'),
-    finalSurvey: async () => processSurvey('FinalSurvey'),
-    quizData: processQuiz,
-  })
-);
+module.exports = {
+  initialSurvey: async () => processSurvey('InitialSurvey'),
+  finalSurvey: async () => processSurvey('FinalSurvey'),
+  quizData: processQuiz,
+};
