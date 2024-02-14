@@ -1,7 +1,5 @@
-import React from 'react';
-
-import SchoolMap from './SchoolMap.jsx';
+import BarChart from './BarChart.jsx';
 
 export default function Analytics() {
-  return <SchoolMap/>;
+  return (<BarChart url={"http://localhost:1337/api/stats/initialSurvey"} />);
 }
