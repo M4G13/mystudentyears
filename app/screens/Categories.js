@@ -209,10 +209,7 @@ export default function Categories({ route, navigation }) {
           >{`${calculateTotalEarnedStars()} / ${categories.length * 3}`}</Text>
         </View>
 
-          <Image
-            source={categoryIcons.Banner}
-            style={style.bannerImage}
-          />
+        <Image source={categoryIcons.Banner} style={style.bannerImage} />
 
         {selectedCategory && (
           <View style={[style.messageBox, adjustedPosition(selectedCategory)]}>

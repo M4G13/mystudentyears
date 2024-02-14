@@ -34,9 +34,11 @@ export default function App() {
   StatusBar.setBarStyle("light-content");
   StatusBar.setBackgroundColor(baseStyle.colors.bg1);
 
-  global.api_url =
+  global.url =
     process.env.EXPO_PUBLIC_API_URL ||
-    "http://" + Constants.expoConfig.hostUri.split(":").shift() + ":1337/api";
+    "http://" + Constants.expoConfig.hostUri.split(":").shift() + ":1337";
+  global.api_url = global.url + "/api";
+  global.media_url = global.url + "uploads";
 
   const fetchData = () => {
     fetch(global.api_url + "/students")

@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+
 import baseStyle from "./base";
 
 const style = StyleSheet.create({
@@ -150,7 +151,6 @@ const style = StyleSheet.create({
     height: 100,
     resizeMode: "contain",
     top: 20,
-    backgroundColor: baseStyle.colors.text1,
   },
   bannerImage: {
     width: "100%",
