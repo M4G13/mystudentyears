@@ -24,12 +24,12 @@ export default function Survey({ navigation }) {
   const [selectedValues, setSelectedValues] = useState(Array(4).fill(-1));
 
   const fetchData = () => {
-    fetch(global.api_url + "/schools?sort=Name")
+    fetch(global.api_url + "/schools?sort=schoolname")
       .then((response) => response.json())
       .then((data) => {
         const temp = data.data.map((item) => ({
           key: item.id,
-          value: item.attributes.Name,
+          value: item.attributes.schoolname,
         }));
 
         setSchools(temp);
