@@ -10,5 +10,10 @@ module.exports = {
       path: '/stats/finalSurvey',
       handler: 'stats.finalSurvey',
     },
+    {
+      method: 'GET',
+      path: '/stats/quizData',
+      handler: 'stats.quizData',
+    },
   ]
 }

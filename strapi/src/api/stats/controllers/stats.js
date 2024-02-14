@@ -30,10 +30,32 @@ async function processSurvey(type) {
 
 }
 
+async function processQuiz() {
+  let entries = await strapi.entityService.findMany('api::app-user.app-user', {
+    populate: {
+      CompletedQuizzes: {
+        populate: '*',
+      }
+    }
+  });
+  let result = [];
+  entries.forEach((e) => {
+    e.CompletedQuizzes.forEach((q) => {
+      let dict = result[q.quiz.id] || {quiz: q.quiz.description};
+      dict['numResponses'] = (dict['numResponses'] || 0) +1;
+      let thisScore = q.results.reduce((i,j) => i+j, 0);
+      dict['avgScore'] = (dict['avgScore'] || 0) + thisScore/dict['numResponses'];
+      result[q.quiz.id] = dict;
+    });
+  });
+  return result;
+}
+
 module.exports = createCoreController(
   "api::app-user.app-user",
   () => ({
     initialSurvey: async () => processSurvey('InitialSurvey'),
     finalSurvey: async () => processSurvey('FinalSurvey'),
+    quizData: processQuiz,
   })
 );
