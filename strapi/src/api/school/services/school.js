@@ -16,22 +16,17 @@ module.exports = createCoreService('api::school.school', ({ strapi }) => ({
       body: new URLSearchParams({
         where: 'schooltype = \'Secondary\'',
         f: 'json',
-        outFields: 'latitude,longitude,schoolname',
+        outFields: 'latitude,longitude,schoolname,laname,lacode,schuid',
         returnGeometry: false
       }).toString()
     }).then((response) => response.json())
       .then((data) => {
         data.features.forEach(val => {
-          const info = {
-            Name: val.attributes.schoolname,
-            latitude: val.attributes.latitude,
-            longitude: val.attributes.longitude
-          };
           strapi.db.query('api::school.school').update({
-            where: { Name: val.attributes.schoolname },
-            data: info
+            where: { schuid: val.attributes.schuid },
+            data: val.attributes
           }).then(entry => {
-            if (entry === null) strapi.entityService.create('api::school.school', {data: info});
+            if (entry === null) strapi.entityService.create('api::school.school', {data: val.attributes});
           }
           );
         });

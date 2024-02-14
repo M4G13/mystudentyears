@@ -12,7 +12,10 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Name": {
+    "schuid": {
+      "type": "string"
+    },
+    "schoolname": {
       "type": "string"
     },
     "latitude": {
@@ -20,6 +23,12 @@
     },
     "longitude": {
       "type": "float"
+    },
+    "lacode": {
+      "type": "string"
+    },
+    "laname": {
+      "type": "string"
     }
   }
 }
