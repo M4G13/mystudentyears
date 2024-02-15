@@ -1,51 +1,33 @@
 'use strict';
 
 async function processSurvey(type) {
-  const entries = await strapi.entityService.findMany('api::app-user.app-user', {
-    populate: {
-      [type]: {
-        populate: '*',
-        Completed: {
-          populate: '*',
-        }
-      }
-    }
-  });
+  const response = await strapi.db.connection.context.raw(`
+    SELECT cs.'order' AS question, cm.answer AS response, COUNT(*) as count FROM app_users_components AS ac
+    INNER JOIN components_survey_surveys_components AS cs ON ac.component_id=cs.entity_id
+    INNER JOIN components_survey_survey_completions AS cm ON cs.component_id=cm.id
+    WHERE ac.field='${type}'
+    GROUP BY cs.'order', cm.answer
+  `);
+  console.log("final query:");
 
-  let result = [];
-  entries.forEach((e) => { // Quite inefficient, test if it can handle lots of entries
-    if (e[type]) {
-      let questions = e[type].Completed;
-      questions.forEach((q,i) => {
-        let dict = result[i] || {question: i+1};
-        dict[q.answer] = (dict[q.answer] || 0) +1;
-        result[i] = dict;
-      });
-    }
-  });
-
-  return result;
-
+  return response.reduce((i,j)=>{ // Reformat the data so it can be viewed
+    i[j.question-1] = {
+      question: j.question,
+      ...i[j.question-1],
+      [j.response]: j.count
+    };
+    return i;
+  }, []);
 }
 
 async function processQuiz() {
-  const entries = await strapi.entityService.findMany('api::app-user.app-user', {
-    populate: {
-      CompletedQuizzes: {
-        populate: '*',
-      }
-    }
-  });
-  let result = [];
-  entries.forEach((e) => {
-    e.CompletedQuizzes.forEach((q) => {
-      let dict = result[q.quiz.id] || {quiz: q.quiz.description};
-      dict['numResponses'] = (dict['numResponses'] || 0) +1;
-      let thisScore = q.results.reduce((i,j) => i+j, 0);
-      dict['avgScore'] = (dict['avgScore'] || 0) + thisScore/dict['numResponses'];
-      result[q.quiz.id] = dict;
-    });
-  });
+  const result = await strapi.db.connection.context.raw(`
+    SELECT l.quiz_id, q.description,
+    AVG((LENGTH(c.results) - LENGTH(REPLACE(c.results, 'true', ''))) / LENGTH('true')) AS avg_score
+    FROM components_completion_completions_quiz_links AS l
+    INNER JOIN components_completion_completions AS c ON completion_id=c.id
+    INNER JOIN quizzes AS q ON quiz_id=q.id
+    GROUP BY l.quiz_id`);
   return result;
 }
 
