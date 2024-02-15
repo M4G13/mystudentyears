@@ -36,8 +36,17 @@ const processQuiz = async () => await strapi.db.connection.context.raw(`
       l.quiz_id;
   `);
 
+const laFreq = async () => await strapi.db.connection.context.raw(`
+    SELECT schools.lacode as id, COUNT(*) as value
+    FROM app_users_school_links as l
+    INNER JOIN schools ON schools.id=l.school_id
+    INNER JOIN app_users ON app_users.id=l.app_user_id
+    GROUP BY schools.lacode;
+  `);
+
 module.exports = {
   initialSurvey: async () => processSurvey('InitialSurvey'),
   finalSurvey: async () => processSurvey('FinalSurvey'),
   quizData: processQuiz,
+  laFreq: laFreq,
 };

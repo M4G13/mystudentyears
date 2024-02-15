@@ -11,20 +11,9 @@ export default function SchoolMap() {
   const [regions, setRegions] = useState([]);
 
   useEffect(() => {
-    fetch(url + '/schools?pagination[pageSize]=500')
+    fetch(url + '/stats/laFreq')
       .then(response => response.json())
-      .then(data => {
-        let nextRegions = [];
-        let temp;
-        data.data.forEach(s => {
-          if ((temp = nextRegions.find(la => la.id === s.attributes.lacode))) {
-            temp.value++;
-          } else {
-            nextRegions.push({id: s.attributes.lacode, value: 1});
-          }
-        })
-        setRegions(nextRegions)
-      })
+      .then(data => setRegions(data))
       .catch(error => console.log(error));
     fetch(url + '/app-users?pagination[pageSize]=500&populate=*')
       .then(response => response.json())
@@ -33,6 +22,7 @@ export default function SchoolMap() {
   }, []);
 
   const geojson = topojson.feature(scotland, scotland.objects.lad);
+  console.log(regions);
 
   return (
     <div style={{height: 1000}}>
