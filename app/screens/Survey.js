@@ -177,6 +177,7 @@ export default function Survey({ navigation }) {
         },
       };
       createNewUser(data);
+      navigation.pop();
       navigation.navigate("Gatehouse");
     } else {
       const data = {
@@ -188,6 +189,7 @@ export default function Survey({ navigation }) {
         },
       };
       updateUser(data);
+      navigation.pop();
       navigation.navigate("Home Screen");
     }
   }

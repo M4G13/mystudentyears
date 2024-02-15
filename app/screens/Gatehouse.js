@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useState, useCallback, useEffect } from "react";
-import { View, Text, Pressable, Alert, BackHandler } from "react-native";
+import React, { useState, useCallback } from "react";
+import { View, Text, Pressable, Alert } from "react-native";
 
 import baseStyle from "../styles/base.js";
 
@@ -39,23 +39,6 @@ export default function Gatehouse({ navigation }) {
       getCompletion();
     }, []),
   );
-
-  useEffect(() => {
-    const backAction = () => {
-      if (navigation.isFocused() && navigation.canGoBack()) {
-        navigation.navigate("Home Screen"); // Replace with "Home" screen
-        return true;
-      }
-      return false;
-    };
-  
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
-  
-    return () => backHandler.remove();
-  }, [navigation]);
 
   return (
     <View style={baseStyle.view}>
