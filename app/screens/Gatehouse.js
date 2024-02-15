@@ -102,7 +102,6 @@ export default function Gatehouse({ navigation }) {
                 if (previousName.slice(-1) !== "s")
                   alertString = alertString + "'s story first!";
                 else alertString = alertString + "' story first!";
-                console.log(previousName);
                 Alert.alert(alertString);
               }
             }}
