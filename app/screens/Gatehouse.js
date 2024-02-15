@@ -96,7 +96,10 @@ export default function Gatehouse({ navigation }) {
               if (openStories[currentID])
                 navigation.navigate("Categories", { student_id: currentID });
               else {
-                Alert.alert(`Complete ${previousName}'${previousName.slice(-1) !== "s" ? 's' : ''} story first!`);
+                Alert.alert(
+                  `Complete ${previousName}'${previousName.slice(-1) !== "s" ? "s" : ""} story first!`,
+                );
+              }
             }}
           >
             <Text style={style.pressable}>
