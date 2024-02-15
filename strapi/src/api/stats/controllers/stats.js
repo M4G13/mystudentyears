@@ -8,7 +8,6 @@ async function processSurvey(type) {
     WHERE ac.field='${type}'
     GROUP BY cs.'order', cm.answer
   `);
-  console.log("final query:");
 
   return response.reduce((i,j)=>{ // Reformat the data so it can be viewed
     i[j.question-1] = {
