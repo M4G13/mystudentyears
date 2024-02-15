@@ -24,12 +24,12 @@ export default function Survey({ navigation }) {
   const [selectedValues, setSelectedValues] = useState(Array(4).fill(-1));
 
   const fetchData = () => {
-    fetch(global.api_url + "/schools?sort=Name")
+    fetch(global.api_url + "/schools?sort=schoolname")
       .then((response) => response.json())
       .then((data) => {
         const temp = data.data.map((item) => ({
           key: item.id,
-          value: item.attributes.Name,
+          value: item.attributes.schoolname,
         }));
 
         setSchools(temp);
@@ -66,6 +66,36 @@ export default function Survey({ navigation }) {
       console.error("Failed to save progress. " + e);
     }
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      async function getResponse() {
+        let tempResponse;
+        try {
+          const storedResponse = await AsyncStorage.getItem("survey");
+          tempResponse = JSON.parse(storedResponse);
+
+          if (tempResponse && tempResponse.data) {
+            setSelected(tempResponse.data.school);
+            setInput(tempResponse.data.Email);
+          } else {
+            const storedEmail = await AsyncStorage.getItem("saveEmail");
+            const storedSchool = await AsyncStorage.getItem("saveSchool");
+
+            if (storedEmail && storedSchool) {
+              setSelected(JSON.parse(storedSchool));
+              setInput(JSON.parse(storedEmail));
+            }
+          }
+        } catch (e) {
+          console.error("Failed to get response. " + e);
+          tempResponse = null;
+        }
+        setResponse(tempResponse);
+      }
+      getResponse();
+    }, []),
+  );
 
   const [response, setResponse] = useState({});
   useFocusEffect(
@@ -147,6 +177,7 @@ export default function Survey({ navigation }) {
         },
       };
       createNewUser(data);
+      navigation.pop();
       navigation.navigate("Gatehouse");
     } else {
       const data = {
@@ -158,8 +189,19 @@ export default function Survey({ navigation }) {
         },
       };
       updateUser(data);
+      navigation.pop();
       navigation.navigate("Home Screen");
     }
+  }
+
+  async function handleNavigate(page) {
+    if (input !== null && input !== undefined) {
+      await AsyncStorage.setItem("saveEmail", JSON.stringify(input));
+    }
+    if (input !== null && input !== undefined) {
+      await AsyncStorage.setItem("saveSchool", JSON.stringify(selected));
+    }
+    navigation.navigate(page);
   }
 
   return (
@@ -167,7 +209,7 @@ export default function Survey({ navigation }) {
       <View style={style.view}>
         {response === null ? (
           <View>
-            <Text style={style.bigText}>Introductary Survey</Text>
+            <Text style={style.bigText}>Introductory Survey</Text>
 
             <TextInput
               style={style.input}
@@ -178,6 +220,7 @@ export default function Survey({ navigation }) {
 
             <View style={style.dropDown}>
               <SelectList
+                id="dropdown"
                 setSelected={(val) => {
                   setSelected(val);
                 }}
@@ -251,11 +294,11 @@ export default function Survey({ navigation }) {
 
         <Text style={style.smallerText}>
           By continuing, you agree to our{" "}
-          <Text onPress={() => navigation.navigate("Terms & Conditions")}>
+          <Text onPress={() => handleNavigate("Terms & Conditions")}>
             <Text style={style.link}>Terms and Conditions</Text>
           </Text>
           , and{" "}
-          <Text onPress={() => navigation.navigate("Privacy Policy")}>
+          <Text onPress={() => handleNavigate("Privacy Policy")}>
             <Text style={style.link}>Privacy Policy</Text>
           </Text>
           .
