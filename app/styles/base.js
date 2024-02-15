@@ -4,7 +4,7 @@ const colors = {
   bg1: "#151718",
   bg2: "#111316",
   bg3: "#050710",
-  bg4: "eee",
+  bg4: "#e0e0e0",
   fg1: "#05b4ff",
   fg2: "#ff69b4",
   text1: "#ffffff",

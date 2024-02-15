@@ -3,13 +3,11 @@ import { StyleSheet } from "react-native";
 import baseStyle from "./base";
 
 const style = StyleSheet.create({
+  ...baseStyle,
   view: {
     flex: 1,
   },
-  map: {
-    flex: 1,
-  },
-  pressable: {
+  iconContainer: {
     position: "absolute",
   },
   icon: {
@@ -26,19 +24,17 @@ const style = StyleSheet.create({
     position: "absolute",
     backgroundColor: baseStyle.colors.text1,
     padding: 10,
-    borderRadius: 5,
-    borderWidth: 1,
+    paddingTop: 40,
+    left: -50,
+    borderRadius: 20,
     borderColor: baseStyle.colors.borderColor1,
-    width: 200,
+    minWidth: 150,
   },
-  messageBoxText: {
-    marginBottom: 10,
-  },
-
   messageBoxTextBig: {
     marginBottom: 10,
     fontSize: 15,
     fontWeight: "600",
+    textAlign: "center",
   },
   messageBoxButton: {
     backgroundColor: baseStyle.colors.bg4,
@@ -62,7 +58,7 @@ const style = StyleSheet.create({
     right: 10,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: baseStyle.colors.bg1,
+    backgroundColor: baseStyle.colors.b1,
     borderRadius: 5,
     padding: 5,
   },
@@ -81,20 +77,21 @@ const style = StyleSheet.create({
     marginBottom: 10,
     resizeMode: "contain",
   },
-  clearButton: {
+  clearButtonContainer: {
     position: "absolute",
-    top: 10,
+    bottom: 0,
+    left: 0,
+  },
+  clearButton: {
+    ...baseStyle.button,
+    position: "absolute",
+    bottom: 10,
     left: 10,
-    backgroundColor: baseStyle.colors.bg4,
-    padding: 5,
-    borderRadius: 5,
   },
   congratsFlag: {
     position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    width: "100%",
+    height: "70%",
     alignItems: "center",
     justifyContent: "center",
     zIndex: 1,
@@ -109,41 +106,34 @@ const style = StyleSheet.create({
   },
   congratsContent: {
     position: "absolute",
-    top: "20%",
     alignItems: "center",
-    width: "100%",
+    width: "50%",
   },
 
   congratsText: {
-    color: baseStyle.colors.text1,
-    textAlign: "center",
-    fontSize: 20,
-    fontWeight: "300",
-    marginBottom: 20,
+    ...baseStyle.bigText,
+    fontSize: 18,
   },
 
   congratsTextBig: {
-    color: baseStyle.colors.text1,
-    textAlign: "center",
-    fontSize: 29,
-    fontWeight: "600",
+    ...baseStyle.bigText,
+    fontSize: 25,
     marginBottom: 20,
   },
 
-  congratsButton: {
-    backgroundColor: baseStyle.colors.text1,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    marginHorizontal: 10,
-    marginVertical: 10,
-    borderRadius: 5,
-  },
   congratsStarCounter: {
-    fontSize: 19,
+    ...baseStyle.bigText,
+    fontSize: 18,
     fontWeight: "bold",
     color: baseStyle.colors.text3,
     marginBottom: 10,
     textAlign: "center",
+  },
+
+  congratsButton: {
+    ...baseStyle.button,
+    backgroundColor: baseStyle.colors.bg4,
+    marginTop: 20,
   },
   overlayImage: {
     position: "absolute",

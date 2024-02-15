@@ -7,7 +7,6 @@ import {
   Pressable,
   ImageBackground,
   Image,
-  Dimensions,
   Animated,
 } from "react-native";
 
@@ -25,33 +24,27 @@ const categoryIcons = {
   flagImage: require("../assets/congratsFlag.png"),
 };
 
-const renderStars = (score) => {
-  const stars = [];
-  const totalStars = 3;
-  const filledStars = score >= 75 ? 3 : score >= 50 ? 2 : score > 0 ? 1 : 0;
+const imageSource = require("../assets/temp_map.png");
 
-  for (let i = 0; i < filledStars; i++) {
-    stars.push(
-      <Image
-        key={`filled_${i}`}
-        source={categoryIcons.StarFilled}
-        style={style.iconSmall}
-      />,
-    );
-  }
+const categoryStars = 3;
 
-  for (let i = filledStars; i < totalStars; i++) {
-    stars.push(
-      <Image
-        key={`empty_${i}`}
-        source={categoryIcons.StarEmpty}
-        style={style.iconSmall}
-      />,
-    );
-  }
+const renderStars = (score) =>
+  Array.from({ length: categoryStars }, (_, i) => (
+    <Image
+      key={`star_${i}`}
+      source={
+        i < Math.ceil(score * (categoryStars / 100))
+          ? categoryIcons.StarFilled
+          : categoryIcons.StarEmpty
+      }
+      style={style.iconSmall}
+    />
+  ));
 
-  return stars;
-};
+const earnedStars = (completed) =>
+  Object.values(completed)
+    .map((e) => Math.ceil(e.score * (categoryStars / 100)))
+    .reduce((a, v) => 1 * a + v, []);
 
 export default function Categories({ route, navigation }) {
   const categories = getData(route.params).student.category;
@@ -63,34 +56,26 @@ export default function Categories({ route, navigation }) {
   };
   const [completed, setCompleted] = useState({});
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const imageSource = require("../assets/temp_map.png");
   const [showCongrats, setShowCongrats] = useState(false);
+  const totalPossibleStars = categories.length * categoryStars;
+
+  const totalEarnedStars = earnedStars(completed);
+
   const congratsAnimation = useRef(new Animated.Value(-600)).current;
-  const totalPossibleStars = categories.length * 3;
-
-  const calculateTotalEarnedStars = () => {
-    let totalEarnedStars = 0;
-    Object.values(completed).forEach((category) => {
-      totalEarnedStars +=
-        category.score >= 75
-          ? 3
-          : category.score >= 50
-            ? 2
-            : category.score > 0
-              ? 1
-              : 0;
-    });
-    return totalEarnedStars;
-  };
-
-  const totalEarnedStars = calculateTotalEarnedStars();
-
   const animateCongratsFlag = () => {
     Animated.timing(congratsAnimation, {
       toValue: 0,
       duration: 1000,
       useNativeDriver: true,
     }).start();
+  };
+
+  const animateCongratsFlagOffScreen = () => {
+    Animated.timing(congratsAnimation, {
+      toValue: -600,
+      duration: 500,
+      useNativeDriver: true,
+    }).start(() => setShowCongrats(false));
   };
 
   useFocusEffect(
@@ -100,16 +85,11 @@ export default function Categories({ route, navigation }) {
         let allCompleted = true;
         for (const category of categories) {
           try {
-            const storedCompletion = await AsyncStorage.getItem(
-              "quiz" + category.id,
-            );
-            const storedScore = await AsyncStorage.getItem(
-              "quizScore" + category.id,
-            );
-            const score = storedScore ? parseInt(storedScore, 10) : null;
-            const isCompleted = storedCompletion != null;
-            complete[category.id] = { completed: isCompleted, score };
-            if (!isCompleted) {
+            const completion = await AsyncStorage.getItem("quiz" + category.id);
+            const score = await AsyncStorage.getItem("quizScore" + category.id);
+            complete[category.id] = { completed: completion || false, score };
+            if (completion === null) {
+              console.log(completion);
               allCompleted = false;
             }
           } catch (e) {
@@ -130,66 +110,52 @@ export default function Categories({ route, navigation }) {
     }, [categories]),
   );
 
-  const animateCongratsFlagOffScreen = () => {
-    Animated.timing(congratsAnimation, {
-      toValue: -600,
-      duration: 500,
-      useNativeDriver: true,
-    }).start(() => setShowCongrats(false));
-  };
-
-  const handlePressCategory = (category) => {
-    setSelectedCategory(category);
-  };
-
-  const adjustedPosition = (category) => {
-    const window = Dimensions.get("window");
-    const messageBoxWidth = 200;
-    const messageBoxHeight = 100;
-    let left = locs[category.Category][0];
-    let top = locs[category.Category][1] + 20;
-
-    if (left + messageBoxWidth > window.width) {
-      left = window.width - messageBoxWidth - 20;
-    }
-    if (top + messageBoxHeight > window.height) {
-      top = window.height - messageBoxHeight - 20;
-    }
-
-    if (left < 0) {
-      left = 20;
-    }
-    if (top < 0) {
-      top = 20;
-    }
-
-    return {
-      left,
-      top,
-      iconLeft: locs[category.Category][0] - left,
-      iconTop: locs[category.Category][1] - top,
-    };
-  };
-
   return (
     <View style={style.view}>
       <ImageBackground
         source={imageSource}
         resizeMode="cover"
-        style={style.map}
+        style={style.view}
       >
         {categories.map((c) => (
           <Pressable
             key={c.id}
-            onPress={() => handlePressCategory(c)}
-            style={[
-              style.pressable,
-              {
-                left: locs[c.Category][0],
-                top: locs[c.Category][1],
-              },
-            ]}
+            onPress={() => {
+              setSelectedCategory(c);
+              console.log(completed);
+            }}
+            style={{
+              ...style.iconContainer,
+              left: locs[c.Category][0],
+              top: locs[c.Category][1],
+              zIndex: c === selectedCategory ? 2 : 1,
+            }}
           >
+            {c === selectedCategory && (
+              <View style={style.messageBox}>
+                <View>
+                  <Text style={style.messageBoxTextBig}>
+                    {selectedCategory.Category}
+                  </Text>
+                  <Pressable
+                    onPress={() => {
+                      navigation.navigate("Category", {
+                        ...route.params,
+                        category_id: selectedCategory.id,
+                      });
+                      setSelectedCategory(null);
+                    }}
+                    style={style.messageBoxButton}
+                  >
+                    <Text>
+                      {completed[selectedCategory.id].score !== null
+                        ? "Continue"
+                        : "Start"}
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
+            )}
             <Image source={categoryIcons[c.Category]} style={style.icon} />
             {completed[c.id] && completed[c.id].completed ? (
               <View style={style.starContainer}>
@@ -204,55 +170,12 @@ export default function Categories({ route, navigation }) {
             source={categoryIcons.StarFilled}
             style={style.starCounterIcon}
           />
-          <Text
-            style={style.starCounterText}
-          >{`${calculateTotalEarnedStars()} / ${categories.length * 3}`}</Text>
+          <Text style={style.starCounterText}>
+            {totalEarnedStars} / {categories.length * categoryStars}
+          </Text>
         </View>
 
         <Image source={categoryIcons.Banner} style={style.bannerImage} />
-
-        {selectedCategory && (
-          <View style={[style.messageBox, adjustedPosition(selectedCategory)]}>
-            <Image
-              source={categoryIcons[selectedCategory.Category]}
-              style={{
-                position: "absolute",
-                width: 50,
-                height: 50,
-                resizeMode: "contain",
-                left: adjustedPosition(selectedCategory).iconLeft,
-                top: adjustedPosition(selectedCategory).iconTop,
-              }}
-            />
-            <View style={{ paddingTop: 15 }}>
-              <Text style={style.messageBoxTextBig}>
-                {selectedCategory.Category} Building
-              </Text>
-              <Text style={style.messageBoxText}>
-                Would you like to go to the {selectedCategory.Category}{" "}
-                category?
-              </Text>
-              <Pressable
-                onPress={() => {
-                  navigation.navigate("Category", {
-                    ...route.params,
-                    category_id: selectedCategory.id,
-                  });
-                  setSelectedCategory(null);
-                }}
-                style={style.messageBoxButton}
-              >
-                <Text>Yes</Text>
-              </Pressable>
-              <Pressable
-                onPress={() => setSelectedCategory(null)}
-                style={style.messageBoxButton}
-              >
-                <Text>No</Text>
-              </Pressable>
-            </View>
-          </View>
-        )}
 
         {showCongrats && (
           <Animated.View
@@ -274,20 +197,14 @@ export default function Categories({ route, navigation }) {
                 You got {totalEarnedStars} out of {totalPossibleStars} stars!
               </Text>
               <Text style={style.congratsText}>
-                You have completed this {"\n"} student's story.
+                You have completed this student's story.
               </Text>
               <View style={style.congratsButtonContainer}>
-                <Pressable
-                  onPress={animateCongratsFlagOffScreen}
-                  style={style.congratsButton}
-                >
-                  <Text>Continue</Text>
+                <Pressable onPress={animateCongratsFlagOffScreen}>
+                  <Text style={style.congratsButton}>Continue</Text>
                 </Pressable>
-                <Pressable
-                  onPress={() => navigation.navigate("Gatehouse")}
-                  style={style.congratsButton}
-                >
-                  <Text>Go back to gatehouse</Text>
+                <Pressable onPress={() => navigation.navigate("Gatehouse")}>
+                  <Text style={style.congratsButton}>Return to gatehouse</Text>
                 </Pressable>
               </View>
             </View>
@@ -300,9 +217,9 @@ export default function Categories({ route, navigation }) {
             setCompleted({});
             setSelectedCategory(null);
           }}
-          style={style.clearButton}
+          style={style.clearButtonContainer}
         >
-          <Text style={style.button}>Clear data</Text>
+          <Text style={style.clearButton}>Clear data</Text>
         </Pressable>
       </ImageBackground>
     </View>
