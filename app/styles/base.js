@@ -10,6 +10,7 @@ const colors = {
   text1: "#ffffff",
   text2: "#000000",
   text3: "#FFD700",
+  text4: "#6c959e",
   borderColor1: "#ddd",
 };
 

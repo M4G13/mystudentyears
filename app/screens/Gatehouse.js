@@ -1,12 +1,33 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useState, useCallback } from "react";
-import { View, Text, Pressable, Alert } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  Alert,
+  ImageBackground,
+  Image,
+} from "react-native";
 
-import baseStyle from "../styles/base.js";
+import style from "../styles/gatehouse.js";
 
 export default function Gatehouse({ navigation }) {
   const students = global.data;
+  const [studentIndex, setStudentIndex] = useState(0);
+  const previousName =
+    students[(studentIndex + students.length - 1) % students.length].Name;
+  const currentName = students[studentIndex].Name;
+  const nextName = students[(studentIndex + 1) % students.length].Name;
+  const currentID = students[studentIndex].id;
+
+  const path = global.url + students[studentIndex].Student_image.url;
+  const imageSource = { uri: path };
+
+  const localImage = {
+    right: require("../assets/right.png"),
+    left: require("../assets/left.png"),
+  };
 
   const [openStories, setOpenStories] = useState({});
   useFocusEffect(
@@ -41,31 +62,53 @@ export default function Gatehouse({ navigation }) {
   );
 
   return (
-    <View style={baseStyle.view}>
-      <Text style={baseStyle.bigText}>Gatehouse</Text>
-      {students.map((s) => (
-        <Pressable
-          key={s.id}
-          onPress={() => {
-            if (openStories[s.id]) {
-              navigation.navigate("Categories", {
-                student_id: s.id,
-              });
-            } else {
-              Alert.alert("Not completed previous story");
-            }
-          }}
-        >
-          <Text style={baseStyle.button}>
-            {s.Name}
-            {!openStories[s.id] && " 🔒"}
-          </Text>
-        </Pressable>
-      ))}
-
-      <Pressable onPress={() => navigation.navigate("Survey")}>
-        <Text style={baseStyle.button}>Final survey 🔒</Text>
-      </Pressable>
-    </View>
+    <ImageBackground
+      source={imageSource}
+      resizeMode="cover"
+      style={style.student}
+    >
+      <View style={style.view}>
+        <View style={style.Right}>
+          <Pressable
+            onPress={() => {
+              if (studentIndex === students.length - 1) setStudentIndex(0);
+              else setStudentIndex((current) => current + 1);
+              navigation.setOptions({ title: nextName });
+            }}
+          >
+            <Image source={localImage.right} style={style.Arrow} />
+          </Pressable>
+        </View>
+        <View style={style.Left}>
+          <Pressable
+            onPress={() => {
+              if (studentIndex === 0) setStudentIndex(students.length - 1);
+              else setStudentIndex((current) => current - 1);
+              navigation.setOptions({ title: previousName });
+            }}
+          >
+            <Image source={localImage.left} style={style.Arrow} />
+          </Pressable>
+        </View>
+        <View style={style.centered}>
+          <Pressable
+            onPress={() => {
+              if (openStories[currentID])
+                navigation.navigate("Categories", { student_id: currentID });
+              else {
+                Alert.alert(
+                  `Complete ${previousName}'${previousName.slice(-1) !== "s" ? "s" : ""} story first!`,
+                );
+              }
+            }}
+          >
+            <Text style={style.pressable}>
+              {currentName}'{currentName.slice(-1) !== "s" && "s"} Story
+              {!openStories[currentID] && " is locked 🔒"}
+            </Text>
+          </Pressable>
+        </View>
+      </View>
+    </ImageBackground>
   );
 }

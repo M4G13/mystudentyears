@@ -42,7 +42,6 @@ export default function App() {
     process.env.EXPO_PUBLIC_API_URL ||
     "http://" + Constants.expoConfig.hostUri.split(":").shift() + ":1337";
   global.api_url = global.url + "/api";
-  global.media_url = global.url + "uploads";
 
   const fetchData = () => {
     fetch(global.api_url + "/students")
@@ -110,7 +109,11 @@ export default function App() {
           <Stack.Screen name="Survey" component={Survey} />
           <Stack.Screen name="Terms & Conditions" component={Terms} />
           <Stack.Screen name="Privacy Policy" component={Privacy} />
-          <Stack.Screen name="Gatehouse" component={Gatehouse} />
+          <Stack.Screen
+            name="Gatehouse"
+            component={Gatehouse}
+            options={{ title: "" }}
+          />
           <Stack.Screen name="Categories" component={Categories} />
           <Stack.Screen name="Category" component={Category} />
           <Stack.Screen name="Question" component={Question} />
