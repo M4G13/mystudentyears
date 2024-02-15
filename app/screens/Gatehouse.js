@@ -98,12 +98,7 @@ export default function Gatehouse({ navigation }) {
               if (openStories[currentID])
                 navigation.navigate("Categories", { student_id: currentID });
               else {
-                alertString = "Complete " + previousName;
-                if (previousName.slice(-1) !== "s")
-                  alertString = alertString + "'s story first!";
-                else alertString = alertString + "' story first!";
-                Alert.alert(alertString);
-              }
+                Alert.alert(`Complete ${previousName}'${previousName.slice(-1) !== "s" ? 's' : ''} story first!`);
             }}
           >
             <Text style={style.pressable}>
