@@ -29,8 +29,6 @@ export default function Gatehouse({ navigation }) {
     left: require("../assets/left.png"),
   };
 
-  let alertString = "";
-
   const [openStories, setOpenStories] = useState({});
   useFocusEffect(
     useCallback(() => {
