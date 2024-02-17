@@ -78,9 +78,12 @@ const style = StyleSheet.create({
     resizeMode: "contain",
   },
   clearButtonContainer: {
+    zIndex: 100,
     position: "absolute",
     bottom: 0,
     left: 0,
+    width: 150,
+    height: 100,
   },
   clearButton: {
     ...baseStyle.button,
