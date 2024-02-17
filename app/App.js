@@ -112,7 +112,7 @@ export default function App() {
           <Stack.Screen
             name="Gatehouse"
             component={Gatehouse}
-            options={{ title: "" }}
+            options={{ title: "Pick a Student" }}
           />
           <Stack.Screen name="Categories" component={Categories} />
           <Stack.Screen name="Category" component={Category} />

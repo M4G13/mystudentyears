@@ -24,7 +24,7 @@ const style = StyleSheet.create({
     position: "absolute",
     backgroundColor: baseStyle.colors.text1,
     padding: 10,
-    paddingTop: 40,
+    paddingTop: 50,
     left: -50,
     borderRadius: 20,
     borderColor: baseStyle.colors.borderColor1,
