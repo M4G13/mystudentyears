@@ -4,7 +4,7 @@ import base from "./base.js";
 
 const style = StyleSheet.create({
   ...base,
-  cardColors: ["#9b5de5", "#f15bb5", "#fee440", "#00bbf9", "#00f5d4"],
+  cardColors: ["#ef476f", "#06d6a0", "#ffd166", "#00bbf9", "#00f5d4"],
   studentCard: {
     flex: 1,
     justifyContent: "center",
@@ -15,9 +15,6 @@ const style = StyleSheet.create({
     marginBottom: 50,
     marginTop: 50,
     borderRadius: 20,
-  },
-  buttonText: {
-    backgroundColor: "#00000033",
   },
   studentWrapper: {
     width: "100%",
@@ -40,14 +37,13 @@ const style = StyleSheet.create({
     width: "100%",
     height: "100%",
     position: "absolute",
+    borderTopWidth: 0,
     left: 0,
     top: 0,
     backgroundColor: "#000000dd",
     zIndex: 4,
     padding: 30,
   },
-  wrapper: {},
-  dotStyle: {},
 });
 
 export default style;

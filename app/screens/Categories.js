@@ -78,34 +78,34 @@ export default function Categories({ route, navigation }) {
     }).start(() => setShowCongrats(false));
   };
 
+  const fetchCompletionStatus = async () => {
+    const complete = {};
+    let allCompleted = true;
+    for (const category of categories) {
+      try {
+        const completion = await AsyncStorage.getItem("quiz" + category.id);
+        const score = await AsyncStorage.getItem("quizScore" + category.id);
+        complete[category.id] = { completed: completion || false, score };
+        if (completion === null) {
+          allCompleted = false;
+        }
+      } catch (e) {
+        console.error("Failed to get progress: ", e);
+        allCompleted = false;
+      }
+    }
+    setCompleted(complete);
+    if (allCompleted) {
+      setShowCongrats(true);
+      animateCongratsFlag();
+    } else {
+      setShowCongrats(false);
+      congratsAnimation.setValue(-600);
+    }
+  };
+
   useFocusEffect(
     useCallback(() => {
-      const fetchCompletionStatus = async () => {
-        const complete = {};
-        let allCompleted = true;
-        for (const category of categories) {
-          try {
-            const completion = await AsyncStorage.getItem("quiz" + category.id);
-            const score = await AsyncStorage.getItem("quizScore" + category.id);
-            complete[category.id] = { completed: completion || false, score };
-            if (completion === null) {
-              console.log(completion);
-              allCompleted = false;
-            }
-          } catch (e) {
-            console.error("Failed to get progress: ", e);
-            allCompleted = false;
-          }
-        }
-        setCompleted(complete);
-        if (allCompleted) {
-          setShowCongrats(true);
-          animateCongratsFlag();
-        } else {
-          setShowCongrats(false);
-          congratsAnimation.setValue(-600);
-        }
-      };
       fetchCompletionStatus();
     }, [categories]),
   );
@@ -120,10 +120,7 @@ export default function Categories({ route, navigation }) {
         {categories.map((c) => (
           <Pressable
             key={c.id}
-            onPress={() => {
-              setSelectedCategory(c);
-              console.log(completed);
-            }}
+            onPress={() => setSelectedCategory(c)}
             style={{
               ...style.iconContainer,
               left: locs[c.Category][0],
