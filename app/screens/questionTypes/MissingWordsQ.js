@@ -21,22 +21,25 @@ export default function MissingWordsQ({ question, handleAnswer }) {
     _.shuffle(keywords),
   );
 
-  function modifyKeyword(index) {
-    const nextSelectedKeywords = [...selectedKeywords];
-    const nextAvailableKeywords = [...availableKeywords];
-
-    if (nextSelectedKeywords[index]) {
-      nextAvailableKeywords.push(nextSelectedKeywords[index]);
-      delete nextSelectedKeywords[index];
+  function putKeyword(index) {
+    for (const [i, kw] of selectedKeywords.entries()) {
+      if(!kw) {
+        const nextSelectedKeywords = [...selectedKeywords];
+        nextSelectedKeywords[i]=availableKeywords[index];
+        setAvailableKeywords(availableKeywords.filter((_, kwi) => kwi!==index));
+        setSelectedKeywords(nextSelectedKeywords);
+        return;
+      }
     }
-    if (selected !== null) {
-      nextSelectedKeywords[index] = availableKeywords[selected];
-      nextAvailableKeywords.splice(selected, 1);
-      setSelected(null);
-    }
+  }
 
-    setAvailableKeywords(nextAvailableKeywords);
-    setSelectedKeywords(nextSelectedKeywords);
+  function popKeyword(index) {
+    if(selectedKeywords[index]) {
+      const nextSelectedKeywords = [...selectedKeywords];
+      nextSelectedKeywords[index] = null;
+      setAvailableKeywords([...availableKeywords, selectedKeywords[index]])
+      setSelectedKeywords(nextSelectedKeywords);
+    }
   }
 
   return (
@@ -48,7 +51,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
               <Text key={`${text}${i}${selectedKeywords[i]}`}>
                 {text}
                 {i < keywords.length && (
-                  <Text style={style.wordGaps} onPress={() => modifyKeyword(i)}>
+                  <Text style={style.wordGaps} onPress={() => popKeyword(i)}>
                     {selectedKeywords[i] || "________"}
                   </Text>
                 )}
@@ -65,8 +68,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
                 selected === index ? style.draggableSelected : style.draggable
               }
               onPress={() => {
-                if (selected === index) setSelected(null);
-                else setSelected(index);
+                putKeyword(index);
               }}
               key={`${index}${keyword}`}
             >
