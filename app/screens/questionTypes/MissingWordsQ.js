@@ -13,7 +13,6 @@ export default function MissingWordsQ({ question, handleAnswer }) {
 
   const questionString = question.question.split(/\[.+?\]/g);
 
-  const [selected, setSelected] = useState(null);
   const [selectedKeywords, setSelectedKeywords] = useState(
     new Array(keywords.length),
   );
@@ -23,10 +22,12 @@ export default function MissingWordsQ({ question, handleAnswer }) {
 
   function putKeyword(index) {
     for (const [i, kw] of selectedKeywords.entries()) {
-      if(!kw) {
+      if (!kw) {
         const nextSelectedKeywords = [...selectedKeywords];
-        nextSelectedKeywords[i]=availableKeywords[index];
-        setAvailableKeywords(availableKeywords.filter((_, kwi) => kwi!==index));
+        nextSelectedKeywords[i] = availableKeywords[index];
+        setAvailableKeywords(
+          availableKeywords.filter((_, kwi) => kwi !== index),
+        );
         setSelectedKeywords(nextSelectedKeywords);
         return;
       }
@@ -34,10 +35,10 @@ export default function MissingWordsQ({ question, handleAnswer }) {
   }
 
   function popKeyword(index) {
-    if(selectedKeywords[index]) {
+    if (selectedKeywords[index]) {
       const nextSelectedKeywords = [...selectedKeywords];
       nextSelectedKeywords[index] = null;
-      setAvailableKeywords([...availableKeywords, selectedKeywords[index]])
+      setAvailableKeywords([...availableKeywords, selectedKeywords[index]]);
       setSelectedKeywords(nextSelectedKeywords);
     }
   }
@@ -64,9 +65,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
         {availableKeywords.length ? (
           availableKeywords.map((keyword, index) => (
             <Pressable
-              style={
-                selected === index ? style.draggableSelected : style.draggable
-              }
+              style={style.draggable}
               onPress={() => {
                 putKeyword(index);
               }}

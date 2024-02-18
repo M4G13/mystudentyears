@@ -2,14 +2,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useState, useCallback } from "react";
 import { View, Text, Pressable, Image } from "react-native";
-import Swiper from "react-native-swiper";
 import Animated, {
   useSharedValue,
   withTiming,
   useAnimatedStyle,
   interpolateColor,
-  Easing,
-} from 'react-native-reanimated';
+} from "react-native-reanimated";
+import Swiper from "react-native-swiper";
 
 import style from "../styles/gatehouse.js";
 
@@ -20,16 +19,18 @@ export default function Gatehouse({ navigation }) {
   const [pStudentIndex, setPStudentIndex] = useState(0);
 
   const bgColorAnim = useAnimatedStyle(() => {
-      return {
-        backgroundColor: interpolateColor(
-          bgIndex.value,
-          [0, 1],
-          [style.cardColors[pStudentIndex],
+    return {
+      backgroundColor: interpolateColor(
+        bgIndex.value,
+        [0, 1],
+        [
+          style.cardColors[pStudentIndex],
           style.cardColors[studentIndex],
-          style.cardColors[1]], // In case nothing is set, this stops a crash.
-        ),
-      };
-    });
+          style.cardColors[1],
+        ], // In case nothing is set, this stops a crash.
+      ),
+    };
+  });
 
   const [openStories, setOpenStories] = useState({});
   useFocusEffect(
@@ -63,7 +64,6 @@ export default function Gatehouse({ navigation }) {
     }, []),
   );
 
-
   return (
     <View style={style.view}>
       <Swiper
@@ -72,16 +72,13 @@ export default function Gatehouse({ navigation }) {
           setPStudentIndex(studentIndex);
           setStudentIndex(i);
           bgIndex.value = 0; // Need to lerp from 0-1 every time
-          bgIndex.value = withTiming(1, {duration: 300});
+          bgIndex.value = withTiming(1, { duration: 300 });
         }}
       >
         {students.map((s, i) => (
           <Animated.View
             key={"student" + i}
-            style={[
-              style.studentWrapper,
-              bgColorAnim
-            ]}
+            style={[style.studentWrapper, bgColorAnim]}
           >
             {!openStories[s.id] && (
               <View style={style.lockedOverlay}>
