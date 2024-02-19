@@ -8,7 +8,7 @@ const _ = require("lodash");
 export default function MissingWordsQ({ question, handleAnswer }) {
   const correctKeywords = Array.from(
     question.question.matchAll(/\[(.+?)\]/g),
-    w => w[1],
+    (w) => w[1],
   );
 
   const questionString = question.question.split(/\[.+?\]/g);
@@ -25,7 +25,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
     const next = keywords.selected.indexOf(null);
     selected[next] = available[index];
     available.splice(index, 1);
-    setKeywords({selected, available});
+    setKeywords({ selected, available });
   }
 
   function popKeyword(index) {
@@ -33,7 +33,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
       const selected = [...keywords.selected];
       selected[index] = null;
       const available = [...keywords.available, keywords.selected[index]];
-      setKeywords({selected, available});
+      setKeywords({ selected, available });
     }
   }
 
