@@ -1,33 +1,36 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useState, useCallback } from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  Alert,
-  ImageBackground,
-  Image,
-} from "react-native";
+import { View, Text, Pressable, Image } from "react-native";
+import Animated, {
+  useSharedValue,
+  withTiming,
+  useAnimatedStyle,
+  interpolateColor,
+} from "react-native-reanimated";
+import Swiper from "react-native-swiper";
 
 import style from "../styles/gatehouse.js";
 
 export default function Gatehouse({ navigation }) {
   const students = global.data;
   const [studentIndex, setStudentIndex] = useState(0);
-  const previousName =
-    students[(studentIndex + students.length - 1) % students.length].Name;
-  const currentName = students[studentIndex].Name;
-  const nextName = students[(studentIndex + 1) % students.length].Name;
-  const currentID = students[studentIndex].id;
+  const bgIndex = useSharedValue(0);
+  const [pStudentIndex, setPStudentIndex] = useState(0);
 
-  const path = global.url + students[studentIndex].Student_image.url;
-  const imageSource = { uri: path };
-
-  const localImage = {
-    right: require("../assets/right.png"),
-    left: require("../assets/left.png"),
-  };
+  const bgColorAnim = useAnimatedStyle(() => {
+    return {
+      backgroundColor: interpolateColor(
+        bgIndex.value,
+        [0, 1],
+        [
+          style.cardColors[pStudentIndex],
+          style.cardColors[studentIndex],
+          style.cardColors[1],
+        ], // In case nothing is set, this stops a crash.
+      ),
+    };
+  });
 
   const [openStories, setOpenStories] = useState({});
   useFocusEffect(
@@ -62,53 +65,49 @@ export default function Gatehouse({ navigation }) {
   );
 
   return (
-    <ImageBackground
-      source={imageSource}
-      resizeMode="cover"
-      style={style.student}
-    >
-      <View style={style.view}>
-        <View style={style.Right}>
-          <Pressable
-            onPress={() => {
-              if (studentIndex === students.length - 1) setStudentIndex(0);
-              else setStudentIndex((current) => current + 1);
-              navigation.setOptions({ title: nextName });
-            }}
+    <View style={style.view}>
+      <Swiper
+        loop={false}
+        onIndexChanged={(i) => {
+          setPStudentIndex(studentIndex);
+          setStudentIndex(i);
+          bgIndex.value = 0; // Need to lerp from 0-1 every time
+          bgIndex.value = withTiming(1, { duration: 300 });
+        }}
+      >
+        {students.map((s, i) => (
+          <Animated.View
+            key={"student" + i}
+            style={[style.studentWrapper, bgColorAnim]}
           >
-            <Image source={localImage.right} style={style.Arrow} />
-          </Pressable>
-        </View>
-        <View style={style.Left}>
-          <Pressable
-            onPress={() => {
-              if (studentIndex === 0) setStudentIndex(students.length - 1);
-              else setStudentIndex((current) => current - 1);
-              navigation.setOptions({ title: previousName });
-            }}
-          >
-            <Image source={localImage.left} style={style.Arrow} />
-          </Pressable>
-        </View>
-        <View style={style.centered}>
-          <Pressable
-            onPress={() => {
-              if (openStories[currentID])
-                navigation.navigate("Categories", { student_id: currentID });
-              else {
-                Alert.alert(
-                  `Complete ${previousName}'${previousName.slice(-1) !== "s" ? "s" : ""} story first!`,
-                );
-              }
-            }}
-          >
-            <Text style={style.pressable}>
-              {currentName}'{currentName.slice(-1) !== "s" && "s"} Story
-              {!openStories[currentID] && " is locked 🔒"}
-            </Text>
-          </Pressable>
-        </View>
-      </View>
-    </ImageBackground>
+            {!openStories[s.id] && (
+              <View style={style.lockedOverlay}>
+                <Text style={style.bigText}>
+                  This story is locked!{"\n\n"}
+                  Complete the previous student's story to unlock it.
+                </Text>
+              </View>
+            )}
+            {s.Student_Image !== null && (
+              <Image
+                source={{ uri: global.url + s.Student_image.url }}
+                style={{ ...style.studentImage }}
+              />
+            )}
+            <View style={style.studentCard}>
+              <Text style={style.studentText}>{s.Name + "'s"} Story</Text>
+              <Pressable
+                style={style.pressable}
+                onPress={() => {
+                  navigation.navigate("Campus", { student_id: s.id });
+                }}
+              >
+                <Text style={style.button}>Go to Campus</Text>
+              </Pressable>
+            </View>
+          </Animated.View>
+        ))}
+      </Swiper>
+    </View>
   );
 }

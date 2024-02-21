@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import Categories from "./screens/Categories.js";
+import Campus from "./screens/Campus.js";
 import Category from "./screens/Category.js";
 import Error from "./screens/Error.js";
 import Gatehouse from "./screens/Gatehouse.js";
@@ -112,9 +112,9 @@ export default function App() {
           <Stack.Screen
             name="Gatehouse"
             component={Gatehouse}
-            options={{ title: "" }}
+            options={{ title: "Pick a Student" }}
           />
-          <Stack.Screen name="Categories" component={Categories} />
+          <Stack.Screen name="Campus" component={Campus} />
           <Stack.Screen name="Category" component={Category} />
           <Stack.Screen name="Question" component={Question} />
           <Stack.Screen name="Info" component={Info} />

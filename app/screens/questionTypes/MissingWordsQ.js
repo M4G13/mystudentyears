@@ -6,37 +6,35 @@ import style from "../../styles/missingwordsq.js";
 const _ = require("lodash");
 
 export default function MissingWordsQ({ question, handleAnswer }) {
-  const keywords = Array.from(
+  const correctKeywords = Array.from(
     question.question.matchAll(/\[(.+?)\]/g),
     (w) => w[1],
   );
 
   const questionString = question.question.split(/\[.+?\]/g);
 
-  const [selected, setSelected] = useState(null);
-  const [selectedKeywords, setSelectedKeywords] = useState(
-    new Array(keywords.length),
-  );
-  const [availableKeywords, setAvailableKeywords] = useState(
-    _.shuffle(keywords),
-  );
+  const [keywords, setKeywords] = useState({
+    selected: new Array(correctKeywords.length).fill(null),
+    available: _.shuffle(correctKeywords),
+  });
 
-  function modifyKeyword(index) {
-    const nextSelectedKeywords = [...selectedKeywords];
-    const nextAvailableKeywords = [...availableKeywords];
+  function putKeyword(index) {
+    const selected = [...keywords.selected];
+    const available = [...keywords.available];
 
-    if (nextSelectedKeywords[index]) {
-      nextAvailableKeywords.push(nextSelectedKeywords[index]);
-      delete nextSelectedKeywords[index];
+    const next = keywords.selected.indexOf(null);
+    selected[next] = available[index];
+    available.splice(index, 1);
+    setKeywords({ selected, available });
+  }
+
+  function popKeyword(index) {
+    if (keywords.selected[index] !== null) {
+      const selected = [...keywords.selected];
+      selected[index] = null;
+      const available = [...keywords.available, keywords.selected[index]];
+      setKeywords({ selected, available });
     }
-    if (selected !== null) {
-      nextSelectedKeywords[index] = availableKeywords[selected];
-      nextAvailableKeywords.splice(selected, 1);
-      setSelected(null);
-    }
-
-    setAvailableKeywords(nextAvailableKeywords);
-    setSelectedKeywords(nextSelectedKeywords);
   }
 
   return (
@@ -45,11 +43,11 @@ export default function MissingWordsQ({ question, handleAnswer }) {
         <Text style={style.bigText}>
           {questionString.map((text, i) => {
             return (
-              <Text key={`${text}${i}${selectedKeywords[i]}`}>
+              <Text key={`${text}${i}${keywords.selected[i]}`}>
                 {text}
-                {i < keywords.length && (
-                  <Text style={style.wordGaps} onPress={() => modifyKeyword(i)}>
-                    {selectedKeywords[i] || "________"}
+                {i < correctKeywords.length && (
+                  <Text style={style.wordGaps} onPress={() => popKeyword(i)}>
+                    {keywords.selected[i] || "________"}
                   </Text>
                 )}
               </Text>
@@ -58,15 +56,12 @@ export default function MissingWordsQ({ question, handleAnswer }) {
         </Text>
       </View>
       <View style={style.keywords}>
-        {availableKeywords.length ? (
-          availableKeywords.map((keyword, index) => (
+        {keywords.available.length ? (
+          keywords.available.map((keyword, index) => (
             <Pressable
-              style={
-                selected === index ? style.draggableSelected : style.draggable
-              }
+              style={style.draggable}
               onPress={() => {
-                if (selected === index) setSelected(null);
-                else setSelected(index);
+                putKeyword(index);
               }}
               key={`${index}${keyword}`}
             >
@@ -78,7 +73,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
             <Pressable
               style={style.submitButton}
               onPress={() =>
-                handleAnswer(_.isEqual(selectedKeywords, keywords))
+                handleAnswer(_.isEqual(keywords.selected, correctKeywords))
               }
             >
               <Text style={style.button}>Submit</Text>

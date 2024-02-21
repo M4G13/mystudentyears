@@ -4,7 +4,7 @@ const colors = {
   bg1: "#151718",
   bg2: "#111316",
   bg3: "#050710",
-  bg4: "eee",
+  bg4: "#e0e0e0",
   fg1: "#05b4ff",
   fg2: "#ff69b4",
   text1: "#ffffff",
@@ -12,6 +12,10 @@ const colors = {
   text3: "#FFD700",
   text4: "#6c959e",
   borderColor1: "#ddd",
+  translucent1: "#00000033",
+  translucent2: "#33333333",
+  translucent3: "#33333355",
+  translucent4: "#000000dd",
 };
 
 const baseStyle = StyleSheet.create({
