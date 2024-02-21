@@ -26,7 +26,7 @@ export default function QuizEndScreen({ route, navigation }) {
   };
 
   const goToMap = () => {
-    navigation.navigate("Categories", { student_id });
+    navigation.navigate("Campus", { student_id });
   };
 
   let message = "";
