@@ -46,7 +46,7 @@ const earnedStars = (completed) =>
     .map((e) => Math.ceil(e.score * (categoryStars / 100)))
     .reduce((a, v) => 1 * a + v, []);
 
-export default function Categories({ route, navigation }) {
+export default function Campus({ route, navigation }) {
   const categories = getData(route.params).student.category;
   const locs = {
     Finance: [60, 125],

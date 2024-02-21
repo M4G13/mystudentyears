@@ -99,7 +99,7 @@ export default function Gatehouse({ navigation }) {
               <Pressable
                 style={style.pressable}
                 onPress={() => {
-                  navigation.navigate("Categories", { student_id: s.id });
+                  navigation.navigate("Campus", { student_id: s.id });
                 }}
               >
                 <Text style={style.button}>Go to Campus</Text>
