@@ -47,9 +47,9 @@ export default function App() {
     fetch(global.api_url + "/students")
       .then((response) => response.json())
       .then((data) => {
+        global.data = data;
         setIsLoading(false);
         setError(false);
-        global.data = data;
       })
       .catch((error) => {
         console.error(error);
@@ -106,7 +106,7 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Home Screen" component={HomeScreen} 
-            options={{ headerShown: false }}
+            options={{headerShown: false}}
           />
           <Stack.Screen name="Survey" component={Survey} />
           <Stack.Screen name="Terms & Conditions" component={Terms} />

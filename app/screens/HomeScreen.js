@@ -42,12 +42,22 @@ export default function HomeScreen({ navigation }) {
         />
       </View>
       <Text style={style.bigText}>Welcome to My Student Years!</Text>
+      {response !== null ? ( 
+        <Pressable onPress={() => {
+          StatusBar.setBackgroundColor(style.colors.bg1);
+          navigation.navigate("Gatehouse")
+        }}>
+          <Text style={style.button}>Go to Gatehouse</Text>
+        </Pressable> )
+      : (
         <Pressable onPress={() => {
           StatusBar.setBackgroundColor(style.colors.bg1);
           navigation.navigate("Survey")
         }}>
-          <Text style={style.button}>Take the survey</Text>
-        </Pressable>
+          <Text style={style.button}>Take the Survey</Text>
+        </Pressable> )
+      }
+
     </View>
   );
 }
