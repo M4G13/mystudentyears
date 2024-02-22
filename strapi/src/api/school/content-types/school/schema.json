@@ -4,18 +4,31 @@
   "info": {
     "singularName": "school",
     "pluralName": "schools",
-    "displayName": "School"
+    "displayName": "School",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
-    "Name": {
+    "schuid": {
       "type": "string"
     },
-    "Location": {
-      "type": "json"
+    "schoolname": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "float"
+    },
+    "longitude": {
+      "type": "float"
+    },
+    "lacode": {
+      "type": "string"
+    },
+    "laname": {
+      "type": "string"
     }
   }
 }

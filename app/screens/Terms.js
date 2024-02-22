@@ -9,7 +9,7 @@ export default function Terms({ route, navigation }) {
   const [termsContent, setTermsContent] = useState("");
 
   const fetchData = () => {
-    fetch(global.api_url + "t-and-c")
+    fetch(global.api_url + "/t-and-c")
       .then((response) => response.json())
       .then((data) => {
         setTermsContent(data.data.attributes.TermsAndConditions);

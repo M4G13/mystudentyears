@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Constants from "expo-constants"; // REMOVE IN PRODUCTION
+import { useFonts } from "expo-font";
 import React, { useState, useEffect } from "react";
 import {
   Text,
@@ -12,7 +13,7 @@ import {
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import Categories from "./screens/Categories.js";
+import Campus from "./screens/Campus.js";
 import Category from "./screens/Category.js";
 import Error from "./screens/Error.js";
 import Gatehouse from "./screens/Gatehouse.js";
@@ -30,13 +31,17 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [fontsLoaded, fontError] = useFonts({
+    Chalkduster: require("./assets/fonts/Chalkduster.ttf"),
+  });
 
   StatusBar.setBarStyle("light-content");
   StatusBar.setBackgroundColor(baseStyle.colors.bg1);
 
-  global.api_url =
+  global.url =
     process.env.EXPO_PUBLIC_API_URL ||
-    "http://" + Constants.expoConfig.hostUri.split(":").shift() + ":1337/api";
+    "http://" + Constants.expoConfig.hostUri.split(":").shift() + ":1337";
+  global.api_url = global.url + "/api";
 
   const fetchData = () => {
     fetch(global.api_url + "/students")
@@ -104,8 +109,12 @@ export default function App() {
           <Stack.Screen name="Survey" component={Survey} />
           <Stack.Screen name="Terms & Conditions" component={Terms} />
           <Stack.Screen name="Privacy Policy" component={Privacy} />
-          <Stack.Screen name="Gatehouse" component={Gatehouse} />
-          <Stack.Screen name="Categories" component={Categories} />
+          <Stack.Screen
+            name="Gatehouse"
+            component={Gatehouse}
+            options={{ title: "Pick a Student" }}
+          />
+          <Stack.Screen name="Campus" component={Campus} />
           <Stack.Screen name="Category" component={Category} />
           <Stack.Screen name="Question" component={Question} />
           <Stack.Screen name="Info" component={Info} />

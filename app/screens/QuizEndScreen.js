@@ -1,12 +1,21 @@
-import React from "react";
-import { View, Text, Pressable } from "react-native";
-import * as Progress from "react-native-progress";
+import React, { useEffect, useRef } from "react";
+import { View, Text, Pressable, ImageBackground, Animated } from "react-native";
 
 import style from "../styles/quizendscreen.js";
 
 export default function QuizEndScreen({ route, navigation }) {
   const { category_id, student_id, score, correctAmount, QuestionAmount } =
     route.params;
+
+  const scaleAnimation = useRef(new Animated.Value(5)).current;
+
+  useEffect(() => {
+    Animated.timing(scaleAnimation, {
+      toValue: 3.5,
+      duration: 1500,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   const retakeQuiz = async () => {
     navigation.navigate("Question", {
@@ -17,46 +26,62 @@ export default function QuizEndScreen({ route, navigation }) {
   };
 
   const goToMap = () => {
-    navigation.navigate("Categories", { student_id });
+    navigation.navigate("Campus", { student_id });
   };
 
   let message = "";
+  let gradeImage = require("../assets/C.png");
 
   if (score < 50) {
     message = "You can do better. Keep practicing!";
+    gradeImage = require("../assets/C.png");
   } else if (score >= 75) {
     message = "Congratulations! You did amazing!";
+    gradeImage = require("../assets/A.png");
   } else {
     message = "Good effort! You're on the right track.";
+    gradeImage = require("../assets/B.png");
   }
 
   return (
-    <View style={style.view}>
+    <ImageBackground
+      source={require("../assets/examResult.png")}
+      style={style.view}
+      resizeMode="stretch"
+    >
       <View style={style.questionWrapper}>
-        <Progress.Circle
-          size={200}
-          progress={score / 100}
-          thickness={10}
-          color={style.colors.fg2}
-          formatText={() => score.toFixed(1) + "%"}
-          showsText
-          strokeCap="round"
+        <Text style={style.studentIDText}>Student ID: {student_id} </Text>
+        <Text style={style.subjectIDText}>Subject ID: {category_id} </Text>
+        <Text style={style.bigText}> Official Result </Text>
+        <Animated.Image
+          source={gradeImage}
+          style={[
+            style.gradeImage,
+            {
+              transform: [{ scale: scaleAnimation }],
+            },
+          ]}
         />
-        <Text style={style.bigText}>Quiz Completed!</Text>
-        <Text style={style.smallText}>
-          You got {score.toFixed(2)}%, which is {correctAmount} out of{" "}
-          {QuestionAmount}
+        <Text style={style.smallText1}>
+          You Scored: {score.toFixed(2)}%, You got {correctAmount} /{" "}
+          {QuestionAmount} correct
         </Text>
-        <Text style={style.smallText}>{message}</Text>
+        <Text style={style.feedback}>Feedback from the marker:</Text>
+        <Text style={style.smallText2}>{message}</Text>
         <View style={style.buttonContainer}>
           <Pressable onPress={retakeQuiz} style={style.pressable}>
-            <Text style={style.button}>Retake Quiz</Text>
+            <Text style={style.button}>Try Again - Beat Your Score!</Text>
           </Pressable>
           <Pressable onPress={goToMap} style={style.pressable}>
-            <Text style={style.button}>Go back to campus</Text>
+            <Text style={style.button}>
+              Return to Campus - Explore More Subjects
+            </Text>
           </Pressable>
         </View>
+        <Text style={style.certifyText}>
+          Certified by: The My Student Years Exam Board
+        </Text>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
