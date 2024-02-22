@@ -8,7 +8,7 @@ import style from "../styles/homescreen.js";
 export default function HomeScreen({ navigation }) {
   const [response, setResponse] = useState({});
 
-  StatusBar.setBackgroundColor("#7CCDF3");
+  StatusBar.setBackgroundColor("#7bcef4");
 
   useFocusEffect(
     useCallback(() => {
@@ -29,13 +29,13 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={style.view}>
-      <View style={style.logoContainer}>
+      <View style={style.bgContainer}>
         <Image
           source={require("../assets/HomeScreenBG.png")}
           style={style.bgImage}
         />
       </View>
-      <View style={style.bgContainer}>
+      <View style={style.logoContainer}>
         <Image
           source={require("../assets/Molly1.png")}
           style={style.mainImage}

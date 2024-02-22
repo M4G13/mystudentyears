@@ -4,6 +4,13 @@ import base from "./base.js";
 
 const style = StyleSheet.create({
   ...base,
+  view: {
+    ...base.view,
+    paddingTop: 0,
+    marginTop: 0,
+    width: "100%",
+    height: "100%",
+  },
   button: {
     ...base.button,
     margin: 50,
@@ -19,9 +26,6 @@ const style = StyleSheet.create({
     width: "95%",
     height: "80%",
     objectFit: "contain",
-    marginTop: -50,
-    marginBottom: -85,
-    zIndex: 3,
     marginLeft: "auto",
     marginRight: "auto",
   },
@@ -30,23 +34,20 @@ const style = StyleSheet.create({
     top: 0,
     left: 0,
     width: "100%",
-    height: "100%",
-    position: "absolute",
-    zIndex: 0,
   },
 
   bgImage: {
-    top: -20,
-    left: 0,
     width: "100%",
     height: "80%",
+    top: 0,
+    objectFit: "fill",
   },
 
   logoContainer: {
     width: "100%",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
+    height: "50%",
+    top: 100,
+    position: "absolute",
   },
 });
 
