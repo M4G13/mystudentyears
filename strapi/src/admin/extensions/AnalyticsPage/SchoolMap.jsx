@@ -24,7 +24,7 @@ export default function SchoolMap() {
 
   return (
     <div style={{height: 1000}}>
-      <ResponsiveChoropleth
+      {regions && <ResponsiveChoropleth
           data={regions}
           features={geojson.features}
           domain={domain}
@@ -33,7 +33,7 @@ export default function SchoolMap() {
           projectionScale={4000}
           projectionTranslation={[0.5, 5.4]}
           onClick={node => console.log(node, domain, regions)}
-        />
+        />}
     </div>
   );
 }
