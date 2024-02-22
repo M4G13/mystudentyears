@@ -89,8 +89,7 @@ export default function Campus({ route, navigation }) {
         style={style.bgImage}
       >
         <Pressable
-          style={{...style.mapTouchable, 
-          zIndex:showModal?9:0}}
+          style={{ ...style.mapTouchable, zIndex: showModal ? 9 : 0 }}
           onPress={() => {
             setSelectedCategory(null); // Close the pop-ups on press-out
             setShowModal(false);
