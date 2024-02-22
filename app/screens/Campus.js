@@ -191,10 +191,15 @@ export default function Campus({ route, navigation }) {
                     setShowModal(false);
                   }}
                 >
-                  <Text>Continue</Text>
+                  <Text>Stay Here</Text>
                 </Pressable>
-                <Pressable style={style.modalButton}>
-                  <Text>Gatehouse</Text>
+                <Pressable
+                  style={style.modalButton}
+                  onPress={() => {
+                    navigation.navigate("Gatehouse");
+                  }}
+                >
+                  <Text>Go to Gatehouse</Text>
                 </Pressable>
               </View>
             </View>
