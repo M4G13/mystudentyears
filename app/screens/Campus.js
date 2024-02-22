@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 import { getData } from "../common.js";
-import style from "../styles/categories.js";
+import style from "../styles/campus.js";
 
 const categoryIcons = {
   Finance: require("../assets/finance.png"),

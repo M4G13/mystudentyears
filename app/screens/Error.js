@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Pressable } from "react-native";
 
-import style from "../styles/categories.js";
+import style from "../styles/campus.js";
 
 export default function Error({ error, plaintxt, navigation }) {
   const retry = () => {
