@@ -105,8 +105,10 @@ export default function App() {
             headerStyle: baseStyle.header,
           }}
         >
-          <Stack.Screen name="Home Screen" component={HomeScreen} 
-            options={{headerShown: false}}
+          <Stack.Screen
+            name="Home Screen"
+            component={HomeScreen}
+            options={{ headerShown: false }}
           />
           <Stack.Screen name="Survey" component={Survey} />
           <Stack.Screen name="Terms & Conditions" component={Terms} />
