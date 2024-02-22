@@ -1,14 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useState, useCallback } from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  ImageBackground,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Pressable, ImageBackground, Image } from "react-native";
 import Animated, { ZoomIn, ZoomOut, StretchInX } from "react-native-reanimated";
 
 import { getData } from "../common.js";
@@ -95,10 +88,12 @@ export default function Campus({ route, navigation }) {
         resizeMode="cover"
         style={style.bgImage}
       >
-        <TouchableOpacity
-          style={style.mapTouchable}
+        <Pressable
+          style={{...style.mapTouchable, 
+          zIndex:showModal?9:0}}
           onPress={() => {
             setSelectedCategory(null); // Close the pop-ups on press-out
+            setShowModal(false);
           }}
         />
         {categories.map((c) => (
@@ -174,9 +169,10 @@ export default function Campus({ route, navigation }) {
           <Animated.View
             style={style.modalContainer}
             exiting={ZoomOut}
+            pointerEvents="box-none"
             entering={ZoomIn.duration(500).springify()}
           >
-            <View style={style.modal}>
+            <View style={style.modal} pointerEvents="auto">
               <Image
                 source={require("../assets/category_complete.png")}
                 style={style.modalImage}
