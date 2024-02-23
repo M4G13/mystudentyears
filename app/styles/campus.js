@@ -33,8 +33,10 @@ const style = StyleSheet.create({
     zIndex: 1,
   },
   messageBoxText: {
+    ...baseStyle.bigText,
+    color: baseStyle.colors.text2,
     marginBottom: 10,
-    fontSize: 15,
+    fontSize: 19,
     fontWeight: "600",
     textAlign: "center",
   },
@@ -80,10 +82,10 @@ const style = StyleSheet.create({
     resizeMode: "contain",
   },
   starCounterText: {
+    ...baseStyle.bigText,
     marginLeft: 5,
     color: baseStyle.colors.text1,
     fontSize: 25,
-    fontWeight: "bold",
   },
   clearButtonContainer: {
     zIndex: 100,

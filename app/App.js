@@ -32,7 +32,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const [fontsLoaded, fontError] = useFonts({
-    Chalkduster: require("./assets/fonts/Chalkduster.ttf"),
+    Playpen: require("./assets/fonts/PlaypenSans.ttf"),
   });
 
   StatusBar.setBarStyle("light-content");
