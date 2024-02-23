@@ -32,7 +32,6 @@ export default function Info({ route, navigation }) {
       const newImageUrl = `${global.url}${infoItem.image.url.startsWith("/") ? "" : "/"}${infoItem.image.url}`;
       setImageUrl(newImageUrl);
     }
-    console.log(style.markdownStyle);
   }, [index, category]);
 
   const navigateToNextPage = async () => {
