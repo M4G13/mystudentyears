@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { styles as mdStyles } from "react-native-markdown-display";
 
 import base from "./base.js";
 
@@ -6,52 +7,59 @@ const style = StyleSheet.create({
   ...base,
   view: {
     ...base.view,
-    padding: 16,
     minHeight: "100%",
     justifyContent: "flexStart",
   },
-  fullScreen: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-  },
   contentContainer: {
     flex: 1,
-    marginHorizontal: 30,
-    marginTop: 35,
-    marginBottom: 55,
+    marginTop: 10,
   },
   infoButton: {
-    backgroundColor: base.colors.bg1,
-    padding: 20,
-    paddingLeft: 25,
-    paddingRight: 25,
-    minWidth: "45%",
+    ...base.button,
+    padding: 15,
+    fontSize: 20,
+    margin: 20,
+    marginBottom: 20,
     textAlign: "center",
     fontWeight: "600",
-    fontFamily: "Chalkduster",
     color: base.colors.text1,
-    alignSelf: "center",
-    marginTop: 2,
   },
-  markdownStylesmall: {
+  markdownStyle: {
+    ...Object.keys(mdStyles).reduce((a, k) => {
+      a[k] = { ...mdStyles[k] };
+      if (a[k].fontSize) {
+        a[k].fontSize += 10;
+      }
+      return a;
+    }, {}),
     body: {
-      fontFamily: "Chalkduster",
+      padding: 10,
+      fontFamily: "Playpen",
       color: base.colors.text1,
+    },
+    link: {
+      fontFamily: "Playpen",
+      color: base.colors.fg1,
     },
   },
   titleText: {
     color: base.colors.text1,
-    fontWeight: "600",
     fontSize: 25,
+    marginBottom: 5,
     textAlign: "center",
-    fontFamily: "Chalkduster",
+    fontFamily: "Playpen",
   },
   imageStyle: {
     width: "100%",
     height: 100,
     resizeMode: "contain",
   },
+  titleRule: {
+    width: "100%",
+    resizeMode: "stretch",
+    height: 10,
+  },
+  bgImage: { ...base.view, padding: 5 },
 });
 
 export default style;
