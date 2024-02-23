@@ -10,23 +10,6 @@ export default function HomeScreen({ navigation }) {
 
   StatusBar.setBackgroundColor("#7bcef4");
 
-  useFocusEffect(
-    useCallback(() => {
-      async function getResponse() {
-        let tempResponse;
-        try {
-          const storedResponse = await AsyncStorage.getItem("survey");
-          tempResponse = JSON.parse(storedResponse);
-        } catch (e) {
-          console.error("Failed to get response. " + e);
-          tempResponse = null;
-        }
-        setResponse(tempResponse);
-      }
-      getResponse();
-    }, []),
-  );
-
   return (
     <View style={style.view}>
       <View style={style.bgContainer}>
@@ -42,7 +25,7 @@ export default function HomeScreen({ navigation }) {
         />
       </View>
       <Text style={style.bigText}>Welcome to My Student Years!</Text>
-      {response !== null ? (
+      {global.uuid ? (
         <Pressable
           onPress={() => {
             StatusBar.setBackgroundColor(style.colors.bg1);

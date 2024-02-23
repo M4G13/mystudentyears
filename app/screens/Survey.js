@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CommonActions, useFocusEffect } from "@react-navigation/native";
-import React, { useState, useCallback, useEffect, useContext } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   View,
   Text,
@@ -12,7 +12,6 @@ import {
 import { SelectList } from "react-native-dropdown-select-list";
 import RadioForm from "react-native-simple-radio-button";
 
-import { AccountContext } from "../Context.js";
 import style from "../styles/survey";
 
 export default function Survey({ navigation }) {
@@ -23,8 +22,6 @@ export default function Survey({ navigation }) {
   const [schools, setSchools] = useState("");
   const [questions, setQuestions] = useState([]);
   const [selectedValues, setSelectedValues] = useState(Array(4).fill(-1));
-
-  const { uuid, setUUID } = useContext(AccountContext);
 
   const fetchData = () => {
     fetch(global.api_url + "/schools?sort=schoolname")
@@ -130,7 +127,7 @@ export default function Survey({ navigation }) {
     })
       .then((response) => response.json())
       .then((user) => {
-        setUUID(user.data.attributes.UUID);
+        global.uuid  = user.data.attributes.UUID;
         AsyncStorage.setItem("uuid", user.data.attributes.UUID);
       })
       .catch((error) => {
@@ -140,7 +137,7 @@ export default function Survey({ navigation }) {
   };
 
   const updateUser = (data) => {
-    fetch(global.api_url + "/app-user/" + uuid, {
+    fetch(global.api_url + "/app-user/" + global.uuid, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

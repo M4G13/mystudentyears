@@ -51,6 +51,7 @@ const style = StyleSheet.create({
   },
   imageStyle: {
     width: "100%",
+    marginTop: 10,
     height: 100,
     resizeMode: "contain",
   },
@@ -59,7 +60,7 @@ const style = StyleSheet.create({
     resizeMode: "stretch",
     height: 10,
   },
-  bgImage: { ...base.view, padding: 5 },
+  bgImage: { ...base.view, width: "100%" },
 });
 
 export default style;

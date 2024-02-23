@@ -13,7 +13,6 @@ import {
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import { AccountContext } from "./Context.js";
 import Campus from "./screens/Campus.js";
 import Category from "./screens/Category.js";
 import Error from "./screens/Error.js";
@@ -36,7 +35,6 @@ export default function App() {
     Playpen: require("./assets/fonts/PlaypenSans.ttf"),
   });
 
-  const [uuid, setUUID] = useState(null);
   const [initalStudent, setInitialStudent] = useState(null);
 
   StatusBar.setBarStyle("light-content");
@@ -65,10 +63,10 @@ export default function App() {
   useEffect(() => {
     fetchData();
     AsyncStorage.getItem("uuid")
-      .then((item) => setUUID(item))
+      .then((uuid) => global.uuid = uuid)
       .catch((e) => console.log(e));
     AsyncStorage.getItem("currentStudent")
-      .then((id) => setInitialStudent(Number(id)))
+      .then((id) => {if (id !== null) setInitialStudent(Number(id));})
       .catch((e) => console.log(e));
   }, []);
 
@@ -94,7 +92,7 @@ export default function App() {
     );
   }
 
-  const navigationState = uuid
+  const navigationState = global.uuid
     ? {
         routes: [
           { name: "Gatehouse" },
@@ -110,7 +108,6 @@ export default function App() {
       };
 
   return (
-    <AccountContext.Provider value={{ uuid, setUUID }}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <NavigationContainer theme={DarkTheme} initialState={navigationState}>
           <Stack.Navigator
@@ -148,6 +145,5 @@ export default function App() {
           </Stack.Navigator>
         </NavigationContainer>
       </GestureHandlerRootView>
-    </AccountContext.Provider>
   );
 }
