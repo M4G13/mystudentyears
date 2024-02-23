@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from "@react-navigation/native";
-import React, { useState, useCallback, useEffect } from "react";
+import { CommonActions, useFocusEffect } from "@react-navigation/native";
+import React, { useState, useCallback, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import {
 import { SelectList } from "react-native-dropdown-select-list";
 import RadioForm from "react-native-simple-radio-button";
 
+import { AccountContext } from "../Context.js";
 import style from "../styles/survey";
 
 export default function Survey({ navigation }) {
@@ -22,6 +23,8 @@ export default function Survey({ navigation }) {
   const [schools, setSchools] = useState("");
   const [questions, setQuestions] = useState([]);
   const [selectedValues, setSelectedValues] = useState(Array(4).fill(-1));
+
+  const { uuid, setUUID } = useContext(AccountContext);
 
   const fetchData = () => {
     fetch(global.api_url + "/schools?sort=schoolname")
@@ -127,8 +130,8 @@ export default function Survey({ navigation }) {
     })
       .then((response) => response.json())
       .then((user) => {
-        global.uuid = user.data.attributes.UUID;
-        AsyncStorage.setItem("uuid", global.uuid);
+        setUUID(user.data.attributes.UUID);
+        AsyncStorage.setItem("uuid", user.data.attributes.UUID);
       })
       .catch((error) => {
         console.error(error);
@@ -137,7 +140,7 @@ export default function Survey({ navigation }) {
   };
 
   const updateUser = (data) => {
-    fetch(global.api_url + "/app-user/" + global.uuid, {
+    fetch(global.api_url + "/app-user/" + uuid, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -147,6 +150,7 @@ export default function Survey({ navigation }) {
   };
 
   function process() {
+    let route;
     if (response === null) {
       if (!/\S+@\S+\.\S+/.test(input)) {
         alert("Please enter a valid e-mail address.");
@@ -177,8 +181,7 @@ export default function Survey({ navigation }) {
         },
       };
       createNewUser(data);
-      navigation.pop();
-      navigation.navigate("Gatehouse");
+      route = [{ name: "Gatehouse" }];
     } else {
       const data = {
         FinalSurvey: {
@@ -189,9 +192,9 @@ export default function Survey({ navigation }) {
         },
       };
       updateUser(data);
-      navigation.pop();
-      navigation.navigate("Home Screen");
+      route = [{ name: "Home Screen" }];
     }
+    navigation.dispatch(CommonActions.reset({ routes: route }));
   }
 
   async function handleNavigate(page) {

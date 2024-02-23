@@ -100,6 +100,7 @@ export default function Gatehouse({ navigation }) {
                 style={style.pressable}
                 onPress={() => {
                   navigation.navigate("Campus", { student_id: s.id });
+                  AsyncStorage.setItem("currentStudent", s.id.toString());
                 }}
               >
                 <Text style={style.button}>Go to Campus</Text>

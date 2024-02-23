@@ -1,12 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import { View } from "react-native";
 
 import MissingWordsQ from "./questionTypes/MissingWordsQ.js";
 import MultiChoiceQ from "./questionTypes/MultiChoiceQ.js";
 import OpenResponseQ from "./questionTypes/OpenResponseQ.js";
 import RankOrderQ from "./questionTypes/RankOrderQ.js";
+import { AccountContext } from "../Context.js";
 import { getData } from "../common.js";
 import baseStyle from "../styles/question.js";
 
@@ -28,6 +29,8 @@ export default function Question({ route, navigation }) {
   const question = quiz.questions[index];
 
   const [answers, setAnswers] = useState([]);
+
+  const uuid = useContext(AccountContext);
 
   async function storeResult(answers, score) {
     try {
@@ -54,7 +57,7 @@ export default function Question({ route, navigation }) {
         quiz.questions.length,
       );
       storeResult(nextAnswers, score);
-      fetch(global.api_url + "/app-user/" + global.uuid, {
+      fetch(global.api_url + "/app-user/" + uuid, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
