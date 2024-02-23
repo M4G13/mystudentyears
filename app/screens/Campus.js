@@ -1,14 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useState, useCallback, useRef } from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  ImageBackground,
-  Image,
-  Animated,
-} from "react-native";
+import React, { useState, useCallback } from "react";
+import { View, Text, Pressable, ImageBackground, Image } from "react-native";
+import Animated, { ZoomIn, ZoomOut, StretchInX } from "react-native-reanimated";
 
 import { getData } from "../common.js";
 import style from "../styles/campus.js";
@@ -20,8 +14,6 @@ const categoryIcons = {
   Independence: require("../assets/independence.png"),
   StarFilled: require("../assets/star_filled.png"),
   StarEmpty: require("../assets/star_empty.png"),
-  Banner: require("../assets/banner.png"),
-  flagImage: require("../assets/congratsFlag.png"),
 };
 
 const imageSource = require("../assets/temp_map.png");
@@ -37,7 +29,10 @@ const renderStars = (score) =>
           ? categoryIcons.StarFilled
           : categoryIcons.StarEmpty
       }
-      style={style.iconSmall}
+      style={{
+        ...style.iconSmall,
+        marginTop: i === 0 || i === categoryStars - 1 ? 6 : 0,
+      }}
     />
   ));
 
@@ -49,34 +44,16 @@ const earnedStars = (completed) =>
 export default function Campus({ route, navigation }) {
   const categories = getData(route.params).student.category;
   const locs = {
-    Finance: [60, 125],
-    Wellbeing: [120, 500],
-    Academics: [180, 235],
+    Finance: [60, 135],
+    Wellbeing: [130, 500],
+    Academics: [210, 235],
     Independence: [260, 110],
   };
   const [completed, setCompleted] = useState({});
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [showCongrats, setShowCongrats] = useState(false);
-  const totalPossibleStars = categories.length * categoryStars;
+  const [showModal, setShowModal] = useState(false);
 
   const totalEarnedStars = earnedStars(completed);
-
-  const congratsAnimation = useRef(new Animated.Value(-600)).current;
-  const animateCongratsFlag = () => {
-    Animated.timing(congratsAnimation, {
-      toValue: 0,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const animateCongratsFlagOffScreen = () => {
-    Animated.timing(congratsAnimation, {
-      toValue: -600,
-      duration: 500,
-      useNativeDriver: true,
-    }).start(() => setShowCongrats(false));
-  };
 
   const fetchCompletionStatus = async () => {
     const complete = {};
@@ -94,14 +71,8 @@ export default function Campus({ route, navigation }) {
         allCompleted = false;
       }
     }
+    setShowModal(allCompleted);
     setCompleted(complete);
-    if (allCompleted) {
-      setShowCongrats(true);
-      animateCongratsFlag();
-    } else {
-      setShowCongrats(false);
-      congratsAnimation.setValue(-600);
-    }
   };
 
   useFocusEffect(
@@ -115,8 +86,15 @@ export default function Campus({ route, navigation }) {
       <ImageBackground
         source={imageSource}
         resizeMode="cover"
-        style={style.view}
+        style={style.bgImage}
       >
+        <Pressable
+          style={{ ...style.mapTouchable, zIndex: showModal ? 9 : 0 }}
+          onPress={() => {
+            setSelectedCategory(null); // Close the pop-ups on press-out
+            setShowModal(false);
+          }}
+        />
         {categories.map((c) => (
           <Pressable
             key={c.id}
@@ -125,13 +103,15 @@ export default function Campus({ route, navigation }) {
               ...style.iconContainer,
               left: locs[c.Category][0],
               top: locs[c.Category][1],
-              zIndex: c === selectedCategory ? 2 : 1,
             }}
           >
             {c === selectedCategory && (
-              <View style={style.messageBox}>
+              <Animated.View
+                style={style.messageBox}
+                entering={StretchInX.duration(100)}
+              >
                 <View>
-                  <Text style={style.messageBoxTextBig}>
+                  <Text style={style.messageBoxText}>
                     {selectedCategory.Category}
                   </Text>
                   <Pressable
@@ -151,63 +131,77 @@ export default function Campus({ route, navigation }) {
                     </Text>
                   </Pressable>
                 </View>
-              </View>
+              </Animated.View>
             )}
-            <Image source={categoryIcons[c.Category]} style={style.icon} />
-            {completed[c.id] && completed[c.id].completed ? (
+            <Image
+              source={categoryIcons[c.Category]}
+              style={{ ...style.icon, zIndex: 9 }}
+            />
+
+            {completed[c.id] && completed[c.id].completed && (
               <View style={style.starContainer}>
                 {renderStars(completed[c.id].score)}
               </View>
-            ) : null}
+            )}
           </Pressable>
         ))}
 
         <View style={style.starCounterContainer}>
+          <View
+            style={{
+              ...style.starProgressBar,
+              width:
+                (totalEarnedStars * 100) / (categories.length * categoryStars) +
+                "%",
+            }}
+          />
           <Image
             source={categoryIcons.StarFilled}
             style={style.starCounterIcon}
           />
-          <Text style={style.starCounterText}>
+          <Text style={style.starCounterText} adjustFontSizeToFit>
             {totalEarnedStars} / {categories.length * categoryStars}
           </Text>
         </View>
 
-        <Image source={categoryIcons.Banner} style={style.bannerImage} />
-
-        {showCongrats && (
+        {showModal && (
           <Animated.View
-            style={[
-              style.congratsFlag,
-              {
-                transform: [{ translateY: congratsAnimation }],
-              },
-            ]}
+            style={style.modalContainer}
+            exiting={ZoomOut}
+            pointerEvents="box-none"
+            entering={ZoomIn.duration(500).springify()}
           >
-            <Image source={categoryIcons.flagImage} style={style.flagImage} />
-            <Image
-              source={require("../assets/msy-logo.png")}
-              style={style.overlayImage}
-            />
-            <View style={style.congratsContent}>
-              <Text style={style.congratsTextBig}>Congratulations!</Text>
-              <Text style={style.congratsStarCounter}>
-                You got {totalEarnedStars} out of {totalPossibleStars} stars!
+            <View style={style.modal} pointerEvents="auto">
+              <Image
+                source={require("../assets/category_complete.png")}
+                style={style.modalImage}
+              />
+              <Text style={style.modalText}>
+                Congratulations, you finished the category!
               </Text>
-              <Text style={style.congratsText}>
-                You have completed this student's story.
-              </Text>
-              <View style={style.congratsButtonContainer}>
-                <Pressable onPress={animateCongratsFlagOffScreen}>
-                  <Text style={style.congratsButton}>Continue</Text>
+              <View style={style.modalButtonContainer}>
+                <Pressable
+                  style={style.modalButton}
+                  onPress={() => {
+                    setShowModal(false);
+                  }}
+                >
+                  <Text>Stay Here</Text>
                 </Pressable>
-                <Pressable onPress={() => navigation.navigate("Gatehouse")}>
-                  <Text style={style.congratsButton}>Return to gatehouse</Text>
+                <Pressable
+                  style={style.modalButton}
+                  onPress={() => {
+                    navigation.navigate("Gatehouse");
+                  }}
+                >
+                  <Text>Go to Gatehouse</Text>
                 </Pressable>
               </View>
             </View>
           </Animated.View>
         )}
 
+        {/* TODO: Delete in prod*/}
         <Pressable
           onPress={async () => {
             await AsyncStorage.clear();
@@ -217,6 +211,15 @@ export default function Campus({ route, navigation }) {
           style={style.clearButtonContainer}
         >
           <Text style={style.clearButton}>Clear data</Text>
+        </Pressable>
+        {/* TODO: Delete in prod*/}
+        <Pressable
+          onPress={async () => {
+            setShowModal(!showModal);
+          }}
+          style={{ ...style.clearButtonContainer, right: 0 }}
+        >
+          <Text style={{ ...style.clearButton, right: 0 }}>Show Modal</Text>
         </Pressable>
       </ImageBackground>
     </View>
