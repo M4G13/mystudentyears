@@ -22,7 +22,7 @@ export default function Info({ route, navigation }) {
   const [imageUrl, setImageUrl] = useState(null);
   const [currInfo, setCurrInfo] = useState(null);
 
-  const chalkboard = require("../assets/chalkboard.png");
+  const chalkboard = require("../assets/Chalkboard.png");
   const titleRule = require("../assets/rule.png");
 
   useEffect(() => {
