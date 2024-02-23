@@ -1,13 +1,8 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from "@react-navigation/native";
-import React, { useState, useCallback } from "react";
 import { View, Text, Pressable, Image, StatusBar } from "react-native";
 
 import style from "../styles/homescreen.js";
 
 export default function HomeScreen({ navigation }) {
-  const [response, setResponse] = useState({});
-
   StatusBar.setBackgroundColor("#7bcef4");
 
   return (

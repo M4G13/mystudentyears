@@ -127,7 +127,7 @@ export default function Survey({ navigation }) {
     })
       .then((response) => response.json())
       .then((user) => {
-        global.uuid  = user.data.attributes.UUID;
+        global.uuid = user.data.attributes.UUID;
         AsyncStorage.setItem("uuid", user.data.attributes.UUID);
       })
       .catch((error) => {
