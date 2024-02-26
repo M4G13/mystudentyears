@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
+import { View, Text, Pressable, TouchableOpacity, Image } from "react-native";
 import DraggableFlatList, {
   ScaleDecorator,
 } from "react-native-draggable-flatlist";
 
 import style from "../../styles/rankorderq.js";
+import SubmitButton from "../../components/SubmitButton.js";
+import { hasImage } from "../Question.js";
 
 const _ = require("lodash");
 
@@ -31,22 +33,30 @@ export default function RankOrderQ({ question, handleAnswer }) {
       <View style={style.questionContainer}>
         <Text style={style.bigText}>{question.question}</Text>
       </View>
+
+      <View style={style.imageContainer}>
+      <Image
+        source={hasImage(question)
+        ? { uri: global.url + question.image.url }
+        : { uri: global.url + "/uploads/thumbnail_default_2d0864170d.png" }
+    }
+        style={ style.image } 
+        
+        resizeMode="contain"
+      />
+    </View>
+
       <DraggableFlatList
         data={data}
         onDragEnd={({ data }) => setData(data)}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
       />
-      <View style={style.submitButtonContainer}>
-        <Pressable
-          style={style.submitButton}
-          onPress={() => {
-            handleAnswer(_.isEqual(data, question.answers));
-          }}
-        >
-          <Text style={style.button}>Submit</Text>
-        </Pressable>
-      </View>
+      <SubmitButton
+        onPressOut={() => {
+          handleAnswer(_.isEqual(data, question.answers));
+        }}
+      />
     </View>
   );
 }

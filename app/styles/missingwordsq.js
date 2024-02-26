@@ -8,30 +8,35 @@ const style = StyleSheet.create({
     ...base.questionWrapper,
     justifyContent: "space-between",
   },
-  draggable: {
-    ...base.pressable,
-    backgroundColor: base.colors.fg1,
-    margin: 5,
-    marginBottom: 10,
-    marginTop: 10,
+  questionContainer: {
+    ...base.questionContainer,
+    height:"30%",
+    alignItems: 'flex-start',
   },
-  draggableSelected: {
-    ...base.pressable,
-    backgroundColor: base.colors.fg2,
+  option: {
+    ...base.option,
     margin: 5,
-    marginBottom: 10,
-    marginTop: 10,
+
   },
   keywords: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
+    height:"20%",
   },
   wordGaps: {
     ...base.bigText,
     backgroundColor: base.colors.bg3,
     textDecorationLine: "underline",
+    textDecorationStyle: "dashed"
   },
+  question: {
+    ...base.bigText,
+    position: 'absolute',
+    top: 20, // Position at the top of the parent container
+    left:"5%",
+    width: '100%', // Take up full width of the parent container
+  }
 });
 
 export default style;

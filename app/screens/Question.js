@@ -19,6 +19,15 @@ export function calculateScore(answers, totalQuestions) {
   };
 }
 
+export function hasImage(question){
+  try{
+    question.image.url
+    return true
+  }catch{
+    return false
+  }
+}
+
 export default function Question({ route, navigation }) {
   const { index } = route.params;
   const { category } = getData(route.params);

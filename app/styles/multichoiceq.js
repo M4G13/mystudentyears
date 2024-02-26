@@ -4,9 +4,9 @@ import base from "./question.js";
 
 const style = StyleSheet.create({
   ...base,
-  submitButton: {
-    ...base.submitButton,
-    marginTop: 30,
+  optionsContainer: {
+    ...base.optionsContainer,
+    flexGrow: 1,
   },
   optionsContainer: {
     ...base.optionsContainer,

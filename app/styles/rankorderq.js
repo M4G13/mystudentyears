@@ -3,12 +3,14 @@ import { StyleSheet } from "react-native";
 import base from "./question.js";
 
 const style = StyleSheet.create({
+  justifyContent: "space-between",
   ...base,
 
   listItem: {
     ...base.pressable,
     margin: 5,
     width: "90%",
+    height: 50,
     alignItems: "center",
     alignSelf: "center",
   },
@@ -22,7 +24,6 @@ const style = StyleSheet.create({
 
   bigText: {
     ...base.bigText,
-    textAlign: "left",
     fontSize: 30,
   },
 });

@@ -16,28 +16,28 @@ const style = StyleSheet.create({
     justifyContent: "space-around",
   },
   optionsContainer: {
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    alignSelf: "center",
-    gap: 15,
+    width: "80%",
+    height: "65%",
+    flex: 1,
+    marginLeft:"10%",
   },
-  submitButtonContainer: {
-    marginTop: "auto",
-    width: "100%",
+  option: {
+    marginBottom:"5%"
   },
-  submitButton: {
-    backgroundColor: base.colors.fg2,
-    justifyContent: "end",
-    marginTop: "auto",
-    margin: 10,
-    padding: 15,
-    borderRadius: 5,
+  optionSelected: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imageContainer: {
+    width: "80%",
+    marginLeft:"10%",
+    height:200,
+    marginBottom:"10%"
   },
   image: {
-    width: 100,
-    height: 200,
-    objectFit: "contain",
+    height:"100%",
+    width:"100%",
   },
   pressable: {
     backgroundColor: base.colors.fg2,
@@ -53,7 +53,6 @@ const style = StyleSheet.create({
   },
   bigText: {
     ...base.bigText,
-    textAlign: "left",
     fontSize: 30,
   },
 

@@ -1,10 +1,15 @@
 import { useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, ScrollView, Image } from "react-native";
 
 import style from "../../styles/multichoiceq.js";
+import AwesomeButton from "react-native-really-awesome-button";
+import SubmitButton from "../../components/SubmitButton.js";
+import { hasImage } from "../Question.js";
+
 
 export default function MultiChoiceQ({ question, handleAnswer }) {
   const [selected, setSelected] = useState({});
+
 
   const handleSelect = (q) => {
     const nextSelected = { ...selected };
@@ -20,37 +25,71 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
     return correct;
   };
 
+  
+
   return (
     <View style={style.questionWrapper}>
       <View style={style.questionContainer}>
         <Text style={style.bigText}>{question.question}</Text>
       </View>
-      <View style={style.optionsContainer}>
-        {question.options.map((q) => (
-          <Pressable
-            key={q.id}
-            style={
-              selected[q.id] === true
-                ? { ...style.pressable, ...style.pressableSelected }
-                : { ...style.pressable }
-            }
-            onPress={() => handleSelect(q)}
-          >
-            <Text style={style.button}>{q.text}</Text>
-          </Pressable>
-        ))}
-      </View>
-      <View style={style.submitButtonContainer}>
-        <Pressable
-          style={style.submitButton}
-          onPress={() =>
-            // Maybe change this to have an error message if no option selected?
-            selected !== [] && handleAnswer(isCorrect())
-          }
-        >
-          <Text style={style.button}>Submit</Text>
-        </Pressable>
-      </View>
+
+      <View style={style.imageContainer}>
+      <Image
+        source={hasImage(question)
+        ? { uri: global.url + question.image.url }
+        : { uri: global.url + "/uploads/thumbnail_default_2d0864170d.png" }
+    }
+        style={ style.image } 
+        
+        resizeMode="contain"
+      />
     </View>
+
+      <ScrollView style={style.optionsContainer}>
+        {question.options.map((q) => (
+          <AwesomeButton
+
+          onResponderRelease={()=>alert("f")}
+
+          style={
+            style.option
+          }
+          
+
+            backgroundDarker={
+                "#666666"
+            }
+
+            
+            borderColor={
+                "#666666"
+            }
+
+            textColor={
+                "white"
+            }
+
+            backgroundColor={
+              selected[q.id] === true
+                ? "#888888"
+                : "#d6d6d6"
+            }
+
+          
+
+            stretch={true}
+            borderRadius={15}
+            borderWidth={2}
+            key={q.id}
+            onPressIn={() => handleSelect(q)}
+          >
+            {q.text}
+          </AwesomeButton>
+        ))}
+      </ScrollView>
+      <SubmitButton 
+        onPressOut={ () => Object.values(selected).some(value => value === true) && handleAnswer(isCorrect())}
+      />
+      </View>
   );
 }

@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import RadioForm from "react-native-simple-radio-button";
+import SubmitButton from "../components/SubmitButton.js";
 
 import style from "../styles/survey";
 
@@ -304,9 +305,9 @@ export default function Survey({ navigation }) {
           .
         </Text>
 
-        <Pressable onPress={() => process()}>
-          <Text style={style.submit}>Submit</Text>
-        </Pressable>
+        <SubmitButton
+          onPressOut={() => process()}
+        />
       </View>
     </ScrollView>
   );

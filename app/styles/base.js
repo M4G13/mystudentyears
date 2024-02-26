@@ -42,6 +42,9 @@ const baseStyle = StyleSheet.create({
     fontWeight: "600",
   },
 
+
+
+
   bigText: {
     color: colors.text1,
     fontWeight: "600",
