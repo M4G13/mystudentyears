@@ -4,16 +4,14 @@ import {
   View,
   Text,
   Pressable,
-  ImageBackground,
   ScrollView,
   Image,
+  ImageBackground,
 } from "react-native";
 import Markdown from "react-native-markdown-display";
 
 import { getData } from "../common.js";
 import style from "../styles/info.js";
-
-const chalkboardImage = require("../assets/Chalkboard.png");
 
 export default function Info({ route, navigation }) {
   const index = route.params.index;
@@ -23,6 +21,9 @@ export default function Info({ route, navigation }) {
   const isLastPage = index === information.length - 1;
   const [imageUrl, setImageUrl] = useState(null);
   const [currInfo, setCurrInfo] = useState(null);
+
+  const chalkboard = require("../assets/Chalkboard.png");
+  const titleRule = require("../assets/rule.png");
 
   useEffect(() => {
     const infoItem = category.information[index];
@@ -55,25 +56,24 @@ export default function Info({ route, navigation }) {
   };
 
   return (
-    <View style={style.fullScreen}>
+    <View style={style.view}>
       <ImageBackground
-        source={chalkboardImage}
-        style={style.fullScreen}
-        resizeMode="stretch"
+        source={chalkboard}
+        resizeMode="cover"
+        style={style.bgImage}
       >
         <ScrollView style={style.contentContainer}>
           {currInfo && (
             <>
               <Text style={style.titleText}>{currInfo.Title}</Text>
+              <Image source={titleRule} style={style.titleRule} />
               {imageUrl && (
                 <Image source={{ uri: imageUrl }} style={style.imageStyle} />
               )}
-              <Markdown style={style.markdownStylesmall}>
-                {currInfo.Text}
-              </Markdown>
+              <Markdown style={style.markdownStyle}>{currInfo.Text}</Markdown>
               <Pressable onPress={navigateToNextPage}>
                 <Text style={style.infoButton}>
-                  {isLastPage ? "Go to Quiz" : "Next subject"}
+                  {isLastPage ? "Go to Quiz" : "Continue Reading..."}
                 </Text>
               </Pressable>
             </>

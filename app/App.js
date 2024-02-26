@@ -32,8 +32,10 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const [fontsLoaded, fontError] = useFonts({
-    Chalkduster: require("./assets/fonts/Chalkduster.ttf"),
+    Playpen: require("./assets/fonts/PlaypenSans.ttf"),
   });
+
+  const [initalStudent, setInitialStudent] = useState(null);
 
   StatusBar.setBarStyle("light-content");
   StatusBar.setBackgroundColor(baseStyle.colors.bg1);
@@ -47,9 +49,9 @@ export default function App() {
     fetch(global.api_url + "/students")
       .then((response) => response.json())
       .then((data) => {
+        global.data = data;
         setIsLoading(false);
         setError(false);
-        global.data = data;
       })
       .catch((error) => {
         console.error(error);
@@ -61,12 +63,11 @@ export default function App() {
   useEffect(() => {
     fetchData();
     AsyncStorage.getItem("uuid")
-      .then((uuid) => {
-        if (uuid) {
-          global.uuid = uuid;
-        } else {
-          console.log("no uuid (error if after survey)");
-        }
+      .then((uuid) => (global.uuid = uuid))
+      .catch((e) => console.log(e));
+    AsyncStorage.getItem("currentStudent")
+      .then((id) => {
+        if (id !== null) setInitialStudent(Number(id));
       })
       .catch((e) => console.log(e));
   }, []);
@@ -93,9 +94,24 @@ export default function App() {
     );
   }
 
+  const navigationState = global.uuid
+    ? {
+        routes: [
+          { name: "Gatehouse" },
+          initalStudent && {
+            name: "Campus",
+            params: { student_id: initalStudent },
+          },
+        ],
+        index: 1,
+      }
+    : {
+        routes: [{ name: "Home Screen" }],
+      };
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer theme={DarkTheme}>
+      <NavigationContainer theme={DarkTheme} initialState={navigationState}>
         <Stack.Navigator
           screenOptions={{
             animation: "fade",
@@ -105,7 +121,11 @@ export default function App() {
             headerStyle: baseStyle.header,
           }}
         >
-          <Stack.Screen name="Home Screen" component={HomeScreen} />
+          <Stack.Screen
+            name="Home Screen"
+            component={HomeScreen}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen name="Survey" component={Survey} />
           <Stack.Screen name="Terms & Conditions" component={Terms} />
           <Stack.Screen name="Privacy Policy" component={Privacy} />

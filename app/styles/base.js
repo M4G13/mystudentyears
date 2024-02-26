@@ -1,14 +1,15 @@
 import { StyleSheet } from "react-native";
 
 const colors = {
-  bg1: "#151718",
-  bg2: "#111316",
-  bg3: "#050710",
+  bg1: "#16161d",
+  bg2: "#11111d",
+  bg3: "#06060d",
   bg4: "#e0e0e0",
-  fg1: "#05b4ff",
-  fg2: "#ff69b4",
+  fg1: "#7bcdf4",
+  fg2: "#57e075",
+  fg3: "#fef270",
   text1: "#ffffff",
-  text2: "#000000",
+  text2: "#16161d",
   text3: "#FFD700",
   text4: "#6c959e",
   borderColor1: "#ddd",

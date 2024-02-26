@@ -60,6 +60,12 @@ export default function Gatehouse({ navigation }) {
         setOpenStories(open);
       }
 
+      AsyncStorage.getItem("currentStudent")
+        .then((id) => {
+          if (id !== null) setStudentIndex(Number(id));
+        })
+        .catch((e) => console.error("Failed to get current student" + e));
+
       getCompletion();
     }, []),
   );
@@ -68,6 +74,7 @@ export default function Gatehouse({ navigation }) {
     <View style={style.view}>
       <Swiper
         loop={false}
+        index={studentIndex}
         onIndexChanged={(i) => {
           setPStudentIndex(studentIndex);
           setStudentIndex(i);
@@ -100,6 +107,7 @@ export default function Gatehouse({ navigation }) {
                 style={style.pressable}
                 onPress={() => {
                   navigation.navigate("Campus", { student_id: s.id });
+                  AsyncStorage.setItem("currentStudent", s.id.toString());
                 }}
               >
                 <Text style={style.button}>Go to Campus</Text>
