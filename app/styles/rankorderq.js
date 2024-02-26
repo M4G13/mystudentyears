@@ -8,11 +8,15 @@ const style = StyleSheet.create({
 
   listItem: {
     ...base.pressable,
-    margin: 5,
+    marginTop: 12,
     width: "90%",
-    height: 50,
+    padding: 0,
+    height: 45,
     alignItems: "center",
     alignSelf: "center",
+    borderWidth: 2,
+    borderColor: base.colors.borderColor1,
+    borderStyle: "solid",
   },
 
   button: {
@@ -24,7 +28,13 @@ const style = StyleSheet.create({
 
   bigText: {
     ...base.bigText,
-    fontSize: 30,
+    fontSize: 24,
+    margin: 0,
+  },
+
+  pressable: {
+    ...base.pressable,
+    margin: 5,
   },
 });
 

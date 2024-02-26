@@ -19,12 +19,12 @@ export function calculateScore(answers, totalQuestions) {
   };
 }
 
-export function hasImage(question){
-  try{
-    question.image.url
-    return true
-  }catch{
-    return false
+export function hasImage(question) {
+  try {
+    question.image.url;
+    return true;
+  } catch {
+    return false;
   }
 }
 

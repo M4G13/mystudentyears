@@ -4,8 +4,8 @@ import DraggableFlatList, {
   ScaleDecorator,
 } from "react-native-draggable-flatlist";
 
-import style from "../../styles/rankorderq.js";
 import SubmitButton from "../../components/SubmitButton.js";
+import style from "../../styles/rankorderq.js";
 import { hasImage } from "../Question.js";
 
 const _ = require("lodash");
@@ -35,16 +35,18 @@ export default function RankOrderQ({ question, handleAnswer }) {
       </View>
 
       <View style={style.imageContainer}>
-      <Image
-        source={hasImage(question)
-        ? { uri: global.url + question.image.url }
-        : { uri: global.url + "/uploads/thumbnail_default_2d0864170d.png" }
-    }
-        style={ style.image } 
-        
-        resizeMode="contain"
-      />
-    </View>
+        <Image
+          source={
+            hasImage(question)
+              ? { uri: global.url + question.image.url }
+              : {
+                  uri: global.url + "/uploads/thumbnail_default_2d0864170d.png",
+                }
+          }
+          style={style.image}
+          resizeMode="contain"
+        />
+      </View>
 
       <DraggableFlatList
         data={data}

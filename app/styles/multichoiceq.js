@@ -8,10 +8,6 @@ const style = StyleSheet.create({
     ...base.optionsContainer,
     flexGrow: 1,
   },
-  optionsContainer: {
-    ...base.optionsContainer,
-    flexGrow: 1,
-  },
   pressable: {
     ...base.pressable,
     backgroundColor: "transparent",
@@ -22,6 +18,10 @@ const style = StyleSheet.create({
   },
   pressableSelected: {
     backgroundColor: base.colors.fg2,
+  },
+  bigText: {
+    ...base.bigText,
+    fontSize: 24,
   },
 });
 

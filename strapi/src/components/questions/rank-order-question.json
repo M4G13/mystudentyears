@@ -16,6 +16,16 @@
       "component": "answers.answers",
       "max": 5,
       "min": 3
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
