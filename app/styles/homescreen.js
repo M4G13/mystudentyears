@@ -30,19 +30,6 @@ const style = StyleSheet.create({
     marginRight: "auto",
   },
 
-  bgContainer: {
-    top: 0,
-    left: 0,
-    width: "100%",
-  },
-
-  bgImage: {
-    width: "100%",
-    height: "80%",
-    top: 0,
-    objectFit: "fill",
-  },
-
   logoContainer: {
     width: "100%",
     height: "50%",

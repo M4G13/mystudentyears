@@ -12,7 +12,6 @@ const style = StyleSheet.create({
     ...base.pressable,
     backgroundColor: "transparent",
     borderColor: base.colors.fg2,
-    borderWidth: 4,
     width: "90%",
     flexGrow: 1,
   },

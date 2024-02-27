@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Text, Pressable, ScrollView, Image } from "react-native";
-import AwesomeButton from "react-native-really-awesome-button";
 
+import SafeButton from "../../components/SafeButton.js";
 import SubmitButton from "../../components/SubmitButton.js";
 import style from "../../styles/multichoiceq.js";
 import { hasImage } from "../Question.js";
@@ -51,25 +51,17 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
         />
       </View>
 
-      <ScrollView style={style.optionsContainer}>
+      <View style={style.optionsContainer}>
         {question.options.map((q) => (
-          <AwesomeButton
-            onResponderRelease={() => alert("f")}
-            style={style.option}
-            backgroundDarker="#666666"
-            borderColor="#666666"
-            textColor="white"
-            backgroundColor={selected[q.id] === true ? "#888888" : "#d6d6d6"}
-            stretch
-            borderRadius={15}
-            borderWidth={2}
+          <SafeButton
             key={q.id}
-            onPressIn={() => handleSelect(q)}
+            backgroundColor={selected[q.id] === true ? "#888888" : "#d6d6d6"}
+            onPressOut={() => handleSelect(q)}
           >
             {q.text}
-          </AwesomeButton>
+          </SafeButton>
         ))}
-      </ScrollView>
+      </View>
       <SubmitButton
         onPressOut={() =>
           Object.values(selected).some((value) => value === true) &&

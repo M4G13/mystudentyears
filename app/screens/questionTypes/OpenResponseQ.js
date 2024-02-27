@@ -34,26 +34,22 @@ export default function OpenResponseQ({ question, handleAnswer }) {
         />
       </View>
 
-      <View>
-        <TextInput
-          style={style.input}
-          placeholder="Enter your answer here"
-          placeholderTextColor={style.input.color}
-          onChangeText={(text) => setInput(text)}
-          value={input}
-        />
-      </View>
+      <TextInput
+        style={style.input}
+        placeholder="Enter your answer here"
+        placeholderTextColor={style.input.color}
+        onChangeText={(text) => setInput(text)}
+        value={input}
+      />
 
-      <View>
-        <SubmitButton
-          onPressOut={() => {
-            Keyboard.dismiss();
-            if (input !== "") {
-              handleAnswer(compare(input, question.answer));
-            }
-          }}
-        />
-      </View>
+      <SubmitButton
+        onPressOut={() => {
+          Keyboard.dismiss();
+          if (input !== "") {
+            handleAnswer(compare(input, question.answer));
+          }
+        }}
+      />
     </View>
   );
 }

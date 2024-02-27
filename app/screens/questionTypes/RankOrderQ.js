@@ -47,13 +47,14 @@ export default function RankOrderQ({ question, handleAnswer }) {
           resizeMode="contain"
         />
       </View>
-
-      <DraggableFlatList
-        data={data}
-        onDragEnd={({ data }) => setData(data)}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-      />
+      <View style={style.listContainer}>
+        <DraggableFlatList
+          data={data}
+          onDragEnd={({ data }) => setData(data)}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+        />
+      </View>
       <SubmitButton
         onPressOut={() => {
           handleAnswer(_.isEqual(data, question.answers));

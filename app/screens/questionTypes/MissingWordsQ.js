@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView, Image } from "react-native";
-import AwesomeButton from "react-native-really-awesome-button";
 
+import SafeButton from "../../components/SafeButton.js";
 import SubmitButton from "../../components/SubmitButton.js";
 import style from "../../styles/missingwordsq.js";
 import { hasImage } from "../Question.js";
@@ -43,20 +43,22 @@ export default function MissingWordsQ({ question, handleAnswer }) {
   return (
     <View style={style.questionWrapper}>
       <View style={style.questionContainer}>
-        <Text style={style.question}>
-          {questionString.map((text, i) => {
-            return (
-              <Text key={`${text}${i}${keywords.selected[i]}`}>
-                {text}
-                {i < correctKeywords.length && (
-                  <Text style={style.wordGaps} onPress={() => popKeyword(i)}>
-                    {keywords.selected[i] || "________"}
-                  </Text>
-                )}
-              </Text>
-            );
-          })}
-        </Text>
+        <ScrollView>
+          <Text style={style.question}>
+            {questionString.map((text, i) => {
+              return (
+                <Text key={`${text}${i}${keywords.selected[i]}`}>
+                  {text}
+                  {i < correctKeywords.length && (
+                    <Text style={style.wordGaps} onPress={() => popKeyword(i)}>
+                      {keywords.selected[i] || "________"}
+                    </Text>
+                  )}
+                </Text>
+              );
+            })}
+          </Text>
+        </ScrollView>
       </View>
 
       <View style={style.imageContainer}>
@@ -77,7 +79,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
           {keywords.available.length ? (
             keywords.available.map((keyword, index) => (
               <View style={style.buttonContainer}>
-                <AwesomeButton
+                <SafeButton
                   style={style.option}
                   backgroundDarker="#666666"
                   borderColor="#666666"
@@ -87,13 +89,13 @@ export default function MissingWordsQ({ question, handleAnswer }) {
                   borderWidth={2}
                   height={50}
                   stretch
-                  onPressIn={() => {
+                  onPressOut={() => {
                     putKeyword(index);
                   }}
                   key={`${index}${keyword}`}
                 >
                   <Text style={style.bigText}>{keyword}</Text>
-                </AwesomeButton>
+                </SafeButton>
               </View>
             ))
           ) : (

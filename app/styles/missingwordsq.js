@@ -6,12 +6,10 @@ const style = StyleSheet.create({
   ...base,
   questionWrapper: {
     ...base.questionWrapper,
-    justifyContent: "space-between",
   },
   questionContainer: {
     ...base.questionContainer,
-    alignItems: "flex-start",
-    height: "35%",
+    height: Dimensions.get("window").height * 0.35,
   },
   option: {
     ...base.option,
@@ -34,9 +32,6 @@ const style = StyleSheet.create({
   },
   question: {
     ...base.bigText,
-    position: "absolute",
-    top: 20, // Position at the top of the parent container
-    width: Dimensions.get("screen").width, // Take up full width of the parent container
     fontSize: 24,
   },
   bigText: {

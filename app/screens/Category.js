@@ -1,9 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useState, useCallback } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Image } from "react-native";
 
 import { getData } from "../common.js";
+import SafeButton from "../components/SafeButton.js";
 import baseStyle from "../styles/base.js";
 
 export default function Category({ route, navigation }) {
@@ -11,6 +12,13 @@ export default function Category({ route, navigation }) {
 
   const [completion, setCompletion] = useState(null);
   const [infoCompletion, setInfoCompletion] = useState(null);
+
+  const categoryImageMap = {
+    Finance: require("../assets/Finance.jpg"),
+    Independence: require("../assets/Independence.jpg"),
+    Wellbeing: require("../assets/Wellbeing.jpg"),
+    Academics: require("../assets/Academics.jpg"),
+  };
 
   useFocusEffect(
     useCallback(() => {
@@ -58,30 +66,41 @@ export default function Category({ route, navigation }) {
             {category.quiz.questions.length}
           </Text>
         )}
-        <Pressable
-          onPress={() =>
-            navigation.navigate("Info", {
-              ...route.params,
-              index: 0,
-            })
-          }
-        >
-          <Text style={baseStyle.button}>Start Reading</Text>
-        </Pressable>
 
-        {infoCompletion !== null && (
-          <Pressable
-            onPress={() => {
-              navigation.navigate("Question", {
+        <View style={baseStyle.imageContainer}>
+          <Image
+            source={categoryImageMap[category.Category]}
+            style={baseStyle.image}
+            resizeMode="contain"
+          />
+        </View>
+
+        <View style={{ width: "80%" }}>
+          <SafeButton
+            onPressOut={() =>
+              navigation.navigate("Info", {
                 ...route.params,
                 index: 0,
-              });
-            }}
+              })
+            }
           >
-            <Text style={baseStyle.button}>
+            Start Reading
+          </SafeButton>
+        </View>
+
+        {infoCompletion !== null && (
+          <View style={{ width: "80%" }}>
+            <SafeButton
+              onPressOut={() => {
+                navigation.navigate("Question", {
+                  ...route.params,
+                  index: 0,
+                });
+              }}
+            >
               {completion ? "Retake Quiz" : "Start Quiz"}
-            </Text>
-          </Pressable>
+            </SafeButton>
+          </View>
         )}
       </>
     </View>

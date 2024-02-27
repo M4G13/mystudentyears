@@ -3,13 +3,15 @@ import { StyleSheet } from "react-native";
 import base from "./question.js";
 
 const style = StyleSheet.create({
-  justifyContent: "space-between",
   ...base,
-
+  questionWrapper: {
+    ...base.questionWrapper,
+    justifyContent: "space-between",
+  },
   listItem: {
     ...base.pressable,
     marginTop: 12,
-    width: "90%",
+    width: "80%",
     padding: 0,
     height: 45,
     alignItems: "center",
@@ -30,6 +32,9 @@ const style = StyleSheet.create({
     ...base.bigText,
     fontSize: 24,
     margin: 0,
+  },
+  listContainer: {
+    width: "100%",
   },
 
   pressable: {

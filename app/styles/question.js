@@ -5,6 +5,7 @@ import base from "./base.js";
 const style = StyleSheet.create({
   ...base,
   questionWrapper: {
+    alignItems: "center",
     flex: 1,
     height: "100%",
     width: "100%",
@@ -12,14 +13,11 @@ const style = StyleSheet.create({
   },
   questionContainer: {
     padding: 30,
-    paddingLeft: 10,
-    justifyContent: "space-around",
   },
   optionsContainer: {
     width: "80%",
     height: "65%",
     flex: 1,
-    marginLeft: "10%",
   },
   option: {
     marginBottom: "5%",
@@ -28,16 +26,6 @@ const style = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  imageContainer: {
-    width: "80%",
-    marginLeft: "10%",
-    height: 200,
-    marginBottom: "10%",
-  },
-  image: {
-    height: "100%",
-    width: "100%",
   },
   pressable: {
     backgroundColor: base.colors.fg2,
