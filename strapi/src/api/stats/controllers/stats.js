@@ -1,22 +1,28 @@
 'use strict';
 
-const processSurvey = async (type) => (await strapi.db.connection.context.raw(`
+const processSurvey = async (type) => Object.values((await strapi.db.connection.context.raw(`
     SELECT
-      cs."order" AS question,
-      cm.answer AS response,
+      q.question AS question,
+      opt.option AS response,
       COUNT(*) as count
     FROM
       app_users_components AS ac
     INNER JOIN
-      components_survey_surveys_components AS cs ON ac.component_id=cs.entity_id
+      components_survey_surveys_components AS sc ON ac.component_id=sc.entity_id
     INNER JOIN
-      components_survey_survey_completions AS cm ON cs.component_id=cm.id
+      components_survey_survey_completions_survey_option_links AS res_opt ON sc.component_id=res_opt.survey_completion_id
+    INNER JOIN
+      components_survey_survey_completions_survey_question_links AS res_q ON res_opt.survey_completion_id=res_q.survey_completion_id
+    INNER JOIN
+      survey_questions AS q on res_q.survey_question_id=q.id
+    INNER JOIN
+      survey_options AS opt on res_opt.survey_option_id=opt.id
     WHERE
       ac.field='${type}'
     GROUP BY
-      cs."order", cm.answer
-  `)).reduce((i,{question:q, response:r, count:c})=>{ // Formatting for vis.
-    i[q-1] = {question: q, ...i[q-1], [r]: c }; return i; }, []);
+      question, response
+  `)).reduce((i, {question:q, response:r, count:c})=>{ // Formatting for vis.
+    i[q] = {question: q, ...i[q], [r]: c }; return i; }, {}));
 
 const processQuiz = async () => await strapi.db.connection.context.raw(`
     SELECT

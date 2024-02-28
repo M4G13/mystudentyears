@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
 
-const BarChart = ({url}) => {
+const url = "http://localhost:1337/api";
+
+const BarChart = () => {
 
   const [data, setData] = useState([]);
+  const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    fetch(url)
+    fetch(url + '/stats/initialSurvey')
       .then(response => response.json())
       .then(data => setData(data))
+      .catch(error => console.log(error));
+    fetch(url + '/survey-options')
+      .then(response => response.json())
+      .then(data => setOptions(data.data.map(val => val.attributes.option)))
       .catch(error => console.log(error));
   }, []);
 
   return (
-    <div style={{height: 600, width: 800}}>
+    <div style={{height: 600, width: "100%"}}>
       <ResponsiveBar
         data={data}
-        keys={[
-            'Extremely unconfident',
-            'Somewhat unconfident',
-            'Neutral',
-            'Somewhat confident',
-            'Extremely confident',
-        ]}
+        keys={options}
         indexBy="question"
         margin={{ top: 50, right: 170, bottom: 50, left: 60 }}
         padding={0.3}

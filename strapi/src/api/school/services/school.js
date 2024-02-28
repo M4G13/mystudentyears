@@ -16,7 +16,7 @@ module.exports = createCoreService('api::school.school', ({ strapi }) => ({
       body: new URLSearchParams({
         where: 'schooltype = \'Secondary\'',
         f: 'json',
-        outFields: 'latitude,longitude,schoolname,laname,lacode,schuid',
+        outFields: 'schoolname,lacode,schuid,dzsimdpercentile',
         returnGeometry: false
       }).toString()
     }).then((response) => response.json())
