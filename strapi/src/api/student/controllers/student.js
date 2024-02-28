@@ -2,6 +2,7 @@ module.exports = {
   async populateDeep() {
     return await strapi.entityService.findMany('api::student.student', {
       'populate': {
+        'Student_image': true,
         'category': {
           'populate': {
             'information': {

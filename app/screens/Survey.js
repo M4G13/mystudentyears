@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from "@react-navigation/native";
+import { CommonActions, useFocusEffect } from "@react-navigation/native";
 import React, { useState, useCallback, useEffect } from "react";
 import {
   View,
@@ -128,7 +128,7 @@ export default function Survey({ navigation }) {
       .then((response) => response.json())
       .then((user) => {
         global.uuid = user.data.attributes.UUID;
-        AsyncStorage.setItem("uuid", global.uuid);
+        AsyncStorage.setItem("uuid", user.data.attributes.UUID);
       })
       .catch((error) => {
         console.error(error);
@@ -147,6 +147,7 @@ export default function Survey({ navigation }) {
   };
 
   function process() {
+    let route;
     if (response === null) {
       if (!/\S+@\S+\.\S+/.test(input)) {
         alert("Please enter a valid e-mail address.");
@@ -177,8 +178,7 @@ export default function Survey({ navigation }) {
         },
       };
       createNewUser(data);
-      navigation.pop();
-      navigation.navigate("Gatehouse");
+      route = [{ name: "Gatehouse" }];
     } else {
       const data = {
         FinalSurvey: {
@@ -189,9 +189,9 @@ export default function Survey({ navigation }) {
         },
       };
       updateUser(data);
-      navigation.pop();
-      navigation.navigate("Home Screen");
+      route = [{ name: "Home Screen" }];
     }
+    navigation.dispatch(CommonActions.reset({ routes: route }));
   }
 
   async function handleNavigate(page) {
