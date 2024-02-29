@@ -77,7 +77,7 @@ const style = StyleSheet.create({
     marginTop: 18,
   },
   buttonContainer: {
-    ...base.submitButtonContainer,
+    ...base.PrettyButtonContainer,
     width: "100%",
     justifyContent: "center",
     alignItems: "center",

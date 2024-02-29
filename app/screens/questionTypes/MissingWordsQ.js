@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView, Image } from "react-native";
 
-import SafeButton from "../../components/SafeButton.js";
-import SubmitButton from "../../components/SubmitButton.js";
+import PrettyButton from "../../components/PrettyButton.js";
 import style from "../../styles/missingwordsq.js";
-import { hasImage } from "../Question.js";
 
 const _ = require("lodash");
 
@@ -64,46 +62,45 @@ export default function MissingWordsQ({ question, handleAnswer }) {
       <View style={style.imageContainer}>
         <Image
           source={
-            hasImage(question)
-              ? { uri: global.url + question.image.url }
-              : {
-                  uri: global.url + "/uploads/thumbnail_default_2d0864170d.png",
+            question.image
+              ? {
+                  uri: global.url + question.image?.url,
                 }
+              : require("../../assets/star_filled.png")
           }
           style={style.image}
           resizeMode="contain"
         />
       </View>
+
       <ScrollView contentContainerStyle={style.contentContainer}>
         <View style={style.keywords}>
           {keywords.available.length ? (
             keywords.available.map((keyword, index) => (
               <View style={style.buttonContainer}>
-                <SafeButton
-                  style={style.option}
-                  backgroundDarker="#666666"
-                  borderColor="#666666"
-                  textColor="white"
-                  backgroundColor="#d6d6d6"
-                  borderRadius={15}
-                  borderWidth={2}
+                <PrettyButton
                   height={50}
                   stretch
-                  onPressOut={() => {
+                  onPress={() => {
                     putKeyword(index);
                   }}
                   key={`${index}${keyword}`}
                 >
                   <Text style={style.bigText}>{keyword}</Text>
-                </SafeButton>
+                </PrettyButton>
               </View>
             ))
           ) : (
-            <SubmitButton
+            <PrettyButton
+              width="80%"
+              backgroundColor={style.colors.fg2}
+              marginLeft="10%"
               onPressOut={() =>
                 handleAnswer(_.isEqual(keywords.selected, correctKeywords))
               }
-            />
+            >
+              Submit
+            </PrettyButton>
           )}
         </View>
       </ScrollView>

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, Pressable, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import DraggableFlatList, {
   ScaleDecorator,
 } from "react-native-draggable-flatlist";
 
-import SubmitButton from "../../components/SubmitButton.js";
+import PrettyButton from "../../components/PrettyButton.js";
 import style from "../../styles/rankorderq.js";
-import { hasImage } from "../Question.js";
 
 const _ = require("lodash");
 
@@ -37,11 +36,9 @@ export default function RankOrderQ({ question, handleAnswer }) {
       <View style={style.imageContainer}>
         <Image
           source={
-            hasImage(question)
+            question.image
               ? { uri: global.url + question.image.url }
-              : {
-                  uri: global.url + "/uploads/thumbnail_default_2d0864170d.png",
-                }
+              : require("../../assets/star_filled.png")
           }
           style={style.image}
           resizeMode="contain"
@@ -55,11 +52,16 @@ export default function RankOrderQ({ question, handleAnswer }) {
           renderItem={renderItem}
         />
       </View>
-      <SubmitButton
+      <PrettyButton
+        width="80%"
+        backgroundColor={style.colors.fg2}
+        marginLeft="10%"
         onPressOut={() => {
           handleAnswer(_.isEqual(data, question.answers));
         }}
-      />
+      >
+        Submit
+      </PrettyButton>
     </View>
   );
 }

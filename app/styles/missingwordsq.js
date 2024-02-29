@@ -6,10 +6,11 @@ const style = StyleSheet.create({
   ...base,
   questionWrapper: {
     ...base.questionWrapper,
+    justifyContent: "space-between",
   },
   questionContainer: {
     ...base.questionContainer,
-    height: Dimensions.get("window").height * 0.35,
+    height: Dimensions.get("window").height * 0.3,
   },
   option: {
     ...base.option,
@@ -17,8 +18,8 @@ const style = StyleSheet.create({
     margin: 5,
   },
   keywords: {
+    marginTop: "10%",
     flexDirection: "row",
-    alignSelf: "flex-end",
     flexWrap: "wrap",
     width: Dimensions.get("screen").width,
   },
@@ -27,7 +28,6 @@ const style = StyleSheet.create({
     ...base.bigText,
     backgroundColor: base.colors.bg3,
     textDecorationLine: "underline",
-    textDecorationStyle: "dashed",
     fontSize: 24,
   },
   question: {

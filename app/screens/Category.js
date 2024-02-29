@@ -1,10 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useState, useCallback } from "react";
-import { View, Text, Pressable, Image } from "react-native";
+import React, { useState, useCallback, useEffect } from "react";
+import { View, Text, Image } from "react-native";
 
 import { getData } from "../common.js";
-import SafeButton from "../components/SafeButton.js";
+import PrettyButton from "../components/PrettyButton.js";
 import baseStyle from "../styles/base.js";
 
 export default function Category({ route, navigation }) {
@@ -12,13 +12,29 @@ export default function Category({ route, navigation }) {
 
   const [completion, setCompletion] = useState(null);
   const [infoCompletion, setInfoCompletion] = useState(null);
+  const [images, setImages] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const categoryImageMap = {
-    Finance: require("../assets/Finance.jpg"),
-    Independence: require("../assets/Independence.jpg"),
-    Wellbeing: require("../assets/Wellbeing.jpg"),
-    Academics: require("../assets/Academics.jpg"),
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(global.api_url + "/category-image");
+        const data = await response.json();
+        setImages(
+          data.Pair.reduce((acc, pair) => {
+            acc[pair.CategoryName] = pair.Image.url;
+            return acc;
+          }, {}),
+        );
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -67,40 +83,48 @@ export default function Category({ route, navigation }) {
           </Text>
         )}
 
-        <View style={baseStyle.imageContainer}>
-          <Image
-            source={categoryImageMap[category.Category]}
-            style={baseStyle.image}
-            resizeMode="contain"
-          />
-        </View>
+        {isLoading ? (
+          <Text>Loading...</Text>
+        ) : (
+          <>
+            <View style={baseStyle.imageContainer}>
+              {images && images[category.Category] && (
+                <Image
+                  source={{ uri: global.url + images[category.Category] }}
+                  style={baseStyle.image}
+                  resizeMode="contain"
+                />
+              )}
+            </View>
 
-        <View style={{ width: "80%" }}>
-          <SafeButton
-            onPressOut={() =>
-              navigation.navigate("Info", {
-                ...route.params,
-                index: 0,
-              })
-            }
-          >
-            Start Reading
-          </SafeButton>
-        </View>
+            <View style={{ width: "80%" }}>
+              <PrettyButton
+                onPressOut={() =>
+                  navigation.navigate("Info", {
+                    ...route.params,
+                    index: 0,
+                  })
+                }
+              >
+                Start Reading
+              </PrettyButton>
+            </View>
 
-        {infoCompletion !== null && (
-          <View style={{ width: "80%" }}>
-            <SafeButton
-              onPressOut={() => {
-                navigation.navigate("Question", {
-                  ...route.params,
-                  index: 0,
-                });
-              }}
-            >
-              {completion ? "Retake Quiz" : "Start Quiz"}
-            </SafeButton>
-          </View>
+            {infoCompletion !== null && (
+              <View style={{ width: "80%" }}>
+                <PrettyButton
+                  onPressOut={() => {
+                    navigation.navigate("Question", {
+                      ...route.params,
+                      index: 0,
+                    });
+                  }}
+                >
+                  {completion ? "Retake Quiz" : "Start Quiz"}
+                </PrettyButton>
+              </View>
+            )}
+          </>
         )}
       </>
     </View>

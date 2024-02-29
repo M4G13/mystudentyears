@@ -1,25 +1,18 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CommonActions, useFocusEffect } from "@react-navigation/native";
 import React, { useState, useCallback, useEffect } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  TextInput,
-  Pressable,
-  Image,
-} from "react-native";
+import { View, Text, ScrollView, TextInput, Image } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import RadioForm from "react-native-simple-radio-button";
 
-import SubmitButton from "../components/SubmitButton.js";
+import PrettyButton from "../components/PrettyButton.js";
+import baseStyle from "../styles/base.js";
 import style from "../styles/survey";
 
 export default function Survey({ navigation }) {
   const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(null);
   const [selected, setSelected] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(false);
   const [schools, setSchools] = useState("");
   const [questions, setQuestions] = useState([]);
   const [selectedValues, setSelectedValues] = useState(Array(4).fill(-1));
@@ -34,25 +27,18 @@ export default function Survey({ navigation }) {
         }));
 
         setSchools(temp);
-        setIsLoading(false);
-        setError(false);
       })
       .catch((error) => {
         console.error(error);
-        setError(true);
         setIsLoading(false);
       });
     fetch(global.api_url + "/survey-questions?populate=*")
       .then((response) => response.json())
       .then((data) => {
         setQuestions(data.data);
-        setIsLoading(false);
-        setError(false);
       })
       .catch((error) => {
         console.error(error);
-        setError(true);
-        setIsLoading(false);
       });
   };
 
@@ -304,8 +290,14 @@ export default function Survey({ navigation }) {
           </Text>
           .
         </Text>
-
-        <SubmitButton onPressOut={() => process()} />
+        <View style={{ width: "100%" }}>
+          <PrettyButton
+            backgroundColor={baseStyle.colors.fg2}
+            onPress={() => process()}
+          >
+            Submit
+          </PrettyButton>
+        </View>
       </View>
     </ScrollView>
   );

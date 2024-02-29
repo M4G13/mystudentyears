@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { View, Text, Pressable, ScrollView, Image } from "react-native";
+import { View, Text, Image } from "react-native";
 
-import SafeButton from "../../components/SafeButton.js";
-import SubmitButton from "../../components/SubmitButton.js";
+import PrettyButton from "../../components/PrettyButton.js";
 import style from "../../styles/multichoiceq.js";
-import { hasImage } from "../Question.js";
 
 export default function MultiChoiceQ({ question, handleAnswer }) {
   const [selected, setSelected] = useState({});
@@ -40,11 +38,11 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
       <View style={style.imageContainer}>
         <Image
           source={
-            hasImage(question)
-              ? { uri: global.url + question.image.url }
-              : {
-                  uri: global.url + "/uploads/thumbnail_default_2d0864170d.png",
+            question.image
+              ? {
+                  uri: global.url + question.image?.url,
                 }
+              : require("../../assets/star_filled.png")
           }
           style={style.image}
           resizeMode="contain"
@@ -53,21 +51,26 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
 
       <View style={style.optionsContainer}>
         {question.options.map((q) => (
-          <SafeButton
+          <PrettyButton
             key={q.id}
             backgroundColor={selected[q.id] === true ? "#888888" : "#d6d6d6"}
             onPressOut={() => handleSelect(q)}
           >
             {q.text}
-          </SafeButton>
+          </PrettyButton>
         ))}
       </View>
-      <SubmitButton
+      <PrettyButton
+        width="80%"
+        backgroundColor={style.colors.fg2}
+        marginLeft="10%"
         onPressOut={() =>
           Object.values(selected).some((value) => value === true) &&
           handleAnswer(isCorrect())
         }
-      />
+      >
+        Submit
+      </PrettyButton>
     </View>
   );
 }
