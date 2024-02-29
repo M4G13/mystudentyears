@@ -35,7 +35,7 @@ export default function App() {
     Playpen: require("./assets/fonts/PlaypenSans.ttf"),
   });
 
-  const [initalStudent, setInitialStudent] = useState(null);
+  const [initialStudent, setInitialStudent] = useState(null);
 
   StatusBar.setBarStyle("light-content");
   StatusBar.setBackgroundColor(baseStyle.colors.bg1);
@@ -98,10 +98,12 @@ export default function App() {
     ? {
         routes: [
           { name: "Gatehouse" },
-          initalStudent && {
-            name: "Campus",
-            params: { student_id: initalStudent },
-          },
+          initialStudent
+            ? {
+                name: "Campus",
+                params: { student_id: initialStudent },
+              }
+            : {},
         ],
         index: 1,
       }
