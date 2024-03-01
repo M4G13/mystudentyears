@@ -15,9 +15,19 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/Chalkduster.ttf"]
+          "fonts": [
+            "./assets/fonts/PlaypenSans.ttf"
+          ]
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "343924fb-1319-4b08-80ca-7ea29324a6f5"
+      }
+    },
+    "android": {
+      "package": "com.magie.msyquiz"
+    }
   }
 }
