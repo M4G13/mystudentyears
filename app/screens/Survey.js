@@ -8,6 +8,7 @@ import {
   TextInput,
   Pressable,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import RadioForm from "react-native-simple-radio-button";
@@ -16,35 +17,37 @@ import style from "../styles/survey";
 
 export default function Survey({ navigation }) {
   const [input, setInput] = useState("");
+
+  const [schools, setSchools] = useState("");
   const [selected, setSelected] = useState("");
+
+  const [questions, setQuestions] = useState([]);
+  const [options, setOptions] = useState([]);
+  const [selectedValues, setSelectedValues] = useState({});
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [schools, setSchools] = useState("");
-  const [questions, setQuestions] = useState([]);
-  const [selectedValues, setSelectedValues] = useState(Array(4).fill(-1));
 
   const fetchData = () => {
-    fetch(global.api_url + "/schools?sort=schoolname")
-      .then((response) => response.json())
-      .then((data) => {
-        const temp = data.data.map((item) => ({
-          key: item.id,
-          value: item.attributes.schoolname,
-        }));
-
-        setSchools(temp);
-        setIsLoading(false);
-        setError(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setError(true);
-        setIsLoading(false);
-      });
-    fetch(global.api_url + "/survey-questions?populate=*")
-      .then((response) => response.json())
-      .then((data) => {
-        setQuestions(data.data);
+    Promise.all([
+      fetch(global.api_url + "/schools?sort=schoolname")
+        .then((response) => response.json())
+        .then((data) =>
+          setSchools(
+            data.data.map((item) => ({
+              key: item.id,
+              value: item.attributes.schoolname,
+            })),
+          ),
+        ),
+      fetch(global.api_url + "/survey-questions")
+        .then((response) => response.json())
+        .then((data) => setQuestions(data.data)),
+      fetch(global.api_url + "/survey-options")
+        .then((response) => response.json())
+        .then((data) => setOptions(data.data)),
+    ])
+      .then(() => {
         setIsLoading(false);
         setError(false);
       })
@@ -159,36 +162,32 @@ export default function Survey({ navigation }) {
     }
 
     for (let i = 0; i < questions.length; i++) {
-      if (selectedValues[questions[i].id] === -1) {
+      if (!selectedValues[questions[i].id]) {
         alert("Please answer all questions.");
         return 0;
       }
     }
+
+    const survey = {
+      Completed: Array.from(questions, (q) => ({
+        survey_question: q.id,
+        survey_option: selectedValues[q.id],
+      })),
+    };
+
     if (response === null) {
-      const data = {
+      createNewUser({
         data: {
           Email: input,
           school: schools.find((elt) => elt.value === selected).key,
-          InitialSurvey: {
-            Completed: Array.from(questions, (q) => ({
-              survey_question: q.id,
-              answer: q.attributes.option[selectedValues[q.id]].option,
-            })),
-          },
+          InitialSurvey: survey,
         },
-      };
-      createNewUser(data);
+      });
       route = [{ name: "Gatehouse" }];
     } else {
-      const data = {
-        FinalSurvey: {
-          Completed: Array.from(questions, (q) => ({
-            survey_question: q.id,
-            answer: q.attributes.option[selectedValues[q.id]].option,
-          })),
-        },
-      };
-      updateUser(data);
+      updateUser({
+        FinalSurvey: survey,
+      });
       route = [{ name: "Home Screen" }];
     }
     navigation.dispatch(CommonActions.reset({ routes: route }));
@@ -202,6 +201,28 @@ export default function Survey({ navigation }) {
       await AsyncStorage.setItem("saveSchool", JSON.stringify(selected));
     }
     navigation.navigate(page);
+  }
+
+  if (isLoading) {
+    return (
+      <View style={style.view}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={style.view}>
+        <Text style={style.bigText}>
+          Failed to load data, make sure you have an internet connection and try
+          again
+        </Text>
+        <Pressable onPress={fetchData}>
+          <Text style={style.button}>Retry</Text>
+        </Pressable>
+      </View>
+    );
   }
 
   return (
@@ -276,9 +297,9 @@ export default function Survey({ navigation }) {
 
             <RadioForm
               style={style.likertContainer}
-              radio_props={q.attributes.option.map((o, i) => ({
-                label: o.option,
-                value: i,
+              radio_props={options.map((o) => ({
+                label: o.attributes.option,
+                value: o.id,
               }))}
               initial={-1} // Set initial to -1 to have no button initially selected
               labelStyle={style.option}
@@ -294,12 +315,12 @@ export default function Survey({ navigation }) {
 
         <Text style={style.smallerText}>
           By continuing, you agree to our{" "}
-          <Text onPress={() => handleNavigate("Terms & Conditions")}>
-            <Text style={style.link}>Terms and Conditions</Text>
+          <Text onPress={() => handleNavigate("Terms & Conditions")} style={style.link}>
+            Terms and Conditions
           </Text>
           , and{" "}
-          <Text onPress={() => handleNavigate("Privacy Policy")}>
-            <Text style={style.link}>Privacy Policy</Text>
+          <Text onPress={() => handleNavigate("Privacy Policy")} style={style.link}>
+            Privacy Policy
           </Text>
           .
         </Text>

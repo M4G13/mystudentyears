@@ -3,13 +3,13 @@ import { ResponsiveBar } from '@nivo/bar';
 
 const url = "http://localhost:1337/api";
 
-const BarChart = () => {
+const BarChart = ({type}) => {
 
   const [data, setData] = useState([]);
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    fetch(url + '/stats/initialSurvey')
+    fetch(url + `/stats/${type}`)
       .then(response => response.json())
       .then(data => setData(data))
       .catch(error => console.log(error));
@@ -20,39 +20,24 @@ const BarChart = () => {
   }, []);
 
   return (
-    <div style={{height: 600, width: "100%"}}>
+    <div style={{height: "45vh", width: "100%"}}>
       <ResponsiveBar
         data={data}
         keys={options}
         indexBy="question"
         margin={{ top: 50, right: 170, bottom: 50, left: 60 }}
         padding={0.3}
-        valueScale={{ type: 'linear' }}
-        indexScale={{ type: 'band', round: true }}
-        colors={{ scheme: 'nivo' }}
         theme={{"text":{"fill":"#ffffff"}}}
-        axisTop={null}
-        axisRight={null}
         axisBottom={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
             legend: 'Question',
             legendPosition: 'middle',
             legendOffset: 32,
-            truncateTickAt: 0
         }}
         axisLeft={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
             legend: 'Responses',
             legendPosition: 'middle',
             legendOffset: -40,
-            truncateTickAt: 0
         }}
-        labelSkipWidth={12}
-        labelSkipHeight={12}
         labelTextColor={{
             from: 'color',
             modifiers: [
@@ -86,9 +71,7 @@ const BarChart = () => {
                 ]
             }
         ]}
-        role="application"
-        ariaLabel="Nivo bar chart demo"
-        barAriaLabel={e=>e.id+": "+e.formattedValue+" in country: "+e.indexValue}/>
+        />
     </div>
   );
 }

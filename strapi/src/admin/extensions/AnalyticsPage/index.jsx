@@ -5,7 +5,8 @@ import React from 'react';
 export default function Analytics() {
   return (
     <div>
-      <BarChart />
+      <BarChart type="InitialSurvey" />
+      <BarChart type="FinalSurvey" />
       <SchoolMap />
     </div>
   );
