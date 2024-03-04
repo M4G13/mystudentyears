@@ -21,12 +21,15 @@
       "component": "category.category"
     },
     "Student_image": {
-      "allowedTypes": [
-        "images"
-      ],
       "type": "media",
       "multiple": false,
-      "required": true
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "Order": {
+      "type": "integer"
     }
   }
 }
