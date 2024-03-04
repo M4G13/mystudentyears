@@ -1,33 +1,36 @@
 {
   "expo": {
-    "name": "MyStudentYears",
-    "slug": "msyquiz",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/msy-logo.png",
+    "icon": "./assets/ios-icon.png",
     "userInterfaceStyle": "dark",
     "splash": {
       "image": "./assets/msy-logo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#16161d"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b8c0f4a1-5f8c-48ac-92bd-02e1d4465ae7"
+      }
+    },
+    "android": {
+      "package": "org.mystudentyears.quiz",
+      "adaptiveIcon": {
+        "foregroundImage":"./assets/adaptive-icon.png",
+        backgroundColor: "#ffffff"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "org.mystudentyears.quiz"
     },
     "plugins": [
       [
         "expo-font",
         {
-          "fonts": [
-            "./assets/fonts/PlaypenSans.ttf"
-          ]
+          "fonts": ["./assets/fonts/PlaypenSans.ttf"]
         }
       ]
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "343924fb-1319-4b08-80ca-7ea29324a6f5"
-      }
-    },
-    "android": {
-      "package": "com.magie.msyquiz"
-    }
+    ]
   }
 }

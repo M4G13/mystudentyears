@@ -38,6 +38,7 @@ const baseStyle = StyleSheet.create({
     paddingLeft: 25,
     paddingRight: 25,
     borderRadius: 5,
+    overflow: "hidden",
     minWidth: "45%",
     textAlign: "center",
     fontWeight: "600",
