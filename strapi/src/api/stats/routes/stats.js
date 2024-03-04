@@ -20,5 +20,10 @@ module.exports = {
       path: '/stats/laFreq',
       handler: 'stats.laFreq',
     },
+    {
+      method: 'GET',
+      path: '/stats/studentCompletion',
+      handler: 'stats.studentCompletion',
+    },
   ]
 }

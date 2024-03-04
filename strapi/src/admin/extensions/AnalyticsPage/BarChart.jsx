@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
 
-const url = "http://localhost:1337/api";
-
 const BarChart = ({type}) => {
 
   const [data, setData] = useState([]);
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    fetch(url + `/stats/${type}`)
+    fetch(`../../api/stats/${type}`)
       .then(response => response.json())
       .then(data => setData(data))
       .catch(error => console.log(error));
-    fetch(url + '/survey-options')
+    fetch('../../api/survey-options')
       .then(response => response.json())
       .then(data => setOptions(data.data.map(val => val.attributes.option)))
       .catch(error => console.log(error));

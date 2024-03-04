@@ -24,7 +24,26 @@ const processSurvey = async (type) => Object.values((await strapi.db.connection.
   `)).reduce((i, {question:q, response:r, count:c})=>{ // Formatting for vis.
     i[q] = {question: q, ...i[q], [r]: c }; return i; }, {}));
 
-const processQuiz = async () => await strapi.db.connection.context.raw(`
+const studentCompletion = async () => await strapi.db.connection.context.raw(`
+    SELECT
+      s.id AS id,
+      s.name AS label,
+      COUNT(*) AS value
+    FROM
+      students AS s
+    INNER JOIN
+      students_components AS sc ON sc.entity_id=s.id
+    INNER JOIN
+      components_category_categories_quiz_links AS ql ON ql.category_id=sc.component_id
+    INNER JOIN
+      components_completion_completions_quiz_links AS c ON c.quiz_id=ql.quiz_id
+    GROUP BY
+      s.id
+    ORDER BY
+      s."Order";
+  `)
+
+const quizData = async () => await strapi.db.connection.context.raw(`
     SELECT
       l.quiz_id,
       q.description,
@@ -53,6 +72,7 @@ const laFreq = async () => await strapi.db.connection.context.raw(`
 module.exports = {
   initialSurvey: async () => processSurvey('InitialSurvey'),
   finalSurvey: async () => processSurvey('FinalSurvey'),
-  quizData: processQuiz,
-  laFreq: laFreq,
+  quizData,
+  laFreq,
+  studentCompletion
 };

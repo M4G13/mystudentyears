@@ -4,10 +4,11 @@
   "info": {
     "singularName": "survey-option",
     "pluralName": "survey-options",
-    "displayName": "Survey Option"
+    "displayName": "Survey Option",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "attributes": {
     "option": {

@@ -3,14 +3,12 @@ import scotland from './scotland.json';
 import { ResponsiveChoropleth } from '@nivo/geo';
 import * as topojson from "topojson-client";
 
-const url = "http://localhost:1337/api";
-
 export default function SchoolMap() {
   const [regions, setRegions] = useState([]);
   const [domain, setDomain] = useState([0, 0]);
 
   useEffect(() => {
-    fetch(url + '/stats/laFreq')
+    fetch('../../api/stats/laFreq')
       .then(response => response.json())
       .then(data => {
         setRegions(data);
