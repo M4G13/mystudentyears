@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import { View, Text, Pressable, ImageBackground, Animated } from "react-native";
+import { View, Text, Pressable, Image, Animated } from "react-native";
 
 import style from "../styles/quizendscreen.js";
 
 export default function QuizEndScreen({ route, navigation }) {
-  const { category_id, student_id, score, correctAmount, QuestionAmount } =
+  //const { category_id, student_id, score, correctAmount, QuestionAmount } =
+  const { category_id, student_id, correctAmount, QuestionAmount } =
     route.params;
 
   const scaleAnimation = useRef(new Animated.Value(5)).current;
@@ -30,58 +31,44 @@ export default function QuizEndScreen({ route, navigation }) {
   };
 
   let message = "";
-  let gradeImage = require("../assets/C.png");
-
+  let grade = "C";
+  score = 80;
   if (score < 50) {
-    message = "You can do better. Keep practicing!";
-    gradeImage = require("../assets/C.png");
+    message = "If you want to work to improve your grade you can go back to the campus and read the information for this category, otherwise continue with more quizzes.";
   } else if (score >= 75) {
-    message = "Congratulations! You did amazing!";
-    gradeImage = require("../assets/A.png");
+    message = "That's an excellent score, you clearly understood the information! Go back to the campus and try more quizzes to test yourself on those!";
+    grade = "A";
   } else {
-    message = "Good effort! You're on the right track.";
-    gradeImage = require("../assets/B.png");
+    message = "Great effort! You can try the quiz again to improve your score and get more stars, otherwise continue to the campus and try more quizzes!";
+    grade = "B";
   }
 
   return (
-    <ImageBackground
-      source={require("../assets/examResult.png")}
-      style={style.view}
-      resizeMode="stretch"
-    >
-      <View style={style.questionWrapper}>
-        <Text style={style.studentIDText}>Student ID: {student_id} </Text>
-        <Text style={style.subjectIDText}>Subject ID: {category_id} </Text>
-        <Text style={style.bigText}> Official Result </Text>
-        <Animated.Image
-          source={gradeImage}
-          style={[
-            style.gradeImage,
-            {
-              transform: [{ scale: scaleAnimation }],
-            },
-          ]}
-        />
-        <Text style={style.smallText1}>
-          You Scored: {score.toFixed(2)}%, You got {correctAmount} /{" "}
-          {QuestionAmount} correct
-        </Text>
-        <Text style={style.feedback}>Feedback from the marker:</Text>
-        <Text style={style.smallText2}>{message}</Text>
-        <View style={style.buttonContainer}>
+    <View style={style.view}>
+      <View style={style.imageContainer}>
+        <Image source={require("../assets/examResult.png")} style={style.image} />
+        <View style={style.messageContainer}>
+          <Text style={style.messageText}>
+            Congratulations!{"\n\n"}You finished this quiz and got the grade of {grade}!{" "}
+            {message}
+          </Text>
+
+        </View>
+        <View style={style.gradeContainer}>
+          <Image source={require("../assets/gradeCircle.png")} style={style.gradeImage}/>
+          <Text style={style.gradeText}>
+            {grade}
+          </Text>
+        </View>
+      </View>
+      <View style={style.buttonContainer}>
           <Pressable onPress={retakeQuiz} style={style.pressable}>
-            <Text style={style.button}>Try Again - Beat Your Score!</Text>
+            <Text style={style.button}>Retake Quiz</Text>
           </Pressable>
           <Pressable onPress={goToMap} style={style.pressable}>
-            <Text style={style.button}>
-              Return to Campus - Explore More Subjects
-            </Text>
+            <Text style={style.button}>Return to Campus</Text>
           </Pressable>
-        </View>
-        <Text style={style.certifyText}>
-          Certified by: The My Student Years Exam Board
-        </Text>
       </View>
-    </ImageBackground>
+    </View>
   );
 }

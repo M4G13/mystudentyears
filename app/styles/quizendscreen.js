@@ -4,99 +4,67 @@ import base from "./question.js";
 
 const style = StyleSheet.create({
   ...base,
-  view: {
-    ...base.view,
-    flex: 1,
-    flexDirection: "column",
-    justifyItems: "center",
-  },
-  questionWrapper: {
-    alignItems: "center",
+  view: {...base.view},
+  imageContainer: {
+    height: "70%",
     width: "100%",
-    paddingBottom: 30,
-    padding: 20,
+    padding: 10,
   },
-  studentIDText: {
-    color: base.colors.text2,
-    fontWeight: "300",
-    fontSize: 15,
-    textAlign: "left",
-    bottom: 97,
-    right: 75,
-  },
-  subjectIDText: {
-    color: base.colors.text2,
-    fontWeight: "300",
-    fontSize: 15,
-    textAlign: "left",
-    bottom: 75,
-    right: 75,
-  },
-  bigText: {
-    color: base.colors.text2,
-    fontWeight: "600",
-    fontSize: 25,
-    textAlign: "left",
-    marginBottom: 10,
-    bottom: 62,
-    right: 65,
-  },
-  smallText1: {
-    color: base.colors.text2,
-    fontWeight: "300",
-    fontSize: 15,
-    textAlign: "center",
-    marginVertical: 5,
-    bottom: 80,
-    right: 3,
-  },
-  smallText2: {
-    color: base.colors.text2,
-    fontWeight: "300",
-    fontSize: 15,
-    textAlign: "center",
-    marginVertical: 5,
-    bottom: 60,
-    right: 25,
-  },
-  feedback: {
-    color: base.colors.text2,
-    fontWeight: "400",
-    fontSize: 20,
-    textAlign: "center",
-    marginVertical: 5,
-    bottom: 70,
-    right: 25,
-  },
-  pressable: {
-    backgroundColor: base.colors.bg1,
-    padding: 15,
-    borderRadius: 5,
-    justifyContent: "center",
-    width: "90%",
-    marginTop: 18,
+  image: {
+    resizeMode: "contain",
+    width: "100%",
+    flex: 1,
   },
   buttonContainer: {
-    ...base.submitButtonContainer,
+    padding: 20,
+    gap: 10,
     width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
   },
-  gradeImage: {
+  gradeContainer: {
+    position: "absolute",
+    padding: 20,
+    right: 70,
     width: 100,
     height: 100,
-    bottom: 25,
-    top: -150,
-    left: 100,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    bottom: 115,
   },
-  certifyText: {
-    color: base.colors.text2,
-    fontWeight: "300",
-    fontSize: 15,
+  gradeText: {
+    color: "#be1e2d",
+    fontFamily: "Playpen",
+    transform: [{rotateX: '-20deg'}, {rotateZ: '10deg'}],
+    fontSize: 55,
+    width: 100,
+    height: 100,
+    marginTop: 10,
     textAlign: "center",
-    marginVertical: 5,
-    bottom: -12,
+    alignSelf: "center"
   },
+  gradeImage: {
+    position: "absolute",
+    width: 100,
+    height: 100,
+    resizeMode: "contain"
+  },
+  messageContainer: {
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+    width: "100%",
+    height: "100%",
+    padding: 30
+  },
+  messageText: {
+    width: "100%",
+    fontFamily: "Playpen",
+    fontSize: 18,
+    lineHeight: 25,
+    padding: 40,
+    borderColor: "#000000"
+  }
 });
 
 export default style;
