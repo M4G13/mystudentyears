@@ -10,13 +10,12 @@ import Animated, {
 } from "react-native-reanimated";
 import Swiper from "react-native-swiper";
 
-import {GradeIcon, calculateGrade} from "../components/Grade.js";
-
+import { GradeIcon } from "../components/Grade.js";
 import style from "../styles/gatehouse.js";
 
 export default function Gatehouse({ navigation }) {
   const students = global.data;
-  const [studentIndex, setStudentIndex] = useState({"prev":0, "curr":0});
+  const [studentIndex, setStudentIndex] = useState({ prev: 0, curr: 0 });
   const bgIndex = useSharedValue(0);
 
   const bgColorAnim = useAnimatedStyle(() => {
@@ -25,7 +24,7 @@ export default function Gatehouse({ navigation }) {
         bgIndex.value,
         [0, 1],
         [
-          style.cardColors[studentIndex.prev||0],
+          style.cardColors[studentIndex.prev || 0],
           style.cardColors[studentIndex.curr],
           style.cardColors[1],
         ], // In case nothing is set, this stops a crash.
@@ -50,18 +49,21 @@ export default function Gatehouse({ navigation }) {
                 gradeTotal[i] = null;
                 break;
               }
-              gradeTotal[i]+= JSON.parse(storedCompletion).reduce((j,k)=>j+k,0)
+              gradeTotal[i] += JSON.parse(storedCompletion).reduce(
+                (j, k) => j + k,
+                0,
+              );
             } catch (e) {
               console.error("Failed to get progress. " + e);
             }
             if (gradeTotal[i] !== null) {
-              gradeTotal[i]/=students[i].category.length;
+              gradeTotal[i] /= students[i].category.length;
             }
           }
           open[students[i].id] =
             i === 0
-              ? {"open": true, "gpa": gradeTotal[i]}
-              : {"open": gradeTotal[i-1]!==null, "gpa": gradeTotal[i]};
+              ? { open: true, gpa: gradeTotal[i] }
+              : { open: gradeTotal[i - 1] !== null, gpa: gradeTotal[i] };
         }
         setOpenStories(open);
         console.log(openStories);
@@ -69,7 +71,10 @@ export default function Gatehouse({ navigation }) {
 
       AsyncStorage.getItem("currentStudent")
         .then((id) => {
-          if (id !== null) setStudentIndex({"curr":students.findIndex((s)=>s.id==Number(id))});
+          if (id !== null)
+            setStudentIndex({
+              curr: students.findIndex((s) => s.id === Number(id)),
+            });
         })
         .catch((e) => console.error("Failed to get current student" + e));
 
@@ -83,7 +88,7 @@ export default function Gatehouse({ navigation }) {
         loop={false}
         index={studentIndex.curr}
         onIndexChanged={(i) => {
-          setStudentIndex({"prev":studentIndex.curr, "curr": i});
+          setStudentIndex({ prev: studentIndex.curr, curr: i });
           bgIndex.value = 0; // Need to lerp from 0-1 every time
           bgIndex.value = withTiming(1, { duration: 300 });
         }}
@@ -111,9 +116,9 @@ export default function Gatehouse({ navigation }) {
                 <Text style={style.button}>Go to Campus</Text>
               </Pressable>
             </View>
-            {openStories[s.id] && openStories[s.id].gpa !== null &&
-              <GradeIcon score={openStories[s.id].gpa} style={style.gpa}/>
-            }
+            {openStories[s.id] && openStories[s.id].gpa !== null && (
+              <GradeIcon score={openStories[s.id].gpa} style={style.gpa} />
+            )}
 
             {!openStories[s.id]?.open && (
               <View style={style.lockedOverlay}>

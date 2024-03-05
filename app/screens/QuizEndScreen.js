@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, Pressable, Image } from "react-native";
 import Animated, { PinwheelIn } from "react-native-reanimated";
-import {calculateGrade, GradeIcon} from "../components/Grade.js";
 
+import { calculateGrade, GradeIcon } from "../components/Grade.js";
 import style from "../styles/quizendscreen.js";
 
 export default function QuizEndScreen({ route, navigation }) {
@@ -19,15 +19,18 @@ export default function QuizEndScreen({ route, navigation }) {
 
   let message = "";
   const grade = calculateGrade(score);
-  switch(grade){
+  switch (grade) {
     case "A":
-      message = "That's an excellent score, you clearly understood the information! Go back to the campus and try more quizzes to test yourself on those!";
+      message =
+        "That's an excellent score, you clearly understood the information! Go back to the campus and try more quizzes to test yourself on those!";
       break;
     case "B":
-      message = "Great effort! You can try the quiz again to improve your score and get more stars, otherwise continue to the campus and try more quizzes!";
+      message =
+        "Great effort! You can try the quiz again to improve your score and get more stars, otherwise continue to the campus and try more quizzes!";
       break;
     default:
-      message = "If you want to work to improve your grade you can go back to the campus and read the information for this category, otherwise continue with more quizzes."
+      message =
+        "If you want to work to improve your grade you can go back to the campus and read the information for this category, otherwise continue with more quizzes.";
   }
 
   return (
@@ -47,7 +50,7 @@ export default function QuizEndScreen({ route, navigation }) {
               {correctAmount} of {QuestionAmount}! {message}
             </Text>
           </View>
-          <GradeIcon style={style.gradeContainer} score={score}/>
+          <GradeIcon style={style.gradeContainer} score={score} />
         </Animated.View>
       )}
       <View style={style.buttonContainer}>

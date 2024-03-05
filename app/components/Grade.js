@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Pressable, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
 
 const styleSheet = StyleSheet.create({
   gradeText: {
@@ -19,23 +19,25 @@ const styleSheet = StyleSheet.create({
 export function calculateGrade(score) {
   // Number is an upper bound, i.e., A grade from 75 to 100.
   const boundaries = {
-    100:"A",
-    74:"B",
-    59:"C",
-    49:"D",
-    34:"F"
+    100: "A",
+    74: "B",
+    59: "C",
+    49: "D",
+    34: "F",
   };
-  return(Object.entries(boundaries).find(([k, _]) => score <= k)[1]);
+  return Object.entries(boundaries).find(([k, _]) => score <= k)[1];
 }
 
-export function GradeIcon({style, score}) {
-  return(
+export function GradeIcon({ style, score }) {
+  return (
     <View style={style}>
       <Image
         source={require("../assets/gradeCircle.png")}
         style={styleSheet.gradeImage}
       />
-      <Text style={styleSheet.gradeText} adjustsFontSizeToFit={true}>{calculateGrade(score)}</Text>
+      <Text style={styleSheet.gradeText} adjustsFontSizeToFit>
+        {calculateGrade(score)}
+      </Text>
     </View>
   );
 }

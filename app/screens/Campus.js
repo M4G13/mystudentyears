@@ -3,9 +3,9 @@ import { useFocusEffect } from "@react-navigation/native";
 import React, { useState, useCallback } from "react";
 import { View, Text, Pressable, ImageBackground, Image } from "react-native";
 import Animated, { ZoomIn, ZoomOut, StretchInX } from "react-native-reanimated";
-import { GradeIcon } from "../components/Grade.js";
 
 import { getData } from "../common.js";
+import { GradeIcon } from "../components/Grade.js";
 import style from "../styles/campus.js";
 
 const categoryIcons = {
@@ -30,27 +30,21 @@ export default function Campus({ route, navigation }) {
   const [showModal, setShowModal] = useState(false);
   const [numCompleted, setNumCompleted] = useState(0);
 
-
   const fetchCompletionStatus = async () => {
     const complete = {};
-    let allCompleted = true;
     let nComplete = 0;
     for (const category of categories) {
       try {
         const completion = await AsyncStorage.getItem("quiz" + category.id);
         const score = await AsyncStorage.getItem("quizScore" + category.id);
         complete[category.id] = { completed: completion || false, score };
-        if (completion === null) {
-          allCompleted = false;
-        }
         if (completion !== null) nComplete++;
       } catch (e) {
         console.error("Failed to get progress: ", e);
-        allCompleted = false;
       }
     }
     setNumCompleted(nComplete);
-    setShowModal(nComplete==categories.length);
+    setShowModal(nComplete === categories.length);
     setCompleted(complete);
   };
 
@@ -118,7 +112,11 @@ export default function Campus({ route, navigation }) {
             />
 
             {completed[c.id] && completed[c.id].completed && (
-                <GradeIcon style={style.grade} score={completed[c.id].score} pointerEvents={'none'}/>
+              <GradeIcon
+                style={style.grade}
+                score={completed[c.id].score}
+                pointerEvents="none"
+              />
             )}
           </Pressable>
         ))}
@@ -127,7 +125,7 @@ export default function Campus({ route, navigation }) {
           <View
             style={{
               ...style.progressBar,
-              width: 100*numCompleted/categories.length+"%",
+              width: (100 * numCompleted) / categories.length + "%",
             }}
           />
           <Text style={style.progressBarText} adjustFontSizeToFit>
@@ -181,7 +179,9 @@ export default function Campus({ route, navigation }) {
           }}
           style={style.clearButtonContainer}
         >
-          <Text style={style.clearButton} adjustsFontSizeToFit={true}>Clear data</Text>
+          <Text style={style.clearButton} adjustsFontSizeToFit>
+            Clear data
+          </Text>
         </Pressable>
         {/* TODO: Delete in prod*/}
         <Pressable
@@ -190,7 +190,9 @@ export default function Campus({ route, navigation }) {
           }}
           style={{ ...style.clearButtonContainer, right: 0 }}
         >
-          <Text style={{ ...style.clearButton, right: 0 }} adjustsFontSizeToFit={true}>Show Modal</Text>
+          <Text style={{ ...style.clearButton, right: 0 }} adjustsFontSizeToFit>
+            Show Modal
+          </Text>
         </Pressable>
       </ImageBackground>
     </View>

@@ -136,14 +136,16 @@ const style = StyleSheet.create({
     borderRadius: 15,
     gap: 10,
   },
-  clearButtonContainer: { // TODO: Delete in prod
+  clearButtonContainer: {
+    // TODO: Delete in prod
     zIndex: 100,
     position: "absolute",
     width: "45%",
     bottom: 0,
     height: 100,
   },
-  clearButton: { // TODO: Delete in prod
+  clearButton: {
+    // TODO: Delete in prod
     ...baseStyle.button,
     position: "absolute",
     width: "100%",
