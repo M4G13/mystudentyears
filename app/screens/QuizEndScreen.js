@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, Pressable, Image } from "react-native";
 import Animated, { PinwheelIn } from "react-native-reanimated";
+import {calculateGrade, GradeIcon} from "../components/Grade.js";
 
 import style from "../styles/quizendscreen.js";
 
@@ -16,21 +17,17 @@ export default function QuizEndScreen({ route, navigation }) {
     });
   };
 
-  let message =
-    "If you want to work to improve your grade you can go back to the campus and read the information for this category, otherwise continue with more quizzes.";
-  let grade = "";
-  if (score < 30) {
-    grade = "D";
-  } else if (score < 50) {
-    grade = "C";
-  } else if (score < 80) {
-    message =
-      "Great effort! You can try the quiz again to improve your score and get more stars, otherwise continue to the campus and try more quizzes!";
-    grade = "B";
-  } else {
-    message =
-      "That's an excellent score, you clearly understood the information! Go back to the campus and try more quizzes to test yourself on those!";
-    grade = "A";
+  let message = "";
+  const grade = calculateGrade(score);
+  switch(grade){
+    case "A":
+      message = "That's an excellent score, you clearly understood the information! Go back to the campus and try more quizzes to test yourself on those!";
+      break;
+    case "B":
+      message = "Great effort! You can try the quiz again to improve your score and get more stars, otherwise continue to the campus and try more quizzes!";
+      break;
+    default:
+      message = "If you want to work to improve your grade you can go back to the campus and read the information for this category, otherwise continue with more quizzes."
   }
 
   return (
@@ -50,13 +47,7 @@ export default function QuizEndScreen({ route, navigation }) {
               {correctAmount} of {QuestionAmount}! {message}
             </Text>
           </View>
-          <View style={style.gradeContainer}>
-            <Image
-              source={require("../assets/gradeCircle.png")}
-              style={style.gradeImage}
-            />
-            <Text style={style.gradeText}>{grade}</Text>
-          </View>
+          <GradeIcon style={style.gradeContainer} score={score}/>
         </Animated.View>
       )}
       <View style={style.buttonContainer}>

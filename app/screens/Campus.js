@@ -3,6 +3,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import React, { useState, useCallback } from "react";
 import { View, Text, Pressable, ImageBackground, Image } from "react-native";
 import Animated, { ZoomIn, ZoomOut, StretchInX } from "react-native-reanimated";
+import { GradeIcon } from "../components/Grade.js";
 
 import { getData } from "../common.js";
 import style from "../styles/campus.js";
@@ -12,34 +13,9 @@ const categoryIcons = {
   Wellbeing: require("../assets/wellbeing.png"),
   Academics: require("../assets/academics.png"),
   Independence: require("../assets/independence.png"),
-  StarFilled: require("../assets/star_filled.png"),
-  StarEmpty: require("../assets/star_empty.png"),
 };
 
 const imageSource = require("../assets/temp_map.png");
-
-const categoryStars = 3;
-
-const renderStars = (score) =>
-  Array.from({ length: categoryStars }, (_, i) => (
-    <Image
-      key={`star_${i}`}
-      source={
-        i < Math.ceil(score * (categoryStars / 100))
-          ? categoryIcons.StarFilled
-          : categoryIcons.StarEmpty
-      }
-      style={{
-        ...style.iconSmall,
-        marginTop: i === 0 || i === categoryStars - 1 ? 6 : 0,
-      }}
-    />
-  ));
-
-const earnedStars = (completed) =>
-  Object.values(completed)
-    .map((e) => Math.ceil(e.score * (categoryStars / 100)))
-    .reduce((a, v) => 1 * a + v, []);
 
 export default function Campus({ route, navigation }) {
   const categories = getData(route.params).student.category;
@@ -52,12 +28,13 @@ export default function Campus({ route, navigation }) {
   const [completed, setCompleted] = useState({});
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [numCompleted, setNumCompleted] = useState(0);
 
-  const totalEarnedStars = earnedStars(completed);
 
   const fetchCompletionStatus = async () => {
     const complete = {};
     let allCompleted = true;
+    let nComplete = 0;
     for (const category of categories) {
       try {
         const completion = await AsyncStorage.getItem("quiz" + category.id);
@@ -66,12 +43,14 @@ export default function Campus({ route, navigation }) {
         if (completion === null) {
           allCompleted = false;
         }
+        if (completion !== null) nComplete++;
       } catch (e) {
         console.error("Failed to get progress: ", e);
         allCompleted = false;
       }
     }
-    setShowModal(allCompleted);
+    setNumCompleted(nComplete);
+    setShowModal(nComplete==categories.length);
     setCompleted(complete);
   };
 
@@ -139,28 +118,20 @@ export default function Campus({ route, navigation }) {
             />
 
             {completed[c.id] && completed[c.id].completed && (
-              <View style={style.starContainer}>
-                {renderStars(completed[c.id].score)}
-              </View>
+                <GradeIcon style={style.grade} score={completed[c.id].score} pointerEvents={'none'}/>
             )}
           </Pressable>
         ))}
 
-        <View style={style.starCounterContainer}>
+        <View style={style.progressBarContainer}>
           <View
             style={{
-              ...style.starProgressBar,
-              width:
-                (totalEarnedStars * 100) / (categories.length * categoryStars) +
-                "%",
+              ...style.progressBar,
+              width: 100*numCompleted/categories.length+"%",
             }}
           />
-          <Image
-            source={categoryIcons.StarFilled}
-            style={style.starCounterIcon}
-          />
-          <Text style={style.starCounterText} adjustFontSizeToFit>
-            {totalEarnedStars} / {categories.length * categoryStars}
+          <Text style={style.progressBarText} adjustFontSizeToFit>
+            {numCompleted} of {categories.length} completed!
           </Text>
         </View>
 
@@ -210,7 +181,7 @@ export default function Campus({ route, navigation }) {
           }}
           style={style.clearButtonContainer}
         >
-          <Text style={style.clearButton}>Clear data</Text>
+          <Text style={style.clearButton} adjustsFontSizeToFit={true}>Clear data</Text>
         </Pressable>
         {/* TODO: Delete in prod*/}
         <Pressable
@@ -219,7 +190,7 @@ export default function Campus({ route, navigation }) {
           }}
           style={{ ...style.clearButtonContainer, right: 0 }}
         >
-          <Text style={{ ...style.clearButton, right: 0 }}>Show Modal</Text>
+          <Text style={{ ...style.clearButton, right: 0 }} adjustsFontSizeToFit={true}>Show Modal</Text>
         </Pressable>
       </ImageBackground>
     </View>

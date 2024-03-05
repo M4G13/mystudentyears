@@ -31,12 +31,15 @@ export default function RankOrderQ({ question, handleAnswer }) {
       <View style={style.questionContainer}>
         <Text style={style.bigText}>{question.question}</Text>
       </View>
-      <DraggableFlatList
+      {/*Removed for now as it doesn't play nice with the removal of
+      react-native-gesture handler and has been causing lots of
+      bugs (see #78)*/}
+      {/*<DraggableFlatList
         data={data}
         onDragEnd={({ data }) => setData(data)}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
-      />
+      />*/}
       <View style={style.submitButtonContainer}>
         <Pressable
           style={style.submitButton}
