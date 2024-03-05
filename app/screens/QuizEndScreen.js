@@ -1,21 +1,12 @@
-import React, { useEffect, useRef } from "react";
-import { View, Text, Pressable, ImageBackground, Animated } from "react-native";
+import React from "react";
+import { View, Text, Pressable, Image } from "react-native";
+import Animated, { PinwheelIn } from "react-native-reanimated";
 
 import style from "../styles/quizendscreen.js";
 
 export default function QuizEndScreen({ route, navigation }) {
   const { category_id, student_id, score, correctAmount, QuestionAmount } =
     route.params;
-
-  const scaleAnimation = useRef(new Animated.Value(5)).current;
-
-  useEffect(() => {
-    Animated.timing(scaleAnimation, {
-      toValue: 3.5,
-      duration: 1500,
-      useNativeDriver: true,
-    }).start();
-  }, []);
 
   const retakeQuiz = async () => {
     navigation.navigate("Question", {
@@ -25,63 +16,60 @@ export default function QuizEndScreen({ route, navigation }) {
     });
   };
 
-  const goToMap = () => {
-    navigation.navigate("Campus", { student_id });
-  };
-
-  let message = "";
-  let gradeImage = require("../assets/C.png");
-
-  if (score < 50) {
-    message = "You can do better. Keep practicing!";
-    gradeImage = require("../assets/C.png");
-  } else if (score >= 75) {
-    message = "Congratulations! You did amazing!";
-    gradeImage = require("../assets/A.png");
+  let message =
+    "If you want to work to improve your grade you can go back to the campus and read the information for this category, otherwise continue with more quizzes.";
+  let grade = "";
+  if (score < 30) {
+    grade = "D";
+  } else if (score < 50) {
+    grade = "C";
+  } else if (score < 80) {
+    message =
+      "Great effort! You can try the quiz again to improve your score and get more stars, otherwise continue to the campus and try more quizzes!";
+    grade = "B";
   } else {
-    message = "Good effort! You're on the right track.";
-    gradeImage = require("../assets/B.png");
+    message =
+      "That's an excellent score, you clearly understood the information! Go back to the campus and try more quizzes to test yourself on those!";
+    grade = "A";
   }
 
   return (
-    <ImageBackground
-      source={require("../assets/examResult.png")}
-      style={style.view}
-      resizeMode="stretch"
-    >
-      <View style={style.questionWrapper}>
-        <Text style={style.studentIDText}>Student ID: {student_id} </Text>
-        <Text style={style.subjectIDText}>Subject ID: {category_id} </Text>
-        <Text style={style.bigText}> Official Result </Text>
-        <Animated.Image
-          source={gradeImage}
-          style={[
-            style.gradeImage,
-            {
-              transform: [{ scale: scaleAnimation }],
-            },
-          ]}
-        />
-        <Text style={style.smallText1}>
-          You Scored: {score.toFixed(2)}%, You got {correctAmount} /{" "}
-          {QuestionAmount} correct
-        </Text>
-        <Text style={style.feedback}>Feedback from the marker:</Text>
-        <Text style={style.smallText2}>{message}</Text>
-        <View style={style.buttonContainer}>
-          <Pressable onPress={retakeQuiz} style={style.pressable}>
-            <Text style={style.button}>Try Again - Beat Your Score!</Text>
-          </Pressable>
-          <Pressable onPress={goToMap} style={style.pressable}>
-            <Text style={style.button}>
-              Return to Campus - Explore More Subjects
+    <View style={style.view}>
+      {grade && (
+        <Animated.View
+          style={style.imageContainer}
+          entering={PinwheelIn.duration(700)}
+        >
+          <Image
+            source={require("../assets/examResult.png")}
+            style={style.image}
+          />
+          <View style={style.messageContainer}>
+            <Text style={style.messageText}>
+              Congratulations!{"\n\n"}You finished this quiz and got{" "}
+              {correctAmount} of {QuestionAmount}! {message}
             </Text>
-          </Pressable>
-        </View>
-        <Text style={style.certifyText}>
-          Certified by: The My Student Years Exam Board
-        </Text>
+          </View>
+          <View style={style.gradeContainer}>
+            <Image
+              source={require("../assets/gradeCircle.png")}
+              style={style.gradeImage}
+            />
+            <Text style={style.gradeText}>{grade}</Text>
+          </View>
+        </Animated.View>
+      )}
+      <View style={style.buttonContainer}>
+        <Pressable onPress={retakeQuiz} style={style.pressable}>
+          <Text style={style.button}>Retake Quiz</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => navigation.navigate("Campus", { student_id })}
+          style={style.pressable}
+        >
+          <Text style={style.button}>Return to Campus</Text>
+        </Pressable>
       </View>
-    </ImageBackground>
+    </View>
   );
 }
