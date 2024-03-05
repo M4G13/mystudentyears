@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, Pressable, TouchableOpacity } from "react-native";
-import DraggableFlatList, {
+/*import DraggableFlatList, {
   ScaleDecorator,
-} from "react-native-draggable-flatlist";
+} from "react-native-draggable-flatlist";*/
 
 import style from "../../styles/rankorderq.js";
 
