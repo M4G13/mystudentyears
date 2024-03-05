@@ -11,8 +11,10 @@
       "relation": "oneToOne",
       "target": "api::survey-question.survey-question"
     },
-    "answer": {
-      "type": "string"
+    "survey_option": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::survey-option.survey-option"
     }
   }
 }
