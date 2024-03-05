@@ -315,11 +315,17 @@ export default function Survey({ navigation }) {
 
         <Text style={style.smallerText}>
           By continuing, you agree to our{" "}
-          <Text onPress={() => handleNavigate("Terms & Conditions")} style={style.link}>
+          <Text
+            onPress={() => handleNavigate("Terms & Conditions")}
+            style={style.link}
+          >
             Terms and Conditions
           </Text>
           , and{" "}
-          <Text onPress={() => handleNavigate("Privacy Policy")} style={style.link}>
+          <Text
+            onPress={() => handleNavigate("Privacy Policy")}
+            style={style.link}
+          >
             Privacy Policy
           </Text>
           .

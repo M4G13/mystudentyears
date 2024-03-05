@@ -10,13 +10,13 @@ import Animated, {
 } from "react-native-reanimated";
 import Swiper from "react-native-swiper";
 
+import { GradeIcon } from "../components/Grade.js";
 import style from "../styles/gatehouse.js";
 
 export default function Gatehouse({ navigation }) {
   const students = global.data;
-  const [studentIndex, setStudentIndex] = useState(0);
+  const [studentIndex, setStudentIndex] = useState({ prev: 0, curr: 0 });
   const bgIndex = useSharedValue(0);
-  const [pStudentIndex, setPStudentIndex] = useState(0);
 
   const bgColorAnim = useAnimatedStyle(() => {
     return {
@@ -24,8 +24,8 @@ export default function Gatehouse({ navigation }) {
         bgIndex.value,
         [0, 1],
         [
-          style.cardColors[pStudentIndex],
-          style.cardColors[studentIndex],
+          style.cardColors[studentIndex.prev || 0],
+          style.cardColors[studentIndex.curr],
           style.cardColors[1],
         ], // In case nothing is set, this stops a crash.
       ),
@@ -37,32 +37,44 @@ export default function Gatehouse({ navigation }) {
     useCallback(() => {
       async function getCompletion() {
         const open = {};
-        const completed = [];
+        const gradeTotal = [];
         for (let i = 0; i < students.length; i++) {
-          completed[i] = 0;
+          gradeTotal[i] = 0;
           for (const category of students[i].category) {
             try {
               const storedCompletion = await AsyncStorage.getItem(
                 "quiz" + category.id,
               );
-              if (storedCompletion != null) {
-                completed[i] += 1;
+              if (storedCompletion == null) {
+                gradeTotal[i] = null;
+                break;
               }
+              gradeTotal[i] += JSON.parse(storedCompletion).reduce(
+                (j, k) => j + k,
+                0,
+              );
             } catch (e) {
               console.error("Failed to get progress. " + e);
+            }
+            if (gradeTotal[i] !== null) {
+              gradeTotal[i] /= students[i].category.length;
             }
           }
           open[students[i].id] =
             i === 0
-              ? true
-              : completed[i - 1] === students[i - 1].category.length;
+              ? { open: true, gpa: gradeTotal[i] }
+              : { open: gradeTotal[i - 1] !== null, gpa: gradeTotal[i] };
         }
         setOpenStories(open);
+        console.log(openStories);
       }
 
       AsyncStorage.getItem("currentStudent")
         .then((id) => {
-          if (id !== null) setStudentIndex(Number(id));
+          if (id !== null)
+            setStudentIndex({
+              curr: students.findIndex((s) => s.id === Number(id)),
+            });
         })
         .catch((e) => console.error("Failed to get current student" + e));
 
@@ -74,10 +86,9 @@ export default function Gatehouse({ navigation }) {
     <View style={style.view}>
       <Swiper
         loop={false}
-        index={studentIndex}
+        index={studentIndex.curr}
         onIndexChanged={(i) => {
-          setPStudentIndex(studentIndex);
-          setStudentIndex(i);
+          setStudentIndex({ prev: studentIndex.curr, curr: i });
           bgIndex.value = 0; // Need to lerp from 0-1 every time
           bgIndex.value = withTiming(1, { duration: 300 });
         }}
@@ -87,14 +98,6 @@ export default function Gatehouse({ navigation }) {
             key={"student" + i}
             style={[style.studentWrapper, bgColorAnim]}
           >
-            {!openStories[s.id] && (
-              <View style={style.lockedOverlay}>
-                <Text style={style.bigText}>
-                  This story is locked!{"\n\n"}
-                  Complete the previous student's story to unlock it.
-                </Text>
-              </View>
-            )}
             {s.Student_Image !== null && (
               <Image
                 source={{ uri: global.url + s.Student_image.url }}
@@ -113,6 +116,18 @@ export default function Gatehouse({ navigation }) {
                 <Text style={style.button}>Go to Campus</Text>
               </Pressable>
             </View>
+            {openStories[s.id] && openStories[s.id].gpa !== null && (
+              <GradeIcon score={openStories[s.id].gpa} style={style.gpa} />
+            )}
+
+            {!openStories[s.id]?.open && (
+              <View style={style.lockedOverlay}>
+                <Text style={style.bigText}>
+                  This story is locked!{"\n\n"}
+                  Complete the previous student's story to unlock it.
+                </Text>
+              </View>
+            )}
           </Animated.View>
         ))}
       </Swiper>
