@@ -6,7 +6,7 @@ const styleSheet = StyleSheet.create({
     color: "#be1e2d",
     fontFamily: "Playpen",
     transform: [{ rotateX: "-20deg" }, { rotateZ: "10deg" }],
-    fontSize: 100,
+    fontSize: 200,
   },
   gradeImage: {
     position: "absolute",

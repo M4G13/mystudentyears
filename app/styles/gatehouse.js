@@ -32,6 +32,15 @@ const style = StyleSheet.create({
   pressable: {
     marginTop: 20,
   },
+  gpa: {
+    position: "absolute",
+    width: "60%",
+    height: "60%",
+    right: "20%",
+    bottom: "40%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   lockedOverlay: {
     ...base.view,
     width: "100%",

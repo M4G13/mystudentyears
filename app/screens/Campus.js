@@ -148,7 +148,7 @@ export default function Campus({ route, navigation }) {
                 style={style.modalImage}
               />
               <Text style={style.modalText}>
-                Congratulations, you finished the category!
+                Congratulations, you finished this story!
               </Text>
               <View style={style.modalButtonContainer}>
                 <Pressable
