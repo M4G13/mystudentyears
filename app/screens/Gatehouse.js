@@ -62,7 +62,7 @@ export default function Gatehouse({ navigation }) {
 
       AsyncStorage.getItem("currentStudent")
         .then((id) => {
-          if (id !== null) setStudentIndex(Number(id));
+          if (id !== null) setStudentIndex(students.findIndex((s)=>s.id==Number(id)));
         })
         .catch((e) => console.error("Failed to get current student" + e));
 
