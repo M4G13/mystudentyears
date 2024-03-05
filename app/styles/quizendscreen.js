@@ -4,7 +4,7 @@ import base from "./question.js";
 
 const style = StyleSheet.create({
   ...base,
-  view: {...base.view},
+  view: { ...base.view },
   imageContainer: {
     height: "70%",
     width: "100%",
@@ -23,30 +23,30 @@ const style = StyleSheet.create({
   gradeContainer: {
     position: "absolute",
     padding: 20,
-    right: 70,
+    right: "12%",
     width: 100,
     height: 100,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    bottom: 115,
+    bottom: "12%",
   },
   gradeText: {
     color: "#be1e2d",
     fontFamily: "Playpen",
-    transform: [{rotateX: '-20deg'}, {rotateZ: '10deg'}],
+    transform: [{ rotateX: "-20deg" }, { rotateZ: "10deg" }],
     fontSize: 55,
     width: 100,
     height: 100,
     marginTop: 10,
     textAlign: "center",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   gradeImage: {
     position: "absolute",
     width: 100,
     height: 100,
-    resizeMode: "contain"
+    resizeMode: "contain",
   },
   messageContainer: {
     position: "absolute",
@@ -55,16 +55,16 @@ const style = StyleSheet.create({
     alignContent: "center",
     width: "100%",
     height: "100%",
-    padding: 30
+    padding: 30,
   },
   messageText: {
     width: "100%",
     fontFamily: "Playpen",
     fontSize: 18,
-    lineHeight: 25,
+    lineHeight: 22,
     padding: 40,
-    borderColor: "#000000"
-  }
+    borderColor: "#000000",
+  },
 });
 
 export default style;
