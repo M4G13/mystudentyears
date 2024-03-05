@@ -11,7 +11,7 @@ const _ = require("lodash");
 export default function RankOrderQ({ question, handleAnswer }) {
   const [data, setData] = useState(_.shuffle(question.answers));
 
-  const renderItem = ({ item, drag, isActive }) => {
+  /*const renderItem = ({ item, drag, isActive }) => {
     return (
       <ScaleDecorator>
         <TouchableOpacity
@@ -24,7 +24,7 @@ export default function RankOrderQ({ question, handleAnswer }) {
         </TouchableOpacity>
       </ScaleDecorator>
     );
-  };
+  };*/
 
   return (
     <View style={style.questionWrapper}>
