@@ -69,10 +69,71 @@ const laFreq = async () => await strapi.db.connection.context.raw(`
     GROUP BY schools.lacode;
   `);
 
+// StudentID, Email,
+const userDetails = async () => {
+  const raw = await strapi.entityService.findMany('api::app-user.app-user', {
+  populate: {
+    InitialSurvey: {
+      populate: {
+        Completed: {
+          populate: {
+            survey_question: {
+              populate: {
+                question: true
+              }
+            },
+            survey_option: {
+              populate: {
+                option: true
+              }
+            }
+          }
+        }
+      }
+    },
+    FinalSurvey: {
+      populate: {
+        Completed: {
+          populate: {
+            survey_question: {
+              populate: {
+                question: true
+              }
+            },
+            survey_option: {
+              populate: {
+                option: true
+              }
+            }
+          }
+        }
+      }
+    }
+  }});
+  let response = [];
+
+  raw.forEach((e, i) => {
+    response.push({"id":e.id, "email":e.Email});
+    ["InitialSurvey", "FinalSurvey"].forEach((survey) => {
+      if(e[survey]) {
+        e[survey].Completed.forEach((completed, ci) => {
+          response[i][survey+ci] = completed.survey_option.option;
+          response[i][survey+"Question"+ci] = completed.survey_question.question;
+        })
+      }
+    });
+  });
+  let converter = require('json-2-csv');
+
+  return await converter.json2csv(response);
+}
+
+
 module.exports = {
   initialSurvey: async () => processSurvey('InitialSurvey'),
   finalSurvey: async () => processSurvey('FinalSurvey'),
   quizData,
   laFreq,
-  studentCompletion
+  studentCompletion,
+  userDetails
 };

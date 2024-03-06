@@ -25,5 +25,10 @@ module.exports = {
       path: '/stats/studentCompletion',
       handler: 'stats.studentCompletion',
     },
+    {
+      method: 'GET',
+      path: '/stats/userDetails',
+      handler: 'stats.userDetails',
+    },
   ]
 }
