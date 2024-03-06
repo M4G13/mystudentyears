@@ -43,23 +43,36 @@ const studentCompletion = async () => await strapi.db.connection.context.raw(`
       s."Order";
   `)
 
-const quizData = async () => await strapi.db.connection.context.raw(`
+const quizData = async () => {
+  const raw = await strapi.db.connection.context.raw(`
     SELECT
       l.quiz_id,
+      c.id,
       q.description,
-      AVG(
-        (LENGTH(c.results) - LENGTH(REPLACE(c.results, 'true', '')))*1.0 /
-        LENGTH('true'))
-      AS avg_score
+      c.results as results
     FROM
       components_completion_completions_quiz_links AS l
     INNER JOIN
       components_completion_completions AS c ON completion_id=c.id
     INNER JOIN
       quizzes AS q ON quiz_id=q.id
-    GROUP BY
-      l.quiz_id;
-  `);
+  `)
+  let result = {};
+  raw.forEach((quiz) => {
+    let quizId = "quiz"+quiz.quiz_id;
+    if(!result[quizId]) {
+      result[quizId] = {};
+    }
+    result[quizId]["description"] = quiz.description;
+    result[quizId]["totalResponses"] = (result[quizId]["totalResponses"] || 0) + 1
+    JSON.parse(quiz.results).forEach((question, questionIndex) => {
+      let questionId = "question"+(questionIndex+1);
+      result[quizId][questionId] = (result[quizId][questionId] || 0) + (question?1:0);
+      console.log(result[quizId][questionId]);
+    });
+  });
+  return result;
+};
 
 const laFreq = async () => await strapi.db.connection.context.raw(`
     SELECT schools.lacode as id, COUNT(*) as value
