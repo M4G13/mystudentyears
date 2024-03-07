@@ -45,7 +45,7 @@ export default function OpenResponseQ({ question, handleAnswer }) {
         width="80%"
         marginLeft="10%"
         backgroundColor={style.colors.fg2}
-        onPressOut={() => {
+        onPress={() => {
           Keyboard.dismiss();
           if (input !== "") {
             handleAnswer(compare(input, question.answer));

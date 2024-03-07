@@ -56,7 +56,7 @@ export default function RankOrderQ({ question, handleAnswer }) {
         width="80%"
         backgroundColor={style.colors.fg2}
         marginLeft="10%"
-        onPressOut={() => {
+        onPress={() => {
           handleAnswer(_.isEqual(data, question.answers));
         }}
       >

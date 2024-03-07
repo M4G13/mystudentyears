@@ -95,7 +95,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
               width="80%"
               backgroundColor={style.colors.fg2}
               marginLeft="10%"
-              onPressOut={() =>
+              onPress={() =>
                 handleAnswer(_.isEqual(keywords.selected, correctKeywords))
               }
             >

@@ -54,7 +54,7 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
           <PrettyButton
             key={q.id}
             backgroundColor={selected[q.id] === true ? "#888888" : "#d6d6d6"}
-            onPressOut={() => handleSelect(q)}
+            onPress={() => handleSelect(q)}
           >
             {q.text}
           </PrettyButton>
@@ -64,9 +64,11 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
         width="80%"
         backgroundColor={style.colors.fg2}
         marginLeft="10%"
-        onPressOut={() =>
+        onPress={() =>{
+          console.log(selected)
           Object.values(selected).some((value) => value === true) &&
           handleAnswer(isCorrect())
+        }
         }
       >
         Submit
