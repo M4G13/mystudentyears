@@ -1,7 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 
 import MissingWordsQ from "./questionTypes/MissingWordsQ.js";
@@ -30,10 +29,18 @@ export default function Question({ route, navigation }) {
 
   const [answers, setAnswers] = useState([]);
 
+  let oldScore = null;
+
   async function storeResult(answers, score) {
     try {
-      await AsyncStorage.setItem("quiz" + category.id, JSON.stringify(answers));
-      await AsyncStorage.setItem("quizScore" + category.id, score.toString());
+      oldScore = await AsyncStorage.getItem("quizScore" + category.id);
+      if (!oldScore || oldScore < score) {
+        await AsyncStorage.setItem(
+          "quiz" + category.id,
+          JSON.stringify(answers),
+        );
+        await AsyncStorage.setItem("quizScore" + category.id, score.toString());
+      }
     } catch (e) {
       console.error("Failed to save progress. " + e);
     }
@@ -73,17 +80,6 @@ export default function Question({ route, navigation }) {
       });
     }
   }
-
-  useFocusEffect(
-    useCallback(() => {
-      if (index === 0) {
-        setAnswers([]);
-        AsyncStorage.removeItem("quiz" + category.id).catch((error) => {
-          console.error("Failed to clear progress. " + error);
-        });
-      }
-    }, [index]),
-  );
 
   const questionTypes = {
     "questions.multi-choice-question": MultiChoiceQ,

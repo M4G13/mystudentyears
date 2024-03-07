@@ -33,8 +33,6 @@ export default function Category({ route, navigation }) {
           if (quizCompletion != null) {
             JSON.parse(quizCompletion).map((x) => (sum += x ? 1 : 0));
             setCompletion(sum);
-          } else {
-            setCompletion(null);
           }
         } catch (e) {
           console.error("Failed to get progress. " + e);
