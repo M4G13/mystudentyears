@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
+import axios from "axios";
 import React, { useState, useCallback } from "react";
 import { View } from "react-native";
 
@@ -54,21 +55,15 @@ export default function Question({ route, navigation }) {
         quiz.questions.length,
       );
       storeResult(nextAnswers, score);
-      fetch(global.api_url + "/app-user/" + global.uuid, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
+      axios.put(global.api_url + "/app-user/" + global.uuid, {
+        data: {
+          CompletedQuizzes: [
+            {
+              quiz: quiz.id,
+              results: nextAnswers,
+            },
+          ],
         },
-        body: JSON.stringify({
-          data: {
-            CompletedQuizzes: [
-              {
-                quiz: quiz.id,
-                results: nextAnswers,
-              },
-            ],
-          },
-        }),
       });
       navigation.navigate("QuizEndScreen", {
         ...route.params,
