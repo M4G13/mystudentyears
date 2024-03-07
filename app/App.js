@@ -8,6 +8,7 @@ import React, { useState, useEffect } from "react";
 import { StatusBar } from "react-native";
 
 import Loading from "./components/Loading.js";
+import { CurrentStudentContext } from "./context/CurrentStudent.js";
 import Campus from "./screens/Campus.js";
 import Category from "./screens/Category.js";
 import Error from "./screens/Error.js";
@@ -35,12 +36,11 @@ global.api_url = global.url + "/api";
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [currentStudent, setCurrentStudent] = useState(null);
 
   useFonts({
     Playpen: require("./assets/fonts/PlaypenSans.ttf"),
   });
-
-  const [initialStudent, setInitialStudent] = useState(null);
 
   const fetchData = () => {
     axios
@@ -63,22 +63,25 @@ export default function App() {
       .then((uuid) => (global.uuid = uuid))
       .catch((e) => console.log(e));
     AsyncStorage.getItem("currentStudent")
-      .then((id) => {
-        if (id !== null) setInitialStudent(Number(id));
+      .then((i) => {
+        if (i !== null) setCurrentStudent(Number(i));
       })
       .catch((e) => console.log(e));
   }, []);
 
-  // useEffect(() => {}, [initialStudent]);
+  useEffect(() => {
+    if (currentStudent !== null)
+      AsyncStorage.setItem("currentStudent", currentStudent.toString());
+  }, [currentStudent]);
 
   const navigationState = global.uuid
     ? {
         routes: [
           { name: "Gatehouse" },
-          initialStudent
+          currentStudent
             ? {
                 name: "Campus",
-                params: { student_id: initialStudent },
+                params: { student_id: currentStudent },
               }
             : {},
         ],
@@ -90,44 +93,48 @@ export default function App() {
 
   return (
     <Loading isLoading={isLoading} isError={error} retry={fetchData}>
-      <NavigationContainer theme={DarkTheme} initialState={navigationState}>
-        <Stack.Navigator
-          screenOptions={{
-            animation: "fade",
-            presentation: "modal",
-            headerTitleAlign: "center",
-            headerShadowVisible: false,
-            headerStyle: baseStyle.header,
-          }}
-        >
-          <Stack.Screen
-            name="Home Screen"
-            component={HomeScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Survey"
-            component={global.uuid ? FinalSurvey : InitialSurvey}
-          />
-          <Stack.Screen name="Terms & Conditions" component={Terms} />
-          <Stack.Screen name="Privacy Policy" component={Privacy} />
-          <Stack.Screen
-            name="Gatehouse"
-            component={Gatehouse}
-            options={{ title: "Pick a Student" }}
-          />
-          <Stack.Screen name="Campus" component={Campus} />
-          <Stack.Screen name="Category" component={Category} />
-          <Stack.Screen name="Question" component={Question} />
-          <Stack.Screen name="Info" component={Info} />
-          <Stack.Screen name="Error" component={Error} />
-          <Stack.Screen
-            name="QuizEndScreen"
-            component={QuizEndScreen}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <CurrentStudentContext.Provider
+        value={[currentStudent, setCurrentStudent]}
+      >
+        <NavigationContainer theme={DarkTheme} initialState={navigationState}>
+          <Stack.Navigator
+            screenOptions={{
+              animation: "fade",
+              presentation: "modal",
+              headerTitleAlign: "center",
+              headerShadowVisible: false,
+              headerStyle: baseStyle.header,
+            }}
+          >
+            <Stack.Screen
+              name="Home Screen"
+              component={HomeScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Survey"
+              component={global.uuid ? FinalSurvey : InitialSurvey}
+            />
+            <Stack.Screen name="Terms & Conditions" component={Terms} />
+            <Stack.Screen name="Privacy Policy" component={Privacy} />
+            <Stack.Screen
+              name="Gatehouse"
+              component={Gatehouse}
+              options={{ title: "Pick a Student" }}
+            />
+            <Stack.Screen name="Campus" component={Campus} />
+            <Stack.Screen name="Category" component={Category} />
+            <Stack.Screen name="Question" component={Question} />
+            <Stack.Screen name="Info" component={Info} />
+            <Stack.Screen name="Error" component={Error} />
+            <Stack.Screen
+              name="QuizEndScreen"
+              component={QuizEndScreen}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </CurrentStudentContext.Provider>
     </Loading>
   );
 }

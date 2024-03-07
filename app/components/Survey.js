@@ -6,7 +6,12 @@ import RadioForm from "react-native-simple-radio-button";
 import Loading from "./Loading.js";
 import style from "../styles/survey";
 
-export default function Survey({ userInfo, action, navigation, fetchSchools = () => {} }) {
+export default function Survey({
+  userInfo,
+  action,
+  navigation,
+  fetchSchools = () => {},
+}) {
   const [questions, setQuestions] = useState([]);
   const [options, setOptions] = useState([]);
   const [selectedValues, setSelectedValues] = useState({});

@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import { View, Text, Pressable, Image } from "react-native";
 import Animated, {
   useSharedValue,
@@ -11,10 +11,12 @@ import Animated, {
 import Swiper from "react-native-swiper";
 
 import { GradeIcon } from "../components/Grade.js";
+import { CurrentStudentContext } from "../context/CurrentStudent.js";
 import style from "../styles/gatehouse.js";
 
 export default function Gatehouse({ navigation }) {
   const students = global.data;
+  const [currentStudent, setCurrentStudent] = useContext(CurrentStudentContext);
   const [studentIndex, setStudentIndex] = useState({ prev: 0, curr: 0 });
   const bgIndex = useSharedValue(0);
 
@@ -69,15 +71,6 @@ export default function Gatehouse({ navigation }) {
         console.log(openStories);
       }
 
-      AsyncStorage.getItem("currentStudent")
-        .then((id) => {
-          if (id !== null)
-            setStudentIndex({
-              curr: students.findIndex((s) => s.id === Number(id)),
-            });
-        })
-        .catch((e) => console.error("Failed to get current student" + e));
-
       getCompletion();
     }, []),
   );
@@ -86,7 +79,7 @@ export default function Gatehouse({ navigation }) {
     <View style={style.view}>
       <Swiper
         loop={false}
-        index={studentIndex.curr}
+        index={students.findIndex((s) => s.id === Number(currentStudent))}
         onIndexChanged={(i) => {
           setStudentIndex({ prev: studentIndex.curr, curr: i });
           bgIndex.value = 0; // Need to lerp from 0-1 every time
@@ -110,7 +103,7 @@ export default function Gatehouse({ navigation }) {
                 style={style.pressable}
                 onPress={() => {
                   navigation.navigate("Campus", { student_id: s.id });
-                  AsyncStorage.setItem("currentStudent", s.id.toString());
+                  setCurrentStudent(s.id.toString());
                 }}
               >
                 <Text style={style.button}>Go to Campus</Text>

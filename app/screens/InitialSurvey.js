@@ -32,8 +32,8 @@ export default function InitialSurvey({ navigation }) {
         },
       })
       .then((response) => {
-        global.uuid = response.data.attributes.UUID;
-        AsyncStorage.setItem("uuid", response.data.attributes.UUID);
+        global.uuid = response.data.data.attributes.UUID;
+        AsyncStorage.setItem("uuid", response.data.data.attributes.UUID);
       })
       .catch((error) => {
         console.error(error);
