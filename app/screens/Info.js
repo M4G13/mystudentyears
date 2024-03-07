@@ -41,14 +41,6 @@ export default function Info({ route, navigation }) {
       } catch (e) {
         console.error("Failed to store category completion. " + e);
       }
-      try {
-        const quizCompletion = await AsyncStorage.getItem("quiz" + category.id);
-        if (quizCompletion) {
-          await AsyncStorage.removeItem("quiz" + category.id);
-        }
-      } catch (e) {
-        console.error("Failed to clear quiz progress. " + e);
-      }
       navigation.navigate("Question", { ...route.params, index: 0 });
     } else {
       navigation.push("Info", { ...route.params, index: index + 1 });
