@@ -18,7 +18,8 @@ export default function Category({ route, navigation }) {
         </Text>
         {catCompletion?.quiz && (
           <Text style={baseStyle.bigText}>
-            Previously you got {getNumCorrect(catCompletion.quiz)} out of {category.quiz.questions.length}
+            Previously you got {getNumCorrect(catCompletion.quiz)} out of{" "}
+            {category.quiz.questions.length}
           </Text>
         )}
         <Pressable

@@ -1,7 +1,7 @@
+import isEqual from "lodash/isEqual";
+import shuffle from "lodash/shuffle";
 import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
-import shuffle from "lodash/shuffle"
-import isEqual from "lodash/isEqual"
 
 import style from "../../styles/missingwordsq.js";
 

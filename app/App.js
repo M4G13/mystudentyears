@@ -45,7 +45,7 @@ export default function App() {
     Playpen: require("./assets/fonts/PlaypenSans.ttf"),
   });
 
-  const fetchData = async () => {
+  const fetchData = () => {
     axios
       .get(global.api_url + "/students")
       .then((response) => {

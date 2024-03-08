@@ -1,6 +1,7 @@
+import isEqual from "lodash/isEqual";
+import shuffle from "lodash/shuffle";
 import React, { useState } from "react";
 import { View, Text, Pressable, TouchableOpacity } from "react-native";
-import shuffle from "lodash/shuffle";
 /*import DraggableFlatList, {
   ScaleDecorator,
 } from "react-native-draggable-flatlist";*/
@@ -43,7 +44,7 @@ export default function RankOrderQ({ question, handleAnswer }) {
         <Pressable
           style={style.submitButton}
           onPress={() => {
-            handleAnswer(_.isEqual(data, question.answers));
+            handleAnswer(isEqual(data, question.answers));
           }}
         >
           <Text style={style.button}>Submit</Text>
