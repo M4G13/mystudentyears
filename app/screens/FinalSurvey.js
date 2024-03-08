@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CommonActions } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
@@ -12,12 +11,10 @@ export default function FinalSurvey({ navigation }) {
   const [school, setSchool] = useState("");
 
   const updateUser = (survey) => {
-    axios.post(global.api_url + "/app-user/" + global.uuid, {
+    axios.put(global.api_url + "/app-user/" + global.uuid, {
       data: { FinalSurvey: survey },
     });
-    navigation.dispatch(
-      CommonActions.reset({ routes: [{ name: "Home Screen" }] }),
-    );
+    navigation.reset({ routes: [{ name: "Home Screen" }] });
   };
 
   useEffect(() => {

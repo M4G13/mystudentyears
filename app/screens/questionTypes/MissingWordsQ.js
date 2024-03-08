@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
+import shuffle from "lodash/shuffle"
+import isEqual from "lodash/isEqual"
 
 import style from "../../styles/missingwordsq.js";
-
-const _ = require("lodash");
 
 export default function MissingWordsQ({ question, handleAnswer }) {
   const correctKeywords = Array.from(
@@ -15,7 +15,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
 
   const [keywords, setKeywords] = useState({
     selected: new Array(correctKeywords.length).fill(null),
-    available: _.shuffle(correctKeywords),
+    available: shuffle(correctKeywords),
   });
 
   function putKeyword(index) {
@@ -73,7 +73,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
             <Pressable
               style={style.submitButton}
               onPress={() =>
-                handleAnswer(_.isEqual(keywords.selected, correctKeywords))
+                handleAnswer(isEqual(keywords.selected, correctKeywords))
               }
             >
               <Text style={style.button}>Submit</Text>

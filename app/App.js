@@ -7,8 +7,9 @@ import { useFonts } from "expo-font";
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "react-native";
 
+import { CurrentStudentContext, CompletionContext } from "./Context.js";
+import { defaultRoute } from "./common.js";
 import Loading from "./components/Loading.js";
-import { CurrentStudentContext } from "./context/CurrentStudent.js";
 import Campus from "./screens/Campus.js";
 import Category from "./screens/Category.js";
 import Error from "./screens/Error.js";
@@ -36,17 +37,21 @@ global.api_url = global.url + "/api";
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+
   const [currentStudent, setCurrentStudent] = useState(null);
+  const [completion, setCompletion] = useState({});
 
   useFonts({
     Playpen: require("./assets/fonts/PlaypenSans.ttf"),
   });
 
-  const fetchData = () => {
+  const fetchData = async () => {
     axios
       .get(global.api_url + "/students")
       .then((response) => {
         global.data = response.data;
+      })
+      .then(() => {
         setIsLoading(false);
         setError(false);
       })
@@ -57,84 +62,80 @@ export default function App() {
       });
   };
 
+  // load external data
   useEffect(() => {
+    AsyncStorage.getItem("uuid").then((uuid) => (global.uuid = uuid));
+    AsyncStorage.getItem("currentStudent").then((i) => {
+      if (i !== null) setCurrentStudent(Number(i));
+    });
+    AsyncStorage.getItem("completion").then((data) => {
+      if (data !== null) setCompletion(JSON.parse(data));
+    });
     fetchData();
-    AsyncStorage.getItem("uuid")
-      .then((uuid) => (global.uuid = uuid))
-      .catch((e) => console.log(e));
-    AsyncStorage.getItem("currentStudent")
-      .then((i) => {
-        if (i !== null) setCurrentStudent(Number(i));
-      })
-      .catch((e) => console.log(e));
   }, []);
 
+  // save state on update
   useEffect(() => {
     if (currentStudent !== null)
       AsyncStorage.setItem("currentStudent", currentStudent.toString());
   }, [currentStudent]);
+  useEffect(() => {
+    if (completion !== null)
+      AsyncStorage.setItem("completion", JSON.stringify(completion));
+  }, [completion]);
 
   const navigationState = global.uuid
-    ? {
-        routes: [
-          { name: "Gatehouse" },
-          currentStudent
-            ? {
-                name: "Campus",
-                params: { student_id: currentStudent },
-              }
-            : {},
-        ],
-        index: 1,
-      }
+    ? defaultRoute(currentStudent)
     : {
         routes: [{ name: "Home Screen" }],
       };
 
   return (
     <Loading isLoading={isLoading} isError={error} retry={fetchData}>
-      <CurrentStudentContext.Provider
-        value={[currentStudent, setCurrentStudent]}
-      >
-        <NavigationContainer theme={DarkTheme} initialState={navigationState}>
-          <Stack.Navigator
-            screenOptions={{
-              animation: "fade",
-              presentation: "modal",
-              headerTitleAlign: "center",
-              headerShadowVisible: false,
-              headerStyle: baseStyle.header,
-            }}
-          >
-            <Stack.Screen
-              name="Home Screen"
-              component={HomeScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Survey"
-              component={global.uuid ? FinalSurvey : InitialSurvey}
-            />
-            <Stack.Screen name="Terms & Conditions" component={Terms} />
-            <Stack.Screen name="Privacy Policy" component={Privacy} />
-            <Stack.Screen
-              name="Gatehouse"
-              component={Gatehouse}
-              options={{ title: "Pick a Student" }}
-            />
-            <Stack.Screen name="Campus" component={Campus} />
-            <Stack.Screen name="Category" component={Category} />
-            <Stack.Screen name="Question" component={Question} />
-            <Stack.Screen name="Info" component={Info} />
-            <Stack.Screen name="Error" component={Error} />
-            <Stack.Screen
-              name="QuizEndScreen"
-              component={QuizEndScreen}
-              options={{ headerShown: false }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </CurrentStudentContext.Provider>
+      <CompletionContext.Provider value={[completion, setCompletion]}>
+        <CurrentStudentContext.Provider
+          value={[currentStudent, setCurrentStudent]}
+        >
+          <NavigationContainer theme={DarkTheme} initialState={navigationState}>
+            <Stack.Navigator
+              screenOptions={{
+                animation: "fade",
+                presentation: "modal",
+                headerTitleAlign: "center",
+                headerShadowVisible: false,
+                headerStyle: baseStyle.header,
+              }}
+            >
+              <Stack.Screen
+                name="Home Screen"
+                component={HomeScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Survey"
+                component={global.uuid ? FinalSurvey : InitialSurvey}
+              />
+              <Stack.Screen name="Terms & Conditions" component={Terms} />
+              <Stack.Screen name="Privacy Policy" component={Privacy} />
+              <Stack.Screen
+                name="Gatehouse"
+                component={Gatehouse}
+                options={{ title: "Pick a Student" }}
+              />
+              <Stack.Screen name="Campus" component={Campus} />
+              <Stack.Screen name="Category" component={Category} />
+              <Stack.Screen name="Question" component={Question} />
+              <Stack.Screen name="Info" component={Info} />
+              <Stack.Screen name="Error" component={Error} />
+              <Stack.Screen
+                name="QuizEndScreen"
+                component={QuizEndScreen}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </CurrentStudentContext.Provider>
+      </CompletionContext.Provider>
     </Loading>
   );
 }

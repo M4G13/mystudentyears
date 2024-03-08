@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CommonActions } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
 import { View, Text, TextInput, Image } from "react-native";
@@ -44,9 +43,7 @@ export default function InitialSurvey({ navigation }) {
       console.error(e),
     );
 
-    navigation.dispatch(
-      CommonActions.reset({ routes: [{ name: "Gatehouse" }] }),
-    );
+    navigation.reset({ routes: [{ name: "Gatehouse" }] });
   };
 
   return (

@@ -1,21 +1,21 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useContext } from "react";
 import { View, Text, Pressable, Image } from "react-native";
 import Animated, { PinwheelIn } from "react-native-reanimated";
 
+import { CompletionContext } from "../Context.js";
+import { getScore, getNumCorrect, defaultRoute } from "../common.js";
 import { calculateGrade, GradeIcon } from "../components/Grade.js";
 import style from "../styles/quizendscreen.js";
 
 export default function QuizEndScreen({ route, navigation }) {
-  const { category_id, student_id, score, correctAmount, QuestionAmount } =
-    route.params;
+  const { category_id, student_id, answers, quiz_id } = route.params;
 
-  const retakeQuiz = async () => {
-    navigation.navigate("Question", {
-      category_id,
-      student_id,
-      index: 0,
-    });
-  };
+  const [completion, setCompletion] = useContext(CompletionContext);
+  const categoryCompletion = completion[category_id];
+
+  const correctAnswers = getNumCorrect(answers);
+  const score = getScore(answers);
 
   let message = "";
   const grade = calculateGrade(score);
@@ -33,6 +33,27 @@ export default function QuizEndScreen({ route, navigation }) {
         "If you want to work to improve your grade you can go back to the campus and read the information for this category, otherwise continue with more quizzes.";
   }
 
+  useEffect(() => {
+    const putData = () => {
+      axios.put(global.api_url + "/app-user/" + global.uuid, {
+        data: {
+          CompletedQuizzes: [
+            {
+              quiz: quiz_id,
+              results: answers,
+            },
+          ],
+        },
+      });
+    };
+    putData();
+    if (!categoryCompletion?.quiz || getScore(categoryCompletion.quiz) < score)
+      setCompletion({
+        ...completion,
+        [category_id]: { quiz: answers, info: categoryCompletion.info },
+      });
+  }, []);
+
   return (
     <View style={style.view}>
       {grade && (
@@ -47,18 +68,27 @@ export default function QuizEndScreen({ route, navigation }) {
           <View style={style.messageContainer}>
             <Text style={style.messageText}>
               Congratulations!{"\n\n"}You finished this quiz and got{" "}
-              {correctAmount} of {QuestionAmount}! {message}
+              {correctAnswers} of {answers.length}! {message}
             </Text>
           </View>
           <GradeIcon style={style.gradeContainer} score={score} />
         </Animated.View>
       )}
       <View style={style.buttonContainer}>
-        <Pressable onPress={retakeQuiz} style={style.pressable}>
+        <Pressable
+          onPress={() =>
+            navigation.navigate("Question", {
+              category_id,
+              student_id,
+              index: 0,
+            })
+          }
+          style={style.pressable}
+        >
           <Text style={style.button}>Retake Quiz</Text>
         </Pressable>
         <Pressable
-          onPress={() => navigation.navigate("Campus", { student_id })}
+          onPress={() => navigation.reset(defaultRoute(student_id))}
           style={style.pressable}
         >
           <Text style={style.button}>Return to Campus</Text>

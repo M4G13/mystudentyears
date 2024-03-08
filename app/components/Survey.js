@@ -80,11 +80,9 @@ export default function Survey({
                 initial={-1} // Set initial to -1 to have no button initially selected
                 labelStyle={style.option}
                 buttonStyle={{ borderRadius: 1000 }}
-                onPress={(value) => {
-                  const newSelectedValues = { ...selectedValues };
-                  newSelectedValues[q.id] = value;
-                  setSelectedValues(newSelectedValues);
-                }}
+                onPress={(value) =>
+                  setSelectedValues({ ...selectedValues, [q.id]: value })
+                }
               />
             </View>
           ))}
