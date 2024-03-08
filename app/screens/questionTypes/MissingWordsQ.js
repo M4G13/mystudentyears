@@ -1,10 +1,10 @@
+import isEqual from "lodash/isEqual";
+import shuffle from "lodash/shuffle";
 import React, { useState } from "react";
 import { View, Text, ScrollView, Image } from "react-native";
 
 import PrettyButton from "../../components/PrettyButton.js";
 import style from "../../styles/missingwordsq.js";
-
-const _ = require("lodash");
 
 export default function MissingWordsQ({ question, handleAnswer }) {
   const correctKeywords = Array.from(
@@ -16,7 +16,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
 
   const [keywords, setKeywords] = useState({
     selected: new Array(correctKeywords.length).fill(null),
-    available: _.shuffle(correctKeywords),
+    available: shuffle(correctKeywords),
   });
 
   function putKeyword(index) {
@@ -90,7 +90,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
             <PrettyButton
               backgroundColor={style.colors.fg2}
               onPress={() =>
-                handleAnswer(_.isEqual(keywords.selected, correctKeywords))
+                handleAnswer(isEqual(keywords.selected, correctKeywords))
               }
             >
               Submit

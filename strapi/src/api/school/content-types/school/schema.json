@@ -18,17 +18,12 @@
     "schoolname": {
       "type": "string"
     },
-    "latitude": {
-      "type": "float"
-    },
-    "longitude": {
-      "type": "float"
-    },
     "lacode": {
       "type": "string"
     },
-    "laname": {
-      "type": "string"
+    "dzsimdpercentile": {
+      "type": "float"
     }
+
   }
 }

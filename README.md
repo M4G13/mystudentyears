@@ -31,15 +31,15 @@ Make sure you either reference the number of the ticket in the commit message or
 - [x] Extended end-user functionality
     - [ ] Full E2E + regression test suite
     - [x] Improve quiz functionality
-    - [ ] Display + store progress
+    - [x] Display + store progress
     - [ ] Form/survey at start + end of app flow
-    - [ ] Analytics captured
-    - [ ] Improved look + layout of whole app
-- [ ] Dev build + deployment of CMS
-    - [ ] Strapi deployed
-    - [ ] App visuals improved, nearly finalised
-    - [ ] Analytics displayed, visualised
-    - [ ] Development build delivered to customer
+    - [x] Analytics captured
+    - [x] Improved look + layout of whole app
+- [x] Dev build + deployment of CMS
+    - [x] Strapi deployed
+    - [x] App visuals improved, nearly finalised
+    - [x] Analytics displayed, visualised
+    - [x] Development build delivered to customer
 - [ ] User testing, polish
     - [ ] App finalised
     - [ ] Flourishes + polish

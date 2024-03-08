@@ -16,8 +16,8 @@ const style = StyleSheet.create({
     alignItems: "center",
   },
   icon: {
-    width: 50,
-    height: 50,
+    width: 85,
+    height: 85,
     zIndex: 2,
     resizeMode: "contain",
   },
@@ -25,8 +25,7 @@ const style = StyleSheet.create({
     position: "absolute",
     backgroundColor: baseStyle.colors.text1,
     padding: 10,
-    paddingTop: 50,
-    left: -50,
+    paddingTop: 85,
     borderRadius: 15,
     borderColor: baseStyle.colors.borderColor1,
     minWidth: 150,
@@ -46,26 +45,27 @@ const style = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
   },
-  iconSmall: {
-    width: 20,
-    height: 20,
-    resizeMode: "contain",
-  },
-  starContainer: {
+  grade: {
     position: "absolute",
-    top: -25,
-    gap: 10,
-    flexDirection: "row",
-    justifyContent: "space-evenly",
+    right: "-18%",
+    top: "-28%",
+    width: 45,
+    height: 45,
+    padding: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 9,
+    backgroundColor: baseStyle.colors.text1,
+    borderRadius: 90,
   },
-  starProgressBar: {
+  progressBar: {
     position: "absolute",
     top: 0,
     left: 0,
     borderColor: baseStyle.colors.fg3,
     borderTopWidth: 5,
   },
-  starCounterContainer: {
+  progressBarContainer: {
     width: "100%",
     position: "absolute",
     flexDirection: "row",
@@ -76,29 +76,13 @@ const style = StyleSheet.create({
     padding: 5,
     paddingTop: 10,
   },
-  starCounterIcon: {
-    width: 25,
-    height: 25,
-    resizeMode: "contain",
-  },
-  starCounterText: {
+  progressBarText: {
     ...baseStyle.bigText,
     marginLeft: 5,
     color: baseStyle.colors.text1,
+    textShadowRadius: 10,
+    textShadowColor: baseStyle.colors.translucent4,
     fontSize: 25,
-  },
-  clearButtonContainer: {
-    zIndex: 100,
-    position: "absolute",
-    width: "50%",
-    bottom: 0,
-    height: 100,
-  },
-  clearButton: {
-    ...baseStyle.button,
-    position: "absolute",
-    width: 200,
-    bottom: 10,
   },
   mapTouchable: {
     position: "absolute",
@@ -151,6 +135,22 @@ const style = StyleSheet.create({
     padding: 20,
     borderRadius: 15,
     gap: 10,
+  },
+  clearButtonContainer: {
+    // TODO: Delete in prod
+    zIndex: 100,
+    position: "absolute",
+    width: "45%",
+    bottom: 0,
+    height: 100,
+  },
+  clearButton: {
+    // TODO: Delete in prod
+    ...baseStyle.button,
+    position: "absolute",
+    width: "100%",
+    bottom: 0,
+    margin: 5,
   },
 });
 
