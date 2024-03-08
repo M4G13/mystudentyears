@@ -19,14 +19,15 @@ export default function OpenResponseQ({ question, handleAnswer }) {
         <Text style={style.bigText}>{question.question}</Text>
       </View>
 
-      {question.image &&(
-      <View style={style.imageContainer}>
-        <Image
-          source={{uri: global.url + question.image?.url}}
-          style={style.image}
-          resizeMode="contain"
-        />
-      </View>)}
+      {question.image && (
+        <View style={style.imageContainer}>
+          <Image
+            source={{ uri: global.url + question.image?.url }}
+            style={style.image}
+            resizeMode="contain"
+          />
+        </View>
+      )}
 
       <TextInput
         style={style.input}

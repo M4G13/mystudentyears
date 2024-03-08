@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Pressable, Text } from "react-native";
-import Animated, { withTiming, useSharedValue } from 'react-native-reanimated';
+import Animated, { withTiming, useSharedValue } from "react-native-reanimated";
 
 import baseStyle from "../styles/base.js";
 
@@ -9,27 +9,25 @@ const PrettyButton = ({ onPress, children, ...otherProps }) => {
 
   const depth = 3;
 
-
   const pressIn = () => {
-    if(otherProps.toggle) {
-      top.value = withTiming(top.value>0?0:depth, {duration:100});
+    if (otherProps.toggle) {
+      top.value = withTiming(top.value > 0 ? 0 : depth, { duration: 100 });
     } else {
-      top.value = withTiming(depth, {duration:100});
+      top.value = withTiming(depth, { duration: 100 });
     }
   };
 
   const pressOut = () => {
-    if(!otherProps.toggle) {
-      top.value = withTiming(0, {duration: 100});
+    if (!otherProps.toggle) {
+      top.value = withTiming(0, { duration: 100 });
     }
   };
 
-
   return (
     <View style={styles.container}>
-      <View style={{...styles.buttonContainer, ...styles.under}}></View>
+      <View style={{ ...styles.buttonContainer, ...styles.under }} />
       <Animated.View
-        style={{...styles.buttonContainer, top:top}}
+        style={{ ...styles.buttonContainer, top }}
         {...otherProps} // Spread additional props
       >
         <Pressable
@@ -37,9 +35,10 @@ const PrettyButton = ({ onPress, children, ...otherProps }) => {
           onPressIn={pressIn}
           onPressOut={pressOut}
           onHoverOut={pressOut}
-          onPress={()=>{
+          onPress={() => {
             pressOut();
-            onPress();}}
+            onPress();
+          }}
         >
           <Text style={styles.text}>{children}</Text>
         </Pressable>
@@ -55,9 +54,9 @@ const styles = StyleSheet.create({
   },
   under: {
     position: "absolute",
-    width:"100%",
+    width: "100%",
     height: "100%",
-    top:3,
+    top: 3,
     backgroundColor: "white",
   },
   button: {
@@ -67,13 +66,12 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingVertical: "6%",
-    alignItems:"center",
-    justifyContent:"center",
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 10,
     borderWidth: 2,
     backgroundColor: baseStyle.colors.fg1,
     borderColor: "white",
-    alignItems: "center",
   },
   text: {
     ...baseStyle.bigText,

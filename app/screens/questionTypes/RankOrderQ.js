@@ -33,14 +33,15 @@ export default function RankOrderQ({ question, handleAnswer }) {
         <Text style={style.bigText}>{question.question}</Text>
       </View>
 
-      {question.image &&(
-      <View style={style.imageContainer}>
-        <Image
-          source={{uri: global.url + question.image?.url}}
-          style={style.image}
-          resizeMode="contain"
-        />
-      </View>)}
+      {question.image && (
+        <View style={style.imageContainer}>
+          <Image
+            source={{ uri: global.url + question.image?.url }}
+            style={style.image}
+            resizeMode="contain"
+          />
+        </View>
+      )}
       <View style={style.listContainer}>
         <DraggableFlatList
           data={data}

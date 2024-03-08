@@ -59,14 +59,15 @@ export default function MissingWordsQ({ question, handleAnswer }) {
         </ScrollView>
       </View>
 
-      {question.image &&(
-      <View style={style.imageContainer}>
-        <Image
-          source={{uri: global.url + question.image?.url}}
-          style={style.image}
-          resizeMode="contain"
-        />
-      </View>)}
+      {question.image && (
+        <View style={style.imageContainer}>
+          <Image
+            source={{ uri: global.url + question.image?.url }}
+            style={style.image}
+            resizeMode="contain"
+          />
+        </View>
+      )}
 
       <ScrollView contentContainerStyle={style.contentContainer}>
         <View style={style.keywords}>
