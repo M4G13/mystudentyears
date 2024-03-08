@@ -1,3 +1,5 @@
+import isEqual from "lodash/isEqual";
+import shuffle from "lodash/shuffle";
 import React, { useState } from "react";
 import { View, Text, Pressable, TouchableOpacity } from "react-native";
 /*import DraggableFlatList, {
@@ -6,10 +8,8 @@ import { View, Text, Pressable, TouchableOpacity } from "react-native";
 
 import style from "../../styles/rankorderq.js";
 
-const _ = require("lodash");
-
 export default function RankOrderQ({ question, handleAnswer }) {
-  const [data, setData] = useState(_.shuffle(question.answers));
+  const [data, setData] = useState(shuffle(question.answers));
 
   /*const renderItem = ({ item, drag, isActive }) => {
     return (
@@ -44,7 +44,7 @@ export default function RankOrderQ({ question, handleAnswer }) {
         <Pressable
           style={style.submitButton}
           onPress={() => {
-            handleAnswer(_.isEqual(data, question.answers));
+            handleAnswer(isEqual(data, question.answers));
           }}
         >
           <Text style={style.button}>Submit</Text>

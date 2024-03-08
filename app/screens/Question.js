@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState } from "react";
 import { View } from "react-native";
 
@@ -8,15 +7,6 @@ import OpenResponseQ from "./questionTypes/OpenResponseQ.js";
 import RankOrderQ from "./questionTypes/RankOrderQ.js";
 import { getData } from "../common.js";
 import baseStyle from "../styles/question.js";
-
-export function calculateScore(answers, totalQuestions) {
-  const correctAnswers = answers.filter((answer) => answer === true);
-  const score = (correctAnswers.length / totalQuestions) * 100;
-  return {
-    score,
-    correctAmount: correctAnswers.length,
-  };
-}
 
 export default function Question({ route, navigation }) {
   const { index } = route.params;
@@ -28,23 +18,6 @@ export default function Question({ route, navigation }) {
 
   const [answers, setAnswers] = useState([]);
 
-  let oldScore = null;
-
-  async function storeResult(answers, score) {
-    try {
-      oldScore = await AsyncStorage.getItem("quizScore" + category.id);
-      if (!oldScore || oldScore < score) {
-        await AsyncStorage.setItem(
-          "quiz" + category.id,
-          JSON.stringify(answers),
-        );
-        await AsyncStorage.setItem("quizScore" + category.id, score.toString());
-      }
-    } catch (e) {
-      console.error("Failed to save progress. " + e);
-    }
-  }
-
   function handleAnswer(correct) {
     const nextAnswers = [...answers, correct];
     setAnswers(nextAnswers);
@@ -55,33 +28,10 @@ export default function Question({ route, navigation }) {
         index: index + 1,
       });
     } else {
-      // probably should navigate to quiz end screen
-      const { score, correctAmount } = calculateScore(
-        nextAnswers,
-        quiz.questions.length,
-      );
-      storeResult(nextAnswers, score);
-      fetch(global.api_url + "/app-user/" + global.uuid, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data: {
-            CompletedQuizzes: [
-              {
-                quiz: quiz.id,
-                results: nextAnswers,
-              },
-            ],
-          },
-        }),
-      });
       navigation.navigate("QuizEndScreen", {
         ...route.params,
-        score,
-        correctAmount,
-        QuestionAmount: quiz.questions.length,
+        answers: nextAnswers,
+        quiz_id: quiz.id,
       });
     }
   }

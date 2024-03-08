@@ -1,6 +1,8 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { View, Text, Pressable, ActivityIndicator } from "react-native";
+import { View, Text } from "react-native";
 
+import Loading from "../components/Loading.js";
 import baseStyle from "../styles/base";
 
 export default function Privacy({ route, navigation }) {
@@ -9,10 +11,10 @@ export default function Privacy({ route, navigation }) {
   const [privacyContent, setPrivacyContent] = useState("");
 
   const fetchData = () => {
-    fetch(global.api_url + "/privacy-policy")
-      .then((response) => response.json())
-      .then((data) => {
-        setPrivacyContent(data.data.attributes.privacyPolicy);
+    axios
+      .get(global.api_url + "/privacy-policy")
+      .then((response) => {
+        setPrivacyContent(response.data.data.attributes.privacyPolicy);
         setIsLoading(false);
         setError(false);
       })
@@ -27,31 +29,11 @@ export default function Privacy({ route, navigation }) {
     fetchData();
   }, []);
 
-  if (isLoading) {
-    return (
-      <View style={baseStyle.view}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
-
-  if (error) {
-    return (
-      <View style={baseStyle.view}>
-        <Text style={baseStyle.bigText}>
-          Failed to load data, make sure you have an internet connection and try
-          again
-        </Text>
-        <Pressable onPress={fetchData}>
-          <Text style={baseStyle.button}>Retry</Text>
-        </Pressable>
-      </View>
-    );
-  }
-
   return (
-    <View style={baseStyle.view}>
-      <Text style={baseStyle.smallText}>{privacyContent}</Text>
-    </View>
+    <Loading isLoading={isLoading} isError={error} retry={fetchData}>
+      <View style={baseStyle.view}>
+        <Text style={baseStyle.smallText}>{privacyContent}</Text>
+      </View>
+    </Loading>
   );
 }
