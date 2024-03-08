@@ -4,15 +4,16 @@ import { View, Text, Image } from "react-native";
 import PrettyButton from "../../components/PrettyButton.js";
 import style from "../../styles/multichoiceq.js";
 
+
 export default function MultiChoiceQ({ question, handleAnswer }) {
   const [selected, setSelected] = useState({});
 
+  const allSelected = (q) => (
+      Object.values(selected).filter(Boolean).length < question.options.filter((item) => item.correct === true).length);
+
+
   const handleSelect = (q) => {
-    if (
-      Object.values(selected).filter(Boolean).length <
-        question.options.filter((item) => item.correct === true).length ||
-      selected[q.id] === true
-    ) {
+    if (allSelected(q) || selected[q.id]===true) {
       if (selected) {
         const nextSelected = { ...selected };
         nextSelected[q.id] = !nextSelected[q.id];
@@ -34,42 +35,32 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
       <View style={style.questionContainer}>
         <Text style={style.bigText}>{question.question}</Text>
       </View>
-
+      {question.image &&(
       <View style={style.imageContainer}>
         <Image
-          source={
-            question.image
-              ? {
-                  uri: global.url + question.image?.url,
-                }
-              : require("../../assets/star_filled.png")
-          }
+          source={{uri: global.url + question.image?.url}}
           style={style.image}
           resizeMode="contain"
         />
-      </View>
+      </View>)}
 
       <View style={style.optionsContainer}>
         {question.options.map((q) => (
           <PrettyButton
             key={q.id}
-            backgroundColor={selected[q.id] === true ? "#888888" : "#d6d6d6"}
             onPress={() => handleSelect(q)}
+            toggle={allSelected(q)}
           >
             {q.text}
           </PrettyButton>
         ))}
       </View>
       <PrettyButton
-        width="80%"
         backgroundColor={style.colors.fg2}
-        marginLeft="10%"
-        onPress={() =>{
-          console.log(selected)
+        onPress={() => {
           Object.values(selected).some((value) => value === true) &&
-          handleAnswer(isCorrect())
-        }
-        }
+            handleAnswer(isCorrect());
+        }}
       >
         Submit
       </PrettyButton>

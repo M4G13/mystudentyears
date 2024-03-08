@@ -99,7 +99,7 @@ export default function Category({ route, navigation }) {
 
             <View style={{ width: "80%" }}>
               <PrettyButton
-                onPressOut={() =>
+                onPress={() =>
                   navigation.navigate("Info", {
                     ...route.params,
                     index: 0,
@@ -113,7 +113,7 @@ export default function Category({ route, navigation }) {
             {infoCompletion !== null && (
               <View style={{ width: "80%" }}>
                 <PrettyButton
-                  onPressOut={() => {
+                  onPress={() => {
                     navigation.navigate("Question", {
                       ...route.params,
                       index: 0,

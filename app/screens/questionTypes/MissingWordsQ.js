@@ -59,19 +59,14 @@ export default function MissingWordsQ({ question, handleAnswer }) {
         </ScrollView>
       </View>
 
+      {question.image &&(
       <View style={style.imageContainer}>
         <Image
-          source={
-            question.image
-              ? {
-                  uri: global.url + question.image?.url,
-                }
-              : require("../../assets/star_filled.png")
-          }
+          source={{uri: global.url + question.image?.url}}
           style={style.image}
           resizeMode="contain"
         />
-      </View>
+      </View>)}
 
       <ScrollView contentContainerStyle={style.contentContainer}>
         <View style={style.keywords}>
@@ -92,9 +87,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
             ))
           ) : (
             <PrettyButton
-              width="80%"
               backgroundColor={style.colors.fg2}
-              marginLeft="10%"
               onPress={() =>
                 handleAnswer(_.isEqual(keywords.selected, correctKeywords))
               }

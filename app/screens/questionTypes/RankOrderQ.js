@@ -33,17 +33,14 @@ export default function RankOrderQ({ question, handleAnswer }) {
         <Text style={style.bigText}>{question.question}</Text>
       </View>
 
+      {question.image &&(
       <View style={style.imageContainer}>
         <Image
-          source={
-            question.image
-              ? { uri: global.url + question.image.url }
-              : require("../../assets/star_filled.png")
-          }
+          source={{uri: global.url + question.image?.url}}
           style={style.image}
           resizeMode="contain"
         />
-      </View>
+      </View>)}
       <View style={style.listContainer}>
         <DraggableFlatList
           data={data}
@@ -53,9 +50,7 @@ export default function RankOrderQ({ question, handleAnswer }) {
         />
       </View>
       <PrettyButton
-        width="80%"
         backgroundColor={style.colors.fg2}
-        marginLeft="10%"
         onPress={() => {
           handleAnswer(_.isEqual(data, question.answers));
         }}

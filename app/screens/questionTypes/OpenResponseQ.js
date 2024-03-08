@@ -19,19 +19,14 @@ export default function OpenResponseQ({ question, handleAnswer }) {
         <Text style={style.bigText}>{question.question}</Text>
       </View>
 
+      {question.image &&(
       <View style={style.imageContainer}>
         <Image
-          source={
-            question.image
-              ? {
-                  uri: global.url + question.image?.url,
-                }
-              : require("../../assets/star_filled.png")
-          }
+          source={{uri: global.url + question.image?.url}}
           style={style.image}
           resizeMode="contain"
         />
-      </View>
+      </View>)}
 
       <TextInput
         style={style.input}
@@ -42,8 +37,6 @@ export default function OpenResponseQ({ question, handleAnswer }) {
       />
 
       <PrettyButton
-        width="80%"
-        marginLeft="10%"
         backgroundColor={style.colors.fg2}
         onPress={() => {
           Keyboard.dismiss();
