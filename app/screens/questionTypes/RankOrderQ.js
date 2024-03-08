@@ -23,14 +23,17 @@ export default function RankOrderQ({ question, handleAnswer }) {
         </View>
       )}
       {/* Draggable flatlist removed until we re-implement it */}
-      <PrettyButton
-        backgroundColor={style.colors.fg2}
-        onPress={() => {
-          handleAnswer(isEqual(data, question.answers));
-        }}
-      >
-        Submit
-      </PrettyButton>
+      <View style={style.submitButtonContainer}>
+        <PrettyButton
+          backgroundColor={style.colors.fg2}
+          style={style.submitButton}
+          onPress={() => {
+            handleAnswer(isEqual(data, question.answers));
+          }}
+        >
+          Submit
+        </PrettyButton>
+      </View>
     </View>
   );
 }

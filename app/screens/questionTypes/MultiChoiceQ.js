@@ -55,15 +55,17 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
           </PrettyButton>
         ))}
       </View>
-      <PrettyButton
-        backgroundColor={style.colors.fg2}
-        onPress={() => {
-          Object.values(selected).some((value) => value === true) &&
-            handleAnswer(isCorrect());
-        }}
-      >
-        Submit
-      </PrettyButton>
+      <View style={style.submitButtonContainer}>
+        <PrettyButton
+          style={style.submitButton}
+          onPress={() => {
+            Object.values(selected).some((value) => value === true) &&
+              handleAnswer(isCorrect());
+          }}
+        >
+          Submit
+        </PrettyButton>
+      </View>
     </View>
   );
 }

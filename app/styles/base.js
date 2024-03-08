@@ -8,6 +8,7 @@ const colors = {
   fg1: "#7bcdf4",
   fg2: "#57e075",
   fg3: "#fef270",
+  fg4: "#6b9cb3",
   text1: "#ffffff",
   text2: "#16161d",
   text3: "#FFD700",

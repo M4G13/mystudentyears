@@ -13,10 +13,6 @@ const style = StyleSheet.create({
     backgroundColor: "transparent",
     borderColor: base.colors.fg2,
     width: "90%",
-    flexGrow: 1,
-  },
-  pressableSelected: {
-    backgroundColor: base.colors.fg2,
   },
   bigText: {
     ...base.bigText,

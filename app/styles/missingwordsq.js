@@ -10,8 +10,13 @@ const style = StyleSheet.create({
   },
   questionContainer: {
     ...base.questionContainer,
-    height: Dimensions.get("window").height * 0.3,
+    justifyContent: "space-between",
+    height: "40%",
   },
+  contentContainer: {
+    marginTop: "auto",
+  },
+
   option: {
     ...base.option,
     fontSize: 20,
@@ -19,11 +24,14 @@ const style = StyleSheet.create({
   },
   keywords: {
     marginTop: "10%",
+    height: "10%",
+    gap: 10,
     flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     flexWrap: "wrap",
-    width: Dimensions.get("screen").width,
+    width: "100%",
   },
-  contentContainer: {},
   wordGaps: {
     ...base.bigText,
     backgroundColor: base.colors.bg3,
@@ -39,8 +47,7 @@ const style = StyleSheet.create({
     fontSize: 20,
   },
   buttonContainer: {
-    width: Dimensions.get("screen").width * 0.45,
-    marginHorizontal: Dimensions.get("screen").width * 0.02,
+    width: "45%",
   },
 });
 

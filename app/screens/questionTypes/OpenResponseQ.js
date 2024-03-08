@@ -36,18 +36,19 @@ export default function OpenResponseQ({ question, handleAnswer }) {
         onChangeText={(text) => setInput(text)}
         value={input}
       />
-
-      <PrettyButton
-        backgroundColor={style.colors.fg2}
-        onPress={() => {
-          Keyboard.dismiss();
-          if (input !== "") {
-            handleAnswer(compare(input, question.answer));
-          }
-        }}
-      >
-        Submit
-      </PrettyButton>
+      <View style={style.submitButtonContainer}>
+        <PrettyButton
+          style={style.submitButton}
+          onPress={() => {
+            Keyboard.dismiss();
+            if (input !== "") {
+              handleAnswer(compare(input, question.answer));
+            }
+          }}
+        >
+          Submit
+        </PrettyButton>
+      </View>
     </View>
   );
 }

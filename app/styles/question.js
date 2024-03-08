@@ -11,6 +11,16 @@ const style = StyleSheet.create({
     width: "100%",
     backgroundColor: base.colors.bg1,
   },
+
+  submitButtonContainer: {
+    padding: 10,
+    width: "100%",
+    marginTop: "auto",
+  },
+
+  submitButton: {
+    backgroundColor: base.colors.fg2,
+  },
   questionContainer: {
     padding: 30,
   },
