@@ -2,7 +2,8 @@
   "collectionName": "components_category_categories",
   "info": {
     "displayName": "Category",
-    "icon": "grid"
+    "icon": "grid",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -17,7 +18,7 @@
     },
     "information": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "api::info.info"
     },
     "quiz": {

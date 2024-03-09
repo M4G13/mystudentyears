@@ -20,9 +20,9 @@ export default function Info({ route, navigation }) {
 
   const { category } = getData(route.params);
 
-  const information = category.information;
+  const information = category.information.pages;
   const isLastPage = index === information.length - 1;
-  const currInfo = category.information[index];
+  const currInfo = information[index];
   const imageUrl =
     currInfo?.image?.url &&
     `${global.url}${currInfo.image.url.startsWith("/") ? "" : "/"}${currInfo.image.url}`;

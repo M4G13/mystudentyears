@@ -1,7 +1,8 @@
 {
   "collectionName": "components_answers_answers",
   "info": {
-    "displayName": "answers"
+    "displayName": "answers",
+    "description": ""
   },
   "options": {},
   "attributes": {
