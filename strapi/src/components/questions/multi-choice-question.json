@@ -13,7 +13,7 @@
     "options": {
       "type": "component",
       "repeatable": true,
-      "component": "option-types.multi-choice-option",
+      "component": "questions-helpers.multi-choice-option",
       "min": 4,
       "max": 4
     },

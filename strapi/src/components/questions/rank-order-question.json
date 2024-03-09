@@ -13,7 +13,7 @@
       "displayName": "answers",
       "type": "component",
       "repeatable": true,
-      "component": "answers.answers",
+      "component": "questions-helpers.answers",
       "max": 5,
       "min": 3
     },

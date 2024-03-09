@@ -8,7 +8,9 @@ module.exports = {
           'populate': {
             'information': {
               'populate': {
-                'image': true
+                'pages': {
+                  'populate': '*'
+                }
               }
             },
             'quiz': {
