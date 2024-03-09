@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_information_information",
+  "info": {
+    "displayName": "information",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "Text": {
+      "type": "richtext"
+    }
+  }
+}

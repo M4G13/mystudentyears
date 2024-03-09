@@ -25,11 +25,12 @@ In this scenario we'll imagine creating a new student story for a character call
 * Navigate to the Content Manager panel (using the sidebar on the left).
 
 * Navigate to the 'Information' panel and press 'Create new entry', This will create the information pages for the first quiz (NB: more than one information page can follow each other for a single quiz).
+    * Fill in the description field.  The description field is just for you to organise your pages.  Call it something like: 'Molly Finance'.
+    * To add a new page to the information, press 'Add entry'.
     * In the title section put the title of this information page (e.g., Molly's first day at uni).
     * Add any accompanying images (these will show up at the top of the information page for some added visual interest).
     * Fill in the text field, this is the main body of a single information page (before a quiz).  Simple formatting can be done, such as italics, bold, etc.
-    * NB: Fill in the description field.  The description field is just for you to organise your pages.  Call it something like: 'Molly Finance 1'.
-    * Repeat for as many information pages are required for a single quiz (e.g., 'Molly Finance 2', etc.)
+    * Repeat for as many information pages are required for a single quiz
     * Press Save
 * Create the quiz for the first category (navigate to quiz, and press 'Create new entry').
     * As before, remember to fill in the description field for your own organisation.  Call this something like 'Molly Finance Quiz', so you know the student story and the category it relates to.
@@ -57,5 +58,5 @@ In this scenario we'll imagine creating a new student story for a character call
     * In the 'Name' field type 'Molly'.
     * Next, select the plus button under category (or the '+ Add an entry' button for following categories).
     * From the drop-down select the correct category (in this case 'Finance').  
-    * Under information select the information pages for this category, i.e., 'Molly Finance 1', and 'Molly Finance 2'. This is the reason for good descriptions on Information pages and quizzes. (NB: information pages will be displayed in the order you place them in here).
+    * Under information select the information page for this category, i.e., 'Molly Finance Information'.
     * Repeat the above for the quiz (e.g., 'Molly Finance Quiz').

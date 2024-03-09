@@ -12,22 +12,10 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Title": {
-      "type": "string"
-    },
-    "image": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "Text": {
-      "type": "richtext"
+    "pages": {
+      "type": "component",
+      "repeatable": true,
+      "component": "information.information"
     },
     "description": {
       "type": "string"
