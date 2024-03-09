@@ -9,64 +9,62 @@ import Animated, {
 
 import baseStyle from "../styles/base.js";
 
-const PrettyButton = ({ onPress, children, ...otherProps }) => {
+export const PrettyButtonState = ({
+  onPress,
+  children,
+  toggled,
+  style,
+  ...props
+}) => {
   const top = useSharedValue(0);
   const colorProgress = useSharedValue(0);
 
   const depth = 3;
 
-  const bgAnim = useAnimatedStyle(() => {
-    return otherProps.toggle
-      ? {
-          backgroundColor: interpolateColor(
-            colorProgress.value,
-            [0, 1],
-            [baseStyle.colors.fg1, baseStyle.colors.fg4],
-          ),
-        }
-      : {};
+  top.value = withTiming(toggled ? depth : 0, { duration: 100 });
+  colorProgress.value = withTiming(toggled ? 1 : 0, {
+    duration: 100,
   });
 
-  const pressIn = () => {
-    if (otherProps.toggle) {
-      colorProgress.value = withTiming(top.value > 0 ? 0 : 1, {
-        duration: 100,
-      });
-      top.value = withTiming(top.value > 0 ? 0 : depth, { duration: 100 });
-    } else {
-      top.value = withTiming(depth, { duration: 100 });
-    }
-  };
-
-  const pressOut = () => {
-    if (!otherProps.toggle) {
-      top.value = withTiming(0, { duration: 100 });
-      colorProgress.value = withTiming(0, { duration: 100 });
-    }
-  };
+  const bgAnim = useAnimatedStyle(() => {
+    return {
+      backgroundColor: interpolateColor(
+        colorProgress.value,
+        [0, 1],
+        [baseStyle.colors.fg1, baseStyle.colors.fg4],
+      ),
+    };
+  });
 
   return (
     <View style={styles.container}>
       <View style={{ ...styles.buttonContainer, ...styles.under }} />
       <Animated.View
-        {...otherProps} // Spread additional props
         // Horrible combination of styles but only way to get pretty animations
-        style={[styles.buttonContainer, otherProps.style, bgAnim, { top }]}
+        style={[styles.buttonContainer, style, bgAnim, { top }]}
       >
         <Pressable
+          {...props} // Spread additional props
           style={styles.button}
-          onPressIn={pressIn}
-          onPressOut={pressOut}
-          onHoverOut={pressOut}
-          onPress={() => {
-            pressOut();
-            onPress();
-          }}
+          onPress={onPress}
         >
           <Text style={styles.text}>{children}</Text>
         </Pressable>
       </Animated.View>
     </View>
+  );
+};
+
+const PrettyButton = (props) => {
+  const [toggled, setToggled] = useState(false);
+  return (
+    <PrettyButtonState
+      {...props}
+      onPressIn={() => setToggled(true)}
+      onPressOut={() => setToggled(false)}
+      onHoverOut={() => setToggled(false)}
+      toggled={toggled}
+    />
   );
 };
 

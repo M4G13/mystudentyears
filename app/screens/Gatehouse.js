@@ -65,9 +65,9 @@ export default function Gatehouse({ navigation }) {
             key={"student" + i}
             style={[style.studentWrapper, bgColorAnim]}
           >
-            {s.Student_Image !== null && (
+            {s.image !== null && (
               <Image
-                source={{ uri: global.url + s.Student_image.url }}
+                source={{ uri: global.url + s.image.url }}
                 style={{ ...style.studentImage }}
               />
             )}

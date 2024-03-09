@@ -7,7 +7,8 @@
   "options": {},
   "attributes": {
     "question": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "answers": {
       "displayName": "answers",
@@ -15,17 +16,16 @@
       "repeatable": true,
       "component": "questions-helpers.answers",
       "max": 5,
-      "min": 3
+      "min": 3,
+      "required": true
     },
     "image": {
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ],
       "type": "media",
-      "multiple": false
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }

@@ -1,23 +1,23 @@
 import { useState } from "react";
 import { View, Text, Image } from "react-native";
 
-import PrettyButton from "../../components/PrettyButton.js";
+import PrettyButton, {
+  PrettyButtonState,
+} from "../../components/PrettyButton.js";
 import style from "../../styles/multichoiceq.js";
 
 export default function MultiChoiceQ({ question, handleAnswer }) {
   const [selected, setSelected] = useState({});
 
-  const allSelected = (q) =>
-    Object.values(selected).filter(Boolean).length <
+  const selectedCorrectNumber =
+    Object.values(selected).filter((item) => item === true).length ===
     question.options.filter((item) => item.correct === true).length;
 
   const handleSelect = (q) => {
-    if (allSelected(q) || selected[q.id] === true) {
-      if (selected) {
-        const nextSelected = { ...selected };
-        nextSelected[q.id] = !nextSelected[q.id];
-        setSelected(nextSelected);
-      }
+    const nextSelected = { ...selected };
+    if (!selectedCorrectNumber || nextSelected[q.id] === true) {
+      nextSelected[q.id] = !nextSelected[q.id];
+      setSelected(nextSelected);
     }
   };
 
@@ -46,21 +46,21 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
 
       <View style={style.optionsContainer}>
         {question.options.map((q) => (
-          <PrettyButton
+          <PrettyButtonState
             key={q.id}
             onPress={() => handleSelect(q)}
-            toggle={allSelected(q)}
+            toggled={selected[q.id]}
           >
             {q.text}
-          </PrettyButton>
+          </PrettyButtonState>
         ))}
       </View>
       <View style={style.submitButtonContainer}>
         <PrettyButton
           style={style.submitButton}
           onPress={() => {
-            Object.values(selected).some((value) => value === true) &&
-              handleAnswer(isCorrect());
+            if (selectedCorrectNumber) handleAnswer(isCorrect());
+            else alert("Please select the correct number of options.");
           }}
         >
           Submit

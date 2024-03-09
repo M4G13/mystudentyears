@@ -73,14 +73,13 @@ export default function MissingWordsQ({ question, handleAnswer }) {
         <View style={style.keywords}>
           {keywords.available.length ? (
             keywords.available.map((keyword, index) => (
-              <View style={style.buttonContainer}>
+              <View style={style.buttonContainer} key={`${index}${keyword}`}>
                 <PrettyButton
                   height={50}
                   stretch
                   onPress={() => {
                     putKeyword(index);
                   }}
-                  key={`${index}${keyword}`}
                 >
                   <Text style={style.bigText}>{keyword}</Text>
                 </PrettyButton>

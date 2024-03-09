@@ -20,10 +20,12 @@
         "questions.rank-order-question",
         "questions.open-response-question"
       ],
-      "min": 1
+      "min": 1,
+      "required": true
     },
     "description": {
-      "type": "string"
+      "type": "string",
+      "required": true
     }
   }
 }

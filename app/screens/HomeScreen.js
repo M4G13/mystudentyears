@@ -1,28 +1,9 @@
-import { useEffect, useState } from "react";
 import { View, Text, Pressable, Image, StatusBar } from "react-native";
 
 import style from "../styles/homescreen.js";
 
 export default function HomeScreen({ navigation }) {
   StatusBar.setBackgroundColor("#7bcef4");
-
-  const [image, setImage] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
-
-  const fetchData = () => {
-    fetch(global.api_url + "/homepage-image")
-      .then((response) => response.json())
-      .then((data) => {
-        setImage(data.image.url);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <View style={style.view}>
@@ -33,7 +14,10 @@ export default function HomeScreen({ navigation }) {
         />
       </View>
       <View style={style.logoContainer}>
-        <Image source={{ uri: global.url + image }} style={style.mainImage} />
+        <Image
+          source={require("../assets/Molly1.png")}
+          style={style.mainImage}
+        />
       </View>
       <Text style={style.bigText}>Welcome to My Student Years!</Text>
       {global.uuid ? (

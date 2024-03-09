@@ -7,20 +7,12 @@
   "options": {},
   "attributes": {
     "Title": {
-      "type": "string"
-    },
-    "image": {
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      "type": "string",
+      "required": true
     },
     "Text": {
-      "type": "richtext"
+      "type": "richtext",
+      "required": true
     }
   }
 }
