@@ -46,32 +46,35 @@ const studentCompletion = async () => await strapi.db.connection.context.raw(`
 const quizData = async () => {
   const raw = await strapi.db.connection.context.raw(`
     SELECT
-      l.quiz_id,
-      c.id,
+      q.id AS quiz_id,
       q.description,
       c.results as results
     FROM
-      components_completion_completions_quiz_links AS l
-    INNER JOIN
+      quizzes AS q
+    LEFT OUTER JOIN
+      components_completion_completions_quiz_links AS l ON l.quiz_id=q.id
+    LEFT OUTER JOIN
       components_completion_completions AS c ON completion_id=c.id
-    INNER JOIN
-      quizzes AS q ON quiz_id=q.id
   `)
   let result = {};
   raw.forEach((quiz) => {
-    let quizId = "quiz"+quiz.quiz_id;
+    let quizId = quiz.quiz_id;
     if(!result[quizId]) {
       result[quizId] = {};
     }
     result[quizId]["description"] = quiz.description;
-    result[quizId]["totalResponses"] = (result[quizId]["totalResponses"] || 0) + 1
-    JSON.parse(quiz.results).forEach((question, questionIndex) => {
-      let questionId = "question"+(questionIndex+1);
-      result[quizId][questionId] = (result[quizId][questionId] || 0) + (question?1:0);
-      console.log(result[quizId][questionId]);
-    });
+    if(quiz.results) {
+      result[quizId]["totalResponses"] = (result[quizId]["totalResponses"] || 0) + 1
+      JSON.parse(quiz.results).forEach((question, questionIndex) => {
+        let questionId = "question"+(questionIndex+1);
+        result[quizId][questionId] = (result[quizId][questionId] || 0) + (question?1:0);
+        console.log(result[quizId][questionId]);
+      });
+    } else {
+      result[quizId]["totalResponses"] = 0;
+    }
   });
-  return result;
+  return Object.values(result);
 };
 
 const laFreq = async () => await strapi.db.connection.context.raw(`
