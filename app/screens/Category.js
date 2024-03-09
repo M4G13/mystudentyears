@@ -11,6 +11,12 @@ export default function Category({ route, navigation }) {
 
   const [completion] = useContext(CompletionContext);
   const catCompletion = completion[category.id];
+  const categoryImages = {
+    Finance: require("../assets/Finance.jpg"),
+    Wellbeing: require("../assets/Wellbeing.jpg"),
+    Academics: require("../assets/Academics.jpg"),
+    Independence: require("../assets/Independence.jpg"),
+  };
 
   return (
     <View style={baseStyle.view}>
@@ -27,13 +33,15 @@ export default function Category({ route, navigation }) {
 
         <>
           <View style={baseStyle.imageContainer}>
-            {category.image && (
-              <Image
-                source={{ uri: global.url + category.image?.url }}
-                style={baseStyle.image}
-                resizeMode="contain"
-              />
-            )}
+            <Image
+              source={
+                category.image
+                  ? { uri: global.url + category.image?.url }
+                  : categoryImages[category.Category]
+              }
+              style={baseStyle.image}
+              resizeMode="contain"
+            />
           </View>
 
           <View style={{ width: "80%" }}>

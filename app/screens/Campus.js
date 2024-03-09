@@ -9,10 +9,10 @@ import { GradeIcon } from "../components/Grade.js";
 import style from "../styles/campus.js";
 
 const categoryIcons = {
-  Finance: require("../assets/finance.png"),
-  Wellbeing: require("../assets/wellbeing.png"),
-  Academics: require("../assets/academics.png"),
-  Independence: require("../assets/independence.png"),
+  Finance: require("../assets/finance-icon.png"),
+  Wellbeing: require("../assets/wellbeing-icon.png"),
+  Academics: require("../assets/academics-icon.png"),
+  Independence: require("../assets/independence-icon.png"),
 };
 
 const imageSource = require("../assets/temp_map.png");
