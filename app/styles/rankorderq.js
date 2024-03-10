@@ -6,14 +6,6 @@ const style = StyleSheet.create({
   ...base,
   questionWrapper: {
     ...base.questionWrapper,
-    // justifyContent: "space-between",
-  },
-
-  button: {
-    color: base.colors.text1,
-    fontWeight: "600",
-    fontSize: 22,
-    textAlign: "center",
   },
 
   bigText: {
@@ -28,14 +20,12 @@ const style = StyleSheet.create({
   },
   selected: {
     ...base.optionsContainer,
-    flex: 1,
-    gap: 25,
-    // height: "40%"
+    flexGrow: 1,
+    gap: 15,
   },
   options: {
     ...base.optionsContainer,
     width: "100%",
-    // flexGrow: 1,
     flex: 1,
     flexDirection: "row",
     alignContent: "flex-end",
@@ -48,8 +38,8 @@ const style = StyleSheet.create({
     height: "20%",
   },
   selectedButton: {
-    height: "15%",
-  }
+    flex: 1,
+  },
 });
 
 export default style;

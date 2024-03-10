@@ -67,32 +67,32 @@ export default function MissingWordsQ({ question, handleAnswer }) {
         </View>
       )}
 
-        {keywords.available.length ? (
+      {keywords.available.length ? (
         <View style={style.keywords}>
           {keywords.available.map((keyword, index) => (
-              <PrettyButton
-                key={`${index}${keyword}`}
-                style={style.button}
-                onPress={() => {
-                  putKeyword(index);
-                }}
-              >
-                {keyword}
-              </PrettyButton>
+            <PrettyButton
+              key={`${index}${keyword}`}
+              style={{ width: "45%", height: "20%" }}
+              onPress={() => {
+                putKeyword(index);
+              }}
+            >
+              {keyword}
+            </PrettyButton>
           ))}
         </View>
-        ) : (
-          <View style={style.submitButtonContainer}>
-            <PrettyButton
-              style={style.submitButton}
-              onPress={() =>
-                handleAnswer(isEqual(keywords.selected, correctKeywords))
-              }
-            >
-              Submit
-            </PrettyButton>
-          </View>
-        )}
+      ) : (
+        <View style={style.submitButtonContainer}>
+          <PrettyButton
+            style={style.submitButton}
+            onPress={() =>
+              handleAnswer(isEqual(keywords.selected, correctKeywords))
+            }
+          >
+            Submit
+          </PrettyButton>
+        </View>
+      )}
     </View>
   );
 }

@@ -54,7 +54,7 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
             key={q.id}
             onPress={() => handleSelect(q)}
             toggled={selected[q.id]}
-            style={{flex: 1}}
+            style={{ flex: 1 }}
           >
             {q.text}
           </PrettyButtonState>

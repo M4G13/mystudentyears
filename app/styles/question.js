@@ -25,7 +25,7 @@ const style = StyleSheet.create({
   optionsContainer: {
     width: "80%",
     marginBottom: "5%",
-    gap: 15
+    gap: 15,
   },
   option: {
     marginBottom: "5%",

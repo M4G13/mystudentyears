@@ -44,23 +44,21 @@ export default function RankOrderQ({ question, handleAnswer }) {
         </View>
       )}
       <View style={style.selected}>
-        {options.selected.map((q, i) => (
+        {options.selected.map((q, i) =>
           q ? (
-          <PrettyButton
-            key={i}
-            onPress={() => handleDeselect(i)}
-            style={style.selectedButton}
-          >
-            {q.answer}
-          </PrettyButton>
+            <PrettyButton
+              key={i}
+              onPress={() => handleDeselect(i)}
+              style={style.selectedButton}
+            >
+              {i + 1}: {q.answer}
+            </PrettyButton>
           ) : (
-          <PrettyButton
-            key={i}
-            style={style.selectedButton}
-          >
-            {i+1}
-          </PrettyButton>
-          )))}
+            <PrettyButton key={i} style={style.selectedButton}>
+              {i + 1}
+            </PrettyButton>
+          ),
+        )}
       </View>
       {options.available.length ? (
         <View style={style.options}>
@@ -68,7 +66,6 @@ export default function RankOrderQ({ question, handleAnswer }) {
             <PrettyButton
               key={q.id}
               onPress={() => handleSelect(i)}
-              // toggled={selected === i}
               style={style.button}
             >
               {q.answer}
@@ -76,17 +73,17 @@ export default function RankOrderQ({ question, handleAnswer }) {
           ))}
         </View>
       ) : (
-          <View style={style.submitButtonContainer}>
-            <PrettyButton
-              style={style.submitButton}
-              onPress={() => {
-                handleAnswer(isEqual(options.selected, question.answers));
-              }}
-            >
-              Submit
-            </PrettyButton>
-          </View>
-        )}
+        <View style={style.submitButtonContainer}>
+          <PrettyButton
+            style={style.submitButton}
+            onPress={() => {
+              handleAnswer(isEqual(options.selected, question.answers));
+            }}
+          >
+            Submit
+          </PrettyButton>
+        </View>
+      )}
     </View>
   );
 }
