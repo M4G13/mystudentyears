@@ -7,7 +7,6 @@ import RankOrderQ from "../../screens/questionTypes/RankOrderQ";
 const data = require("../data.json");
 const question = data[0].category[0].quiz.questions[2];
 const mockFnTrue = jest.fn();
-const mockFnFalse = jest.fn();
 
 describe("<RankOrderQ />", () => {
   const tree = renderer
@@ -21,7 +20,7 @@ describe("<RankOrderQ />", () => {
 describe("handleAnswer()", () => {
   it("Returns true with correct order", () => {
     render(<RankOrderQ question={question} handleAnswer={mockFnTrue} />);
-    question.answers.forEach((q)=>{
+    question.answers.forEach((q) => {
       fireEvent.press(screen.getByText(q.answer));
     });
     fireEvent.press(screen.getByText("Submit"));

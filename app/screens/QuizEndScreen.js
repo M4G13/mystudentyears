@@ -82,7 +82,7 @@ export default function QuizEndScreen({ route, navigation }) {
               category_id,
               student_id,
               index: 0,
-            })
+            });
           }}
           style={style.pressable}
         >
