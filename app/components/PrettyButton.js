@@ -16,46 +16,42 @@ export const PrettyButtonState = ({
   style,
   ...props
 }) => {
-  const top = useSharedValue(0);
-  const colorProgress = useSharedValue(0);
-
   const depth = 3;
-
-  top.value = withTiming(toggled ? depth : 0, { duration: 100 });
+  const colorProgress = useSharedValue(0);
   colorProgress.value = withTiming(toggled ? 1 : 0, {
     duration: 100,
   });
 
-  const bgAnim = useAnimatedStyle(() => {
+  const animatedStyles = useAnimatedStyle(() => {
     return {
       backgroundColor: interpolateColor(
         colorProgress.value,
         [0, 1],
         [baseStyle.colors.fg1, baseStyle.colors.fg4],
       ),
+      top: withTiming(toggled ? depth : 0, { duration: 100 }),
     };
   });
 
   return (
-    <View style={styles.container}>
+    <View style={style}>
       <View style={{ ...styles.buttonContainer, ...styles.under }} />
-      <Animated.View
-        // Horrible combination of styles but only way to get pretty animations
-        style={[styles.buttonContainer, style, bgAnim, { top }]}
-      >
+      <Animated.View style={[styles.buttonContainer, animatedStyles]}>
         <Pressable
           {...props} // Spread additional props
           style={styles.button}
           onPress={onPress}
         >
-          <Text style={styles.text}>{children}</Text>
+          <Text style={styles.text} adjustsFontSizeToFit>
+            {children}
+          </Text>
         </Pressable>
       </Animated.View>
     </View>
   );
 };
 
-const PrettyButton = (props) => {
+const PrettyButton = ({ down, ...props }) => {
   const [toggled, setToggled] = useState(false);
   return (
     <PrettyButtonState
@@ -63,7 +59,7 @@ const PrettyButton = (props) => {
       onPressIn={() => setToggled(true)}
       onPressOut={() => setToggled(false)}
       onHoverOut={() => setToggled(false)}
-      toggled={toggled}
+      toggled={toggled || down}
     />
   );
 };
@@ -82,11 +78,11 @@ const styles = StyleSheet.create({
   },
   button: {
     width: "100%",
-    position: "absolute",
-    padding: "3%",
+    justifyContent: "center",
+    height: "100%",
   },
   buttonContainer: {
-    paddingVertical: "8%",
+    height: "100%",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,

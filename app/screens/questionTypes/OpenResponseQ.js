@@ -15,12 +15,8 @@ export default function OpenResponseQ({ question, handleAnswer }) {
 
   return (
     <View style={style.questionWrapper}>
-      <View style={style.questionContainer}>
-        <Text style={style.bigText}>{question.question}</Text>
-      </View>
-
       {question.image && (
-        <View style={style.imageContainer}>
+        <View style={{ width: "60%", height: "100%", flex: 1 }}>
           <Image
             source={{ uri: global.url + question.image?.url }}
             style={style.image}
@@ -28,6 +24,9 @@ export default function OpenResponseQ({ question, handleAnswer }) {
           />
         </View>
       )}
+      <View style={style.questionContainer}>
+        <Text style={style.bigText}>{question.question}</Text>
+      </View>
 
       <TextInput
         style={style.input}
