@@ -13,6 +13,33 @@ export default function Question({ route, navigation }) {
   const { index } = route.params;
   const { category } = getData(route.params);
 
+  useEffect(
+    () =>
+      navigation.addListener("beforeRemove", (e) => {
+        if (e.data.action.type === "POP") return;
+        e.preventDefault();
+        Alert.alert(
+          "Exit quiz?",
+          "You will lose your current progress. ",
+          [
+            { text: "Don't leave", style: "cancel", onPress: () => {} },
+            {
+              text: "Exit",
+              style: "destructive",
+              onPress: () => {
+                navigation.dispatch(e.data.action);
+              },
+            },
+          ],
+          {
+            cancelable: true,
+            onDismiss: () => {},
+          },
+        );
+      }),
+    [navigation],
+  );
+
   const quiz = category.quiz;
 
   if (!quiz) {
@@ -20,30 +47,6 @@ export default function Question({ route, navigation }) {
     navigation.pop();
     return;
   }
-
-  useEffect(() =>
-    navigation.addListener('beforeRemove', (e) => {
-      if (e.data.action.type === "POP") return;
-      e.preventDefault();
-      Alert.alert(
-        'Exit quiz?',
-        'You will lose your current progress. ',
-        [
-          { text: "Don't leave", style: 'cancel', onPress: () => {} },
-          {
-            text: 'Exit',
-            style: 'destructive',
-            onPress: () => {
-              navigation.dispatch(e.data.action)
-            }
-          },
-        ],
-        {
-          cancelable: true,
-          onDismiss: () => {}
-        }
-      );
-    }), [navigation])
 
   const question = quiz.questions[index];
 

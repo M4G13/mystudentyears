@@ -35,7 +35,7 @@ export default function Info({ route, navigation }) {
       });
       navigation.navigate("Category", {
         ...route.params,
-      })
+      });
       navigation.navigate("Question", { ...route.params, index: 0 });
     } else {
       navigation.push("Info", { ...route.params, index: index + 1 });
