@@ -6,11 +6,12 @@ import RankOrderQ from "../../screens/questionTypes/RankOrderQ";
 
 const data = require("../data.json");
 const question = data[0].category[0].quiz.questions[2];
-const mockFn = jest.fn();
+const mockFnTrue = jest.fn();
+const mockFnFalse = jest.fn();
 
 describe("<RankOrderQ />", () => {
   const tree = renderer
-    .create(<RankOrderQ question={question} handleAnswer={mockFn} />)
+    .create(<RankOrderQ question={question} handleAnswer={mockFnTrue} />)
     .toJSON();
   it("renders with children", () => {
     expect(tree.children.length).toBeGreaterThan(0);
@@ -18,9 +19,12 @@ describe("<RankOrderQ />", () => {
 });
 
 describe("handleAnswer()", () => {
-  it("is called on click submit", () => {
-    render(<RankOrderQ question={question} handleAnswer={mockFn} />);
+  it("Returns true with correct order", () => {
+    render(<RankOrderQ question={question} handleAnswer={mockFnTrue} />);
+    question.answers.forEach((q)=>{
+      fireEvent.press(screen.getByText(q.answer));
+    });
     fireEvent.press(screen.getByText("Submit"));
-    expect(mockFn).toHaveBeenCalled();
+    expect(mockFnTrue).toHaveBeenCalledWith(true);
   });
 });
