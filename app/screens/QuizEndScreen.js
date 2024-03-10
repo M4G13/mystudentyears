@@ -76,13 +76,14 @@ export default function QuizEndScreen({ route, navigation }) {
       )}
       <View style={style.buttonContainer}>
         <Pressable
-          onPress={() =>
-            navigation.navigate("Question", {
+          onPress={() => {
+            navigation.pop(2);
+            navigation.push("Question", {
               category_id,
               student_id,
               index: 0,
-            })
-          }
+            });
+          }}
           style={style.pressable}
         >
           <Text style={style.button}>Retake Quiz</Text>

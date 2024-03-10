@@ -12,7 +12,6 @@ import { defaultRoute } from "./common.js";
 import Loading from "./components/Loading.js";
 import Campus from "./screens/Campus.js";
 import Category from "./screens/Category.js";
-import Error from "./screens/Error.js";
 import FinalSurvey from "./screens/FinalSurvey.js";
 import Gatehouse from "./screens/Gatehouse.js";
 import HomeScreen from "./screens/HomeScreen.js";
