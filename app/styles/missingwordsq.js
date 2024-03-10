@@ -6,15 +6,15 @@ const style = StyleSheet.create({
   ...base,
   questionWrapper: {
     ...base.questionWrapper,
-    justifyContent: "space-between",
+    //justifyContent: "space-between",
   },
   questionContainer: {
     ...base.questionContainer,
-    justifyContent: "space-between",
-    height: "40%",
   },
   contentContainer: {
-    marginTop: "auto",
+    ...base.optionsContainer,
+    width: "100%",
+    //marginTop: "auto",
   },
 
   option: {
@@ -23,11 +23,11 @@ const style = StyleSheet.create({
     margin: 5,
   },
   keywords: {
-    marginTop: "10%",
-    height: "10%",
-    gap: 10,
+    ...base.optionsContainer,
+    padding: 10,
+    flexGrow: 1,
     flexDirection: "row",
-    alignItems: "center",
+    alignContent: "flex-end",
     justifyContent: "center",
     flexWrap: "wrap",
     width: "100%",
@@ -42,12 +42,10 @@ const style = StyleSheet.create({
     ...base.bigText,
     fontSize: 24,
   },
-  bigText: {
-    ...base.bigText,
-    fontSize: 20,
-  },
   buttonContainer: {
     width: "45%",
+    height: "15%",
+    marginHorizontal: "1%"
   },
 });
 

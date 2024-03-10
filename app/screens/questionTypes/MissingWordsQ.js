@@ -41,22 +41,20 @@ export default function MissingWordsQ({ question, handleAnswer }) {
   return (
     <View style={style.questionWrapper}>
       <View style={style.questionContainer}>
-        <ScrollView>
-          <Text style={style.question}>
-            {questionString.map((text, i) => {
-              return (
-                <Text key={`${text}${i}${keywords.selected[i]}`}>
-                  {text}
-                  {i < correctKeywords.length && (
-                    <Text style={style.wordGaps} onPress={() => popKeyword(i)}>
-                      {keywords.selected[i] || "________"}
-                    </Text>
-                  )}
-                </Text>
-              );
-            })}
-          </Text>
-        </ScrollView>
+        <Text style={style.question}>
+          {questionString.map((text, i) => {
+            return (
+              <Text key={`${text}${i}${keywords.selected[i]}`}>
+                {text}
+                {i < correctKeywords.length && (
+                  <Text style={style.wordGaps} onPress={() => popKeyword(i)}>
+                    {keywords.selected[i] || "________"}
+                  </Text>
+                )}
+              </Text>
+            );
+          })}
+        </Text>
       </View>
 
       {question.image && (
@@ -69,23 +67,21 @@ export default function MissingWordsQ({ question, handleAnswer }) {
         </View>
       )}
 
-      <ScrollView contentContainerStyle={style.contentContainer}>
-        <View style={style.keywords}>
-          {keywords.available.length ? (
-            keywords.available.map((keyword, index) => (
-              <View style={style.buttonContainer} key={`${index}${keyword}`}>
-                <PrettyButton
-                  height={50}
-                  stretch
-                  onPress={() => {
-                    putKeyword(index);
-                  }}
-                >
-                  <Text style={style.bigText}>{keyword}</Text>
-                </PrettyButton>
-              </View>
-            ))
-          ) : (
+      <View style={style.keywords}>
+        {keywords.available.length ? (
+          keywords.available.map((keyword, index) => (
+            <View style={style.buttonContainer} key={`${index}${keyword}`}>
+              <PrettyButton
+                style={{height: "100%"}}
+                onPress={() => {
+                  putKeyword(index);
+                }}
+              >
+                {keyword}
+              </PrettyButton>
+            </View>
+          ))
+        ) : (
             <View style={style.submitButtonContainer}>
               <PrettyButton
                 style={style.submitButton}
@@ -97,8 +93,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
               </PrettyButton>
             </View>
           )}
-        </View>
-      </ScrollView>
+      </View>
     </View>
   );
 }
