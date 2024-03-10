@@ -77,7 +77,7 @@ export default function QuizEndScreen({ route, navigation }) {
       <View style={style.buttonContainer}>
         <Pressable
           onPress={() => {
-            navigation.pop(2);
+            navigation.pop();
             navigation.push("Question", {
               category_id,
               student_id,

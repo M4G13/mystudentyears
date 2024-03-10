@@ -33,6 +33,9 @@ export default function Info({ route, navigation }) {
         ...completion,
         [category.id]: { quiz: completion[category.id]?.quiz, info: true },
       });
+      navigation.navigate("Category", {
+        ...route.params,
+      })
       navigation.navigate("Question", { ...route.params, index: 0 });
     } else {
       navigation.push("Info", { ...route.params, index: index + 1 });

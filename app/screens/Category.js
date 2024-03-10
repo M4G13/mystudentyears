@@ -20,15 +20,17 @@ export default function Category({ route, navigation }) {
 
   return (
     <View style={baseStyle.view}>
-      <Text style={baseStyle.bigText}>
-        This is the {category.Category} section
-      </Text>
-      {catCompletion?.quiz && (
+      <View style={baseStyle.view}>
         <Text style={baseStyle.bigText}>
-          Previously you got {getNumCorrect(catCompletion.quiz)} out of{" "}
-          {category.quiz.questions.length}
+          This is the {category.Category} section
         </Text>
-      )}
+        {catCompletion?.quiz && (
+          <Text style={baseStyle.bigText}>
+            Previously you got {getNumCorrect(catCompletion.quiz)} out of{" "}
+            {category.quiz.questions.length}
+          </Text>
+        )}
+      </View>
 
       <View style={baseStyle.imageContainer}>
         <Image
@@ -41,9 +43,9 @@ export default function Category({ route, navigation }) {
           resizeMode="contain"
         />
       </View>
-      <View style={{ width: "80%", flex: 1, paddingVertical: "25%", gap: 80 }}>
+      <View style={{ width: "80%", flex: 1, marginVertical: "10%", gap: 30 }}>
         <PrettyButton
-          style={{ flex: 1 }}
+          style={{ flex: 1, maxHeight: "50%" }}
           onPress={() =>
             navigation.navigate("Info", {
               ...route.params,
