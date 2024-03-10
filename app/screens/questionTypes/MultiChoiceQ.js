@@ -9,9 +9,13 @@ import style from "../../styles/multichoiceq.js";
 export default function MultiChoiceQ({ question, handleAnswer }) {
   const [selected, setSelected] = useState({});
 
+  const correctNumber = question.options.filter(
+    (item) => item.correct === true,
+  ).length;
+
   const selectedCorrectNumber =
     Object.values(selected).filter((item) => item === true).length ===
-    question.options.filter((item) => item.correct === true).length;
+    correctNumber;
 
   const handleSelect = (q) => {
     const nextSelected = { ...selected };
@@ -60,7 +64,10 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
           style={style.submitButton}
           onPress={() => {
             if (selectedCorrectNumber) handleAnswer(isCorrect());
-            else alert("Please select the correct number of options.");
+            else
+              alert(
+                `Please select the correct number of options. (${correctNumber})`,
+              );
           }}
         >
           Submit

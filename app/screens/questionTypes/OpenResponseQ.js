@@ -41,9 +41,8 @@ export default function OpenResponseQ({ question, handleAnswer }) {
           style={style.submitButton}
           onPress={() => {
             Keyboard.dismiss();
-            if (input !== "") {
-              handleAnswer(compare(input, question.answer));
-            }
+            if (input !== "") handleAnswer(compare(input, question.answer));
+            else alert("Enter an answer to the question.");
           }}
         >
           Submit

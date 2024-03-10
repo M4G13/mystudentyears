@@ -20,7 +20,7 @@ export default function Info({ route, navigation }) {
 
   const { category } = getData(route.params);
 
-  const information = category.information.pages;
+  const information = category.information?.pages || [];
   const isLastPage = index >= information.length - 1;
   const currInfo = information[index];
 

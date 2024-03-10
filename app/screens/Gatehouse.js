@@ -36,17 +36,17 @@ export default function Gatehouse({ navigation }) {
   });
 
   const completedStories = students.map((s) =>
-    s.category.reduce((open, c) => open && !!completion[c.id]?.quiz, true),
+    s.category.length ? s.category.every((c) => completion[c.id]?.quiz) : false,
   );
 
   const gpas = students.map((s) => {
-    return (
-      s.category.reduce((sum, c) => {
-        if (completion[c.id]?.quiz)
-          return sum + getScore(completion[c.id].quiz);
-        else return 0;
-      }, 0) / s.category.length
-    );
+    return s.category.length
+      ? s.category.reduce((sum, c) => {
+          if (completion[c.id]?.quiz)
+            return sum + getScore(completion[c.id].quiz);
+          else return 0;
+        }, 0) / s.category.length
+      : 0;
   });
 
   return (

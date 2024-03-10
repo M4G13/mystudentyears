@@ -9,14 +9,19 @@ import { getData } from "../common.js";
 import baseStyle from "../styles/question.js";
 
 export default function Question({ route, navigation }) {
+  const [answers, setAnswers] = useState([]);
   const { index } = route.params;
   const { category } = getData(route.params);
 
   const quiz = category.quiz;
 
-  const question = quiz.questions[index];
+  if (!quiz) {
+    alert("No quiz has been made for this category... Come back later!");
+    navigation.pop();
+    return;
+  }
 
-  const [answers, setAnswers] = useState([]);
+  const question = quiz.questions[index];
 
   function handleAnswer(correct) {
     const nextAnswers = [...answers, correct];
@@ -49,7 +54,11 @@ export default function Question({ route, navigation }) {
 
   return (
     <View style={baseStyle.view}>
-      <QuestionType question={question} handleAnswer={handleAnswer} />
+      <QuestionType
+        question={question}
+        handleAnswer={handleAnswer}
+        key={question.id}
+      />
     </View>
   );
 }
