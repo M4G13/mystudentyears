@@ -4,7 +4,7 @@
   "info": {
     "singularName": "survey-question",
     "pluralName": "survey-questions",
-    "displayName": "Survey Questions",
+    "displayName": "Survey Question",
     "description": ""
   },
   "options": {
@@ -13,12 +13,8 @@
   "pluginOptions": {},
   "attributes": {
     "question": {
-      "type": "string"
-    },
-    "option": {
-      "type": "component",
-      "repeatable": true,
-      "component": "survey.option"
+      "type": "string",
+      "required": true
     }
   }
 }

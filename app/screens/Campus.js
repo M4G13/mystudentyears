@@ -1,137 +1,74 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from "@react-navigation/native";
-import React, { useState, useCallback, useRef } from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  ImageBackground,
-  Image,
-  Animated,
-} from "react-native";
+import React, { useState, useContext } from "react";
+import { View, Text, Pressable, ImageBackground, Image } from "react-native";
+import Animated, { ZoomIn, ZoomOut, StretchInX } from "react-native-reanimated";
 
-import { getData } from "../common.js";
-import style from "../styles/categories.js";
+import { CompletionContext } from "../Context.js";
+import { getData, getScore } from "../common.js";
+import { GradeIcon } from "../components/Grade.js";
+import style from "../styles/campus.js";
 
 const categoryIcons = {
-  Finance: require("../assets/finance.png"),
-  Wellbeing: require("../assets/wellbeing.png"),
-  Academics: require("../assets/academics.png"),
-  Independence: require("../assets/independence.png"),
-  StarFilled: require("../assets/star_filled.png"),
-  StarEmpty: require("../assets/star_empty.png"),
-  Banner: require("../assets/banner.png"),
-  flagImage: require("../assets/congratsFlag.png"),
+  Finance: require("../assets/finance-icon.png"),
+  Wellbeing: require("../assets/wellbeing-icon.png"),
+  Academics: require("../assets/academics-icon.png"),
+  Independence: require("../assets/independence-icon.png"),
 };
 
 const imageSource = require("../assets/temp_map.png");
 
-const categoryStars = 3;
-
-const renderStars = (score) =>
-  Array.from({ length: categoryStars }, (_, i) => (
-    <Image
-      key={`star_${i}`}
-      source={
-        i < Math.ceil(score * (categoryStars / 100))
-          ? categoryIcons.StarFilled
-          : categoryIcons.StarEmpty
-      }
-      style={style.iconSmall}
-    />
-  ));
-
-const earnedStars = (completed) =>
-  Object.values(completed)
-    .map((e) => Math.ceil(e.score * (categoryStars / 100)))
-    .reduce((a, v) => 1 * a + v, []);
-
 export default function Campus({ route, navigation }) {
   const categories = getData(route.params).student.category;
+
+  const [completion, setCompletion] = useContext(CompletionContext);
+
+  const numCompleted = categories.filter((c) => completion[c.id]?.quiz).length;
+
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [showModal, setShowModal] = useState(
+    numCompleted === categories.length,
+  );
+
   const locs = {
-    Finance: [60, 125],
-    Wellbeing: [120, 500],
-    Academics: [180, 235],
+    Finance: [60, 135],
+    Wellbeing: [130, 500],
+    Academics: [210, 235],
     Independence: [260, 110],
   };
-  const [completed, setCompleted] = useState({});
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [showCongrats, setShowCongrats] = useState(false);
-  const totalPossibleStars = categories.length * categoryStars;
-
-  const totalEarnedStars = earnedStars(completed);
-
-  const congratsAnimation = useRef(new Animated.Value(-600)).current;
-  const animateCongratsFlag = () => {
-    Animated.timing(congratsAnimation, {
-      toValue: 0,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const animateCongratsFlagOffScreen = () => {
-    Animated.timing(congratsAnimation, {
-      toValue: -600,
-      duration: 500,
-      useNativeDriver: true,
-    }).start(() => setShowCongrats(false));
-  };
-
-  const fetchCompletionStatus = async () => {
-    const complete = {};
-    let allCompleted = true;
-    for (const category of categories) {
-      try {
-        const completion = await AsyncStorage.getItem("quiz" + category.id);
-        const score = await AsyncStorage.getItem("quizScore" + category.id);
-        complete[category.id] = { completed: completion || false, score };
-        if (completion === null) {
-          allCompleted = false;
-        }
-      } catch (e) {
-        console.error("Failed to get progress: ", e);
-        allCompleted = false;
-      }
-    }
-    setCompleted(complete);
-    if (allCompleted) {
-      setShowCongrats(true);
-      animateCongratsFlag();
-    } else {
-      setShowCongrats(false);
-      congratsAnimation.setValue(-600);
-    }
-  };
-
-  useFocusEffect(
-    useCallback(() => {
-      fetchCompletionStatus();
-    }, [categories]),
-  );
 
   return (
     <View style={style.view}>
       <ImageBackground
         source={imageSource}
         resizeMode="cover"
-        style={style.view}
+        style={style.bgImage}
       >
+        <Pressable
+          style={{ ...style.mapTouchable, zIndex: showModal ? 9 : 0 }}
+          onPress={() => {
+            setSelectedCategory(null); // Close the pop-ups on press-out
+            setShowModal(false);
+          }}
+        />
         {categories.map((c) => (
           <Pressable
             key={c.id}
-            onPress={() => setSelectedCategory(c)}
+            onPress={() => {
+              setSelectedCategory(c);
+            }}
             style={{
               ...style.iconContainer,
               left: locs[c.Category][0],
               top: locs[c.Category][1],
-              zIndex: c === selectedCategory ? 2 : 1,
             }}
           >
-            {c === selectedCategory && (
-              <View style={style.messageBox}>
+            {c.id === selectedCategory?.id && (
+              <Animated.View
+                style={style.messageBox}
+                entering={StretchInX.duration(100)}
+              >
                 <View>
-                  <Text style={style.messageBoxTextBig}>
+                  <Text style={style.messageBoxText}>
                     {selectedCategory.Category}
                   </Text>
                   <Pressable
@@ -145,78 +82,90 @@ export default function Campus({ route, navigation }) {
                     style={style.messageBoxButton}
                   >
                     <Text>
-                      {completed[selectedCategory.id].score !== null
+                      {completion[selectedCategory.id]?.quiz
                         ? "Continue"
                         : "Start"}
                     </Text>
                   </Pressable>
                 </View>
-              </View>
+              </Animated.View>
             )}
-            <Image source={categoryIcons[c.Category]} style={style.icon} />
-            {completed[c.id] && completed[c.id].completed ? (
-              <View style={style.starContainer}>
-                {renderStars(completed[c.id].score)}
-              </View>
-            ) : null}
+            <Image
+              source={categoryIcons[c.Category]}
+              style={{ ...style.icon, zIndex: 9 }}
+            />
+
+            {completion[c.id]?.quiz && (
+              <GradeIcon
+                style={style.grade}
+                score={getScore(completion[c.id]?.quiz)}
+                pointerEvents="none"
+              />
+            )}
           </Pressable>
         ))}
 
-        <View style={style.starCounterContainer}>
-          <Image
-            source={categoryIcons.StarFilled}
-            style={style.starCounterIcon}
+        <View style={style.progressBarContainer}>
+          <View
+            style={{
+              ...style.progressBar,
+              width: (100 * numCompleted) / categories.length + "%",
+            }}
           />
-          <Text style={style.starCounterText}>
-            {totalEarnedStars} / {categories.length * categoryStars}
+          <Text style={style.progressBarText} adjustFontSizeToFit>
+            {numCompleted} of {categories.length} completed!
           </Text>
         </View>
 
-        <Image source={categoryIcons.Banner} style={style.bannerImage} />
-
-        {showCongrats && (
+        {showModal && (
           <Animated.View
-            style={[
-              style.congratsFlag,
-              {
-                transform: [{ translateY: congratsAnimation }],
-              },
-            ]}
+            style={style.modalContainer}
+            exiting={ZoomOut}
+            pointerEvents="box-none"
+            entering={ZoomIn.duration(500).springify()}
           >
-            <Image source={categoryIcons.flagImage} style={style.flagImage} />
-            <Image
-              source={require("../assets/msy-logo.png")}
-              style={style.overlayImage}
-            />
-            <View style={style.congratsContent}>
-              <Text style={style.congratsTextBig}>Congratulations!</Text>
-              <Text style={style.congratsStarCounter}>
-                You got {totalEarnedStars} out of {totalPossibleStars} stars!
+            <View style={style.modal} pointerEvents="auto">
+              <Image
+                source={require("../assets/category_complete.png")}
+                style={style.modalImage}
+              />
+              <Text style={style.modalText}>
+                Congratulations, you finished this story!
               </Text>
-              <Text style={style.congratsText}>
-                You have completed this student's story.
-              </Text>
-              <View style={style.congratsButtonContainer}>
-                <Pressable onPress={animateCongratsFlagOffScreen}>
-                  <Text style={style.congratsButton}>Continue</Text>
+              <View style={style.modalButtonContainer}>
+                <Pressable
+                  style={style.modalButton}
+                  onPress={() => {
+                    setShowModal(false);
+                  }}
+                >
+                  <Text>Stay Here</Text>
                 </Pressable>
-                <Pressable onPress={() => navigation.navigate("Gatehouse")}>
-                  <Text style={style.congratsButton}>Return to gatehouse</Text>
+                <Pressable
+                  style={style.modalButton}
+                  onPress={() => {
+                    navigation.navigate("Gatehouse");
+                  }}
+                >
+                  <Text>Go to Gatehouse</Text>
                 </Pressable>
               </View>
             </View>
           </Animated.View>
         )}
 
+        {/* TODO: Delete in prod*/}
         <Pressable
           onPress={async () => {
             await AsyncStorage.clear();
-            setCompleted({});
+            setCompletion({});
             setSelectedCategory(null);
           }}
           style={style.clearButtonContainer}
         >
-          <Text style={style.clearButton}>Clear data</Text>
+          <Text style={style.clearButton} adjustsFontSizeToFit>
+            Clear data
+          </Text>
         </Pressable>
       </ImageBackground>
     </View>

@@ -15,5 +15,20 @@ module.exports = {
       path: '/stats/quizData',
       handler: 'stats.quizData',
     },
+    {
+      method: 'GET',
+      path: '/stats/laFreq',
+      handler: 'stats.laFreq',
+    },
+    {
+      method: 'GET',
+      path: '/stats/studentCompletion',
+      handler: 'stats.studentCompletion',
+    },
+    {
+      method: 'GET',
+      path: '/stats/userDetails',
+      handler: 'stats.userDetails',
+    },
   ]
 }

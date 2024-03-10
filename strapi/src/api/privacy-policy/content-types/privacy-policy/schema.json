@@ -4,7 +4,8 @@
   "info": {
     "singularName": "privacy-policy",
     "pluralName": "privacy-policies",
-    "displayName": "Privacy Policy"
+    "displayName": "Privacy Policy",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,7 +13,8 @@
   "pluginOptions": {},
   "attributes": {
     "privacyPolicy": {
-      "type": "text"
+      "type": "text",
+      "required": true
     }
   }
 }

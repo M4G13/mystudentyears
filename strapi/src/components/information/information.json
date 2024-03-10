@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_information_information",
+  "info": {
+    "displayName": "information",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "required": true
+    },
+    "Text": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}

@@ -2,12 +2,14 @@
   "collectionName": "components_option_types_multi_choice_options",
   "info": {
     "displayName": "multi-choice-option",
-    "icon": "layer"
+    "icon": "layer",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "text": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "correct": {
       "type": "boolean",

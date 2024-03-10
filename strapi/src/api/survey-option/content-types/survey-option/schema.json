@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "survey_options",
+  "info": {
+    "singularName": "survey-option",
+    "pluralName": "survey-options",
+    "displayName": "Survey Option",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "option": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

@@ -8,29 +8,46 @@ const style = StyleSheet.create({
     ...base.questionWrapper,
     justifyContent: "space-between",
   },
-  draggable: {
-    ...base.pressable,
-    backgroundColor: base.colors.fg1,
-    margin: 5,
-    marginBottom: 10,
-    marginTop: 10,
+  questionContainer: {
+    ...base.questionContainer,
+    justifyContent: "space-between",
+    height: "40%",
   },
-  draggableSelected: {
-    ...base.pressable,
-    backgroundColor: base.colors.fg2,
+  contentContainer: {
+    marginTop: "auto",
+  },
+
+  option: {
+    ...base.option,
+    fontSize: 20,
     margin: 5,
-    marginBottom: 10,
-    marginTop: 10,
   },
   keywords: {
+    marginTop: "10%",
+    height: "10%",
+    gap: 10,
     flexDirection: "row",
-    flexWrap: "wrap",
+    alignItems: "center",
     justifyContent: "center",
+    flexWrap: "wrap",
+    width: "100%",
   },
   wordGaps: {
     ...base.bigText,
     backgroundColor: base.colors.bg3,
     textDecorationLine: "underline",
+    fontSize: 24,
+  },
+  question: {
+    ...base.bigText,
+    fontSize: 24,
+  },
+  bigText: {
+    ...base.bigText,
+    fontSize: 20,
+  },
+  buttonContainer: {
+    width: "45%",
   },
 });
 

@@ -4,13 +4,21 @@ import base from "./question.js";
 
 const style = StyleSheet.create({
   ...base,
-
+  questionWrapper: {
+    ...base.questionWrapper,
+    justifyContent: "space-between",
+  },
   listItem: {
     ...base.pressable,
-    margin: 5,
-    width: "90%",
+    marginTop: 12,
+    width: "80%",
+    padding: 0,
+    height: 45,
     alignItems: "center",
     alignSelf: "center",
+    borderWidth: 2,
+    borderColor: base.colors.borderColor1,
+    borderStyle: "solid",
   },
 
   button: {
@@ -22,8 +30,16 @@ const style = StyleSheet.create({
 
   bigText: {
     ...base.bigText,
-    textAlign: "left",
-    fontSize: 30,
+    fontSize: 24,
+    margin: 0,
+  },
+  listContainer: {
+    width: "100%",
+  },
+
+  pressable: {
+    ...base.pressable,
+    margin: 5,
   },
 });
 

@@ -1,55 +1,59 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import axios from "axios";
 import Constants from "expo-constants"; // REMOVE IN PRODUCTION
 import { useFonts } from "expo-font";
 import React, { useState, useEffect } from "react";
-import {
-  Text,
-  StatusBar,
-  Pressable,
-  View,
-  ActivityIndicator,
-} from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { StatusBar } from "react-native";
 
+import { CurrentStudentContext, CompletionContext } from "./Context.js";
+import { defaultRoute } from "./common.js";
+import Loading from "./components/Loading.js";
 import Campus from "./screens/Campus.js";
 import Category from "./screens/Category.js";
 import Error from "./screens/Error.js";
+import FinalSurvey from "./screens/FinalSurvey.js";
 import Gatehouse from "./screens/Gatehouse.js";
 import HomeScreen from "./screens/HomeScreen.js";
 import Info from "./screens/Info.js";
+import InitialSurvey from "./screens/InitialSurvey.js";
 import Privacy from "./screens/Privacy.js";
 import Question from "./screens/Question.js";
 import QuizEndScreen from "./screens/QuizEndScreen.js";
-import Survey from "./screens/Survey.js";
 import Terms from "./screens/Terms.js";
 import baseStyle from "./styles/base.js";
 
 const Stack = createNativeStackNavigator();
 
+StatusBar.setBarStyle("light-content");
+StatusBar.setBackgroundColor(baseStyle.colors.bg1);
+
+global.url =
+  process.env.EXPO_PUBLIC_API_URL ||
+  "http://" + Constants.expoConfig.hostUri.split(":").shift() + ":1337";
+global.api_url = global.url + "/api";
+
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [fontsLoaded, fontError] = useFonts({
-    Chalkduster: require("./assets/fonts/Chalkduster.ttf"),
+
+  const [currentStudent, setCurrentStudent] = useState(null);
+  const [completion, setCompletion] = useState({});
+
+  useFonts({
+    Playpen: require("./assets/fonts/PlaypenSans.ttf"),
   });
 
-  StatusBar.setBarStyle("light-content");
-  StatusBar.setBackgroundColor(baseStyle.colors.bg1);
-
-  global.url =
-    process.env.EXPO_PUBLIC_API_URL ||
-    "http://" + Constants.expoConfig.hostUri.split(":").shift() + ":1337";
-  global.api_url = global.url + "/api";
-
   const fetchData = () => {
-    fetch(global.api_url + "/students")
-      .then((response) => response.json())
-      .then((data) => {
+    axios
+      .get(global.api_url + "/students")
+      .then((response) => {
+        global.data = response.data;
+      })
+      .then(() => {
         setIsLoading(false);
         setError(false);
-        global.data = data;
       })
       .catch((error) => {
         console.error(error);
@@ -58,74 +62,80 @@ export default function App() {
       });
   };
 
+  // load external data
   useEffect(() => {
+    AsyncStorage.getItem("uuid").then((uuid) => (global.uuid = uuid));
+    AsyncStorage.getItem("currentStudent").then((i) => {
+      if (i !== null) setCurrentStudent(Number(i));
+    });
+    AsyncStorage.getItem("completion").then((data) => {
+      if (data !== null) setCompletion(JSON.parse(data));
+    });
     fetchData();
-    AsyncStorage.getItem("uuid")
-      .then((uuid) => {
-        if (uuid) {
-          global.uuid = uuid;
-        } else {
-          console.log("no uuid (error if after survey)");
-        }
-      })
-      .catch((e) => console.log(e));
   }, []);
 
-  if (isLoading) {
-    return (
-      <View style={baseStyle.view}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
+  // save state on update
+  useEffect(() => {
+    if (currentStudent !== null)
+      AsyncStorage.setItem("currentStudent", currentStudent.toString());
+  }, [currentStudent]);
+  useEffect(() => {
+    if (completion !== null)
+      AsyncStorage.setItem("completion", JSON.stringify(completion));
+  }, [completion]);
 
-  if (error) {
-    return (
-      <View style={baseStyle.view}>
-        <Text style={baseStyle.bigText}>
-          Failed to load data, make sure you have an internet connection and try
-          again
-        </Text>
-        <Pressable onPress={fetchData}>
-          <Text style={baseStyle.button}>Retry</Text>
-        </Pressable>
-      </View>
-    );
-  }
+  const navigationState = global.uuid
+    ? defaultRoute(currentStudent)
+    : {
+        routes: [{ name: "Home Screen" }],
+      };
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer theme={DarkTheme}>
-        <Stack.Navigator
-          screenOptions={{
-            animation: "fade",
-            presentation: "transparentModal",
-            headerTitleAlign: "center",
-            headerShadowVisible: false,
-            headerStyle: baseStyle.header,
-          }}
+    <Loading isLoading={isLoading} isError={error} retry={fetchData}>
+      <CompletionContext.Provider value={[completion, setCompletion]}>
+        <CurrentStudentContext.Provider
+          value={[currentStudent, setCurrentStudent]}
         >
-          <Stack.Screen name="Home Screen" component={HomeScreen} />
-          <Stack.Screen name="Survey" component={Survey} />
-          <Stack.Screen name="Terms & Conditions" component={Terms} />
-          <Stack.Screen name="Privacy Policy" component={Privacy} />
-          <Stack.Screen
-            name="Gatehouse"
-            component={Gatehouse}
-            options={{ title: "Pick a Student" }}
-          />
-          <Stack.Screen name="Campus" component={Campus} />
-          <Stack.Screen name="Category" component={Category} />
-          <Stack.Screen name="Question" component={Question} />
-          <Stack.Screen name="Info" component={Info} />
-          <Stack.Screen name="Error" component={Error} />
-          <Stack.Screen
-            name="QuizEndScreen"
-            component={QuizEndScreen}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </GestureHandlerRootView>
+          <NavigationContainer theme={DarkTheme} initialState={navigationState}>
+            <Stack.Navigator
+              screenOptions={{
+                animation: "fade",
+                presentation: "modal",
+                headerTitleAlign: "center",
+                headerShadowVisible: false,
+                headerStyle: baseStyle.header,
+              }}
+            >
+              <Stack.Screen
+                name="Home Screen"
+                component={HomeScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Survey"
+                component={global.uuid ? FinalSurvey : InitialSurvey}
+              />
+              <Stack.Screen name="Terms & Conditions" component={Terms} />
+              <Stack.Screen name="Privacy Policy" component={Privacy} />
+              <Stack.Screen
+                name="Gatehouse"
+                component={Gatehouse}
+                options={{ title: "Pick a Student" }}
+              />
+              <Stack.Screen name="Campus" component={Campus} />
+              <Stack.Screen name="Category" component={Category} />
+              <Stack.Screen name="Question" component={Question} />
+              <Stack.Screen name="Info" component={Info} />
+              <Stack.Screen name="Error" component={Error} />
+              <Stack.Screen
+                name="QuizEndScreen"
+                component={QuizEndScreen}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </CurrentStudentContext.Provider>
+      </CompletionContext.Provider>
+    </Loading>
   );
 }
