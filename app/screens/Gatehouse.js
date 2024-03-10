@@ -60,44 +60,77 @@ export default function Gatehouse({ navigation }) {
           bgIndex.value = withTiming(1, { duration: 300 });
         }}
       >
-        {students.map((s, i) => (
+        {[
+          ...students.map((s, i) => (
+            <Animated.View
+              key={"student" + i}
+              style={[style.studentWrapper, bgColorAnim]}
+            >
+              {s.image !== null && (
+                <Image
+                  source={{ uri: global.url + s.image.url }}
+                  style={{ ...style.studentImage }}
+                />
+              )}
+              <View style={style.studentCard}>
+                <Text style={style.studentText}>{s.Name + "'s"} Story</Text>
+                <Pressable
+                  style={style.pressable}
+                  onPress={() => {
+                    navigation.navigate("Campus", { student_id: s.id });
+                    setCurrentStudent(s.id.toString());
+                  }}
+                >
+                  <Text style={style.button}>Go to Campus</Text>
+                </Pressable>
+              </View>
+
+              {(i === 0 ? true : completedStories[i - 1]) ? (
+                completedStories[i] && (
+                  <GradeIcon
+                    score={gpas[i]}
+                    style={style.gpa}
+                    pointerEvents="none"
+                  />
+                )
+              ) : (
+                <View style={style.lockedOverlay}>
+                  <Text style={style.bigText}>
+                    This story is locked!{"\n\n"}
+                    Complete the previous student's story to unlock it.
+                  </Text>
+                </View>
+              )}
+            </Animated.View>
+          )),
           <Animated.View
-            key={"student" + i}
             style={[style.studentWrapper, bgColorAnim]}
+            key={"student" + students.length}
           >
-            {s.image !== null && (
-              <Image
-                source={{ uri: global.url + s.image.url }}
-                style={{ ...style.studentImage }}
-              />
-            )}
-            <View style={style.studentCard}>
-              <Text style={style.studentText}>{s.Name + "'s"} Story</Text>
+            <View style={style.surveyCard}>
+              <Text style={style.studentText}>Final Survey</Text>
+              <Text style={[style.studentText, { fontSize: 20 }]}>
+                You've completed all the student stories! Please complete this
+                final survey to let us know what you've learned.
+              </Text>
               <Pressable
                 style={style.pressable}
-                onPress={() => {
-                  navigation.navigate("Campus", { student_id: s.id });
-                  setCurrentStudent(s.id.toString());
-                }}
+                onPress={() => navigation.navigate("Survey")}
               >
-                <Text style={style.button}>Go to Campus</Text>
+                <Text style={style.button}>Take Survey</Text>
               </Pressable>
             </View>
 
-            {(i === 0 ? true : completedStories[i - 1]) ? (
-              completedStories[i] && (
-                <GradeIcon score={gpas[i]} style={style.gpa} />
-              )
-            ) : (
+            {!completedStories.every((s) => s === true) && (
               <View style={style.lockedOverlay}>
                 <Text style={style.bigText}>
-                  This story is locked!{"\n\n"}
-                  Complete the previous student's story to unlock it.
+                  You can't complete the final survey yet!{"\n\n"}
+                  Please complete all student stories first then come back!
                 </Text>
               </View>
             )}
-          </Animated.View>
-        ))}
+          </Animated.View>,
+        ]}
       </Swiper>
     </View>
   );
