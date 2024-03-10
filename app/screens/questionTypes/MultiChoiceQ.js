@@ -1,23 +1,8 @@
 import { useState } from "react";
 import { View, Text, Image } from "react-native";
 
-import PrettyButton, {
-  PrettyButtonState,
-} from "../../components/PrettyButton.js";
+import PrettyButton from "../../components/PrettyButton.js";
 import style from "../../styles/multichoiceq.js";
-
-const PrettyButtonWrapper = ({toggled, ...props}) => {
-  const [pressed, setPressed] = useState(false);
-  return (
-    <PrettyButtonState
-      {...props}
-      onPressIn={() => setPressed(true)}
-      onPressOut={() => setPressed(false)}
-      onHoverOut={() => setPressed(false)}
-      toggled={pressed || toggled}
-    />
-  );
-};
 
 export default function MultiChoiceQ({ question, handleAnswer }) {
   const [selected, setSelected] = useState({});
@@ -34,7 +19,6 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
     const nextSelected = { ...selected };
     if (!selectedCorrectNumber || nextSelected[q.id] === true) {
       nextSelected[q.id] = !nextSelected[q.id];
-      console.log(nextSelected);
       setSelected(nextSelected);
     }
   };
@@ -64,14 +48,14 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
 
       <View style={style.optionsContainer}>
         {question.options.map((q) => (
-          <PrettyButtonWrapper
+          <PrettyButton
             key={q.id}
             onPress={() => handleSelect(q)}
-            toggled={selected[q.id]}
+            down={selected[q.id]}
             style={{ flex: 1 }}
           >
             {q.text}
-          </PrettyButtonWrapper>
+          </PrettyButton>
         ))}
       </View>
       <View style={style.submitButtonContainer}>

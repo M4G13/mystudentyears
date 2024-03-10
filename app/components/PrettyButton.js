@@ -51,7 +51,7 @@ export const PrettyButtonState = ({
   );
 };
 
-const PrettyButton = (props) => {
+const PrettyButton = ({ down, ...props }) => {
   const [toggled, setToggled] = useState(false);
   return (
     <PrettyButtonState
@@ -59,7 +59,7 @@ const PrettyButton = (props) => {
       onPressIn={() => setToggled(true)}
       onPressOut={() => setToggled(false)}
       onHoverOut={() => setToggled(false)}
-      toggled={toggled}
+      toggled={toggled || down}
     />
   );
 };
