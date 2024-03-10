@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { View, Text, Image } from "react-native";
 
-import PrettyButton, {
-  PrettyButtonState,
-} from "../../components/PrettyButton.js";
+import PrettyButton from "../../components/PrettyButton.js";
 import style from "../../styles/multichoiceq.js";
 
 export default function MultiChoiceQ({ question, handleAnswer }) {
@@ -50,14 +48,14 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
 
       <View style={style.optionsContainer}>
         {question.options.map((q) => (
-          <PrettyButtonState
+          <PrettyButton
             key={q.id}
             onPress={() => handleSelect(q)}
-            toggled={selected[q.id]}
+            down={selected[q.id]}
             style={{ flex: 1 }}
           >
             {q.text}
-          </PrettyButtonState>
+          </PrettyButton>
         ))}
       </View>
       <View style={style.submitButtonContainer}>
