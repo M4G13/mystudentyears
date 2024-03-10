@@ -11,14 +11,28 @@ const style = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#33333333",
     borderColor: "#33333355",
+    borderWidth: 4,
     margin: 20,
     marginBottom: 50,
     marginTop: 50,
     borderRadius: 20,
   },
+
+  surveyCard: {
+    padding: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#33333333",
+    borderColor: "#33333355",
+    borderWidth: 4,
+    margin: 20,
+    marginVertical: "auto",
+    borderRadius: 20,
+  },
   studentWrapper: {
     width: "100%",
     height: "100%",
+    justifyContent: "center",
     flex: 1,
   },
   studentImage: {
@@ -28,6 +42,8 @@ const style = StyleSheet.create({
   },
   studentText: {
     ...base.bigText,
+    textShadowRadius: 10,
+    textShadowColor: base.colors.translucent3,
   },
   pressable: {
     marginTop: 20,
@@ -40,6 +56,7 @@ const style = StyleSheet.create({
     bottom: "40%",
     justifyContent: "center",
     alignItems: "center",
+    pointerEvents: "none",
   },
   lockedOverlay: {
     ...base.view,
