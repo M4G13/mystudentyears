@@ -40,6 +40,15 @@ export default function MissingWordsQ({ question, handleAnswer }) {
 
   return (
     <View style={style.questionWrapper}>
+      {question.image && (
+        <View style={style.imageContainer}>
+          <Image
+            source={{ uri: global.url + question.image?.url }}
+            style={style.image}
+            resizeMode="contain"
+          />
+        </View>
+      )}
       <View style={style.questionContainer}>
         <Text style={style.question}>
           {questionString.map((text, i) => {
@@ -56,16 +65,6 @@ export default function MissingWordsQ({ question, handleAnswer }) {
           })}
         </Text>
       </View>
-
-      {question.image && (
-        <View style={style.imageContainer}>
-          <Image
-            source={{ uri: global.url + question.image?.url }}
-            style={style.image}
-            resizeMode="contain"
-          />
-        </View>
-      )}
 
       {keywords.available.length ? (
         <View style={style.keywords}>

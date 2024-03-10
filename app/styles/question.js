@@ -83,6 +83,12 @@ const style = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "center",
   },
+  imageContainer: {
+    width: "100%",
+    maxHeight: "30%",
+    flex: 0.7,
+    padding: "5%",
+  },
 });
 
 export default style;

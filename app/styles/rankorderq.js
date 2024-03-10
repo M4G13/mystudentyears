@@ -27,6 +27,7 @@ const style = StyleSheet.create({
     ...base.optionsContainer,
     width: "100%",
     flex: 1,
+    flexGrow: 1,
     flexDirection: "row",
     alignContent: "flex-end",
     justifyContent: "center",
