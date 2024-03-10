@@ -3,27 +3,29 @@ import shuffle from "lodash/shuffle";
 import React, { useState } from "react";
 import { View, Text, Image } from "react-native";
 
-import PrettyButton, {
-  PrettyButtonState,
-} from "../../components/PrettyButton.js";
+import PrettyButton from "../../components/PrettyButton.js";
 import style from "../../styles/rankorderq.js";
 
 export default function RankOrderQ({ question, handleAnswer }) {
-  const [options, setOptions] = useState(shuffle(question.answers));
-  const [selected, setSelected] = useState(null);
+  const [options, setOptions] = useState({
+    selected: new Array(question.answers.length).fill(null),
+    available: shuffle(question.answers),
+  });
 
-  const handleSelect = (i) => {
-    if (selected === null) {
-      setSelected(i);
-    } else if (i !== selected) {
-      const tempOptions = [...options];
-      const temp = tempOptions[i];
-      tempOptions[i] = tempOptions[selected];
-      tempOptions[selected] = temp;
-      setOptions(tempOptions);
-      setSelected(i);
-    } else {
-      setSelected(null);
+  const handleSelect = (index) => {
+    const selected = [...options.selected];
+    const available = [...options.available];
+    const next = options.selected.indexOf(null);
+    selected[next] = available[index];
+    available.splice(index, 1);
+    setOptions({ selected, available });
+  };
+  const handleDeselect = (index) => {
+    if (options.selected[index] !== null) {
+      const selected = [...options.selected];
+      selected[index] = null;
+      const available = [...options.available, options.selected[index]];
+      setOptions({ selected, available });
     }
   };
 
@@ -41,27 +43,50 @@ export default function RankOrderQ({ question, handleAnswer }) {
           />
         </View>
       )}
-      <View style={style.optionsContainer}>
-        {options.map((q, i) => (
-          <PrettyButtonState
-            key={q.id}
-            onPress={() => handleSelect(i)}
-            toggled={selected === i}
+      <View style={style.selected}>
+        {options.selected.map((q, i) => (
+          q ? (
+          <PrettyButton
+            key={i}
+            onPress={() => handleDeselect(i)}
+            style={style.selectedButton}
           >
             {q.answer}
-          </PrettyButtonState>
-        ))}
+          </PrettyButton>
+          ) : (
+          <PrettyButton
+            key={i}
+            style={style.selectedButton}
+          >
+            {i+1}
+          </PrettyButton>
+          )))}
       </View>
-      <View style={style.submitButtonContainer}>
-        <PrettyButton
-          style={style.submitButton}
-          onPress={() => {
-            handleAnswer(isEqual(options, question.answers));
-          }}
-        >
-          Submit
-        </PrettyButton>
-      </View>
+      {options.available.length ? (
+        <View style={style.options}>
+          {options.available.map((q, i) => (
+            <PrettyButton
+              key={q.id}
+              onPress={() => handleSelect(i)}
+              // toggled={selected === i}
+              style={style.button}
+            >
+              {q.answer}
+            </PrettyButton>
+          ))}
+        </View>
+      ) : (
+          <View style={style.submitButtonContainer}>
+            <PrettyButton
+              style={style.submitButton}
+              onPress={() => {
+                handleAnswer(isEqual(options.selected, question.answers));
+              }}
+            >
+              Submit
+            </PrettyButton>
+          </View>
+        )}
     </View>
   );
 }

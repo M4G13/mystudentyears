@@ -6,7 +6,7 @@ const style = StyleSheet.create({
   ...base,
   questionWrapper: {
     ...base.questionWrapper,
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
   },
 
   button: {
@@ -26,6 +26,30 @@ const style = StyleSheet.create({
     ...base.pressable,
     margin: 5,
   },
+  selected: {
+    ...base.optionsContainer,
+    flex: 1,
+    gap: 25,
+    // height: "40%"
+  },
+  options: {
+    ...base.optionsContainer,
+    width: "100%",
+    // flexGrow: 1,
+    flex: 1,
+    flexDirection: "row",
+    alignContent: "flex-end",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    gap: 15,
+  },
+  button: {
+    width: "45%",
+    height: "20%",
+  },
+  selectedButton: {
+    height: "15%",
+  }
 });
 
 export default style;

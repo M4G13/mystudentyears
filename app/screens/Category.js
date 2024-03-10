@@ -20,7 +20,6 @@ export default function Category({ route, navigation }) {
 
   return (
     <View style={baseStyle.view}>
-      <>
         <Text style={baseStyle.bigText}>
           This is the {category.Category} section
         </Text>
@@ -31,7 +30,6 @@ export default function Category({ route, navigation }) {
           </Text>
         )}
 
-        <>
           <View style={baseStyle.imageContainer}>
             <Image
               source={
@@ -44,7 +42,7 @@ export default function Category({ route, navigation }) {
             />
           </View>
 
-          <View style={{ width: "80%" }}>
+          <View style={{ width: "80%", flex: 1, marginVertical: "10%" }}>
             <PrettyButton
               onPress={() =>
                 navigation.navigate("Info", {
@@ -58,7 +56,7 @@ export default function Category({ route, navigation }) {
           </View>
 
           {catCompletion?.info && (
-            <View style={{ width: "80%" }}>
+            <View style={{ width: "80%", flex: 1, marginVertical: "10%" }}>
               <PrettyButton
                 onPress={() => {
                   navigation.navigate("Question", {
@@ -71,8 +69,6 @@ export default function Category({ route, navigation }) {
               </PrettyButton>
             </View>
           )}
-        </>
-      </>
     </View>
   );
 }

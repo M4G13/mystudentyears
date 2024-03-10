@@ -15,19 +15,17 @@ const style = StyleSheet.create({
   submitButtonContainer: {
     padding: 10,
     width: "100%",
+    height: "15%",
     marginTop: "auto",
   },
 
-  submitButton: {
-    backgroundColor: base.colors.fg2,
-  },
   questionContainer: {
     padding: 30,
   },
   optionsContainer: {
     width: "80%",
-    height: "65%",
-    flex: 1,
+    marginBottom: "5%",
+    gap: 15
   },
   option: {
     marginBottom: "5%",

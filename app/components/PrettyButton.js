@@ -37,11 +37,11 @@ export const PrettyButtonState = ({
   });
 
   return (
-    <View style={styles.container}>
+    <View style={style}>
       <View style={{ ...styles.buttonContainer, ...styles.under }} />
       <Animated.View
         // Horrible combination of styles but only way to get pretty animations
-        style={[styles.buttonContainer, style, bgAnim, { top }]}
+        style={[styles.buttonContainer, bgAnim, { top }]}
       >
         <Pressable
           {...props} // Spread additional props
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingVertical: "8%",
+    height: "100%",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,

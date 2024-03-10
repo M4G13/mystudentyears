@@ -30,7 +30,8 @@ const style = StyleSheet.create({
     alignContent: "flex-end",
     justifyContent: "center",
     flexWrap: "wrap",
-    width: "100%",
+    gap: 15,
+    // width: "100%",
   },
   wordGaps: {
     ...base.bigText,
@@ -42,10 +43,10 @@ const style = StyleSheet.create({
     ...base.bigText,
     fontSize: 24,
   },
-  buttonContainer: {
+  button: {
     width: "45%",
     height: "15%",
-    marginHorizontal: "1%",
+    // marginHorizontal: "1%",
   },
 });
 
