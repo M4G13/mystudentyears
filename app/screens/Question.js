@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Alert } from "react-native";
 
 import MissingWordsQ from "./questionTypes/MissingWordsQ.js";
 import MultiChoiceQ from "./questionTypes/MultiChoiceQ.js";
@@ -12,6 +12,33 @@ export default function Question({ route, navigation }) {
   const [answers, setAnswers] = useState([]);
   const { index } = route.params;
   const { category } = getData(route.params);
+
+  useEffect(
+    () =>
+      navigation.addListener("beforeRemove", (e) => {
+        if (e.data.action.type === "POP") return;
+        e.preventDefault();
+        Alert.alert(
+          "Exit quiz?",
+          "You will lose your current progress. ",
+          [
+            { text: "Don't leave", style: "cancel", onPress: () => {} },
+            {
+              text: "Exit",
+              style: "destructive",
+              onPress: () => {
+                navigation.dispatch(e.data.action);
+              },
+            },
+          ],
+          {
+            cancelable: true,
+            onDismiss: () => {},
+          },
+        );
+      }),
+    [navigation],
+  );
 
   const quiz = category.quiz;
 
@@ -33,6 +60,7 @@ export default function Question({ route, navigation }) {
         index: index + 1,
       });
     } else {
+      navigation.pop();
       navigation.navigate("QuizEndScreen", {
         ...route.params,
         answers: nextAnswers,
