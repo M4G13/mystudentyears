@@ -1,15 +1,24 @@
 import { useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Image } from "react-native";
 
+import PrettyButton, {
+  PrettyButtonState,
+} from "../../components/PrettyButton.js";
 import style from "../../styles/multichoiceq.js";
 
 export default function MultiChoiceQ({ question, handleAnswer }) {
   const [selected, setSelected] = useState({});
 
+  const selectedCorrectNumber =
+    Object.values(selected).filter((item) => item === true).length ===
+    question.options.filter((item) => item.correct === true).length;
+
   const handleSelect = (q) => {
     const nextSelected = { ...selected };
-    nextSelected[q.id] = !nextSelected[q.id];
-    setSelected(nextSelected);
+    if (!selectedCorrectNumber || nextSelected[q.id] === true) {
+      nextSelected[q.id] = !nextSelected[q.id];
+      setSelected(nextSelected);
+    }
   };
 
   const isCorrect = () => {
@@ -25,31 +34,37 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
       <View style={style.questionContainer}>
         <Text style={style.bigText}>{question.question}</Text>
       </View>
+      {question.image && (
+        <View style={style.imageContainer}>
+          <Image
+            source={{ uri: global.url + question.image?.url }}
+            style={style.image}
+            resizeMode="contain"
+          />
+        </View>
+      )}
+
       <View style={style.optionsContainer}>
         {question.options.map((q) => (
-          <Pressable
+          <PrettyButtonState
             key={q.id}
-            style={
-              selected[q.id] === true
-                ? { ...style.pressable, ...style.pressableSelected }
-                : { ...style.pressable }
-            }
             onPress={() => handleSelect(q)}
+            toggled={selected[q.id]}
           >
-            <Text style={style.button}>{q.text}</Text>
-          </Pressable>
+            {q.text}
+          </PrettyButtonState>
         ))}
       </View>
       <View style={style.submitButtonContainer}>
-        <Pressable
+        <PrettyButton
           style={style.submitButton}
-          onPress={() =>
-            // Maybe change this to have an error message if no option selected?
-            selected !== [] && handleAnswer(isCorrect())
-          }
+          onPress={() => {
+            if (selectedCorrectNumber) handleAnswer(isCorrect());
+            else alert("Please select the correct number of options.");
+          }}
         >
-          <Text style={style.button}>Submit</Text>
-        </Pressable>
+          Submit
+        </PrettyButton>
       </View>
     </View>
   );

@@ -1,8 +1,9 @@
 import isEqual from "lodash/isEqual";
 import shuffle from "lodash/shuffle";
 import React, { useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, ScrollView, Image } from "react-native";
 
+import PrettyButton from "../../components/PrettyButton.js";
 import style from "../../styles/missingwordsq.js";
 
 export default function MissingWordsQ({ question, handleAnswer }) {
@@ -40,47 +41,64 @@ export default function MissingWordsQ({ question, handleAnswer }) {
   return (
     <View style={style.questionWrapper}>
       <View style={style.questionContainer}>
-        <Text style={style.bigText}>
-          {questionString.map((text, i) => {
-            return (
-              <Text key={`${text}${i}${keywords.selected[i]}`}>
-                {text}
-                {i < correctKeywords.length && (
-                  <Text style={style.wordGaps} onPress={() => popKeyword(i)}>
-                    {keywords.selected[i] || "________"}
-                  </Text>
-                )}
-              </Text>
-            );
-          })}
-        </Text>
+        <ScrollView>
+          <Text style={style.question}>
+            {questionString.map((text, i) => {
+              return (
+                <Text key={`${text}${i}${keywords.selected[i]}`}>
+                  {text}
+                  {i < correctKeywords.length && (
+                    <Text style={style.wordGaps} onPress={() => popKeyword(i)}>
+                      {keywords.selected[i] || "________"}
+                    </Text>
+                  )}
+                </Text>
+              );
+            })}
+          </Text>
+        </ScrollView>
       </View>
-      <View style={style.keywords}>
-        {keywords.available.length ? (
-          keywords.available.map((keyword, index) => (
-            <Pressable
-              style={style.draggable}
-              onPress={() => {
-                putKeyword(index);
-              }}
-              key={`${index}${keyword}`}
-            >
-              <Text style={style.bigText}>{keyword}</Text>
-            </Pressable>
-          ))
-        ) : (
-          <View style={style.submitButtonContainer}>
-            <Pressable
-              style={style.submitButton}
-              onPress={() =>
-                handleAnswer(isEqual(keywords.selected, correctKeywords))
-              }
-            >
-              <Text style={style.button}>Submit</Text>
-            </Pressable>
-          </View>
-        )}
-      </View>
+
+      {question.image && (
+        <View style={style.imageContainer}>
+          <Image
+            source={{ uri: global.url + question.image?.url }}
+            style={style.image}
+            resizeMode="contain"
+          />
+        </View>
+      )}
+
+      <ScrollView contentContainerStyle={style.contentContainer}>
+        <View style={style.keywords}>
+          {keywords.available.length ? (
+            keywords.available.map((keyword, index) => (
+              <View style={style.buttonContainer} key={`${index}${keyword}`}>
+                <PrettyButton
+                  height={50}
+                  stretch
+                  onPress={() => {
+                    putKeyword(index);
+                  }}
+                >
+                  <Text style={style.bigText}>{keyword}</Text>
+                </PrettyButton>
+              </View>
+            ))
+          ) : (
+            <View style={style.submitButtonContainer}>
+              <PrettyButton
+                style={style.submitButton}
+                onPress={() =>
+                  handleAnswer(isEqual(keywords.selected, correctKeywords))
+                }
+              >
+                Submit
+              </PrettyButton>
+            </View>
+          )}
+        </View>
+      </ScrollView>
     </View>
   );
 }

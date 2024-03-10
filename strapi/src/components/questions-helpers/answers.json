@@ -7,7 +7,8 @@
   "options": {},
   "attributes": {
     "answer": {
-      "type": "string"
+      "type": "string",
+      "required": true
     }
   }
 }

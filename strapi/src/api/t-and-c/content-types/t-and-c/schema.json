@@ -13,7 +13,8 @@
   "pluginOptions": {},
   "attributes": {
     "TermsAndConditions": {
-      "type": "text"
+      "type": "text",
+      "required": true
     }
   }
 }

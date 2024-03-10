@@ -5,39 +5,37 @@ import base from "./base.js";
 const style = StyleSheet.create({
   ...base,
   questionWrapper: {
+    alignItems: "center",
     flex: 1,
     height: "100%",
     width: "100%",
     backgroundColor: base.colors.bg1,
   },
-  questionContainer: {
-    padding: 30,
-    paddingLeft: 10,
-    justifyContent: "space-around",
-  },
-  optionsContainer: {
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    alignSelf: "center",
-    gap: 15,
-  },
+
   submitButtonContainer: {
-    marginTop: "auto",
+    padding: 10,
     width: "100%",
+    marginTop: "auto",
   },
+
   submitButton: {
     backgroundColor: base.colors.fg2,
-    justifyContent: "end",
-    marginTop: "auto",
-    margin: 10,
-    padding: 15,
-    borderRadius: 5,
   },
-  image: {
-    width: 100,
-    height: 200,
-    objectFit: "contain",
+  questionContainer: {
+    padding: 30,
+  },
+  optionsContainer: {
+    width: "80%",
+    height: "65%",
+    flex: 1,
+  },
+  option: {
+    marginBottom: "5%",
+  },
+  optionSelected: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   pressable: {
     backgroundColor: base.colors.fg2,
@@ -53,7 +51,6 @@ const style = StyleSheet.create({
   },
   bigText: {
     ...base.bigText,
-    textAlign: "left",
     fontSize: 30,
   },
 

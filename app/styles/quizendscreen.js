@@ -16,6 +16,7 @@ const style = StyleSheet.create({
     flex: 1,
   },
   buttonContainer: {
+    ...base.PrettyButtonContainer,
     padding: 20,
     gap: 10,
     width: "100%",

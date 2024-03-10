@@ -3,7 +3,7 @@ module.exports = {
     return await strapi.entityService.findMany('api::student.student', {
       sort: 'Order',
       'populate': {
-        'Student_image': true,
+        'image': true,
         'category': {
           'populate': {
             'information': {
@@ -16,11 +16,7 @@ module.exports = {
             'quiz': {
               'populate': {
                 'questions': {
-                  'populate': {
-                    'options': true,
-                    'image': true,
-                    'answers': true
-                  }
+                  'populate': '*'
                 }
               }
             }

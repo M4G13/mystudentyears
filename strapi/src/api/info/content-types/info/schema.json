@@ -15,10 +15,12 @@
     "pages": {
       "type": "component",
       "repeatable": true,
-      "component": "information.information"
+      "component": "information.information",
+      "required": true
     },
     "description": {
-      "type": "string"
+      "type": "string",
+      "required": true
     }
   }
 }

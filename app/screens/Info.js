@@ -21,11 +21,8 @@ export default function Info({ route, navigation }) {
   const { category } = getData(route.params);
 
   const information = category.information.pages;
-  const isLastPage = index === information.length - 1;
+  const isLastPage = index >= information.length - 1;
   const currInfo = information[index];
-  const imageUrl =
-    currInfo?.image?.url &&
-    `${global.url}${currInfo.image.url.startsWith("/") ? "" : "/"}${currInfo.image.url}`;
 
   const chalkboard = require("../assets/Chalkboard.png");
   const titleRule = require("../assets/rule.png");
@@ -54,17 +51,14 @@ export default function Info({ route, navigation }) {
             <>
               <Text style={style.titleText}>{currInfo.Title}</Text>
               <Image source={titleRule} style={style.titleRule} />
-              {imageUrl && (
-                <Image source={{ uri: imageUrl }} style={style.imageStyle} />
-              )}
               <Markdown style={style.markdownStyle}>{currInfo.Text}</Markdown>
-              <Pressable onPress={navigateToNextPage}>
-                <Text style={style.infoButton}>
-                  {isLastPage ? "Go to Quiz" : "Continue Reading..."}
-                </Text>
-              </Pressable>
             </>
           )}
+          <Pressable onPress={navigateToNextPage}>
+            <Text style={style.infoButton}>
+              {isLastPage ? "Go to Quiz" : "Continue Reading..."}
+            </Text>
+          </Pressable>
         </ScrollView>
       </ImageBackground>
     </View>
