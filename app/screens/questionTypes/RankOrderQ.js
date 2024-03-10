@@ -3,11 +3,30 @@ import shuffle from "lodash/shuffle";
 import React, { useState } from "react";
 import { View, Text, Pressable, TouchableOpacity, Image } from "react-native";
 
-import PrettyButton from "../../components/PrettyButton.js";
+import PrettyButton, { PrettyButtonState } from "../../components/PrettyButton.js";
 import style from "../../styles/rankorderq.js";
 
+
+
 export default function RankOrderQ({ question, handleAnswer }) {
-  const [data, setData] = useState(shuffle(question.answers));
+  const [options, setOptions] = useState(shuffle(question.answers));
+  const [selected, setSelected] = useState(null);
+
+  const handleSelect = (i) => {
+    if(selected===null) {
+      setSelected(i);
+    } else if(i!==selected) {
+      let tempOptions = [...options];
+      let temp = tempOptions[i];
+      tempOptions[i] = tempOptions[selected];
+      tempOptions[selected] = temp;
+      setOptions(tempOptions);
+      setSelected(i);
+    } else {
+      setSelected(null);
+    }
+  }
+
   return (
     <View style={style.questionWrapper}>
       <View style={style.questionContainer}>
@@ -22,13 +41,22 @@ export default function RankOrderQ({ question, handleAnswer }) {
           />
         </View>
       )}
-      {/* Draggable flatlist removed until we re-implement it */}
+      <View style={style.optionsContainer}>
+        {options.map((q,i) => (
+          <PrettyButtonState
+            key={q.id}
+            onPress={() => handleSelect(i)}
+            toggled={selected===i}
+          >
+          {q.answer}
+          </PrettyButtonState>
+        ))}
+      </View>
       <View style={style.submitButtonContainer}>
         <PrettyButton
-          backgroundColor={style.colors.fg2}
           style={style.submitButton}
           onPress={() => {
-            handleAnswer(isEqual(data, question.answers));
+            handleAnswer(isEqual(options, question.answers));
           }}
         >
           Submit
