@@ -1,7 +1,7 @@
 import isEqual from "lodash/isEqual";
 import shuffle from "lodash/shuffle";
 import React, { useState } from "react";
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, Image } from "react-native";
 
 import PrettyButton from "../../components/PrettyButton.js";
 import style from "../../styles/missingwordsq.js";
@@ -72,7 +72,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
           keywords.available.map((keyword, index) => (
             <View style={style.buttonContainer} key={`${index}${keyword}`}>
               <PrettyButton
-                style={{height: "100%"}}
+                style={{ height: "100%" }}
                 onPress={() => {
                   putKeyword(index);
                 }}
@@ -82,17 +82,17 @@ export default function MissingWordsQ({ question, handleAnswer }) {
             </View>
           ))
         ) : (
-            <View style={style.submitButtonContainer}>
-              <PrettyButton
-                style={style.submitButton}
-                onPress={() =>
-                  handleAnswer(isEqual(keywords.selected, correctKeywords))
-                }
-              >
-                Submit
-              </PrettyButton>
-            </View>
-          )}
+          <View style={style.submitButtonContainer}>
+            <PrettyButton
+              style={style.submitButton}
+              onPress={() =>
+                handleAnswer(isEqual(keywords.selected, correctKeywords))
+              }
+            >
+              Submit
+            </PrettyButton>
+          </View>
+        )}
       </View>
     </View>
   );

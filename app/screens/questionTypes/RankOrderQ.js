@@ -1,23 +1,23 @@
 import isEqual from "lodash/isEqual";
 import shuffle from "lodash/shuffle";
 import React, { useState } from "react";
-import { View, Text, Pressable, TouchableOpacity, Image } from "react-native";
+import { View, Text, Image } from "react-native";
 
-import PrettyButton, { PrettyButtonState } from "../../components/PrettyButton.js";
+import PrettyButton, {
+  PrettyButtonState,
+} from "../../components/PrettyButton.js";
 import style from "../../styles/rankorderq.js";
-
-
 
 export default function RankOrderQ({ question, handleAnswer }) {
   const [options, setOptions] = useState(shuffle(question.answers));
   const [selected, setSelected] = useState(null);
 
   const handleSelect = (i) => {
-    if(selected===null) {
+    if (selected === null) {
       setSelected(i);
-    } else if(i!==selected) {
-      let tempOptions = [...options];
-      let temp = tempOptions[i];
+    } else if (i !== selected) {
+      const tempOptions = [...options];
+      const temp = tempOptions[i];
       tempOptions[i] = tempOptions[selected];
       tempOptions[selected] = temp;
       setOptions(tempOptions);
@@ -25,7 +25,7 @@ export default function RankOrderQ({ question, handleAnswer }) {
     } else {
       setSelected(null);
     }
-  }
+  };
 
   return (
     <View style={style.questionWrapper}>
@@ -42,13 +42,13 @@ export default function RankOrderQ({ question, handleAnswer }) {
         </View>
       )}
       <View style={style.optionsContainer}>
-        {options.map((q,i) => (
+        {options.map((q, i) => (
           <PrettyButtonState
             key={q.id}
             onPress={() => handleSelect(i)}
-            toggled={selected===i}
+            toggled={selected === i}
           >
-          {q.answer}
+            {q.answer}
           </PrettyButtonState>
         ))}
       </View>

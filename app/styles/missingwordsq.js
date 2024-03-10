@@ -45,7 +45,7 @@ const style = StyleSheet.create({
   buttonContainer: {
     width: "45%",
     height: "15%",
-    marginHorizontal: "1%"
+    marginHorizontal: "1%",
   },
 });
 
