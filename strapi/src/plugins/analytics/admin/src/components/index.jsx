@@ -8,7 +8,7 @@ import {getFetchClient} from '@strapi/helper-plugin';
 export default function Analytics() {
   const fetchData = async () => {
     const { get } = getFetchClient();
-    const response = await get('http://localhost:1337/api/stats/laFreq');
+    const response = await get('http://localhost:1337/analytics/initialSurvey');
     console.log(response.data);
   }
 
