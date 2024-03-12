@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, Pressable } from "react-native";
 import RadioForm from "react-native-simple-radio-button";
+import PrettyButton from "../components/PrettyButton.js";
 
 import Loading from "./Loading.js";
 import style from "../styles/survey";
@@ -105,9 +106,12 @@ export default function Survey({
             .
           </Text>
 
-          <Pressable onPress={() => process()}>
-            <Text style={style.submit}>Submit</Text>
-          </Pressable>
+          <PrettyButton 
+          onPress={() => process()}
+          style={style.prettyButton}
+          >
+            Submit
+          </PrettyButton>
         </View>
       </ScrollView>
     </Loading>

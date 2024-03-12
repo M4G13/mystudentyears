@@ -1,4 +1,5 @@
 import { Text, Pressable, View, ActivityIndicator } from "react-native";
+import PrettyButton from "../components/PrettyButton.js";
 
 import baseStyle from "../styles/base.js";
 
@@ -18,9 +19,12 @@ export default function Loading({ isLoading, isError, retry, children }) {
           Failed to load data, make sure you have an internet connection and try
           again
         </Text>
-        <Pressable onPress={retry}>
-          <Text style={baseStyle.button}>Retry</Text>
-        </Pressable>
+        <PrettyButton 
+        style={baseStyle.prettyButton}
+        onPress={retry}
+        >
+          Retry
+        </PrettyButton>
       </View>
     );
   }

@@ -45,7 +45,7 @@ export default function Category({ route, navigation }) {
       </View>
       <View style={{ width: "80%", flex: 1, marginVertical: "10%", gap: 30 }}>
         <PrettyButton
-          style={{ flex: 1, maxHeight: "50%" }}
+          style={baseStyle.prettyButton}
           onPress={() =>
             navigation.navigate("Info", {
               ...route.params,
@@ -58,7 +58,7 @@ export default function Category({ route, navigation }) {
 
         {catCompletion?.info && (
           <PrettyButton
-            style={{ flex: 1 }}
+            style={baseStyle.prettyButton}
             onPress={() => {
               navigation.navigate("Question", {
                 ...route.params,

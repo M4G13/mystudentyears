@@ -7,6 +7,7 @@ import { CompletionContext } from "../Context.js";
 import { getScore, getNumCorrect, defaultRoute } from "../common.js";
 import { calculateGrade, GradeIcon } from "../components/Grade.js";
 import style from "../styles/quizendscreen.js";
+import PrettyButton from "../components/PrettyButton.js";
 
 export default function QuizEndScreen({ route, navigation }) {
   const { category_id, student_id, answers, quiz_id } = route.params;
@@ -75,7 +76,7 @@ export default function QuizEndScreen({ route, navigation }) {
         </Animated.View>
       )}
       <View style={style.buttonContainer}>
-        <Pressable
+        <PrettyButton
           onPress={() => {
             navigation.pop();
             navigation.push("Question", {
@@ -84,16 +85,16 @@ export default function QuizEndScreen({ route, navigation }) {
               index: 0,
             });
           }}
-          style={style.pressable}
+          style={style.prettyButton}
         >
-          <Text style={style.button}>Retake Quiz</Text>
-        </Pressable>
-        <Pressable
+          Retake Quiz
+        </PrettyButton>
+        <PrettyButton
           onPress={() => navigation.reset(defaultRoute(student_id))}
-          style={style.pressable}
+          style={style.prettyButton}
         >
-          <Text style={style.button}>Return to Campus</Text>
-        </Pressable>
+          Return to Campus
+        </PrettyButton>
       </View>
     </View>
   );

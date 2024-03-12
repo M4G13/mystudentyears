@@ -13,6 +13,8 @@ const style = StyleSheet.create({
   contentContainer: {
     flex: 1,
     marginTop: 10,
+    width:"100%",
+    height:"100%",
   },
   infoButton: {
     ...base.button,
@@ -55,6 +57,12 @@ const style = StyleSheet.create({
     height: 100,
     resizeMode: "contain",
   },
+  Pressable:{ 
+    width:"80%",
+    height:50,
+    margin:"10%"
+  },
+
   titleRule: {
     width: "100%",
     resizeMode: "stretch",

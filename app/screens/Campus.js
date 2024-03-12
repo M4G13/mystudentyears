@@ -7,6 +7,7 @@ import { CompletionContext } from "../Context.js";
 import { getData, getScore } from "../common.js";
 import { GradeIcon } from "../components/Grade.js";
 import style from "../styles/campus.js";
+import PrettyButton from "../components/PrettyButton.js";
 
 const categoryIcons = {
   Finance: require("../assets/finance-icon.png"),
@@ -155,7 +156,7 @@ export default function Campus({ route, navigation }) {
         )}
 
         {/* TODO: Delete in prod*/}
-        <Pressable
+        <PrettyButton
           onPress={async () => {
             await AsyncStorage.clear();
             setCompletion({});
@@ -163,10 +164,8 @@ export default function Campus({ route, navigation }) {
           }}
           style={style.clearButtonContainer}
         >
-          <Text style={style.clearButton} adjustsFontSizeToFit>
             Clear data
-          </Text>
-        </Pressable>
+        </PrettyButton>
       </ImageBackground>
     </View>
   );

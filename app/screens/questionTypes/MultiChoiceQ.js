@@ -58,7 +58,6 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
           </PrettyButton>
         ))}
       </View>
-      <View style={style.submitButtonContainer}>
         <PrettyButton
           style={style.submitButton}
           onPress={() => {
@@ -71,7 +70,6 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
         >
           Submit
         </PrettyButton>
-      </View>
     </View>
   );
 }

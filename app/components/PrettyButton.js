@@ -42,7 +42,7 @@ export const PrettyButtonState = ({
           style={styles.button}
           onPress={onPress}
         >
-          <Text style={styles.text} adjustsFontSizeToFit>
+          <Text style={styles.text} >
             {children}
           </Text>
         </Pressable>

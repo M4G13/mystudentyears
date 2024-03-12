@@ -30,6 +30,11 @@ const style = StyleSheet.create({
     marginRight: "auto",
   },
 
+  Pressable:{ 
+    width:"80%",
+    height:50,
+  },
+
   logoContainer: {
     width: "100%",
     height: "50%",

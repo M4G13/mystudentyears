@@ -8,6 +8,7 @@ import {
   ImageBackground,
 } from "react-native";
 import Markdown from "react-native-markdown-display";
+import PrettyButton from "../components/PrettyButton.js";
 
 import { CompletionContext } from "../Context.js";
 import { getData } from "../common.js";
@@ -57,11 +58,12 @@ export default function Info({ route, navigation }) {
               <Markdown style={style.markdownStyle}>{currInfo.Text}</Markdown>
             </>
           )}
-          <Pressable onPress={navigateToNextPage}>
-            <Text style={style.infoButton}>
+          <PrettyButton 
+          onPress={navigateToNextPage}
+          style={style.prettyButton}
+          >
               {isLastPage ? "Go to Quiz" : "Continue Reading..."}
-            </Text>
-          </Pressable>
+          </PrettyButton>
         </ScrollView>
       </ImageBackground>
     </View>

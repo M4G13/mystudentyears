@@ -81,7 +81,6 @@ export default function MissingWordsQ({ question, handleAnswer }) {
           ))}
         </View>
       ) : (
-        <View style={style.submitButtonContainer}>
           <PrettyButton
             style={style.submitButton}
             onPress={() =>
@@ -90,7 +89,6 @@ export default function MissingWordsQ({ question, handleAnswer }) {
           >
             Submit
           </PrettyButton>
-        </View>
       )}
     </View>
   );

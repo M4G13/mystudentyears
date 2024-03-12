@@ -1,4 +1,5 @@
 import { View, Text, Pressable, Image, StatusBar } from "react-native";
+import PrettyButton from "../components/PrettyButton.js";
 
 import style from "../styles/homescreen.js";
 
@@ -21,23 +22,25 @@ export default function HomeScreen({ navigation }) {
       </View>
       <Text style={style.bigText}>Welcome to My Student Years!</Text>
       {global.uuid ? (
-        <Pressable
+        <PrettyButton
+          style={style.prettyButton}
           onPress={() => {
             StatusBar.setBackgroundColor(style.colors.bg1);
             navigation.navigate("Gatehouse");
           }}
         >
           <Text style={style.button}>Go to Gatehouse</Text>
-        </Pressable>
+        </PrettyButton>
       ) : (
-        <Pressable
+        <PrettyButton
+        style={style.prettyButton}
           onPress={() => {
             StatusBar.setBackgroundColor(style.colors.bg1);
             navigation.navigate("Survey");
           }}
         >
           <Text style={style.button}>Take the Survey</Text>
-        </Pressable>
+        </PrettyButton>
       )}
     </View>
   );

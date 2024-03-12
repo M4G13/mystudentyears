@@ -35,7 +35,6 @@ export default function OpenResponseQ({ question, handleAnswer }) {
         onChangeText={(text) => setInput(text)}
         value={input}
       />
-      <View style={style.submitButtonContainer}>
         <PrettyButton
           style={style.submitButton}
           onPress={() => {
@@ -46,7 +45,6 @@ export default function OpenResponseQ({ question, handleAnswer }) {
         >
           Submit
         </PrettyButton>
-      </View>
     </View>
   );
 }

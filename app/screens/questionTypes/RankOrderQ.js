@@ -73,7 +73,6 @@ export default function RankOrderQ({ question, handleAnswer }) {
           ))}
         </View>
       ) : (
-        <View style={style.submitButtonContainer}>
           <PrettyButton
             style={style.submitButton}
             onPress={() => {
@@ -82,7 +81,6 @@ export default function RankOrderQ({ question, handleAnswer }) {
           >
             Submit
           </PrettyButton>
-        </View>
       )}
     </View>
   );

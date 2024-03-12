@@ -91,6 +91,12 @@ const baseStyle = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
+
+  prettyButton:{ 
+    width:"80%",
+    height:50,
+    margin:"10%",
+  },
 });
 
 export default baseStyle;

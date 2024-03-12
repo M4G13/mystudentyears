@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import base from "./base";
 
 const style = StyleSheet.create({
+  ...base,
   scrollView: {
     flexGrow: 1,
   },
@@ -32,14 +33,11 @@ const style = StyleSheet.create({
     alignItems: "left", // Align items in the center
     width: "100%", // Ensure full width
   },
-  pressable: {
-    backgroundColor: base.colors.fg2,
-    padding: 15,
-    borderRadius: 5,
-    flexBasis: "40%",
-    flexDirection: "row",
-    justifyContent: "center",
+  prettyButton:{ 
+    ...base.prettyButton,
+    width:"100%",
   },
+
   button: {
     color: base.colors.text1,
     fontWeight: "600",
