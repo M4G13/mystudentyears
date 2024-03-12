@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { View, Text, Pressable, Image } from "react-native";
+import { View, Text, Image } from "react-native";
 import Animated, {
   useSharedValue,
   withTiming,
@@ -11,6 +11,7 @@ import Swiper from "react-native-swiper";
 import { CurrentStudentContext, CompletionContext } from "../Context.js";
 import { getScore } from "../common.js";
 import { GradeIcon } from "../components/Grade.js";
+import PrettyButton from "../components/PrettyButton.js";
 import style from "../styles/gatehouse.js";
 
 export default function Gatehouse({ navigation }) {
@@ -74,15 +75,15 @@ export default function Gatehouse({ navigation }) {
               )}
               <View style={style.studentCard}>
                 <Text style={style.studentText}>{s.Name + "'s"} Story</Text>
-                <Pressable
-                  style={style.pressable}
+                <PrettyButton
+                  style={style.prettyButton}
                   onPress={() => {
                     navigation.navigate("Campus", { student_id: s.id });
                     setCurrentStudent(s.id.toString());
                   }}
                 >
-                  <Text style={style.button}>Go to Campus</Text>
-                </Pressable>
+                  Go to Campus
+                </PrettyButton>
               </View>
 
               {(i === 0 ? true : completedStories[i - 1]) ? (
@@ -113,12 +114,12 @@ export default function Gatehouse({ navigation }) {
                 You've completed all the student stories! Please complete this
                 final survey to let us know what you've learned.
               </Text>
-              <Pressable
-                style={style.pressable}
+              <PrettyButton
+                style={style.prettyButton}
                 onPress={() => navigation.navigate("Survey")}
               >
-                <Text style={style.button}>Take Survey</Text>
-              </Pressable>
+                Take Survey
+              </PrettyButton>
             </View>
 
             {!completedStories.every((s) => s === true) && (

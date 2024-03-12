@@ -65,6 +65,7 @@ const style = StyleSheet.create({
     borderColor: baseStyle.colors.fg3,
     borderTopWidth: 5,
   },
+
   progressBarContainer: {
     width: "100%",
     position: "absolute",
@@ -138,19 +139,11 @@ const style = StyleSheet.create({
   },
   clearButtonContainer: {
     // TODO: Delete in prod
-    zIndex: 100,
     position: "absolute",
-    width: "45%",
-    bottom: 0,
-    height: 100,
-  },
-  clearButton: {
-    // TODO: Delete in prod
-    ...baseStyle.button,
-    position: "absolute",
-    width: "100%",
-    bottom: 0,
-    margin: 5,
+    width: "80%",
+    bottom: 10,
+    left: "10%",
+    height: 50,
   },
 });
 

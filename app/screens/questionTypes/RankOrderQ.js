@@ -73,16 +73,14 @@ export default function RankOrderQ({ question, handleAnswer }) {
           ))}
         </View>
       ) : (
-        <View style={style.submitButtonContainer}>
-          <PrettyButton
-            style={style.submitButton}
-            onPress={() => {
-              handleAnswer(isEqual(options.selected, question.answers));
-            }}
-          >
-            Submit
-          </PrettyButton>
-        </View>
+        <PrettyButton
+          style={style.submitButton}
+          onPress={() => {
+            handleAnswer(isEqual(options.selected, question.answers));
+          }}
+        >
+          Submit
+        </PrettyButton>
       )}
     </View>
   );
