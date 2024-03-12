@@ -29,7 +29,7 @@ export default function HomeScreen({ navigation }) {
             navigation.navigate("Gatehouse");
           }}
         >
-          <Text style={style.button}>Go to Gatehouse</Text>
+          Go to Gatehouse
         </PrettyButton>
       ) : (
         <PrettyButton
@@ -39,7 +39,7 @@ export default function HomeScreen({ navigation }) {
             navigation.navigate("Survey");
           }}
         >
-          <Text style={style.button}>Take the Survey</Text>
+          Take the Survey
         </PrettyButton>
       )}
     </View>

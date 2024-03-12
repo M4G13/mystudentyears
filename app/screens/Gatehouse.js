@@ -82,7 +82,7 @@ export default function Gatehouse({ navigation }) {
                     setCurrentStudent(s.id.toString());
                   }}
                 >
-                  <Text style={style.button}>Go to Campus</Text>
+                  Go to Campus
                 </PrettyButton>
               </View>
 
