@@ -35,7 +35,7 @@ export function GradeIcon({ style, score }) {
         source={require("../assets/gradeCircle.png")}
         style={styleSheet.gradeImage}
       />
-       style={styleSheet.gradeText} adjustsFontSizeToFit>
+      <Text style={styleSheet.gradeText} adjustsFontSizeToFit>
         {calculateGrade(score)}
       </Text>
     </View>
