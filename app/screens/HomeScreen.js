@@ -1,6 +1,6 @@
-import { View, Text, Pressable, Image, StatusBar } from "react-native";
-import PrettyButton from "../components/PrettyButton.js";
+import { View, Text, Image, StatusBar } from "react-native";
 
+import PrettyButton from "../components/PrettyButton.js";
 import style from "../styles/homescreen.js";
 
 export default function HomeScreen({ navigation }) {
@@ -33,7 +33,7 @@ export default function HomeScreen({ navigation }) {
         </PrettyButton>
       ) : (
         <PrettyButton
-        style={style.prettyButton}
+          style={style.prettyButton}
           onPress={() => {
             StatusBar.setBackgroundColor(style.colors.bg1);
             navigation.navigate("Survey");

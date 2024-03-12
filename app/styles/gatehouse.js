@@ -45,11 +45,6 @@ const style = StyleSheet.create({
     textShadowRadius: 10,
     textShadowColor: base.colors.translucent3,
   },
-  Pressable:{ 
-    width:"80%",
-    height:50,
-    margin:20,
-  },
 
   gpa: {
     position: "absolute",

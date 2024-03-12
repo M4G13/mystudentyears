@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useContext } from "react";
-import { View, Text, Pressable, Image } from "react-native";
+import { View, Text, Image } from "react-native";
 import Animated, { PinwheelIn } from "react-native-reanimated";
 
 import { CompletionContext } from "../Context.js";
 import { getScore, getNumCorrect, defaultRoute } from "../common.js";
 import { calculateGrade, GradeIcon } from "../components/Grade.js";
-import style from "../styles/quizendscreen.js";
 import PrettyButton from "../components/PrettyButton.js";
+import style from "../styles/quizendscreen.js";
 
 export default function QuizEndScreen({ route, navigation }) {
   const { category_id, student_id, answers, quiz_id } = route.params;

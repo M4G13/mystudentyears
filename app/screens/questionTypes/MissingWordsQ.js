@@ -81,14 +81,14 @@ export default function MissingWordsQ({ question, handleAnswer }) {
           ))}
         </View>
       ) : (
-          <PrettyButton
-            style={style.submitButton}
-            onPress={() =>
-              handleAnswer(isEqual(keywords.selected, correctKeywords))
-            }
-          >
-            Submit
-          </PrettyButton>
+        <PrettyButton
+          style={style.submitButton}
+          onPress={() =>
+            handleAnswer(isEqual(keywords.selected, correctKeywords))
+          }
+        >
+          Submit
+        </PrettyButton>
       )}
     </View>
   );

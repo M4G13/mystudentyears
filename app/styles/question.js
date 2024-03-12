@@ -12,12 +12,11 @@ const style = StyleSheet.create({
     backgroundColor: base.colors.bg1,
   },
 
-  submitButton:{ 
-    width:"80%",
-    height:50,
-    margin:"10%"
+  submitButton: {
+    width: "80%",
+    height: 50,
+    margin: "10%",
   },
-
 
   questionContainer: {
     padding: 30,

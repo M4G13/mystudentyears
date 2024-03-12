@@ -49,13 +49,6 @@ const style = StyleSheet.create({
     padding: 40,
     borderColor: "#000000",
   },
-  Pressable:{ 
-    width:"80%",
-    height:50,
-    marginHorizontal:"10%",
-    marginVertical: "2.5%"
-  },
-
 });
 
 export default style;

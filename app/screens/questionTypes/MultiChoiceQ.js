@@ -58,18 +58,18 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
           </PrettyButton>
         ))}
       </View>
-        <PrettyButton
-          style={style.submitButton}
-          onPress={() => {
-            if (selectedCorrectNumber) handleAnswer(isCorrect());
-            else
-              alert(
-                `Please select the correct number of options. (${correctNumber})`,
-              );
-          }}
-        >
-          Submit
-        </PrettyButton>
+      <PrettyButton
+        style={style.submitButton}
+        onPress={() => {
+          if (selectedCorrectNumber) handleAnswer(isCorrect());
+          else
+            alert(
+              `Please select the correct number of options. (${correctNumber})`,
+            );
+        }}
+      >
+        Submit
+      </PrettyButton>
     </View>
   );
 }

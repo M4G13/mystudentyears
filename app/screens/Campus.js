@@ -6,8 +6,8 @@ import Animated, { ZoomIn, ZoomOut, StretchInX } from "react-native-reanimated";
 import { CompletionContext } from "../Context.js";
 import { getData, getScore } from "../common.js";
 import { GradeIcon } from "../components/Grade.js";
-import style from "../styles/campus.js";
 import PrettyButton from "../components/PrettyButton.js";
+import style from "../styles/campus.js";
 
 const categoryIcons = {
   Finance: require("../assets/finance-icon.png"),
@@ -164,7 +164,7 @@ export default function Campus({ route, navigation }) {
           }}
           style={style.clearButtonContainer}
         >
-            Clear data
+          Clear data
         </PrettyButton>
       </ImageBackground>
     </View>

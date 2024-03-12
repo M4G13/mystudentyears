@@ -33,9 +33,9 @@ const style = StyleSheet.create({
     alignItems: "left", // Align items in the center
     width: "100%", // Ensure full width
   },
-  prettyButton:{ 
+  prettyButton: {
     ...base.prettyButton,
-    width:"100%",
+    width: "100%",
   },
 
   button: {

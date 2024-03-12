@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { View, Text, Pressable, Image } from "react-native";
+import { View, Text, Image } from "react-native";
 import Animated, {
   useSharedValue,
   withTiming,
@@ -11,8 +11,8 @@ import Swiper from "react-native-swiper";
 import { CurrentStudentContext, CompletionContext } from "../Context.js";
 import { getScore } from "../common.js";
 import { GradeIcon } from "../components/Grade.js";
-import style from "../styles/gatehouse.js";
 import PrettyButton from "../components/PrettyButton.js";
+import style from "../styles/gatehouse.js";
 
 export default function Gatehouse({ navigation }) {
   const students = global.data;

@@ -65,10 +65,6 @@ const style = StyleSheet.create({
     borderColor: baseStyle.colors.fg3,
     borderTopWidth: 5,
   },
-  Pressable:{ 
-    width:"80%",
-    height:50,
-  },
 
   progressBarContainer: {
     width: "100%",
@@ -146,7 +142,7 @@ const style = StyleSheet.create({
     position: "absolute",
     width: "80%",
     bottom: 10,
-    left:"10%",
+    left: "10%",
     height: 50,
   },
 });
