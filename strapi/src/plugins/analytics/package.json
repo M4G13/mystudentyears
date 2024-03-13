@@ -9,10 +9,16 @@
     "displayName": "Analytics"
   },
   "dependencies": {
+    "@nivo/bar": "^0.85.1",
+    "@nivo/geo": "^0.85.1",
     "@strapi/design-system": "^1.6.3",
     "@strapi/helper-plugin": "^4.6.0",
     "@strapi/icons": "^1.6.3",
-    "prop-types": "^15.7.2"
+    "axios": "^1.6.7",
+    "json-2-csv": "^5.5.0",
+    "json2csv": "6.0.0-alpha.2",
+    "prop-types": "^15.7.2",
+    "topojson-client": "^3.1.0"
   },
   "devDependencies": {
     "react": "^18.2.0",

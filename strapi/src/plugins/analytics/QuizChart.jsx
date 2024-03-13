@@ -3,7 +3,7 @@ import { ResponsiveBar } from '@nivo/bar';
 
 import {getFetchClient} from '@strapi/helper-plugin';
 
-const BarChart = ({type}) => {
+const QuizChart = ({type}) => {
 
   const [data, setData] = useState([]);
   const [options, setOptions] = useState([]);

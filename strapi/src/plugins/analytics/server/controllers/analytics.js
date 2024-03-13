@@ -68,7 +68,6 @@ const quizData = async () => {
       JSON.parse(quiz.results).forEach((question, questionIndex) => {
         let questionId = "question"+(questionIndex+1);
         result[quizId][questionId] = (result[quizId][questionId] || 0) + (question?1:0);
-        console.log(result[quizId][questionId]);
       });
     } else {
       result[quizId]["totalResponses"] = 0;
