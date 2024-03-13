@@ -1,7 +1,7 @@
 import BarChart from './BarChart.jsx';
 import SchoolMap from './SchoolMap.jsx';
 import QuizChart from './QuizChart.jsx';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 
 import { Box, Tabs, Tab, TabGroup, TabPanels, TabPanel, Layout, BaseHeaderLayout, Button, Link, SubNav, SubNavHeader, SubNavSections, SubNavSection, Typography} from '@strapi/design-system';
@@ -13,15 +13,17 @@ export default function Analytics() {
   const [ userData, setUserData ] = useState();
 
   const fetchData = async () => {
-    // TODO: Make not download every time
     const { get } = getFetchClient();
     const data = await get('../../analytics/userDetails');
-    setUserData(URL.createObjectURL(new Blob([data.data, {type: 'text/csv'}])));
-  }
+    const elem = document.createElement('a');
+    elem.setAttribute('href', URL.createObjectURL(new Blob([data.data, {type: 'text/csv'}])));
+    elem.setAttribute('download', 'userdata.csv');
+    elem.style.display = 'none';
+    document.body.appendChild(elem);
+    elem.click();
+    document.body.removeChild(elem);
 
-  useEffect(()=>{
-    fetchData();
-  },[]);
+  }
 
   return (
      <Box background="neutral100">
@@ -32,15 +34,9 @@ export default function Analytics() {
             Back
         </Link>}
         primaryAction={
-            <a
-              download="userData.csv"
-              rel="noreferrer"
-              href={userData}
-              style={{textDecoration: "none"}}>
-            <Button startIcon={<Folder />} >
+            <Button startIcon={<Folder />} onClick={()=>fetchData()}>
               Download user data
             </Button>
-            </a>
           }
         title="Analytics"
           as="h2" />
