@@ -44,6 +44,9 @@ dependencies:
   pg:
     specifier: ^8.11.3
     version: 8.11.3
+  prop-types:
+    specifier: ^15.8.1
+    version: 15.8.1
   react:
     specifier: ^18.2.0
     version: 18.2.0

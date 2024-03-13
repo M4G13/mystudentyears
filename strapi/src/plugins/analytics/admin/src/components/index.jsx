@@ -59,7 +59,7 @@ export default function Analytics() {
               </Box>
             </TabPanel>
             <TabPanel>
-              <Box color="neutral800" padding={4} background="neutral0" flex={1}>
+              <Box color="neutral800" padding={4} background="secondary500" flex={1}>
                 <Typography variant="alpha" text-align={"center"}>Number of users by council area</Typography>
                 <SchoolMap />
               </Box>

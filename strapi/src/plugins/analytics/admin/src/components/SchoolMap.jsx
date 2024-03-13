@@ -33,7 +33,8 @@ export default function SchoolMap() {
           theme={{"text":{"fill":"#ffffff"},"tooltip":{"container":{"color":"#000000"}}}}
           features={geojson.features}
           domain={domain}
-          colors="RdPu"
+          colors="YlGn"
+          unknownColor="#555555"
           label='properties.LAD13NM'
           projectionScale={3700}
           projectionTranslation={[0.7, 6.25]}

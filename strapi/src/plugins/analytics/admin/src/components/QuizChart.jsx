@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
+import { ThemeContext } from 'styled-components';
 
+import { Box, Typography } from '@strapi/design-system';
 import {getFetchClient} from '@strapi/helper-plugin';
 
 const QuizChart = () => {
@@ -13,6 +15,7 @@ const QuizChart = () => {
     Object.entries(q).slice(2).map(([k, v]) => ({ "question": k, "correct": 100*v/(q.totalResponses) })) : [];
 
   const { get } = getFetchClient();
+  const theme = useContext(ThemeContext)
   const fetchData = async () => {
     get(`../../analytics/quizData`)
       .then(response => {setQuizzes(response.data)})
@@ -32,14 +35,25 @@ const QuizChart = () => {
         indexBy="description"
         margin={{ top: 50, right: 60, bottom: 100, left: 60 }}
         padding={0.3}
-        tooltip={(bar,color,label)=>{return(
-            <div style={{borderRadius: 4,backgroundColor:"#ffffff", color:"#000000", padding: 4, textAlign: "center"}}>
-            <h1>{bar.indexValue}</h1>
-            <p>(click for questions)</p>
-            </div>
-          )}}
+        tooltip={(bar, color,label)=>
+        <Box
+          background="white"
+          textAlign="center"
+          hasRadius
+          padding={2}
+          role="tooltip"
+        >
+
+          <h1 style={{color:"#777777"}}>
+            {bar.indexValue}
+          </h1>
+          <p style={{color:"#777777"}}>
+            (Click for questions)
+          </p>
+        </Box>
+          }
         onClick={({index})=>{setQuestion(index)}}
-        theme={{"text":{"fill":"#ffffff"},"tooltip":{"container":{"color":"#000000"}}}}
+        theme={{"text":{"fill":theme.colors.neutral800}}}
         axisBottom={{
             tickRotation: 25
         }}
@@ -69,7 +83,7 @@ const QuizChart = () => {
         padding={0.3}
         minValue={0}
         maxValue={100}
-        theme={{"text":{"fill":"#ffffff"},"tooltip":{"container":{"color":"#000000"}}}}
+        theme={{"text":{"fill":theme.colors.neutral800},"tooltip":{"container":{"color":"#777777"}}}}
         axisBottom={{
             legend: 'Question',
             legendPosition: 'middle',

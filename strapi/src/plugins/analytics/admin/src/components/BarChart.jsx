@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
 
+import { ThemeContext } from 'styled-components';
 import {getFetchClient} from '@strapi/helper-plugin';
 
 const BarChart = ({type}) => {
 
   const [data, setData] = useState([]);
   const [options, setOptions] = useState([]);
+
+  const theme = useContext(ThemeContext)
 
   const { get } = getFetchClient();
   const fetchData = async () => {
@@ -34,7 +37,7 @@ const BarChart = ({type}) => {
         indexBy="question"
         margin={{ top: 50, right: 170, bottom: 50, left: 60 }}
         padding={0.3}
-        theme={{"text":{"fill":"#ffffff"},"tooltip":{"container":{"color":"#000000"}}}}
+        theme={{"text":{"fill":theme.colors.neutral800},"tooltip":{"container":{"color":"#000000"}}}}
         axisBottom={{
             legend: 'Question',
             legendPosition: 'middle',
