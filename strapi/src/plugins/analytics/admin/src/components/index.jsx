@@ -45,7 +45,7 @@ export default function Analytics() {
         title="Analytics"
           as="h2" />
 
-        <TabGroup label="Some stuff for the label" id="tabs" onTabChange={selected => console.log(selected)}>
+        <TabGroup label="Some stuff for the label" id="tabs">
           <Tabs>
             <Tab>Survey Data</Tab>
             <Tab>School Data (map)</Tab>
@@ -59,7 +59,7 @@ export default function Analytics() {
               </Box>
             </TabPanel>
             <TabPanel>
-              <Box color="neutral800" padding={4} background="secondary500" flex={1}>
+              <Box color="neutral800" padding={4} background="secondary100" flex={1}>
                 <Typography variant="alpha" text-align={"center"}>Number of users by council area</Typography>
                 <SchoolMap />
               </Box>
