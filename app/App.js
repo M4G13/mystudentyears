@@ -95,8 +95,11 @@ export default function App() {
         <CurrentStudentContext.Provider
           value={[currentStudent, setCurrentStudent]}
         >
-          <View style={{backgroundColor:baseStyle.colors.bg1, flex: 1}}>
-            <NavigationContainer theme={DarkTheme} initialState={navigationState}>
+          <View style={{ backgroundColor: baseStyle.colors.bg1, flex: 1 }}>
+            <NavigationContainer
+              theme={DarkTheme}
+              initialState={navigationState}
+            >
               <Stack.Navigator
                 screenOptions={{
                   presentation: "modal",

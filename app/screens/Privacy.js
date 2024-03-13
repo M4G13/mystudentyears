@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import {  Text, ScrollView } from "react-native";
+import { Text, ScrollView } from "react-native";
 
 import Loading from "../components/Loading.js";
 import baseStyle from "../styles/base";
@@ -31,7 +31,7 @@ export default function Privacy({ route, navigation }) {
 
   return (
     <Loading isLoading={isLoading} isError={error} retry={fetchData}>
-      <ScrollView >
+      <ScrollView>
         <Text style={baseStyle.smallText}>{privacyContent}</Text>
       </ScrollView>
     </Loading>
