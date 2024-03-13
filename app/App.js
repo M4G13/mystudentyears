@@ -95,8 +95,11 @@ export default function App() {
         <CurrentStudentContext.Provider
           value={[currentStudent, setCurrentStudent]}
         >
-          <View style={{backgroundColor:baseStyle.colors.bg1, flex: 1}}>
-            <NavigationContainer theme={DarkTheme} initialState={navigationState}>
+          <View style={{ backgroundColor: baseStyle.colors.bg1, flex: 1 }}>
+            <NavigationContainer
+              theme={DarkTheme}
+              initialState={navigationState}
+            >
               <Stack.Navigator
                 screenOptions={{
                   presentation: "modal",
@@ -123,8 +126,21 @@ export default function App() {
                 />
                 <Stack.Screen name="Campus" component={Campus} />
                 <Stack.Screen name="Category" component={Category} />
-                <Stack.Screen name="Question" component={Question} />
-                <Stack.Screen name="Info" component={Info} />
+                <Stack.Screen
+                  name="Question"
+                  component={Question}
+                  options={({ route }) => ({
+                    title: `Question ${route.params.index + 1}`,
+                    headerBackVisible: false,
+                  })}
+                />
+                <Stack.Screen
+                  name="Info"
+                  component={Info}
+                  options={({ route }) => ({
+                    title: `Information ${route.params.index + 1}`,
+                  })}
+                />
                 <Stack.Screen name="Error" component={Error} />
                 <Stack.Screen
                   name="QuizEndScreen"

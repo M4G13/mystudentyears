@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { Text, ScrollView } from "react-native";
 
 import Loading from "../components/Loading.js";
 import baseStyle from "../styles/base";
@@ -31,9 +31,9 @@ export default function Terms({ route, navigation }) {
 
   return (
     <Loading isLoading={isLoading} isError={error} retry={fetchData}>
-      <View style={baseStyle.view}>
+      <ScrollView>
         <Text style={baseStyle.smallText}>{termsContent}</Text>
-      </View>
+      </ScrollView>
     </Loading>
   );
 }
