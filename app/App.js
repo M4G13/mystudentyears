@@ -5,7 +5,7 @@ import axios from "axios";
 import Constants from "expo-constants"; // REMOVE IN PRODUCTION
 import { useFonts } from "expo-font";
 import React, { useState, useEffect } from "react";
-import { StatusBar } from "react-native";
+import { StatusBar, View } from "react-native";
 
 import { CurrentStudentContext, CompletionContext } from "./Context.js";
 import { defaultRoute } from "./common.js";
@@ -95,44 +95,45 @@ export default function App() {
         <CurrentStudentContext.Provider
           value={[currentStudent, setCurrentStudent]}
         >
-          <NavigationContainer theme={DarkTheme} initialState={navigationState}>
-            <Stack.Navigator
-              screenOptions={{
-                animation: "fade",
-                presentation: "modal",
-                headerTitleAlign: "center",
-                headerShadowVisible: false,
-                headerStyle: baseStyle.header,
-              }}
-            >
-              <Stack.Screen
-                name="Home Screen"
-                component={HomeScreen}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Survey"
-                component={global.uuid ? FinalSurvey : InitialSurvey}
-              />
-              <Stack.Screen name="Terms & Conditions" component={Terms} />
-              <Stack.Screen name="Privacy Policy" component={Privacy} />
-              <Stack.Screen
-                name="Gatehouse"
-                component={Gatehouse}
-                options={{ title: "Pick a Student" }}
-              />
-              <Stack.Screen name="Campus" component={Campus} />
-              <Stack.Screen name="Category" component={Category} />
-              <Stack.Screen name="Question" component={Question} />
-              <Stack.Screen name="Info" component={Info} />
-              <Stack.Screen name="Error" component={Error} />
-              <Stack.Screen
-                name="QuizEndScreen"
-                component={QuizEndScreen}
-                options={{ headerShown: false }}
-              />
-            </Stack.Navigator>
-          </NavigationContainer>
+          <View style={{backgroundColor:baseStyle.colors.bg1, flex: 1}}>
+            <NavigationContainer theme={DarkTheme} initialState={navigationState}>
+              <Stack.Navigator
+                screenOptions={{
+                  presentation: "modal",
+                  headerTitleAlign: "center",
+                  headerShadowVisible: false,
+                  headerStyle: baseStyle.header,
+                }}
+              >
+                <Stack.Screen
+                  name="Home Screen"
+                  component={HomeScreen}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="Survey"
+                  component={global.uuid ? FinalSurvey : InitialSurvey}
+                />
+                <Stack.Screen name="Terms & Conditions" component={Terms} />
+                <Stack.Screen name="Privacy Policy" component={Privacy} />
+                <Stack.Screen
+                  name="Gatehouse"
+                  component={Gatehouse}
+                  options={{ title: "Pick a Student" }}
+                />
+                <Stack.Screen name="Campus" component={Campus} />
+                <Stack.Screen name="Category" component={Category} />
+                <Stack.Screen name="Question" component={Question} />
+                <Stack.Screen name="Info" component={Info} />
+                <Stack.Screen name="Error" component={Error} />
+                <Stack.Screen
+                  name="QuizEndScreen"
+                  component={QuizEndScreen}
+                  options={{ headerShown: false }}
+                />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </View>
         </CurrentStudentContext.Provider>
       </CompletionContext.Provider>
     </Loading>
