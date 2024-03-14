@@ -9,16 +9,11 @@
       "resizeMode": "contain",
       "backgroundColor": "#16161d"
     },
-    "extra": {
-      "eas": {
-        "projectId": "b8c0f4a1-5f8c-48ac-92bd-02e1d4465ae7"
-      }
-    },
     "android": {
       "package": "org.mystudentyears.quiz",
       "adaptiveIcon": {
-        "foregroundImage":"./assets/adaptive-icon.png",
-        backgroundColor: "#ffffff"
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
       }
     },
     "ios": {
@@ -28,9 +23,17 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/PlaypenSans.ttf"]
+          "fonts": [
+            "./assets/fonts/PlaypenSans.ttf"
+          ]
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "b8c0f4a1-5f8c-48ac-92bd-02e1d4465ae7"
+      }
+    },
+    "owner": "mystudentyears"
   }
 }
