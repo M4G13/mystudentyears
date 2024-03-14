@@ -1,4 +1,4 @@
-import favicon from "../../favicon.png";
+import favicon from "./extensions/favicon.png";
 import msyLogoSmall from "../../msyLogoSmall.png";
 import msyLogoLarge from "../../msyLogoLarge.png";
 
