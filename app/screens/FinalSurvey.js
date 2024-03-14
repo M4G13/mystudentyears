@@ -15,6 +15,8 @@ export default function FinalSurvey({ navigation }) {
       data: { FinalSurvey: survey },
     });
     navigation.reset({ routes: [{ name: "Home Screen" }] });
+    AsyncStorage.setItem("finalSurveyComplete", "true");
+    global.finalSurvey = "true";
   };
 
   useEffect(() => {
