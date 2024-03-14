@@ -105,7 +105,7 @@ export default function App() {
             >
               <Stack.Navigator
                 screenOptions={{
-                  presentation: "modal",
+                  presentation: "card",
                   headerTitleAlign: "center",
                   headerShadowVisible: false,
                   headerStyle: baseStyle.header,

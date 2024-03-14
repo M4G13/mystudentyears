@@ -31,10 +31,10 @@ export default function Campus({ route, navigation }) {
   );
 
   const locs = {
-    Finance: [60, 135],
-    Wellbeing: [130, 500],
-    Academics: [210, 235],
-    Independence: [260, 110],
+    Finance: ["67%", "55%"],
+    Wellbeing: ["10%", "49%"],
+    Academics: ["40%", "23%"],
+    Independence: ["65%", "10%"],
   };
 
   return (

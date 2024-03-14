@@ -32,7 +32,7 @@ export default function Category({ route, navigation }) {
         )}
       </View>
 
-      <View style={baseStyle.imageContainer}>
+      <View style={{width: "80%", flex: 1, marginVertical:"10%"}}>
         <Image
           source={
             category.image
@@ -43,7 +43,7 @@ export default function Category({ route, navigation }) {
           resizeMode="contain"
         />
       </View>
-      <View style={{ width: "80%", flex: 1, marginVertical: "10%", gap: 30 }}>
+      <View style={{ width: "80%", height: "40%"}}>
         <PrettyButton
           style={baseStyle.prettyButton}
           onPress={() =>
