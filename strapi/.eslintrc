@@ -20,5 +20,8 @@
   },
   "globals": {
     "strapi": true
-  }
+  },
+  "rules": {
+        "no-unused-vars": "off"
+      }
 }

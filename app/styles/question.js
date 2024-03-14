@@ -12,22 +12,19 @@ const style = StyleSheet.create({
     backgroundColor: base.colors.bg1,
   },
 
-  submitButtonContainer: {
-    padding: 10,
-    width: "100%",
-    marginTop: "auto",
+  submitButton: {
+    width: "80%",
+    height: 50,
+    margin: "10%",
   },
 
-  submitButton: {
-    backgroundColor: base.colors.fg2,
-  },
   questionContainer: {
     padding: 30,
   },
   optionsContainer: {
     width: "80%",
-    height: "65%",
-    flex: 1,
+    marginBottom: "5%",
+    gap: 15,
   },
   option: {
     marginBottom: "5%",
@@ -84,6 +81,12 @@ const style = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
+  },
+  imageContainer: {
+    width: "100%",
+    maxHeight: "30%",
+    flex: 0.7,
+    padding: "5%",
   },
 });
 

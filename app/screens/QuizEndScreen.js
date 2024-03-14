@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useContext } from "react";
-import { View, Text, Pressable, Image } from "react-native";
+import { View, Text, Image } from "react-native";
 import Animated, { PinwheelIn } from "react-native-reanimated";
 
 import { CompletionContext } from "../Context.js";
 import { getScore, getNumCorrect, defaultRoute } from "../common.js";
 import { calculateGrade, GradeIcon } from "../components/Grade.js";
+import PrettyButton from "../components/PrettyButton.js";
 import style from "../styles/quizendscreen.js";
 
 export default function QuizEndScreen({ route, navigation }) {
@@ -75,24 +76,25 @@ export default function QuizEndScreen({ route, navigation }) {
         </Animated.View>
       )}
       <View style={style.buttonContainer}>
-        <Pressable
-          onPress={() =>
-            navigation.navigate("Question", {
+        <PrettyButton
+          onPress={() => {
+            navigation.pop();
+            navigation.push("Question", {
               category_id,
               student_id,
               index: 0,
-            })
-          }
-          style={style.pressable}
+            });
+          }}
+          style={style.prettyButton}
         >
-          <Text style={style.button}>Retake Quiz</Text>
-        </Pressable>
-        <Pressable
+          Retake Quiz
+        </PrettyButton>
+        <PrettyButton
           onPress={() => navigation.reset(defaultRoute(student_id))}
-          style={style.pressable}
+          style={style.prettyButton}
         >
-          <Text style={style.button}>Return to Campus</Text>
-        </Pressable>
+          Return to Campus
+        </PrettyButton>
       </View>
     </View>
   );

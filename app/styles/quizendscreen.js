@@ -8,7 +8,8 @@ const style = StyleSheet.create({
   imageContainer: {
     height: "70%",
     width: "100%",
-    padding: 10,
+    paddingTop: 50,
+    flex: 1,
   },
   image: {
     resizeMode: "contain",

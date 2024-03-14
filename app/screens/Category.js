@@ -20,7 +20,7 @@ export default function Category({ route, navigation }) {
 
   return (
     <View style={baseStyle.view}>
-      <>
+      <View style={baseStyle.view}>
         <Text style={baseStyle.bigText}>
           This is the {category.Category} section
         </Text>
@@ -30,49 +30,46 @@ export default function Category({ route, navigation }) {
             {category.quiz.questions.length}
           </Text>
         )}
+      </View>
 
-        <>
-          <View style={baseStyle.imageContainer}>
-            <Image
-              source={
-                category.image
-                  ? { uri: global.url + category.image?.url }
-                  : categoryImages[category.Category]
-              }
-              style={baseStyle.image}
-              resizeMode="contain"
-            />
-          </View>
+      <View style={baseStyle.imageContainer}>
+        <Image
+          source={
+            category.image
+              ? { uri: global.url + category.image?.url }
+              : categoryImages[category.Category]
+          }
+          style={baseStyle.image}
+          resizeMode="contain"
+        />
+      </View>
+      <View style={{ width: "80%", flex: 1, marginVertical: "10%", gap: 30 }}>
+        <PrettyButton
+          style={baseStyle.prettyButton}
+          onPress={() =>
+            navigation.navigate("Info", {
+              ...route.params,
+              index: 0,
+            })
+          }
+        >
+          Start Reading
+        </PrettyButton>
 
-          <View style={{ width: "80%" }}>
-            <PrettyButton
-              onPress={() =>
-                navigation.navigate("Info", {
-                  ...route.params,
-                  index: 0,
-                })
-              }
-            >
-              Start Reading
-            </PrettyButton>
-          </View>
-
-          {catCompletion?.info && (
-            <View style={{ width: "80%" }}>
-              <PrettyButton
-                onPress={() => {
-                  navigation.navigate("Question", {
-                    ...route.params,
-                    index: 0,
-                  });
-                }}
-              >
-                {catCompletion?.quiz ? "Retake Quiz" : "Start Quiz"}
-              </PrettyButton>
-            </View>
-          )}
-        </>
-      </>
+        {catCompletion?.info && (
+          <PrettyButton
+            style={baseStyle.prettyButton}
+            onPress={() => {
+              navigation.navigate("Question", {
+                ...route.params,
+                index: 0,
+              });
+            }}
+          >
+            {catCompletion?.quiz ? "Retake Quiz" : "Start Quiz"}
+          </PrettyButton>
+        )}
+      </View>
     </View>
   );
 }

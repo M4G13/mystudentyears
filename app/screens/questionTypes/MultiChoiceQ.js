@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { View, Text, Image } from "react-native";
 
-import PrettyButton, {
-  PrettyButtonState,
-} from "../../components/PrettyButton.js";
+import PrettyButton from "../../components/PrettyButton.js";
 import style from "../../styles/multichoiceq.js";
 
 export default function MultiChoiceQ({ question, handleAnswer }) {
   const [selected, setSelected] = useState({});
 
+  const correctNumber = question.options.filter(
+    (item) => item.correct === true,
+  ).length;
+
   const selectedCorrectNumber =
     Object.values(selected).filter((item) => item === true).length ===
-    question.options.filter((item) => item.correct === true).length;
+    correctNumber;
 
   const handleSelect = (q) => {
     const nextSelected = { ...selected };
@@ -31,9 +33,6 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
 
   return (
     <View style={style.questionWrapper}>
-      <View style={style.questionContainer}>
-        <Text style={style.bigText}>{question.question}</Text>
-      </View>
       {question.image && (
         <View style={style.imageContainer}>
           <Image
@@ -43,29 +42,34 @@ export default function MultiChoiceQ({ question, handleAnswer }) {
           />
         </View>
       )}
+      <View style={style.questionContainer}>
+        <Text style={style.bigText}>{question.question}</Text>
+      </View>
 
       <View style={style.optionsContainer}>
         {question.options.map((q) => (
-          <PrettyButtonState
+          <PrettyButton
             key={q.id}
             onPress={() => handleSelect(q)}
-            toggled={selected[q.id]}
+            down={selected[q.id]}
+            style={{ flex: 1 }}
           >
             {q.text}
-          </PrettyButtonState>
+          </PrettyButton>
         ))}
       </View>
-      <View style={style.submitButtonContainer}>
-        <PrettyButton
-          style={style.submitButton}
-          onPress={() => {
-            if (selectedCorrectNumber) handleAnswer(isCorrect());
-            else alert("Please select the correct number of options.");
-          }}
-        >
-          Submit
-        </PrettyButton>
-      </View>
+      <PrettyButton
+        style={style.submitButton}
+        onPress={() => {
+          if (selectedCorrectNumber) handleAnswer(isCorrect());
+          else
+            alert(
+              `Please select the correct number of options. (${correctNumber})`,
+            );
+        }}
+      >
+        Submit
+      </PrettyButton>
     </View>
   );
 }

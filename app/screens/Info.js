@@ -1,16 +1,10 @@
 import React, { useContext } from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  ScrollView,
-  Image,
-  ImageBackground,
-} from "react-native";
+import { View, Text, ScrollView, Image, ImageBackground } from "react-native";
 import Markdown from "react-native-markdown-display";
 
 import { CompletionContext } from "../Context.js";
 import { getData } from "../common.js";
+import PrettyButton from "../components/PrettyButton.js";
 import style from "../styles/info.js";
 
 export default function Info({ route, navigation }) {
@@ -20,7 +14,7 @@ export default function Info({ route, navigation }) {
 
   const { category } = getData(route.params);
 
-  const information = category.information.pages;
+  const information = category.information?.pages || [];
   const isLastPage = index >= information.length - 1;
   const currInfo = information[index];
 
@@ -32,6 +26,9 @@ export default function Info({ route, navigation }) {
       setCompletion({
         ...completion,
         [category.id]: { quiz: completion[category.id]?.quiz, info: true },
+      });
+      navigation.navigate("Category", {
+        ...route.params,
       });
       navigation.navigate("Question", { ...route.params, index: 0 });
     } else {
@@ -54,11 +51,9 @@ export default function Info({ route, navigation }) {
               <Markdown style={style.markdownStyle}>{currInfo.Text}</Markdown>
             </>
           )}
-          <Pressable onPress={navigateToNextPage}>
-            <Text style={style.infoButton}>
-              {isLastPage ? "Go to Quiz" : "Continue Reading..."}
-            </Text>
-          </Pressable>
+          <PrettyButton onPress={navigateToNextPage} style={style.prettyButton}>
+            {isLastPage ? "Go to Quiz" : "Continue Reading..."}
+          </PrettyButton>
         </ScrollView>
       </ImageBackground>
     </View>

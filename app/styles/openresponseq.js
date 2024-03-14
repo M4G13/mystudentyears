@@ -12,12 +12,11 @@ const style = StyleSheet.create({
     borderRadius: 5,
     alignSelf: "center",
     width: "80%",
-    marginVertical: 60,
+    marginBottom: 15,
   },
 
   bigText: {
     ...base.bigText,
-    marginBottom: 60,
     fontSize: 24,
   },
 });
