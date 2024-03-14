@@ -1,20 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
+
+import { ThemeContext } from 'styled-components';
+import {getFetchClient} from '@strapi/helper-plugin';
 
 const BarChart = ({type}) => {
 
   const [data, setData] = useState([]);
   const [options, setOptions] = useState([]);
 
-  useEffect(() => {
-    fetch(`../../api/stats/${type}`)
-      .then(response => response.json())
-      .then(data => setData(data))
-      .catch(error => console.log(error));
-    fetch('../../api/survey-options')
+  const theme = useContext(ThemeContext)
+
+  const { get } = getFetchClient();
+  const fetchData = async () => {
+    get(`../../analytics/${type}`)
+      .then(response => setData(response.data))
+  }
+
+  const fetchOptions = async () => {
+    fetch('../../../api/survey-options')
       .then(response => response.json())
       .then(data => setOptions(data.data.map(val => val.attributes.option)))
       .catch(error => console.log(error));
+}
+
+  useEffect(() => {
+    fetchData();
+    fetchOptions();
   }, []);
 
   return (
@@ -25,7 +37,7 @@ const BarChart = ({type}) => {
         indexBy="question"
         margin={{ top: 50, right: 170, bottom: 50, left: 60 }}
         padding={0.3}
-        theme={{"text":{"fill":"#ffffff"}}}
+        theme={{"text":{"fill":theme.colors.neutral800},"tooltip":{"container":{"color":"#000000"}}}}
         axisBottom={{
             legend: 'Question',
             legendPosition: 'middle',
