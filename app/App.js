@@ -70,6 +70,8 @@ export default function App() {
     AsyncStorage.getItem("completion").then((data) => {
       if (data !== null) setCompletion(JSON.parse(data));
     });
+    AsyncStorage.getItem("finalSurveyComplete")
+      .then((data)=>(global.finalSurvey = data));
     fetchData();
   }, []);
 

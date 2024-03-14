@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { View, Text, Image } from "react-native";
 import Animated, {
   useSharedValue,
@@ -16,6 +16,7 @@ import style from "../styles/gatehouse.js";
 
 export default function Gatehouse({ navigation }) {
   const students = global.data;
+  const showSurvey = global.finalSurvey==null;
 
   const [completion] = useContext(CompletionContext);
 
@@ -54,7 +55,7 @@ export default function Gatehouse({ navigation }) {
     <View style={style.view}>
       <Swiper
         loop={false}
-        index={students.findIndex((s) => s.id === Number(currentStudent))}
+        index={currentStudent?students.findIndex((s) => s.id === Number(currentStudent)):0}
         onIndexChanged={(i) => {
           setStudentIndex({ prev: studentIndex.curr, curr: i });
           bgIndex.value = 0; // Need to lerp from 0-1 every time
@@ -104,7 +105,7 @@ export default function Gatehouse({ navigation }) {
               )}
             </Animated.View>
           )),
-          <Animated.View
+          showSurvey&&<Animated.View
             style={[style.studentWrapper, bgColorAnim]}
             key={"student" + students.length}
           >
@@ -130,7 +131,7 @@ export default function Gatehouse({ navigation }) {
                 </Text>
               </View>
             )}
-          </Animated.View>,
+          </Animated.View>
         ]}
       </Swiper>
     </View>
