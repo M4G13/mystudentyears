@@ -1,52 +1,87 @@
+import isEqual from "lodash/isEqual";
+import shuffle from "lodash/shuffle";
 import React, { useState } from "react";
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
-// import DraggableFlatList, {
-//   ScaleDecorator,
-// } from "react-native-draggable-flatlist";
+import { View, Text, Image } from "react-native";
 
+import PrettyButton from "../../components/PrettyButton.js";
 import style from "../../styles/rankorderq.js";
 
-const _ = require("lodash");
-
 export default function RankOrderQ({ question, handleAnswer }) {
-  const [data, setData] = useState(_.shuffle(question.answers));
+  const [options, setOptions] = useState({
+    selected: new Array(question.answers.length).fill(null),
+    available: shuffle(question.answers),
+  });
 
-  // const renderItem = ({ item, drag, isActive }) => {
-  //   return (
-  //     <ScaleDecorator>
-  //       <TouchableOpacity
-  //         onLongPress={drag}
-  //         delayLongPress={0}
-  //         disabled={isActive}
-  //         style={style.listItem}
-  //       >
-  //         <Text style={style.bigText}>{item.answer}</Text>
-  //       </TouchableOpacity>
-  //     </ScaleDecorator>
-  //   );
-  // };
+  const handleSelect = (index) => {
+    const selected = [...options.selected];
+    const available = [...options.available];
+    const next = options.selected.indexOf(null);
+    selected[next] = available[index];
+    available.splice(index, 1);
+    setOptions({ selected, available });
+  };
+  const handleDeselect = (index) => {
+    if (options.selected[index] !== null) {
+      const selected = [...options.selected];
+      selected[index] = null;
+      const available = [...options.available, options.selected[index]];
+      setOptions({ selected, available });
+    }
+  };
 
   return (
     <View style={style.questionWrapper}>
+      {question.image && (
+        <View style={style.imageContainer}>
+          <Image
+            source={{ uri: global.url + question.image?.url }}
+            style={style.image}
+            resizeMode="contain"
+          />
+        </View>
+      )}
       <View style={style.questionContainer}>
         <Text style={style.bigText}>{question.question}</Text>
       </View>
-      {/*<DraggableFlatList
-        data={data}
-        onDragEnd={({ data }) => setData(data)}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-      />*/}
-      <View style={style.submitButtonContainer}>
-        <Pressable
+      <View style={style.selected}>
+        {options.selected.map((q, i) =>
+          q ? (
+            <PrettyButton
+              key={i}
+              onPress={() => handleDeselect(i)}
+              style={style.selectedButton}
+            >
+              {i + 1}: {q.answer}
+            </PrettyButton>
+          ) : (
+            <PrettyButton key={i} style={style.selectedButton}>
+              {i + 1}
+            </PrettyButton>
+          ),
+        )}
+      </View>
+      {options.available.length ? (
+        <View style={style.options}>
+          {options.available.map((q, i) => (
+            <PrettyButton
+              key={q.id}
+              onPress={() => handleSelect(i)}
+              style={style.button}
+            >
+              {q.answer}
+            </PrettyButton>
+          ))}
+        </View>
+      ) : (
+        <PrettyButton
           style={style.submitButton}
           onPress={() => {
-            handleAnswer(_.isEqual(data, question.answers));
+            handleAnswer(isEqual(options.selected, question.answers));
           }}
         >
-          <Text style={style.button}>Submit</Text>
-        </Pressable>
-      </View>
+          Submit
+        </PrettyButton>
+      )}
     </View>
   );
 }

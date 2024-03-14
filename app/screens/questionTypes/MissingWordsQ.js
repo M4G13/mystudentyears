@@ -1,9 +1,10 @@
+import isEqual from "lodash/isEqual";
+import shuffle from "lodash/shuffle";
 import React, { useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Image } from "react-native";
 
+import PrettyButton from "../../components/PrettyButton.js";
 import style from "../../styles/missingwordsq.js";
-
-const _ = require("lodash");
 
 export default function MissingWordsQ({ question, handleAnswer }) {
   const correctKeywords = Array.from(
@@ -15,7 +16,7 @@ export default function MissingWordsQ({ question, handleAnswer }) {
 
   const [keywords, setKeywords] = useState({
     selected: new Array(correctKeywords.length).fill(null),
-    available: _.shuffle(correctKeywords),
+    available: shuffle(correctKeywords),
   });
 
   function putKeyword(index) {
@@ -39,8 +40,17 @@ export default function MissingWordsQ({ question, handleAnswer }) {
 
   return (
     <View style={style.questionWrapper}>
+      {question.image && (
+        <View style={style.imageContainer}>
+          <Image
+            source={{ uri: global.url + question.image?.url }}
+            style={style.image}
+            resizeMode="contain"
+          />
+        </View>
+      )}
       <View style={style.questionContainer}>
-        <Text style={style.bigText}>
+        <Text style={style.question}>
           {questionString.map((text, i) => {
             return (
               <Text key={`${text}${i}${keywords.selected[i]}`}>
@@ -55,32 +65,31 @@ export default function MissingWordsQ({ question, handleAnswer }) {
           })}
         </Text>
       </View>
-      <View style={style.keywords}>
-        {keywords.available.length ? (
-          keywords.available.map((keyword, index) => (
-            <Pressable
-              style={style.draggable}
+
+      {keywords.available.length ? (
+        <View style={style.keywords}>
+          {keywords.available.map((keyword, index) => (
+            <PrettyButton
+              key={`${index}${keyword}`}
+              style={{ width: "45%", height: "20%" }}
               onPress={() => {
                 putKeyword(index);
               }}
-              key={`${index}${keyword}`}
             >
-              <Text style={style.bigText}>{keyword}</Text>
-            </Pressable>
-          ))
-        ) : (
-          <View style={style.submitButtonContainer}>
-            <Pressable
-              style={style.submitButton}
-              onPress={() =>
-                handleAnswer(_.isEqual(keywords.selected, correctKeywords))
-              }
-            >
-              <Text style={style.button}>Submit</Text>
-            </Pressable>
-          </View>
-        )}
-      </View>
+              {keyword}
+            </PrettyButton>
+          ))}
+        </View>
+      ) : (
+        <PrettyButton
+          style={style.submitButton}
+          onPress={() =>
+            handleAnswer(isEqual(keywords.selected, correctKeywords))
+          }
+        >
+          Submit
+        </PrettyButton>
+      )}
     </View>
   );
 }

@@ -5,39 +5,34 @@ import base from "./base.js";
 const style = StyleSheet.create({
   ...base,
   questionWrapper: {
+    alignItems: "center",
     flex: 1,
     height: "100%",
     width: "100%",
     backgroundColor: base.colors.bg1,
   },
+
+  submitButton: {
+    width: "80%",
+    height: 50,
+    margin: "10%",
+  },
+
   questionContainer: {
     padding: 30,
-    paddingLeft: 10,
-    justifyContent: "space-around",
   },
   optionsContainer: {
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    alignSelf: "center",
+    width: "80%",
+    marginBottom: "5%",
     gap: 15,
   },
-  submitButtonContainer: {
-    marginTop: "auto",
-    width: "100%",
+  option: {
+    marginBottom: "5%",
   },
-  submitButton: {
-    backgroundColor: base.colors.fg2,
-    justifyContent: "end",
-    marginTop: "auto",
-    margin: 10,
-    padding: 15,
-    borderRadius: 5,
-  },
-  image: {
-    width: 100,
-    height: 200,
-    objectFit: "contain",
+  optionSelected: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   pressable: {
     backgroundColor: base.colors.fg2,
@@ -53,7 +48,6 @@ const style = StyleSheet.create({
   },
   bigText: {
     ...base.bigText,
-    textAlign: "left",
     fontSize: 30,
   },
 
@@ -87,6 +81,12 @@ const style = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
+  },
+  imageContainer: {
+    width: "100%",
+    maxHeight: "30%",
+    flex: 0.7,
+    padding: "5%",
   },
 });
 

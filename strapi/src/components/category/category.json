@@ -2,7 +2,8 @@
   "collectionName": "components_category_categories",
   "info": {
     "displayName": "Category",
-    "icon": "grid"
+    "icon": "grid",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -13,17 +14,26 @@
         "Wellbeing",
         "Academics",
         "Independence"
-      ]
+      ],
+      "required": true
     },
     "information": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "api::info.info"
     },
     "quiz": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::quiz.quiz"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }

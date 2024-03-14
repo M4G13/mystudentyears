@@ -1,7 +1,5 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from "@react-navigation/native";
-import React, { useState, useCallback } from "react";
-import { View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Alert } from "react-native";
 
 import MissingWordsQ from "./questionTypes/MissingWordsQ.js";
 import MultiChoiceQ from "./questionTypes/MultiChoiceQ.js";
@@ -10,33 +8,47 @@ import RankOrderQ from "./questionTypes/RankOrderQ.js";
 import { getData } from "../common.js";
 import baseStyle from "../styles/question.js";
 
-export function calculateScore(answers, totalQuestions) {
-  const correctAnswers = answers.filter((answer) => answer === true);
-  const score = (correctAnswers.length / totalQuestions) * 100;
-  return {
-    score,
-    correctAmount: correctAnswers.length,
-  };
-}
-
 export default function Question({ route, navigation }) {
+  const [answers, setAnswers] = useState([]);
   const { index } = route.params;
   const { category } = getData(route.params);
 
+  useEffect(
+    () =>
+      navigation.addListener("beforeRemove", (e) => {
+        if (e.data.action.type === "POP") return;
+        e.preventDefault();
+        Alert.alert(
+          "Exit quiz?",
+          "You will lose your current progress. ",
+          [
+            { text: "Don't leave", style: "cancel", onPress: () => {} },
+            {
+              text: "Exit",
+              style: "destructive",
+              onPress: () => {
+                navigation.dispatch(e.data.action);
+              },
+            },
+          ],
+          {
+            cancelable: true,
+            onDismiss: () => {},
+          },
+        );
+      }),
+    [navigation],
+  );
+
   const quiz = category.quiz;
 
-  const question = quiz.questions[index];
-
-  const [answers, setAnswers] = useState([]);
-
-  async function storeResult(answers, score) {
-    try {
-      await AsyncStorage.setItem("quiz" + category.id, JSON.stringify(answers));
-      await AsyncStorage.setItem("quizScore" + category.id, score.toString());
-    } catch (e) {
-      console.error("Failed to save progress. " + e);
-    }
+  if (!quiz) {
+    alert("No quiz has been made for this category... Come back later!");
+    navigation.pop();
+    return;
   }
+
+  const question = quiz.questions[index];
 
   function handleAnswer(correct) {
     const nextAnswers = [...answers, correct];
@@ -48,47 +60,14 @@ export default function Question({ route, navigation }) {
         index: index + 1,
       });
     } else {
-      // probably should navigate to quiz end screen
-      const { score, correctAmount } = calculateScore(
-        nextAnswers,
-        quiz.questions.length,
-      );
-      storeResult(nextAnswers, score);
-      fetch(global.api_url + "/app-user/" + global.uuid, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data: {
-            CompletedQuizzes: [
-              {
-                quiz: quiz.id,
-                results: nextAnswers,
-              },
-            ],
-          },
-        }),
-      });
+      navigation.pop();
       navigation.navigate("QuizEndScreen", {
         ...route.params,
-        score,
-        correctAmount,
-        QuestionAmount: quiz.questions.length,
+        answers: nextAnswers,
+        quiz_id: quiz.id,
       });
     }
   }
-
-  useFocusEffect(
-    useCallback(() => {
-      if (index === 0) {
-        setAnswers([]);
-        AsyncStorage.removeItem("quiz" + category.id).catch((error) => {
-          console.error("Failed to clear progress. " + error);
-        });
-      }
-    }, [index]),
-  );
 
   const questionTypes = {
     "questions.multi-choice-question": MultiChoiceQ,
@@ -103,7 +82,11 @@ export default function Question({ route, navigation }) {
 
   return (
     <View style={baseStyle.view}>
-      <QuestionType question={question} handleAnswer={handleAnswer} />
+      <QuestionType
+        question={question}
+        handleAnswer={handleAnswer}
+        key={question.id}
+      />
     </View>
   );
 }

@@ -1,64 +1,51 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from "@react-navigation/native";
-import React, { useState, useCallback } from "react";
-import { View, Text, Pressable } from "react-native";
+import React, { useContext } from "react";
+import { View, Text, Image } from "react-native";
 
-import { getData } from "../common.js";
+import { CompletionContext } from "../Context.js";
+import { getNumCorrect, getData } from "../common.js";
+import PrettyButton from "../components/PrettyButton.js";
 import baseStyle from "../styles/base.js";
 
 export default function Category({ route, navigation }) {
   const { category } = getData(route.params);
 
-  const [completion, setCompletion] = useState(null);
-  const [infoCompletion, setInfoCompletion] = useState(null);
-
-  useFocusEffect(
-    useCallback(() => {
-      async function getCompletion() {
-        try {
-          const infoCompletion = await AsyncStorage.getItem(
-            "info" + category.id,
-          );
-          setInfoCompletion(infoCompletion);
-        } catch (e) {
-          console.error("Failed to get info page completion" + e);
-          setInfoCompletion(null);
-        }
-
-        try {
-          let sum = 0;
-          const quizCompletion = await AsyncStorage.getItem(
-            "quiz" + category.id,
-          );
-          if (quizCompletion != null) {
-            JSON.parse(quizCompletion).map((x) => (sum += x ? 1 : 0));
-            setCompletion(sum);
-          } else {
-            setCompletion(null);
-          }
-        } catch (e) {
-          console.error("Failed to get progress. " + e);
-          setCompletion(null);
-        }
-      }
-
-      getCompletion();
-    }, []),
-  );
+  const [completion] = useContext(CompletionContext);
+  const catCompletion = completion[category.id];
+  const categoryImages = {
+    Finance: require("../assets/Finance.jpg"),
+    Wellbeing: require("../assets/Wellbeing.jpg"),
+    Academics: require("../assets/Academics.jpg"),
+    Independence: require("../assets/Independence.jpg"),
+  };
 
   return (
     <View style={baseStyle.view}>
-      <>
+      <View style={baseStyle.view}>
         <Text style={baseStyle.bigText}>
           This is the {category.Category} section
         </Text>
-        {completion !== null && (
+        {catCompletion?.quiz && (
           <Text style={baseStyle.bigText}>
-            Previously you got {completion} out of{" "}
+            Previously you got {getNumCorrect(catCompletion.quiz)} out of{" "}
             {category.quiz.questions.length}
           </Text>
         )}
-        <Pressable
+      </View>
+
+      <View style={baseStyle.imageContainer}>
+        <Image
+          source={
+            category.image
+              ? { uri: global.url + category.image?.url }
+              : categoryImages[category.Category]
+          }
+          style={baseStyle.image}
+          resizeMode="contain"
+        />
+      </View>
+      <View style={{ width: "80%", flex: 1, marginVertical: "10%", gap: 30 }}>
+        <PrettyButton
+          style={baseStyle.prettyButton}
           onPress={() =>
             navigation.navigate("Info", {
               ...route.params,
@@ -66,11 +53,12 @@ export default function Category({ route, navigation }) {
             })
           }
         >
-          <Text style={baseStyle.button}>Start Reading</Text>
-        </Pressable>
+          Start Reading
+        </PrettyButton>
 
-        {infoCompletion !== null && (
-          <Pressable
+        {catCompletion?.info && (
+          <PrettyButton
+            style={baseStyle.prettyButton}
             onPress={() => {
               navigation.navigate("Question", {
                 ...route.params,
@@ -78,12 +66,10 @@ export default function Category({ route, navigation }) {
               });
             }}
           >
-            <Text style={baseStyle.button}>
-              {completion ? "Retake Quiz" : "Start Quiz"}
-            </Text>
-          </Pressable>
+            {catCompletion?.quiz ? "Retake Quiz" : "Start Quiz"}
+          </PrettyButton>
         )}
-      </>
+      </View>
     </View>
   );
 }

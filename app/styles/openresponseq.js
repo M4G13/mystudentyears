@@ -1,66 +1,23 @@
 import { StyleSheet } from "react-native";
 
-import base from "./base.js";
+import base from "./question.js";
 
 const style = StyleSheet.create({
   ...base,
-
-  questionWrapper: {
-    flex: 1,
-    height: "100%",
-  },
 
   input: {
     backgroundColor: base.colors.bg3,
     color: base.colors.text1,
     padding: 15,
     borderRadius: 5,
-    marginTop: 30,
     alignSelf: "center",
-    width: "90%",
-  },
-
-  questionContainer: {
-    height: "100%",
-    padding: 30,
-    paddingLeft: 10,
-    color: base.colors.text2,
-  },
-
-  submitButtonContainer: {
-    marginTop: "auto",
-  },
-  submitButton: {
-    backgroundColor: base.colors.fg2,
-    borderRadius: 5,
-    padding: 15,
-    margin: 10,
-    marginTop: 30,
-  },
-
-  listItem: {
-    backgroundColor: base.colors.fg2,
-    borderColor: base.colors.fg2,
-    borderWidth: 4,
-    padding: 15,
-    borderRadius: 5,
-    margin: 5,
-    width: "90%",
-    alignItems: "center",
-    alignSelf: "center",
-  },
-
-  button: {
-    color: base.colors.text1,
-    fontWeight: "600",
-    fontSize: 22,
-    textAlign: "center",
+    width: "80%",
+    marginBottom: 15,
   },
 
   bigText: {
     ...base.bigText,
-    textAlign: "left",
-    fontSize: 30,
+    fontSize: 24,
   },
 });
 

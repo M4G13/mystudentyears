@@ -4,26 +4,42 @@ import base from "./question.js";
 
 const style = StyleSheet.create({
   ...base,
-
-  listItem: {
-    ...base.pressable,
-    margin: 5,
-    width: "90%",
-    alignItems: "center",
-    alignSelf: "center",
-  },
-
-  button: {
-    color: base.colors.text1,
-    fontWeight: "600",
-    fontSize: 22,
-    textAlign: "center",
+  questionWrapper: {
+    ...base.questionWrapper,
   },
 
   bigText: {
     ...base.bigText,
-    textAlign: "left",
-    fontSize: 30,
+    fontSize: 24,
+    margin: 0,
+  },
+
+  pressable: {
+    ...base.pressable,
+    margin: 5,
+  },
+  selected: {
+    ...base.optionsContainer,
+    flexGrow: 1,
+    gap: 15,
+  },
+  options: {
+    ...base.optionsContainer,
+    width: "100%",
+    flex: 1,
+    flexGrow: 1,
+    flexDirection: "row",
+    alignContent: "flex-end",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    gap: 15,
+  },
+  button: {
+    width: "45%",
+    height: "20%",
+  },
+  selectedButton: {
+    flex: 1,
   },
 });
 

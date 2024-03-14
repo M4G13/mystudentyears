@@ -13,20 +13,25 @@
   "pluginOptions": {},
   "attributes": {
     "Name": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "category": {
       "type": "component",
       "repeatable": true,
-      "component": "category.category"
+      "component": "category.category",
+      "required": false
     },
-    "Student_image": {
-      "allowedTypes": [
-        "images"
-      ],
+    "image": {
       "type": "media",
       "multiple": false,
-      "required": true
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "Order": {
+      "type": "integer"
     }
   }
 }

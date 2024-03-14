@@ -6,31 +6,48 @@ const style = StyleSheet.create({
   ...base,
   questionWrapper: {
     ...base.questionWrapper,
-    justifyContent: "space-between",
   },
-  draggable: {
-    ...base.pressable,
-    backgroundColor: base.colors.fg1,
+  questionContainer: {
+    ...base.questionContainer,
+    width: "100%",
+    flex: 1,
+  },
+  contentContainer: {
+    ...base.optionsContainer,
+    width: "100%",
+  },
+
+  option: {
+    ...base.option,
+    fontSize: 20,
     margin: 5,
-    marginBottom: 10,
-    marginTop: 10,
   },
-  draggableSelected: {
-    ...base.pressable,
-    backgroundColor: base.colors.fg2,
-    margin: 5,
-    marginBottom: 10,
-    marginTop: 10,
-  },
+
   keywords: {
+    ...base.optionsContainer,
+    width: "100%",
+    flex: 1,
     flexDirection: "row",
-    flexWrap: "wrap",
+    alignContent: "flex-end",
     justifyContent: "center",
+    flexWrap: "wrap",
+    gap: 15,
   },
+
   wordGaps: {
     ...base.bigText,
     backgroundColor: base.colors.bg3,
     textDecorationLine: "underline",
+    fontSize: 24,
+  },
+
+  question: {
+    ...base.bigText,
+    fontSize: 24,
+  },
+  button: {
+    width: "45%",
+    height: "15%",
   },
 });
 
