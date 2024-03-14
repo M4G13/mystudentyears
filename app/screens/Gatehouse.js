@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, Image } from "react-native";
 import Animated, {
   useSharedValue,
@@ -16,7 +16,7 @@ import style from "../styles/gatehouse.js";
 
 export default function Gatehouse({ navigation }) {
   const students = global.data;
-  const showSurvey = global.finalSurvey==null;
+  const showSurvey = global.finalSurvey == null;
 
   const [completion] = useContext(CompletionContext);
 
@@ -55,7 +55,11 @@ export default function Gatehouse({ navigation }) {
     <View style={style.view}>
       <Swiper
         loop={false}
-        index={currentStudent?students.findIndex((s) => s.id === Number(currentStudent)):0}
+        index={
+          currentStudent
+            ? students.findIndex((s) => s.id === Number(currentStudent))
+            : 0
+        }
         onIndexChanged={(i) => {
           setStudentIndex({ prev: studentIndex.curr, curr: i });
           bgIndex.value = 0; // Need to lerp from 0-1 every time
@@ -105,33 +109,35 @@ export default function Gatehouse({ navigation }) {
               )}
             </Animated.View>
           )),
-          showSurvey&&<Animated.View
-            style={[style.studentWrapper, bgColorAnim]}
-            key={"student" + students.length}
-          >
-            <View style={style.surveyCard}>
-              <Text style={style.studentText}>Final Survey</Text>
-              <Text style={[style.studentText, { fontSize: 20 }]}>
-                You've completed all the student stories! Please complete this
-                final survey to let us know what you've learned.
-              </Text>
-              <PrettyButton
-                style={style.prettyButton}
-                onPress={() => navigation.navigate("Survey")}
-              >
-                Take Survey
-              </PrettyButton>
-            </View>
-
-            {!completedStories.every((s) => s === true) && (
-              <View style={style.lockedOverlay}>
-                <Text style={style.bigText}>
-                  You can't complete the final survey yet!{"\n\n"}
-                  Please complete all student stories first then come back!
+          showSurvey && (
+            <Animated.View
+              style={[style.studentWrapper, bgColorAnim]}
+              key={"student" + students.length}
+            >
+              <View style={style.surveyCard}>
+                <Text style={style.studentText}>Final Survey</Text>
+                <Text style={[style.studentText, { fontSize: 20 }]}>
+                  You've completed all the student stories! Please complete this
+                  final survey to let us know what you've learned.
                 </Text>
+                <PrettyButton
+                  style={style.prettyButton}
+                  onPress={() => navigation.navigate("Survey")}
+                >
+                  Take Survey
+                </PrettyButton>
               </View>
-            )}
-          </Animated.View>
+
+              {!completedStories.every((s) => s === true) && (
+                <View style={style.lockedOverlay}>
+                  <Text style={style.bigText}>
+                    You can't complete the final survey yet!{"\n\n"}
+                    Please complete all student stories first then come back!
+                  </Text>
+                </View>
+              )}
+            </Animated.View>
+          ),
         ]}
       </Swiper>
     </View>

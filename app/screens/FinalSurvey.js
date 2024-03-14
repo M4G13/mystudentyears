@@ -16,7 +16,7 @@ export default function FinalSurvey({ navigation }) {
     });
     navigation.reset({ routes: [{ name: "Home Screen" }] });
     AsyncStorage.setItem("finalSurveyComplete", "true");
-    global.finalSurvey="true";
+    global.finalSurvey = "true";
   };
 
   useEffect(() => {
