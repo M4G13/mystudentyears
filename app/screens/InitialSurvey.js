@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import React, { useState } from "react";
-import { View, Text, TextInput, Image } from "react-native";
-import { SelectList } from "react-native-dropdown-select-list";
+import { View, Text, TextInput } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
 
 import Survey from "../components/Survey.js";
 import style from "../styles/survey";
@@ -26,7 +26,7 @@ export default function InitialSurvey({ navigation }) {
       .post(global.api_url + "/app-users", {
         data: {
           Email: email,
-          school: schools.find((elt) => elt.value === selectedSchool).key,
+          school: selectedSchool.id,
           InitialSurvey: survey,
         },
       })
@@ -39,8 +39,8 @@ export default function InitialSurvey({ navigation }) {
       });
 
     AsyncStorage.setItem("email", email).catch((e) => console.error(e));
-    AsyncStorage.setItem("school", selectedSchool).catch((e) =>
-      console.error(e),
+    AsyncStorage.setItem("school", selectedSchool.attributes.schoolname).catch(
+      (e) => console.error(e),
     );
 
     navigation.reset({ routes: [{ name: "Gatehouse" }] });
@@ -53,60 +53,47 @@ export default function InitialSurvey({ navigation }) {
       fetchSchools={() =>
         axios
           .get(global.api_url + "/schools?sort=schoolname")
-          .then((response) =>
-            setSchools(
-              response.data.data.map((item) => ({
-                key: item.id,
-                value: item.attributes.schoolname,
-              })),
-            ),
-          )
+          .then((response) => setSchools(response.data.data))
       }
       userInfo={
-        <View>
+        <View style={{ width: "90%", gap: 15 }}>
           <Text style={style.bigText}>Introductory Survey</Text>
 
           <TextInput
             style={style.input}
             placeholder="Enter your e-mail address"
+            placeholderTextColor={style.colors.text1}
             onChangeText={setEmail}
             value={email}
+            inputMode="email"
+            autoComplete="email"
+            keyboardType="email-address"
           />
 
           <View style={style.dropDown}>
-            <SelectList
-              id="dropdown"
-              setSelected={setSelectedSchool}
+            <Dropdown
+              onChange={setSelectedSchool}
               data={schools}
-              boxStyles={style.boxStyle}
-              inputStyles={style.dropdownOption}
-              dropdownStyles={style.dropdownOption}
-              dropdownTextStyles={style.dropdownOption}
-              dropdownItemStyles={style.dropdownOption}
-              searchicon={
-                <Image
-                  source={require("../assets/search.png")}
-                  resizeMode="contain"
-                  style={{ width: 17, height: 17 }}
-                />
-              }
-              arrowicon={
-                <Image
-                  source={require("../assets/arrow.png")}
-                  resizeMode="contain"
-                  style={{ width: 17, height: 17 }}
-                />
-              }
-              closeicon={
-                <Image
-                  source={require("../assets/close.png")}
-                  resizeMode="contain"
-                  style={{ width: 17, height: 17 }}
-                />
-              }
+              labelField="attributes.schoolname"
+              valueField="id"
+              search
+              value={selectedSchool}
+              style={style.boxStyle}
+              inputSearchStyle={style.dropdownInput}
+              placeholderStyle={style.dropdownInput}
+              selectedTextStyle={style.dropdownInput}
+              containerStyle={style.boxStyle}
+              itemTextStyle={style.schoolsText}
+              activeColor={style.colors.bg3}
+              // renderLeftIcon={() =>
+              //   <Image
+              //     source={require("../assets/search.png")}
+              //     resizeMode="contain"
+              //     style={{ width: 16, height: 16 }}
+              //   />
+              // }
+              searchPlaceholder="Search..."
               placeholder="Select your school"
-              searchPlaceholder="Search"
-              save="value"
             />
           </View>
         </View>

@@ -9,7 +9,9 @@ const style = StyleSheet.create({
   },
   view: {
     ...base.view,
-    padding: 16, // Adjust the padding as needed
+    padding: "2%",
+    width: "100%",
+    height: "100%",
   },
   bigText: {
     ...base.bigText,
@@ -20,72 +22,78 @@ const style = StyleSheet.create({
     fontSize: 20,
     color: base.colors.text1,
     marginBottom: 10,
-    flexWrap: "wrap", // Allow line wrapping
+    flexWrap: "wrap",
+  },
+  radioContainer: {
+    width: "95%",
+    marginVertical: "4%",
   },
   questionContainer: {
-    marginTop: 20,
-    alignItems: "center",
-    width: "100%", // Ensure full width
+    width: "100%",
+    alignItems: "left",
+    justifyContent: "center",
+    padding: "2%",
   },
-  likertContainer: {
-    margin: 15,
-    flexDirection: "column", // Change to column
-    alignItems: "left", // Align items in the center
-    width: "100%", // Ensure full width
+  questionText: {
+    ...base.bigText,
+    fontSize: 22,
+    textAlign: "left",
   },
   prettyButton: {
     ...base.prettyButton,
+    marginTop: 10,
     width: "100%",
   },
-
   button: {
     color: base.colors.text1,
     fontWeight: "600",
     fontSize: 20,
     textAlign: "center",
   },
-
   input: {
-    width: 380,
-    alignItems: "stretch",
     borderWidth: 1,
+    borderColor: base.colors.text1,
     fontSize: 20,
     padding: 10,
-    backgroundColor: base.colors.text1,
-    margin: 20,
+    backgroundColor: base.colors.text2,
     borderRadius: 10,
+    width: "100%",
+    flex: 1,
+    color: base.colors.text1,
   },
   option: {
     width: "100%",
     fontSize: 17,
     color: base.colors.text1,
-    flexWrap: "wrap", // Allow line wrapping
+    flexWrap: "wrap",
   },
   questions: {
     marginLeft: 20,
   },
   dropdownOption: {
-    width: "380",
-    maxWidth: "380",
     fontSize: 20,
     color: base.colors.text1,
-    flexWrap: "wrap", // Allow line wrapping
+    flexWrap: "wrap",
+  },
+  dropdownInput: {
+    fontSize: 20,
+    color: base.colors.text1,
+    flexWrap: "wrap",
   },
   boxStyle: {
-    width: 380,
+    backgroundColor: base.colors.bg1,
+    borderColor: base.colors.text1,
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    paddingVertical: 7,
   },
-  submit: {
-    margin: 20,
-    padding: 20,
-    width: 380,
-    backgroundColor: base.colors.fg1,
-    textAlign: "center",
-    borderRadius: 20,
-    fontSize: 20,
-    fontWeight: "bold",
+  schoolsText: {
+    color: base.colors.text1,
   },
   dropDown: {
-    paddingLeft: 20,
+    width: "100%",
+    flex: 1,
   },
   personalInfo: {
     textAlign: "center",
@@ -93,6 +101,8 @@ const style = StyleSheet.create({
   },
   smallerText: {
     fontSize: 15,
+    width: "95%",
+    textAlign: "center",
     color: base.colors.text1,
   },
   link: {
