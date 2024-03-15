@@ -54,6 +54,7 @@ const style = StyleSheet.create({
     borderRadius: 10,
     width: "100%",
     flex: 1,
+    color: base.colors.text1,
   },
   option: {
     width: "100%",

@@ -72,6 +72,9 @@ export default function InitialSurvey({ navigation }) {
             placeholderTextColor={style.colors.text1}
             onChangeText={setEmail}
             value={email}
+            inputMode="email"
+            autoComplete="email"
+            keyboardType="email-address"
           />
 
           <View style={style.dropDown}>
