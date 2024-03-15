@@ -14,7 +14,7 @@ export default function Analytics() {
 
   const fetchData = async () => {
     const { get } = getFetchClient();
-    const data = await get('../../analytics/userDetails');
+    const data = await get('/analytics/userDetails');
     const elem = document.createElement('a');
     elem.setAttribute('href', URL.createObjectURL(new Blob([data.data, {type: 'text/csv'}])));
     elem.setAttribute('download', 'userdata.csv');

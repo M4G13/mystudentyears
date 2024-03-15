@@ -11,7 +11,7 @@ export default function SchoolMap() {
 
   const { get } = getFetchClient();
   const fetchSchools = async () => {
-    get('../../analytics/laFreq')
+    get('/analytics/laFreq')
       .then(data => {
         setRegions(data.data);
         const vals = data.data.map(r => r.value);
