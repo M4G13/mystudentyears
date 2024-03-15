@@ -63,12 +63,13 @@ export default function InitialSurvey({ navigation }) {
           )
       }
       userInfo={
-        <View>
+        <View style={style.view}>
           <Text style={style.bigText}>Introductory Survey</Text>
 
           <TextInput
             style={style.input}
             placeholder="Enter your e-mail address"
+            placeholderTextColor={style.colors.text1}
             onChangeText={setEmail}
             value={email}
           />
@@ -79,7 +80,7 @@ export default function InitialSurvey({ navigation }) {
               setSelected={setSelectedSchool}
               data={schools}
               boxStyles={style.boxStyle}
-              inputStyles={style.dropdownOption}
+              inputStyles={style.dropdownInput}
               dropdownStyles={style.dropdownOption}
               dropdownTextStyles={style.dropdownOption}
               dropdownItemStyles={style.dropdownOption}

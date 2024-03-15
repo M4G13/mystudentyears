@@ -9,7 +9,9 @@ const style = StyleSheet.create({
   },
   view: {
     ...base.view,
-    padding: 16, // Adjust the padding as needed
+    padding: "2%",
+    width: "100%",
+    height: "100%",
   },
   bigText: {
     ...base.bigText,
@@ -20,59 +22,63 @@ const style = StyleSheet.create({
     fontSize: 20,
     color: base.colors.text1,
     marginBottom: 10,
-    flexWrap: "wrap", // Allow line wrapping
+    flexWrap: "wrap",
   },
   questionContainer: {
     marginTop: 20,
     alignItems: "center",
-    width: "100%", // Ensure full width
+    width: "100%",
   },
   likertContainer: {
     margin: 15,
-    flexDirection: "column", // Change to column
-    alignItems: "left", // Align items in the center
-    width: "100%", // Ensure full width
+    flexDirection: "column",
+    alignItems: "left",
+    width: "100%",
   },
   prettyButton: {
     ...base.prettyButton,
     width: "100%",
   },
-
   button: {
     color: base.colors.text1,
     fontWeight: "600",
     fontSize: 20,
     textAlign: "center",
   },
-
   input: {
     width: 380,
-    alignItems: "stretch",
     borderWidth: 1,
+    borderColor: base.colors.text1,
     fontSize: 20,
     padding: 10,
-    backgroundColor: base.colors.text1,
-    margin: 20,
+    marginBottom: 10,
+    backgroundColor: base.colors.text2,
     borderRadius: 10,
+    width: "100%"
   },
   option: {
     width: "100%",
     fontSize: 17,
     color: base.colors.text1,
-    flexWrap: "wrap", // Allow line wrapping
+    flexWrap: "wrap",
   },
   questions: {
     marginLeft: 20,
   },
   dropdownOption: {
-    width: "380",
-    maxWidth: "380",
     fontSize: 20,
     color: base.colors.text1,
-    flexWrap: "wrap", // Allow line wrapping
+    flexWrap: "wrap",
+  },
+  dropdownInput: {
+    fontSize: 20,
+    color: base.colors.text1,
+    paddingHorizontal: 10,
+    flexWrap: "wrap",
   },
   boxStyle: {
-    width: 380,
+    width: "100%",
+    borderColor: base.colors.text1,
   },
   submit: {
     margin: 20,
@@ -85,7 +91,7 @@ const style = StyleSheet.create({
     fontWeight: "bold",
   },
   dropDown: {
-    paddingLeft: 20,
+    width: "100%",
   },
   personalInfo: {
     textAlign: "center",
