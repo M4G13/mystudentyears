@@ -4,7 +4,7 @@ import { View, Text, ScrollView } from "react-native";
 
 import Loading from "./Loading.js";
 import PrettyButton from "../components/PrettyButton.js";
-import RadioButton from "../components/SurveyQuestion.js";
+import RadioButton from "../components/RadioButton.js";
 import style from "../styles/survey";
 
 export default function Survey({
@@ -78,15 +78,14 @@ export default function Survey({
                   <RadioButton
                     text={o.attributes.option}
                     key={o.id}
-                    selected={selectedValues[q.id]==o.id}
-                    action={()=>
-                      setSelectedValues({...selectedValues, [q.id]: o.id})
+                    selected={selectedValues[q.id] === o.id}
+                    action={() =>
+                      setSelectedValues({ ...selectedValues, [q.id]: o.id })
                     }
                   />
                 ))}
               </View>
             </View>
-
           ))}
 
           <Text style={style.smallerText}>

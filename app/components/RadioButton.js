@@ -1,46 +1,31 @@
 import { View, StyleSheet, Pressable, Text } from "react-native";
-import {useState} from "react";
-import baseStyle from "../styles/base.js";
-import Animated, {
-  withTiming,
-  useSharedValue,
-  useAnimatedStyle,
-  interpolateColor,
-  ZoomIn,
-  ZoomOut,
-  Easing,
-} from "react-native-reanimated";
+import Animated, { ZoomIn, ZoomOut, Easing } from "react-native-reanimated";
 
-const RadioButton = ({action, children, selected, text, question, key}) => {
+import baseStyle from "../styles/base.js";
+
+const RadioButton = ({ action, children, selected, text, question }) => {
   return (
     <View style={styles.optionContainer}>
       <Pressable style={styles.button} onPress={action}>
-        {selected && <Animated.View entering={ZoomIn.duration(400).easing(Easing.elastic(2))
-        } exiting={ZoomOut} style={styles.buttonBackground}>
-
-        </Animated.View>}
+        {selected && (
+          <Animated.View
+            entering={ZoomIn.duration(400).easing(Easing.elastic(2))}
+            exiting={ZoomOut}
+            style={styles.buttonBackground}
+          />
+        )}
       </Pressable>
-      <Text style={styles.optionText}>
-        {text}
-      </Text>
+      <Text style={styles.optionText}>{text}</Text>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
-  radioContainer: {
-    width: "100%",
-    marginVertical: "1%",
-    flex: 1
-  },
   buttonBackground: {
     flex: 1,
     margin: 4,
     backgroundColor: baseStyle.colors.fg1,
     borderRadius: 1000,
-  },
-  optionsContainer: {
-    width: "100%",
   },
   optionContainer: {
     flexDirection: "row",
@@ -62,7 +47,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "left",
     marginLeft: "1%",
-    alignSelf: "center"
+    alignSelf: "center",
   },
 });
 
