@@ -29,10 +29,9 @@ Make sure you either reference the number of the ticket in the commit message or
     - [x] Create all question types
     - [x] App works with strapi
 - [x] Extended end-user functionality
-    - [ ] Full E2E + regression test suite
     - [x] Improve quiz functionality
     - [x] Display + store progress
-    - [ ] Form/survey at start + end of app flow
+    - [x] Form/survey at start + end of app flow
     - [x] Analytics captured
     - [x] Improved look + layout of whole app
 - [x] Dev build + deployment of CMS
@@ -40,10 +39,10 @@ Make sure you either reference the number of the ticket in the commit message or
     - [x] App visuals improved, nearly finalised
     - [x] Analytics displayed, visualised
     - [x] Development build delivered to customer
-- [ ] User testing, polish
-    - [ ] App finalised
-    - [ ] Flourishes + polish
-    - [ ] User testing of app
+- [x] User testing, polish
+    - [x] App finalised
+    - [x] Flourishes + polish
+    - [x] User testing of app
 
 ## Requirements
 * The app will open with some welcome screen > NEXT
