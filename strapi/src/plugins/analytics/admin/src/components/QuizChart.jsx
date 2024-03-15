@@ -12,12 +12,12 @@ const QuizChart = () => {
 
   const formatQuestion = (q) =>
     q ?
-    Object.entries(q).slice(2).map(([k, v]) => ({ "question": k, "correct": 100*v/(q.totalResponses) })) : [];
+    Object.entries(q).slice(2).map(([k, v]) => ({ "question": k, "correct": Math.round(100*v/(q.totalResponses)) })) : [];
 
   const { get } = getFetchClient();
   const theme = useContext(ThemeContext)
   const fetchData = async () => {
-    get(`../../analytics/quizData`)
+    get(`/analytics/quizData`)
       .then(response => {setQuizzes(response.data)})
   }
 
@@ -84,6 +84,7 @@ const QuizChart = () => {
         minValue={0}
         maxValue={100}
         theme={{"text":{"fill":theme.colors.neutral800},"tooltip":{"container":{"color":"#777777"}}}}
+        label={d=> `${d.value}%` }
         axisBottom={{
             legend: 'Question',
             legendPosition: 'middle',

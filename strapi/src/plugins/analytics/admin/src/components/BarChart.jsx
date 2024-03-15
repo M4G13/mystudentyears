@@ -13,12 +13,12 @@ const BarChart = ({type}) => {
 
   const { get } = getFetchClient();
   const fetchData = async () => {
-    get(`../../analytics/${type}`)
-      .then(response => setData(response.data))
+    get(`/analytics/${type}`)
+      .then(response => {setData(response.data);console.log(response)})
   }
 
   const fetchOptions = async () => {
-    fetch('../../../api/survey-options')
+    fetch('/api/survey-options')
       .then(response => response.json())
       .then(data => setOptions(data.data.map(val => val.attributes.option)))
       .catch(error => console.log(error));
