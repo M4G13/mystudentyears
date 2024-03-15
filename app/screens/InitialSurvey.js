@@ -26,7 +26,7 @@ export default function InitialSurvey({ navigation }) {
       .post(global.api_url + "/app-users", {
         data: {
           Email: email,
-          school: schools.find((elt) => elt.value === selectedSchool).key,
+          school: selectedSchool.id,
           InitialSurvey: survey,
         },
       })
@@ -39,8 +39,8 @@ export default function InitialSurvey({ navigation }) {
       });
 
     AsyncStorage.setItem("email", email).catch((e) => console.error(e));
-    AsyncStorage.setItem("school", selectedSchool).catch((e) =>
-      console.error(e),
+    AsyncStorage.setItem("school", selectedSchool.attributes.schoolname).catch(
+      (e) => console.error(e),
     );
 
     navigation.reset({ routes: [{ name: "Gatehouse" }] });
@@ -53,14 +53,7 @@ export default function InitialSurvey({ navigation }) {
       fetchSchools={() =>
         axios
           .get(global.api_url + "/schools?sort=schoolname")
-          .then((response) =>
-            setSchools(
-              response.data.data.map((item) => ({
-                value: item.id,
-                label: item.attributes.schoolname,
-              })),
-            ),
-          )
+          .then((response) => setSchools(response.data.data))
       }
       userInfo={
         <View style={{ width: "90%", gap: 15 }}>
@@ -81,8 +74,8 @@ export default function InitialSurvey({ navigation }) {
             <Dropdown
               onChange={setSelectedSchool}
               data={schools}
-              labelField="label"
-              valueField="value"
+              labelField="attributes.schoolname"
+              valueField="id"
               search
               value={selectedSchool}
               style={style.boxStyle}
