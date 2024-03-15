@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import React, { useState } from "react";
-import { View, Text, TextInput, Image } from "react-native";
-import { Dropdown } from 'react-native-element-dropdown';
+import { View, Text, TextInput } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
 
 import Survey from "../components/Survey.js";
 import style from "../styles/survey";
@@ -63,7 +63,7 @@ export default function InitialSurvey({ navigation }) {
           )
       }
       userInfo={
-        <View style={{width: "90%", gap: 15}}>
+        <View style={{ width: "90%", gap: 15 }}>
           <Text style={style.bigText}>Introductory Survey</Text>
 
           <TextInput

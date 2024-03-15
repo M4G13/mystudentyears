@@ -53,7 +53,7 @@ const style = StyleSheet.create({
     backgroundColor: base.colors.text2,
     borderRadius: 10,
     width: "100%",
-    flex: 1
+    flex: 1,
   },
   option: {
     width: "100%",
@@ -97,7 +97,7 @@ const style = StyleSheet.create({
   },
   dropDown: {
     width: "100%",
-    flex: 1
+    flex: 1,
   },
   personalInfo: {
     textAlign: "center",
