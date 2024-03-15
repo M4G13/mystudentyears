@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import React, { useState } from "react";
 import { View, Text, TextInput, Image } from "react-native";
-import { SelectList } from "react-native-dropdown-select-list";
+import { Dropdown } from 'react-native-element-dropdown';
 
 import Survey from "../components/Survey.js";
 import style from "../styles/survey";
@@ -56,14 +56,14 @@ export default function InitialSurvey({ navigation }) {
           .then((response) =>
             setSchools(
               response.data.data.map((item) => ({
-                key: item.id,
-                value: item.attributes.schoolname,
+                value: item.id,
+                label: item.attributes.schoolname,
               })),
             ),
           )
       }
       userInfo={
-        <View style={style.view}>
+        <View style={{width: "90%", gap: 15}}>
           <Text style={style.bigText}>Introductory Survey</Text>
 
           <TextInput
@@ -75,39 +75,29 @@ export default function InitialSurvey({ navigation }) {
           />
 
           <View style={style.dropDown}>
-            <SelectList
-              id="dropdown"
-              setSelected={setSelectedSchool}
+            <Dropdown
+              onChange={setSelectedSchool}
               data={schools}
-              boxStyles={style.boxStyle}
-              inputStyles={style.dropdownInput}
-              dropdownStyles={style.dropdownOption}
-              dropdownTextStyles={style.dropdownOption}
-              dropdownItemStyles={style.dropdownOption}
-              searchicon={
-                <Image
-                  source={require("../assets/search.png")}
-                  resizeMode="contain"
-                  style={{ width: 17, height: 17 }}
-                />
-              }
-              arrowicon={
-                <Image
-                  source={require("../assets/arrow.png")}
-                  resizeMode="contain"
-                  style={{ width: 17, height: 17 }}
-                />
-              }
-              closeicon={
-                <Image
-                  source={require("../assets/close.png")}
-                  resizeMode="contain"
-                  style={{ width: 17, height: 17 }}
-                />
-              }
+              labelField="label"
+              valueField="value"
+              search
+              value={selectedSchool}
+              style={style.boxStyle}
+              inputSearchStyle={style.dropdownInput}
+              placeholderStyle={style.dropdownInput}
+              selectedTextStyle={style.dropdownInput}
+              containerStyle={style.boxStyle}
+              itemTextStyle={style.schoolsText}
+              activeColor={style.colors.bg3}
+              // renderLeftIcon={() =>
+              //   <Image
+              //     source={require("../assets/search.png")}
+              //     resizeMode="contain"
+              //     style={{ width: 16, height: 16 }}
+              //   />
+              // }
+              searchPlaceholder="Search..."
               placeholder="Select your school"
-              searchPlaceholder="Search"
-              save="value"
             />
           </View>
         </View>
