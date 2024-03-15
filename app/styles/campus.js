@@ -60,6 +60,7 @@ const style = StyleSheet.create({
   },
   progressBar: {
     position: "absolute",
+    width: "100%",
     top: 0,
     left: 0,
     borderColor: baseStyle.colors.fg3,
@@ -74,7 +75,6 @@ const style = StyleSheet.create({
     alignItems: "center",
     backgroundColor: baseStyle.colors.b1,
     borderRadius: 5,
-    padding: 5,
     paddingTop: 10,
   },
   progressBarText: {
@@ -105,6 +105,9 @@ const style = StyleSheet.create({
     alignItems: "center",
   },
   modalText: {
+    ...baseStyle.bigText,
+    textShadowRadius: 2,
+    textShadowColor: baseStyle.colors.translucent3,
     fontSize: 30,
     textAlign: "center",
   },
@@ -122,8 +125,7 @@ const style = StyleSheet.create({
     ...baseStyle.button,
     minWidth: "auto",
     backgroundColor: baseStyle.colors.fg3,
-    padding: 15,
-    flex: 1,
+    padding: "5%",
     justifyItems: "center",
     alignItems: "center",
   },
@@ -136,6 +138,8 @@ const style = StyleSheet.create({
     padding: 20,
     borderRadius: 15,
     gap: 10,
+    borderColor: "#33333355",
+    borderWidth: 4,
   },
   clearButtonContainer: {
     // TODO: Delete in prod
