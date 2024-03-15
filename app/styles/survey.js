@@ -24,19 +24,24 @@ const style = StyleSheet.create({
     marginBottom: 10,
     flexWrap: "wrap",
   },
-  questionContainer: {
-    marginTop: 20,
-    alignItems: "center",
-    width: "100%",
+  radioContainer: {
+    width: "95%",
+    marginVertical: "4%",
   },
-  likertContainer: {
-    margin: 15,
-    flexDirection: "column",
-    alignItems: "left",
+  questionContainer: {
     width: "100%",
+    alignItems: "left",
+    justifyContent: "center",
+    padding: "2%",
+  },
+  questionText: {
+    ...base.bigText,
+    fontSize: 22,
+    textAlign: "left",
   },
   prettyButton: {
     ...base.prettyButton,
+    marginTop: 10,
     width: "100%",
   },
   button: {
@@ -80,16 +85,6 @@ const style = StyleSheet.create({
     width: "100%",
     borderColor: base.colors.text1,
   },
-  submit: {
-    margin: 20,
-    padding: 20,
-    width: 380,
-    backgroundColor: base.colors.fg1,
-    textAlign: "center",
-    borderRadius: 20,
-    fontSize: 20,
-    fontWeight: "bold",
-  },
   dropDown: {
     width: "100%",
   },
@@ -99,6 +94,8 @@ const style = StyleSheet.create({
   },
   smallerText: {
     fontSize: 15,
+    width: "95%",
+    textAlign: "center",
     color: base.colors.text1,
   },
   link: {

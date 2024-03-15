@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView } from "react-native";
-import RadioForm from "react-native-simple-radio-button";
 
 import Loading from "./Loading.js";
 import PrettyButton from "../components/PrettyButton.js";
+import RadioButton from "../components/SurveyQuestion.js";
 import style from "../styles/survey";
 
 export default function Survey({
@@ -69,23 +69,24 @@ export default function Survey({
         <View style={style.view}>
           {userInfo}
           {questions.map((q) => (
-            <View key={q.id} style={style.questionContainer}>
-              <Text style={style.smallText}>{q.attributes.question} </Text>
-
-              <RadioForm
-                style={style.likertContainer}
-                radio_props={options.map((o) => ({
-                  label: o.attributes.option,
-                  value: o.id,
-                }))}
-                initial={-1} // Set initial to -1 to have no button initially selected
-                labelStyle={style.option}
-                buttonStyle={{ borderRadius: 1000 }}
-                onPress={(value) =>
-                  setSelectedValues({ ...selectedValues, [q.id]: value })
-                }
-              />
+            <View style={style.radioContainer} key={q.id}>
+              <View style={style.questionContainer}>
+                <Text style={style.questionText}>{q.attributes.question}</Text>
+              </View>
+              <View>
+                {options.map((o) => (
+                  <RadioButton
+                    text={o.attributes.option}
+                    key={o.id}
+                    selected={selectedValues[q.id]==o.id}
+                    action={()=>
+                      setSelectedValues({...selectedValues, [q.id]: o.id})
+                    }
+                  />
+                ))}
+              </View>
             </View>
+
           ))}
 
           <Text style={style.smallerText}>
