@@ -3,10 +3,12 @@ import { ResponsiveBar } from '@nivo/bar';
 
 import { ThemeContext } from 'styled-components';
 import {getFetchClient} from '@strapi/helper-plugin';
+import axios from "axios";
 
 const BarChart = ({type}) => {
 
   const [data, setData] = useState([]);
+  //const [options, setOptions] = useState(["aaaaaa", "test1"]);
   const [options, setOptions] = useState([]);
 
   const theme = useContext(ThemeContext)
@@ -14,15 +16,22 @@ const BarChart = ({type}) => {
   const { get } = getFetchClient();
   const fetchData = async () => {
     get(`/analytics/${type}`)
-      .then(response => {setData(response.data);console.log(response)})
+      .then(response => {setData(response.data)})
   }
 
   const fetchOptions = async () => {
-    fetch('/api/survey-options')
+    /*const r = await fetch('/api/survey-options');
+    console.log(r);*/
+
+    axios
+      .get("../../api/survey-options")
+      .then(response => setOptions(response.data.data.map(val => val.attributes.option)))
+    //console.log(r.data);
+    /*fetch('../../api/survey-options')
       .then(response => response.json())
       .then(data => setOptions(data.data.map(val => val.attributes.option)))
-      .catch(error => console.log(error));
-}
+      .catch(error => console.log(error));*/
+  }
 
   useEffect(() => {
     fetchData();

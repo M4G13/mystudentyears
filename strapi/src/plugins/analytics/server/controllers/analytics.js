@@ -1,6 +1,7 @@
 'use strict';
 
-const processSurvey = async (type) => Object.values((await strapi.db.connection.context.raw(`
+const processSurvey = async (type) => {
+  const raw = await strapi.db.connection.context.raw(`
     SELECT
       q.question AS question,
       opt.option AS response,
@@ -21,10 +22,14 @@ const processSurvey = async (type) => Object.values((await strapi.db.connection.
       ac.field='${type}'
     GROUP BY
       question, response
-  `)).reduce((i, {question:q, response:r, count:c})=>{ // Formatting for vis.
+  `);
+  const response = raw.rows?raw.rows:raw;
+  return Object.values(response.reduce((i, {question:q, response:r, count:c})=>{
     i[q] = {question: q, ...i[q], [r]: c }; return i; }, {}));
+  };
 
-const studentCompletion = async () => await strapi.db.connection.context.raw(`
+const studentCompletion = async () => {
+  const raw = await strapi.db.connection.context.raw(`
     SELECT
       s.id AS id,
       s.name AS label,
@@ -41,7 +46,9 @@ const studentCompletion = async () => await strapi.db.connection.context.raw(`
       s.id
     ORDER BY
       s."Order";
-  `)
+  `);
+  return(raw.rows?raw.rows:raw);
+  };
 
 const quizData = async () => {
   const raw = await strapi.db.connection.context.raw(`
@@ -55,9 +62,10 @@ const quizData = async () => {
       components_completion_completions_quiz_links AS l ON l.quiz_id=q.id
     LEFT OUTER JOIN
       components_completion_completions AS c ON completion_id=c.id
-  `)
+  `);
+  const response = raw.rows?raw.rows:raw;
   let result = {};
-  raw.forEach((quiz) => {
+  response.forEach((quiz) => {
     let quizId = quiz.quiz_id;
     if(!result[quizId]) {
       result[quizId] = {};
@@ -76,15 +84,17 @@ const quizData = async () => {
   return Object.values(result);
 };
 
-const laFreq = async () => await strapi.db.connection.context.raw(`
+const laFreq = async () => {
+  const raw = await strapi.db.connection.context.raw(`
     SELECT schools.lacode as id, COUNT(*) as value
     FROM app_users_school_links as l
     INNER JOIN schools ON schools.id=l.school_id
     INNER JOIN app_users ON app_users.id=l.app_user_id
     GROUP BY schools.lacode;
   `);
+  return(raw.rows?raw.rows:raw);
+}
 
-// StudentID, Email,
 const userDetails = async () => {
   const raw = await strapi.entityService.findMany('api::app-user.app-user', {
   populate: {
@@ -125,9 +135,10 @@ const userDetails = async () => {
       }
     }
   }});
+  //const response = raw.rows?raw.rows:raw;
   let response = [];
 
-  raw.forEach((e, i) => {
+  (raw.rows?raw.rows:raw).forEach((e, i) => {
     response.push({"id":e.id, "email":e.Email});
     ["InitialSurvey", "FinalSurvey"].forEach((survey) => {
       if(e[survey]) {
