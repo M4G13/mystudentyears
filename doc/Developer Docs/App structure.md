@@ -28,25 +28,48 @@ screen components.
 
 ## Navigation
 
-The app utilizes `@react-navigation/native-stack` for navigation, structured in `App.js`. It dynamically selects between `InitialSurvey` and `FinalSurvey` based on the presence of a UUID in global state, it then guides the user through their journey from the home screen to quizzes and informational content.
+The app utilizes react navigation for navigation, structured in `App.js`. It
+dynamically selects between `InitialSurvey` and `FinalSurvey` based on the
+presence of a UUID in global state, it then guides the user through their
+journey from the home screen to quizzes and informational content.
 
 ## Global State Management
 
-Using React Context (`CurrentStudentContext`, `CompletionContext`), the app tracks the current student profile and quiz completion status. These contexts are essential for navigating the user's progress and tailoring the content dynamically.
+Using React Context (`CurrentStudentContext`, `CompletionContext`), the app
+tracks the current student profile and quiz completion status. These contexts
+are essential for navigating the user's progress and tailoring the content
+dynamically.  AsyncStorage is used for persistence of data, docs can be found
+[here](https://react-native-async-storage.github.io/async-storage/docs/install).
 
 ## Data Flow with Strapi
 
-The app interacts with a Strapi CMS backend, fetching and updating data related to students, quizzes, and progress. Global URLs (`global.url` and `global.api_url`) are configured for backend communication, these are crucial for dynamic content rendering and recording quiz results.
+The app interacts with a Strapi CMS backend, fetching and updating data related
+to students, quizzes, and progress. The global URL for the strapi api defaults
+to `localhost:1337/api`. Alternatively, place the following line inside
+`/app/.env` to use the production server's data, this is preferable if you have
+no data locally.
 
-**Example of fetching data in `FinalSurvey.js`**:
+```
+EXPO_PUBLIC_API_URL="https://mystudentyears.co.uk/strapi"
+```
 
-axios.put(global.api_url + "/app-user/" + global.uuid, {
-  data: { FinalSurvey: survey },
-});
+
+**Example of fetching data in `App.js`**:
+
+```js
+axios.get(global.api_url + "/students")
+.then((response) => {
+  global.data = response.data;
+})
+```
 
 ## Theming and Styling
 
-A base style defined in `styles/base.js` ensures consistent theming across the app. Components and screens import these styles, maintaining a cohesive look and feel. A custom font `PlaypensSans` enhances the user interface.
+A base style defined in `styles/base.js` ensures consistent theming across the
+app. Components and screens import these styles, maintaining a cohesive look and
+feel. A custom font `PlaypensSans` enhances the user interface. Styles are
+similar to css styles but camel-case, find a full list
+[here](https://reactnative.dev/docs/style).
 
 **Example from `base.js`**:
 
@@ -71,7 +94,9 @@ const baseStyle = StyleSheet.create({
 
 ## Testing and Mocks
 
-The project employs React Testing Library and Jest for testing components and functionalities. The tests focus on user interactions and component rendering, ensuring the application behaves as expected.
+The project employs React Testing Library and Jest for testing components and
+functionalities. The tests focus on user interactions and component rendering,
+ensuring the application behaves as expected.
 
 **Example test case in `HomeScreen.test.js`**:
 
@@ -84,4 +109,6 @@ describe("<HomeScreen />", () => {
 
 ## Coverage Reports
 
-Generated coverage reports provide insight into the tested portions of the code. These reports help identify areas lacking tests, guiding future testing efforts to improve code reliability.
+Generated coverage reports provide insight into the tested portions of the code.
+These reports help identify areas lacking tests, guiding future testing efforts
+to improve code reliability.
