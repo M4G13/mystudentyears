@@ -5,7 +5,7 @@ An app to help students in the transitionary period from high school to Universi
 
 ## Contributing
 ### Getting started
-To run the app follow the READMEs in `app/` and `strapi/`.
+See the folder `doc` for development environment setup and other essential documentation.
 
 ### Pre-commit
 Before committing ensure that any new components created have tests (jest is used for this but follow the relevant docs for your component, e.g., AsyncStorage has its own section on testing).  Also ensure that all tests pass by running `pnpm run test` in `app/`.  Also ensure that you run `pnpm run lint-fix` in `app/` for consistent styling.  Read the output of `lint-fix`, if warnings are generated check if they should be fixed or if they were intentional, if errors are generated the pipeline will fail (fix these).
