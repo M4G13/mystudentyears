@@ -1,0 +1,130 @@
+## React Native App Structure Documentation
+
+## Overview
+This document details the structure and key components of the "My Student Years" content management system (Strapi). 
+
+## Strapi Content Types
+The CMS comprises several collection types, single types and components that facilitate content organization and delivery for the application.
+
+### Collection Types:
+
+- **AppUser**: Represents the users of the application, featuring:
+    - Email: The user's email address.
+    - InitialSurvey & FinalSurvey: Components representing surveys taken by the user, each including:
+        - Completed: A repeatable component linking to Survey Question and Survey Option collections.
+    - CompletedQuizzes: A component linking to the Quiz collection and storing the quiz results in a JSON field.
+    - UUID: A unique identifier for the user.
+    - School: A relational field connecting to the School collection.
+
+- **Information**: This collection type contains the content pages used within the app. It includes:  
+
+    - Pages: A repeatable component consisting of:
+        - Title: Title of the page.
+        - Text: Markdown-formatted content of the page.
+    - Description: A text field for a short description or summary.
+
+- **Quiz**: This collection Stores quizzes comprising various types of questions within a dynamic zone, and includes
+
+    - Questions: A dynamic zone where different question components can be added. 
+    - Description: A text field for the quiz description. 
+      
+     
+
+- **School**: This collection type stores information about schools, including:
+    - schuid: School identifier
+    - school name: The school name 
+    - lacode: local authority code
+    - dzsimdpercentile: Ranking of deprevation 
+
+
+- **Student Story**: Includes stories of individual students with the following fields:
+
+    - Name: The students name
+    - Category: A component including Category, Information, Quiz, and an Image.
+    - Order: Numerical order of the student story.
+    - Image: Categorys image
+
+- **Survey Option**: Represents individual survey options with one text field.
+
+- **Survey Question**: Represents individual survey questions with one text field.
+
+- **User**: This collection type details about users who can access and manage the CMS, it contains:
+
+    - Username: Username of the user.
+    - Email: Email address of the user.
+    - Password: Password of the user. 
+    - Confirmed: A boolean indicating if the user's email is confirmed.
+    - Blocked: A boolean indicating if the user is blocked. 
+    - Role: Relation with Role, linking to the users-permissions plugin.
+
+
+## Single types:
+
+- **Privacy Policy**: Contains the privacy policy text for the application.
+
+- **Terms and Conditions**: Contains the terms and conditions text for the application.
+
+
+### Components
+
+Components in Strapi are reusable elements that define the structure of various types of content within the CMS.
+
+## Category Component
+The Category component is used to classify information and quizzes under a specific related area. Each category has several fields:
+
+- **Category**: An enumeration field that allows for the selection of a specific category from predefined options such as Finance, Wellbeing, Academics, and Independence.
+- **Information**: A relational field that links to the Information collection type, detailing the content associated with this category.
+- **Quiz**: A relational field that connects to the Quiz collection type, containing the questions and answers correlated to this category.
+- **Image**: A media field that enables the upload and association of an image relevant to the category.
+
+## Completion Component
+The Completion component tracks the progress of quizzes and the results for a user. It contains the following fields:
+
+- **Quiz**: A relational field that ties to a specific Quiz entry, indicating which quiz the completion data is referring to.
+- **Results**: A JSON field that stores the results of the quiz in a structured format.
+
+## Information Component
+The information components holds content that provides context or details for the associated quiz. It includes:
+
+- **Title**: A text field for the title of the information content
+- **Text** : A rich text field that supports markdown formatting for detailed text information 
+
+### Question Components 
+## Missing-words-question Component
+This component is utilized for constructing questions where certain words are omitted and must be filled in by the user. It consists of:
+
+- **Question**: A text field for the content of the missing words question.
+- **Image**: An optional media field to include an image relating to the question.
+
+## Multi-choice-question Component
+The Multi-choice-question component allows for the creation of a question with multiple selectable options. It includes:
+
+- **Question**: A text field for the question text.
+- **Options**: A repeatable component field where each instance uses the Multi-choice-option component to represent one option.
+- Image: An optional media field to include an image that pertains to the question.
+
+## Open-response-question Component
+For questions that require a more open-ended response, the Open-response-question component is used. It includes:
+
+- **Question**: A text field for the question text.
+- **Answer**: A text field for the expected answer or guideline for evaluation.
+- **Image**: An optional media field to accompany the question.
+
+## Rank-order-question Component
+The Rank-order-question component is designed for questions where responses should be ranked in a specific order. It contains:
+
+- **Question**: A text field for the question text.
+- **Answers**: A repeatable component field where each instance represents an answer to be ranked.
+
+### Question-helper Components
+## Answers Component
+The Answers component is a utility that stores the possible answers for various types of questions. It contains:
+
+- **Answer**: A text field designed to hold the answer text.
+
+## Multi-choice-option Component
+The Multi-choice-option component is used within a multi-choice question to present different options to the user. It has:
+
+- **Text**: A text field for the option's content.
+- **Correct**: A boolean to indicate whether this option is the correct answer for the question.
+
