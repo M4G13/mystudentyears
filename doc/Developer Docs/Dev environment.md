@@ -35,6 +35,8 @@ simply scan the bar code when it appears. If expo shows a dev build running you
 can either build a dev build and run this on your device or switch to Expo Go by
 pressing 's' once the app has built.
 
+> Note: when running the app with expo go ensure that the mobile device is on the same network as expo, and ensure that the network is configured correctly.  If running on a public network (e.g., Eduroam), consider using a mobile hot-spot.
+
 API and Backend Services Ensure that Strapi is running and accessible. Do this
 by navigating to the strapi directory and run the following command:
 
